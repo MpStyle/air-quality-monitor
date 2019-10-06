@@ -7,18 +7,10 @@ import admin = require('firebase-admin');
 import functions = require('firebase-functions');
 
 export const deviceSearch: ServiceAsync<DeviceSearchRequest, Device[]> = (req: DeviceSearchRequest): Promise<DeviceSearchResponse> => {
-    if (!req.googleEmail || req.googleEmail === ''
-        || !req.googleToken || req.googleToken === '') {
-        return Promise.resolve(<DeviceSearchResponse>{ error: Errors.INVALID_DEVICE_SEARCH_REQUEST });
-    }
-
     admin.initializeApp(functions.config().firebase);
 
     const db = admin.firestore();
     const collectionRef = db.collection(Collections.DEVICE);
-
-    collectionRef.where('googleEmail', '==', req.googleEmail);
-    collectionRef.where('deleted', '==', false);
 
     if (req.deviceId) {
         collectionRef.where('deviceId', '==', req.deviceId);
@@ -39,8 +31,6 @@ export const deviceSearch: ServiceAsync<DeviceSearchRequest, Device[]> = (req: D
 
 export interface DeviceSearchRequest {
     deviceId: string;
-    googleEmail: string;
-    googleToken: string;
 }
 
 export interface DeviceSearchResponse extends ServiceResponse<Device[]> {
