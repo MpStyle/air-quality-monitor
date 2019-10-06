@@ -1,17 +1,20 @@
-import * as functions from 'firebase-functions';
+import functions = require('firebase-functions');
+import admin = require('firebase-admin');
+import express = require('express');
 import { middlewareAuthorization } from './book/MiddlewareAuthorization';
 import { measurementAdd } from './service/MeasurementAdd';
 import { measurementSearch } from './service/MeasurementSearch';
-import express = require('express');
-import cors = require('cors');
+import { healthCheck } from './service/HealthCheck';
 
+admin.initializeApp();
+
+const cors = require('cors')({ origin: true });
 const app = express();
 
-// Automatically allow cross-origin requests
-app.use(cors({ origin: true }));
+app.use(cors);
 
-app.put('/measurement-add', (req, res) => () => { res.send(middlewareAuthorization(req.body, measurementAdd)); });
-app.put('/measurement-search', (req, res) => () => { res.send(middlewareAuthorization(req.body, measurementSearch)); });
+app.put('/measurement-add', (req, res) => { middlewareAuthorization(req.body, measurementAdd).then(response => res.json(response)).catch(error => { res.send(error) }); });
+app.post('/measurement-search', (req, res) => { res.send(middlewareAuthorization(req.body, measurementSearch)); });
+app.get('/health-check', (req, res) => { res.send(healthCheck()); });
 
-// Expose Express API as a single Cloud Function:
-export const aircare = functions.https.onRequest(app);
+exports.app = functions.https.onRequest(app);
