@@ -1,13 +1,15 @@
 import { ServiceAsync } from "../entity/Service";
 import { ServiceResponse } from "../entity/ServiceResponse";
+import { ServiceRequest } from "../entity/ServiceRequest";
 
 export const authorization: ServiceAsync<AuthorizationRequest, boolean> = (req: AuthorizationRequest): Promise<AuthorizationResponse> => {
     return new Promise((resolve, reject) => {
-        return <AuthorizationResponse>{ payload: req.accessToken === "123456" };
+        resolve(<AuthorizationResponse>{ payload: req.accessToken === "123456" });
+        return;
     });
 };
 
-export interface AuthorizationRequest {
+export interface AuthorizationRequest extends ServiceRequest {
     accessToken: string;
 }
 
