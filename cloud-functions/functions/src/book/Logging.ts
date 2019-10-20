@@ -2,8 +2,8 @@ import { isNullOrUndefined, isString } from "util";
 import { StringUtils } from "./StringUtils";
 
 export enum LogLevel {
-    debug, // - debugging information (hidden by default)
-    info, // - a purely informational message (hidden by default)
+    debug, // - debugging information
+    info, // - a purely informational message
     notice, // - condition normal, but significant
     warning, // (also aliased as warn) - condition warning
     error, // - condition error - to notify of errors accompanied with recovery mechanism (hence reported as log and not as uncaught exception)
@@ -13,9 +13,16 @@ export interface ILogging {
     log(message: string, level?: LogLevel): void;
     log(context: string, message: string, level?: LogLevel): void;
     log(param01: string, param02?: string | LogLevel, param03?: LogLevel): void;
+
+    debug(param01: string, param02?: string): void;
+    info(param01: string, param02?: string): void;
+    notice(param01: string, param02?: string): void;
+    warn(param01: string, param02?: string): void;
+    error(param01: string, param02?: string): void;
 }
 
 export class Logging {
+    private static readonly DEFAULT_LOG_LEVEL = LogLevel.info;
     private static instance: Logging;
 
     // private Logging() {}
@@ -30,52 +37,48 @@ export class Logging {
 
     log(message: string, level?: LogLevel): void;
     log(context: string, message: string, level?: LogLevel): void;
-    log(param01: string, param02?: string | LogLevel, param03?: LogLevel): void {
+    log(param01: string, param02?: string | LogLevel | null, param03?: LogLevel): void {
         if (isNullOrUndefined(param03)) {
             if (isNullOrUndefined(param02)) {
-                this.log_string(param01);
+                this.print(null, param01, Logging.DEFAULT_LOG_LEVEL);
                 return;
             }
 
             if (isString(param02)) {
-                this.log_string_string(param01, param02);
+                this.print(param01, param02, Logging.DEFAULT_LOG_LEVEL);
                 return;
             }
 
-            this.log_string_LogLevel(param01, param02);
+            this.print(null, param01, param02);
             return;
         }
 
         if (isString(param02)) {
-            this.log_string_string_LogLevel(param01, param02, param03);
+            this.print(param01, param02, param03);
+            return;
         }
 
-        throw new Error("Invalid parameters type");
+        throw new Error(`Invalid parameters type: param01 => ${typeof (param01)}, param02 => ${typeof (param02)}, param03 => ${typeof (param03)}`);
     }
 
-    private log_string(message: string): void {
-        console.log(`${this.getFormatedDate()} - ${LogLevel.info.toString()} - ${message}`);
-    }
+    debug(param01: string, param02?: string): void { isNullOrUndefined(param02) ? this.log(param01, LogLevel.debug) : this.log(param01, param02, LogLevel.debug); }
 
-    private log_string_string(context: string, message: string): void {
-        console.log(`${this.getFormatedDate()} - ${LogLevel.info.toString()} - ${context} - ${message}`);
-    }
+    info(param01: string, param02?: string): void { isNullOrUndefined(param02) ? this.log(param01, LogLevel.info) : this.log(param01, param02, LogLevel.info); }
 
-    private log_string_LogLevel(message: string, level: LogLevel): void {
+    notice(param01: string, param02?: string): void { isNullOrUndefined(param02) ? this.log(param01, LogLevel.notice) : this.log(param01, param02, LogLevel.notice); }
+
+    warn(param01: string, param02?: string): void { isNullOrUndefined(param02) ? this.log(param01, LogLevel.warning) : this.log(param01, param02, LogLevel.warning); }
+
+    error(param01: string, param02?: string): void { isNullOrUndefined(param02) ? this.log(param01, LogLevel.error) : this.log(param01, param02, LogLevel.error); }
+
+    private print(context: string | null, message: string, level: LogLevel): void {
+        const toPrint = `${this.getFormatedDate()} - ${this.getLogLevelName(level)} ${context ? `- ${context}` : ''} - ${message}`;
+
         switch (level) {
             case LogLevel.error:
-                console.error(`${this.getFormatedDate()} - ${level.toString()} - ${message}`);
+                console.error(toPrint);
             default:
-                console.log(`${this.getFormatedDate()} - ${level.toString()} - ${message}`);
-        }
-    }
-
-    private log_string_string_LogLevel(context: string, message: string, level: LogLevel): void {
-        switch (level) {
-            case LogLevel.error:
-                console.error(`${this.getFormatedDate()} - ${level.toString()} - ${context} - ${message}`);
-            default:
-                console.log(`${this.getFormatedDate()} - ${level.toString()} - ${context} - ${message}`);
+                console.log(toPrint);
         }
     }
 
@@ -93,5 +96,9 @@ export class Logging {
                 StringUtils.padLeft(d.getMinutes(), '0', 2), ,
                 StringUtils.padLeft(d.getSeconds(), '0', 2),
             ].join(':'));
+    }
+
+    private getLogLevelName(logLevel: LogLevel): string {
+        return LogLevel[logLevel];
     }
 }

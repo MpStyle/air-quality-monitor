@@ -1,9 +1,10 @@
-import { ServiceAsync } from "../entity/Service";
-import { ServiceResponse } from "../entity/ServiceResponse";
+import { ILogging } from "../book/Logging";
 import { ServiceRequest } from "../entity/ServiceRequest";
+import { ServiceResponse } from "../entity/ServiceResponse";
 
-export const authorization: ServiceAsync<AuthorizationRequest, boolean> = (req: AuthorizationRequest): Promise<AuthorizationResponse> => {
+export const authorization = (logging: ILogging) => (req: AuthorizationRequest): Promise<AuthorizationResponse> => {
     return new Promise((resolve, reject) => {
+        logging.log("authorization", "authorized");
         resolve(<AuthorizationResponse>{ payload: req.accessToken === "123456" });
         return;
     });
