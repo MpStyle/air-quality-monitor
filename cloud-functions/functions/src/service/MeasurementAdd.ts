@@ -8,6 +8,7 @@ import { deviceAdd, DeviceAddRequest } from "./DeviceAdd";
 import { measurementSearch, MeasurementSearchRequest, MeasurementSearchResponse } from "./MeasurementSearch";
 import admin = require('firebase-admin');
 import Bluebird = require("bluebird");
+import { deviceSearch, DeviceSearchRequest } from "./DeviceSearch";
 
 export const measurementAdd = (logging: ILogging) => (req: MeasurementAddRequest): Promise<MeasurementAddResponse> => {
     if (!req.deviceId || req.deviceId === ''
@@ -22,11 +23,16 @@ export const measurementAdd = (logging: ILogging) => (req: MeasurementAddRequest
     }
 
     const db = admin.firestore();
+    const deviceSearchService = deviceSearch(logging);
 
-    return deviceAdd(logging)(<DeviceAddRequest>{ deviceId: req.deviceId })
-        .then(deviceAddResponse => {
-            if (deviceAddResponse.error) {
-                return Promise.resolve({ error: deviceAddResponse.error });
+    return deviceSearchService(<DeviceSearchRequest>{ deviceId: req.deviceId })
+        .then(deviceSearchResponse => {
+            if (deviceSearchResponse.error) {
+                return Promise.resolve({ error: deviceSearchResponse.error });
+            }
+
+            if (!deviceSearchResponse.payload || !deviceSearchResponse.payload.length) {
+                return Promise.resolve({ error: Errors.DEVICE_NOT_FOUND });
             }
 
             return Bluebird
@@ -91,7 +97,7 @@ export interface MeasurementAddRequest extends ServiceRequest {
     measurements: {
         id: string,
         type: string,
-        value: string
+        value: any
     }[];
     inserted: number;
 }

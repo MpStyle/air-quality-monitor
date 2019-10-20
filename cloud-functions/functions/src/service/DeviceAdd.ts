@@ -24,21 +24,18 @@ export const deviceAdd = (logging: ILogging) => (req: DeviceAddRequest): Promise
                 return Promise.resolve(<DeviceAddResponse>{ error: deviceSearchResponse.error });
             }
 
-            const device = <Device>{
+            let device: Partial<Device> = {
                 deviceId: req.deviceId,
-                name: req.deviceName || '',
-                address: req.deviceAddress || '',
-                inserted: (new Date).getTime(),
+                inserted: (new Date).getTime()
             };
 
             if (deviceSearchResponse.payload && deviceSearchResponse.payload.length) {
-                device.inserted = deviceSearchResponse.payload[0].inserted;
+                device = deviceSearchResponse.payload[0];
             }
 
-            if (!req.update && deviceSearchResponse.payload && deviceSearchResponse.payload.length) {
-                device.name = deviceSearchResponse.payload[0].name;
-                device.address = deviceSearchResponse.payload[0].address;
-            }
+            device.name = req.deviceName || device.name || '';
+            device.address = req.deviceAddress || device.address || '';
+            device.deviceIP = req.deviceIP || device.deviceIP || '';
 
             logging.debug("deviceAdd", `Device to add: ${JSON.stringify(device)}`);
 
@@ -77,7 +74,7 @@ export interface DeviceAddRequest extends ServiceRequest {
     deviceId: string;
     deviceName: string;
     deviceAddress: string;
-    update: boolean;
+    deviceIP: string;
 }
 
 export interface DeviceAddResponse extends ServiceResponse<Device> {
