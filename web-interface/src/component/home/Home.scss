@@ -7,7 +7,8 @@
   
 
   .home-main {
-    margin-top: 1em;
+    margin: 1em auto 0px auto;
+    max-width: 600px;
 
     @import "../datarow/DataRow.scss";
   }
