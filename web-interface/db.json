@@ -1,0 +1,70 @@
+{
+    "device": [
+        {
+            "id": "01",
+            "name": "Device Name"
+        }
+    ],
+    "airQualityData": [
+        {
+            "deviceId": "01",
+            "inserted": 1,
+            "co2": 400,
+            "tvoc": 0.2,
+            "pressure": 100,
+            "humidity": 40,
+            "noise": 39,
+            "temperature": 25
+        },
+        {
+            "deviceId": "01",
+            "inserted": 2,
+            "co2": 400,
+            "tvoc": 0.2,
+            "pressure": 100,
+            "humidity": 40,
+            "noise": 39,
+            "temperature": 25
+        },
+        {
+            "deviceId": "01",
+            "inserted": 3,
+            "co2": 400,
+            "tvoc": 0.2,
+            "pressure": 100,
+            "humidity": 40,
+            "noise": 39,
+            "temperature": 25
+        },
+        {
+            "deviceId": "01",
+            "inserted": 4,
+            "co2": 400,
+            "tvoc": 0.2,
+            "pressure": 100,
+            "humidity": 40,
+            "noise": 39,
+            "temperature": 25
+        },
+        {
+            "deviceId": "01",
+            "inserted": 5,
+            "co2": 400,
+            "tvoc": 0.2,
+            "pressure": 100,
+            "humidity": 40,
+            "noise": 39,
+            "temperature": 25
+        },
+        {
+            "deviceId": "01",
+            "inserted": 6,
+            "co2": 701,
+            "tvoc": 0.2,
+            "pressure": 100,
+            "humidity": 0,
+            "noise": 101,
+            "temperature": 25
+        }
+    ]
+}

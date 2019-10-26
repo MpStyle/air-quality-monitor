@@ -1,0 +1,58 @@
+.data {
+    width: -webkit-calc(98% - 2em);
+    width: -moz-calc(98% - 2em);
+    width: calc(98% - 2em);
+    margin: 0px auto;
+    padding: 15px 1em;
+    display: flex;
+    border-bottom: 1px solid $color-text-very-light;
+
+    .icon {
+        flex-grow: 1;
+        max-width: 30px;
+
+        .value-icon {
+            width: 18px;
+            vertical-align: middle;
+        }
+    }
+
+    .value {
+        flex-grow: 2;
+        display: inline-block;
+        padding-left: 1em;
+        font-size: 1.4em;
+
+        .unit {
+            font-size: .55em;
+            color: $color-text-light;
+        }
+    }
+
+    .quality-level {
+        text-align: right;
+        flex-grow: 1;
+
+        .warning-icon {
+            width: 22px;
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+    }
+
+    .quality-level.excellent {
+        color: $color-excellent
+    }
+
+    .quality-level.good {
+        color: $color-good
+    }
+
+    .quality-level.not-good {
+        color: $color-not-good
+    }
+
+    .quality-level.very-bad {
+        color: $color-very-bad
+    }
+}
