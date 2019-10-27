@@ -28,9 +28,6 @@ dht11DataReader = DHT11DataReader()
 dataCollector = DataCollector()
 configurationReader = ConfigurationReader()
 
-while ccs811DataReader.areDataAvailable():
-    pass
-
 # Calibrations
 bme280DataReader.calibration()
 

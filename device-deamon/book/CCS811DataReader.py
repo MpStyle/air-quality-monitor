@@ -18,10 +18,16 @@ class CCS811DataReader:
         self.ccs5A = adafruit_ccs811.CCS811(i2c, 0x5a)
         self.ccs5B = adafruit_ccs811.CCS811(i2c, 0x5b)
 
-    def areDataAvailable(self) -> bool:
-        return not self.ccs5A.data_ready or not self.ccs5B.data_ready
-
     def getData(self) -> CCS811Data:
+        data = CCS811Data()
+
+        if not self.ccs5A.data_ready or not self.ccs5B.data_ready:
+            data.temperature = None
+            data.tvoc = None
+            data.co2 = None
+
+            return data
+
         temp5A = self.ccs5A.temperature
         tvoc5A = self.ccs5A.tvoc
         co25A = self.ccs5A.eco2
@@ -29,8 +35,6 @@ class CCS811DataReader:
         temp5B = self.ccs5B.temperature
         tvoc5B = self.ccs5B.tvoc
         co25B = self.ccs5B.eco2
-
-        data = CCS811Data()
 
         if abs(temp5A-temp5B) <= self.TEMPERATURE_DELTA:
             data.temperature = (temp5A+temp5B)/2
