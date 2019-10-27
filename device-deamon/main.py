@@ -7,6 +7,8 @@ from book.CCS811DataReader import CCS811DataReader
 from book.DHT11DataReader import DHT11DataReader
 from book.DataCollector import DataCollector
 from book.ConfigurationReader import ConfigurationReader
+from book.GetIpAddress import getIpAddress
+import time
 
 clock = 0
 
@@ -37,21 +39,24 @@ while(1):
     # Collects data
     dataCollector.addData(bme280Data, ccs811Data, dht11Data)
 
+    # Composes data to send to the cloud
+    data = json.dumps({
+        "secretKey": configuration["secretKey"],
+        "device": {
+            "id": configuration["deviceId"],
+            "name": configuration["deviceName"],
+            "ip": getIpAddress(),
+        },
+        "airData": dataCollector.getData().__dict__,
+        "measurementDate": int((time.time() * 1000)),
+    })
+    print(data)
+
     # After 60 readings the data will be send to the cloud
     if clock % 60 == 0:
-        # Composes data to send to the cloud
-        data = json.dumps({
-            "secretKey": configuration["secretKey"],
-            "device": {
-                "id": configuration["deviceId"],
-                "name": configuration["deviceName"],
-            },
-            "airData": dataCollector.getData().__dict__
-        })
-
         # send data
         response = requests.put(
-            configuration['airCareUrl'], data=json.dumps(data))
+            configuration['airCareUrl'], data=data)
 
         print(response)
         clock = 0
