@@ -15,3 +15,15 @@ Set environment variable `airqualitymonitor.secretkey` using Firebase CLI:
 ```
 firebase functions:config:set airqualitymonitor.secretkey="__SECRET_KEY__"
 ```
+
+Set environment variable `airqualitymonitor.clientId` using Firebase CLI:
+
+```
+firebase functions:config:set airqualitymonitor.clientId="__CLIENT_ID__"
+```
+
+Set environment variable `airqualitymonitor.usersEmails` using Firebase CLI:
+
+```
+firebase functions:config:set airqualitymonitor.usersEmails="__USERS_EMAIL__"
+```
