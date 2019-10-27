@@ -8,9 +8,16 @@ from book.DHT11DataReader import DHT11DataReader
 from book.DataCollector import DataCollector
 from book.ConfigurationReader import ConfigurationReader
 from book.GetIpAddress import getIpAddress
+from book.SystemArgumentsReader import systemArgumentsReader
 import time
+import sys
 
 clock = 0
+options = systemArgumentsReader(sys.argv)
+
+if options.help:
+    print("--no-upload  Not upload data to back-end")
+    exit(0)
 
 # Initialization
 bme280DataReader = BME280DataReader()
@@ -52,13 +59,14 @@ while(1):
     })
     print(data)
 
-    # After 60 readings the data will be send to the cloud
-    if clock % 60 == 0:
-        # send data
-        response = requests.put(
-            configuration['airCareUrl'], data=data)
+    if options.uploadData:
+        # After 60 readings the data will be send to the cloud
+        if clock % 60 == 0:
+            # send data
+            response = requests.put(
+                configuration['airCareUrl'], data=data)
 
-        print(response)
-        clock = 0
+            print(response)
+            clock = 0
 
     sleep(1)
