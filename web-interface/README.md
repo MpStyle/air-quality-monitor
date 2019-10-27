@@ -1,4 +1,4 @@
-# Air quality - Front-end
+# Air quality monitor - Front-end
 
 Measured data:
 - CO<sub>2</sub>

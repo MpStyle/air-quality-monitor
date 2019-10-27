@@ -1,4 +1,6 @@
-# Air care - Client
+# Air quality monitor - Device deamon
+
+Python.
 
 The configuration file path must be:
 ```
