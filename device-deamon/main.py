@@ -9,8 +9,10 @@ from book.DataCollector import DataCollector
 from book.ConfigurationReader import ConfigurationReader
 from book.GetIpAddress import getIpAddress
 from book.SystemArgumentsReader import systemArgumentsReader
+from book.DataUpload import dataUpload
 import time
 import sys
+import threading
 
 clock = 0
 options = systemArgumentsReader(sys.argv)
@@ -63,10 +65,9 @@ while(1):
         # After 60 readings the data will be send to the cloud
         if clock % 60 == 0:
             # send data
-            response = requests.put(
-                configuration['airCareUrl'], data=data)
+            threading.Thread(target=dataUpload, args=(
+                data, configuration['airCareUrl'],)).start()
 
-            print(response)
             clock = 0
 
     sleep(1)
