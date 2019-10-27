@@ -7,3 +7,11 @@ Typescript.
 REST API and database.
 
 Authentication.
+
+## Configuration 
+
+Set environment variable `airqualitymonitor.secretkey` using Firebase CLI:
+
+```
+firebase functions:config:set airqualitymonitor.secretkey="__SECRET_KEY__"
+```
