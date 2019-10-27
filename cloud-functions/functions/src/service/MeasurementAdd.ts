@@ -4,11 +4,10 @@ import { Errors } from "../entity/Errors";
 import { Measurement } from "../entity/Measurement";
 import { ServiceRequest } from "../entity/ServiceRequest";
 import { ServiceResponse } from "../entity/ServiceResponse";
-import { deviceAdd, DeviceAddRequest } from "./DeviceAdd";
+import { deviceSearch, DeviceSearchRequest } from "./DeviceSearch";
 import { measurementSearch, MeasurementSearchRequest, MeasurementSearchResponse } from "./MeasurementSearch";
 import admin = require('firebase-admin');
 import Bluebird = require("bluebird");
-import { deviceSearch, DeviceSearchRequest } from "./DeviceSearch";
 
 export const measurementAdd = (logging: ILogging) => (req: MeasurementAddRequest): Promise<MeasurementAddResponse> => {
     if (!req.deviceId || req.deviceId === ''

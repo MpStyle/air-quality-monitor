@@ -35,7 +35,7 @@ export const deviceAdd = (logging: ILogging) => (req: DeviceAddRequest): Promise
 
             device.name = req.deviceName || device.name || '';
             device.address = req.deviceAddress || device.address || '';
-            device.deviceIP = req.deviceIP || device.deviceIP || '';
+            device.deviceIP = req.deviceIp || device.deviceIP || '';
 
             logging.debug("deviceAdd", `Device to add: ${JSON.stringify(device)}`);
 
@@ -74,7 +74,7 @@ export interface DeviceAddRequest extends ServiceRequest {
     deviceId: string;
     deviceName: string;
     deviceAddress: string;
-    deviceIP: string;
+    deviceIp: string;
 }
 
 export interface DeviceAddResponse extends ServiceResponse<Device> {
