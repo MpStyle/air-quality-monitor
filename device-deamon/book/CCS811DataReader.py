@@ -3,6 +3,7 @@ import time
 import board
 import busio
 import adafruit_ccs811
+from time import sleep
 
 
 class CCS811DataReader:
@@ -20,17 +21,21 @@ class CCS811DataReader:
 
     def getData(self) -> CCS811Data:
         data = CCS811Data()
+        data.temperature = None
+        data.tvoc = None
+        data.co2 = None
 
-        if not self.ccs5A.data_ready or not self.ccs5B.data_ready:
-            data.temperature = None
-            data.tvoc = None
-            data.co2 = None
-
+        if not self.ccs5A.data_ready:
             return data
 
         temp5A = self.ccs5A.temperature
         tvoc5A = self.ccs5A.tvoc
         co25A = self.ccs5A.eco2
+
+        sleep(0.5)
+
+        if not self.ccs5B.data_ready:
+            return data
 
         temp5B = self.ccs5B.temperature
         tvoc5B = self.ccs5B.tvoc
