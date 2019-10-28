@@ -23,11 +23,14 @@
         }
     }
 
+    // http://howtocenterincss.com/#contentType=text&content.text.fontSize=2em&content.text.lines=1&container.width=100pct&horizontal=center&vertical=middle&browser.IE=none
     .second {
         font-size: 2em;
         height: calc((100% - 30px) / 3 * 2);
         vertical-align: middle;
-        line-height: 200px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     .third {
