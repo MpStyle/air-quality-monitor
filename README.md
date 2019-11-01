@@ -2,7 +2,9 @@
 
 # Air Quality Monitor
 
-Smart air quality monitor - IoT Project
+Smart air quality monitor.
+
+A full stack IoT Project.
 
 ## Project description
 
