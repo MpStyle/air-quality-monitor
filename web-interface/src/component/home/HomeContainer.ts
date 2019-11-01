@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import { getDevice } from '../../book/GetDevices';
+import { fetchDevices } from '../../book/FetchDevices';
 import { AppState } from '../../entity/AppState';
 import { updateCurrentDeviceIdActionBuilder } from './../../action/UpdateCurrentDeviceIdAction';
 import Home, { HomeProps } from "./Home";
@@ -19,7 +19,7 @@ export const HomeContainer = connect(
     (dispatch: Dispatch): HomeProps => {
         return {
             onCurrentDeviceIdChange: (deviceId: string) => { dispatch(updateCurrentDeviceIdActionBuilder(deviceId)); },
-            loadDevices: () => getDevice(dispatch)
+            loadDevices: () => fetchDevices(dispatch)
         } as HomeProps;
     }
 )(Home);

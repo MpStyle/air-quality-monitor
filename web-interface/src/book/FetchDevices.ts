@@ -1,9 +1,9 @@
 import { Dispatch } from "react";
 import { Action } from "redux";
 import { updateDevicesActionBuilder } from "../action/UpdateDevicesAction";
-import { Device } from './../entity/Device';
+import { Device } from '../entity/Device';
 
-export const getDevice = (dispatch: Dispatch<Action>) => {
+export const fetchDevices = (dispatch: Dispatch<Action>) => {
     const url = process.env.REACT_APP_AIR_QUALITY_DATA_REMOTE_URL as string;
     fetch(`${url}/device`)
         .then((response): Promise<Device[]> => {
