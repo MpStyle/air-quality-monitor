@@ -1,6 +1,6 @@
 import React from 'react';
 import { airQualityToClassName } from '../../book/AirQualityToClassName';
-import { airQualityToLabel } from '../../book/QualityLabel';
+import { airQualityToLabel } from '../../book/AirQualityToLabel';
 import { AirQuality } from '../../entity/AirStatus';
 import warning from '../../images/warning.svg';
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import AliceCarousel from 'react-alice-carousel';
 import { averageAirStatus } from '../../book/AverageAirStatus';
-import { airQualityToLabel } from '../../book/QualityLabel';
+import { airQualityToLabel } from '../../book/AirQualityToLabel';
 import { AirStatus } from '../../entity/AirStatus';
 import { Device } from '../../entity/Device';
 import './Header.scss';
