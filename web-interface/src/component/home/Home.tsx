@@ -17,8 +17,21 @@ import { AirQualityData } from './../../entity/AirQualityData';
 import './Home.scss';
 
 const Home: React.FC<HomeProps> = (props: HomeProps) => {
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => props.loadDevices(), []);
+  useEffect(() => props.loadDevices(), []); // eslint-disable-line
+
+  // Load loadAirQualityData the first time
+  useEffect(() => {
+    if (props.currentDeviceId != null) {
+      props.loadAirQualityData(props.currentDeviceId as string);
+    }
+  }, [props.currentDeviceId]); // eslint-disable-line
+
+  // Poller for loadAirQualityData
+  useEffect(() => {
+    if (props.currentDeviceId != null) {
+      setTimeout(() => props.loadAirQualityData(props.currentDeviceId as string), parseInt(process.env.REACT_APP_AIR_QUALITY_DATA_REFRESH_TIME as string));
+    }
+  });
 
   return (
     <div className={`home ${airQualityToClassName(averageAirStatus(props.airStatus))}`}>
@@ -90,5 +103,6 @@ export interface HomeProps {
   currentDeviceId: string | null;
   onCurrentDeviceIdChange: (deviceId: string) => void;
   loadDevices: () => void;
+  loadAirQualityData: (currentDeviceId: string) => void;
   suggestions: string[];
 }

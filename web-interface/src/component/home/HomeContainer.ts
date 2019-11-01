@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
+import { fetchAirQualityData } from '../../book/FetchAirQualityData';
 import { fetchDevices } from '../../book/FetchDevices';
 import { AppState } from '../../entity/AppState';
 import { updateCurrentDeviceIdActionBuilder } from './../../action/UpdateCurrentDeviceIdAction';
@@ -19,7 +20,8 @@ export const HomeContainer = connect(
     (dispatch: Dispatch): HomeProps => {
         return {
             onCurrentDeviceIdChange: (deviceId: string) => { dispatch(updateCurrentDeviceIdActionBuilder(deviceId)); },
-            loadDevices: () => fetchDevices(dispatch)
+            loadDevices: () => fetchDevices(dispatch),
+            loadAirQualityData: (currentDeviceId: string) => fetchAirQualityData(currentDeviceId, dispatch)
         } as HomeProps;
     }
 )(Home);
