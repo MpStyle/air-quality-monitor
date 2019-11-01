@@ -1,5 +1,4 @@
 import { Action, Store } from "redux";
-import { updateCurrentDeviceIdActionBuilder } from "../action/UpdateCurrentDeviceIdAction";
 import { AirQualityData } from "../entity/AirQualityData";
 import { AppState } from "../entity/AppState";
 import { updateAirQualityDataActionBuilder } from './../action/UpdateAirQualityDataAction';
@@ -19,10 +18,6 @@ export const airQualityDataPoller = (store: Store<AppState, Action>) => {
             .catch((_error) => {
                 // TODO: dispatch an error message
             });
-    }
-    else if (store.getState().devices && store.getState().devices.length) {
-        store.dispatch(updateCurrentDeviceIdActionBuilder(store.getState().devices[0].id));
-        airQualityDataPoller(store);
     }
     else {
         setTimeout(() => airQualityDataPoller(store), 1000);

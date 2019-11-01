@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import "react-alice-carousel/lib/scss/alice-carousel.scss";
 import { airQualityToClassName } from '../../book/AirQualityToClassName';
 import { averageAirStatus } from '../../book/AverageAirStatus';
@@ -17,6 +17,9 @@ import { AirQualityData } from './../../entity/AirQualityData';
 import './Home.scss';
 
 const Home: React.FC<HomeProps> = (props: HomeProps) => {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => props.loadDevices(), []);
+
   return (
     <div className={`home ${airQualityToClassName(averageAirStatus(props.airStatus))}`}>
       <Header
@@ -86,5 +89,6 @@ export interface HomeProps {
   devices: Device[];
   currentDeviceId: string | null;
   onCurrentDeviceIdChange: (deviceId: string) => void;
+  loadDevices: () => void;
   suggestions: string[];
 }
