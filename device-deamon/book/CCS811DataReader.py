@@ -11,20 +11,14 @@ class CCS811DataReader:
     TVOC_DELTA = 8
     CO2_DELTA = 50
 
-    ccs5A: adafruit_ccs811.CCS811
-    ccs5B: adafruit_ccs811.CCS811
-
-    def __init__(self):
-        i2c = busio.I2C(board.SCL, board.SDA)
-        self.ccs5A = adafruit_ccs811.CCS811(i2c, 0x5a)
-        self.ccs5B = adafruit_ccs811.CCS811(i2c, 0x5b)
-
     def getData(self) -> CCS811Data:
+        i2c = busio.I2C(board.SCL, board.SDA)
         data = CCS811Data()
         data.temperature = None
         data.tvoc = None
         data.co2 = None
 
+        self.ccs5A = adafruit_ccs811.CCS811(i2c, 0x5a)
         if not self.ccs5A.data_ready:
             return data
 
@@ -34,6 +28,7 @@ class CCS811DataReader:
 
         sleep(0.5)
 
+        self.ccs5B = adafruit_ccs811.CCS811(i2c, 0x5b)
         if not self.ccs5B.data_ready:
             return data
 
