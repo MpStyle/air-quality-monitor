@@ -19,6 +19,7 @@ options = systemArgumentsReader(sys.argv)
 
 if options.help:
     print("--no-upload  Not upload data to back-end")
+    print("-v           Verbose")
     exit(0)
 
 # Initialization
@@ -56,7 +57,9 @@ while(1):
         "airData": dataCollector.getData().__dict__,
         "measurementDate": int((time.time() * 1000)),
     })
-    print(data)
+
+    if options.verbose:
+        print(data)
 
     if options.uploadData:
         # After 60 readings the data will be send to the cloud

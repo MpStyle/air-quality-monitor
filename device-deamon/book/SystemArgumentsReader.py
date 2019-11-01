@@ -12,4 +12,8 @@ def systemArgumentsReader(args) -> Options:
             options.help = True
             continue
 
+        if arg == '-v' or arg == '--verbose':
+            options.verbose = True
+            continue
+
     return options
