@@ -33,7 +33,7 @@ export const Header: React.FC<HeaderProps> = (props: HeaderProps) => {
         </div>
 
         <div className="sub-header third">
-            {props.suggestions && props.suggestions.length > 0 && <AliceCarousel buttonsDisabled={true}>
+            {props.suggestions && props.suggestions.length > 0 && <AliceCarousel autoPlayInterval={6000} buttonsDisabled={true} autoPlay={true}>
                 {props.suggestions.map((s, i) => <div key={`slide-${i}`}>{s}</div>)}
             </AliceCarousel >}
         </div>
