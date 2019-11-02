@@ -6,6 +6,8 @@ Smart air quality monitor.
 
 A full stack IoT Project.
 
+![Web Interface](doc/images/iphone-x-screenshot.png)
+
 ## Project description
 
 - Click [here](doc/ProjectDescription.md) for details.
