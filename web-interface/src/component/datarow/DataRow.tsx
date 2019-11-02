@@ -6,6 +6,10 @@ import warning from '../../images/warning.svg';
 import './DataRow.scss';
 
 export const DataRow: React.FC<DataRowProps> = (props: DataRowProps) => {
+    if (!props.value) {
+        return null;
+    }
+
     return <div className="data" title={props.title}>
         <span className="icon">
             <img src={props.icon} className="value-icon" alt="Humidity" />
