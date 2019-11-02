@@ -1,41 +1,15 @@
 @import "../../sass/Colors.scss";
 
 .home {
-  height: 100%;
-  margin-bottom: 100px;
-
-  
+  margin-bottom: 100px; 
 
   .home-main {
-    margin: 1em auto 0px auto;
+    margin: 1em auto 0px auto; 
     max-width: 600px;
+    background-color: #fff;
 
     @import "../datarow/DataRow.scss";
   }
-}
-
-$gradient-1-percentage: 27%;
-$gradient-2-percentage: 34%;
-$gradient-3-percentage: 40%;
-
-.home.excellent {
-  background: #fff;
-  background: linear-gradient(180deg, $color-gradient-primary-excellent $gradient-1-percentage, $color-gradient-secondary-excellent $gradient-2-percentage, #fff $gradient-3-percentage);
-}
-
-.home.good {
-  background: #fff;
-  background: linear-gradient(180deg, $color-gradient-primary-good $gradient-1-percentage, $color-gradient-secondary-good $gradient-2-percentage, #fff $gradient-3-percentage);
-}
-
-.home.not-good {
-  background: #fff;
-  background: linear-gradient(180deg, $color-gradient-primary-not-good $gradient-1-percentage, $color-gradient-secondary-not-good $gradient-2-percentage, #fff $gradient-3-percentage);
-}
-
-.home.very-bad {
-  background: #fff;
-  background: linear-gradient(180deg, $color-gradient-primary-very-bad $gradient-1-percentage, $color-gradient-secondary-very-bad $gradient-2-percentage, #fff $gradient-3-percentage);
 }
 
 footer {

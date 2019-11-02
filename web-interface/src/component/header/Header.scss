@@ -1,7 +1,9 @@
 @import "../../sass/Colors.scss";
 
 .home-header {
-    height: 33%;
+    padding-bottom: 10px;
+    background: #fff;
+    background: linear-gradient(180deg, #31d8ff 0%, #fe80ff 100%);
 
     .sub-header {
         width: 100%;
@@ -10,23 +12,31 @@
     }
 
     .first {
-        height: 30px;
         vertical-align: middle;
         align-self: flex-start;
+        overflow: hidden;
 
         select {
-            height: 30px;
             border: 0px;
+            margin-right: -48px;
+            margin-top: 20px;
             background: transparent;
             color: $color-text-alternative;
             text-align: center;
+        }
+
+        .md-icon{
+            float: right;
+            width: 24px;
+            height: 24px;
+            padding: 12px;
         }
     }
 
     // http://howtocenterincss.com/#contentType=text&content.text.fontSize=2em&content.text.lines=1&container.width=100pct&horizontal=center&vertical=middle&browser.IE=none
     .second {
         font-size: 2em;
-        height: calc((100% - 30px) / 3 * 2);
+        height: 2.5em;
         vertical-align: middle;
         display: flex;
         justify-content: center;
@@ -34,7 +44,6 @@
     }
 
     .third {
-        height: calc((100% - 30px) / 3);
         vertical-align: middle;
         align-self: flex-end;
 

@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react';
 import "react-alice-carousel/lib/scss/alice-carousel.scss";
-import { airQualityToClassName } from '../../book/AirQualityToClassName';
-import { averageAirStatus } from '../../book/AverageAirStatus';
 import { AirStatus } from '../../entity/AirStatus';
 import { Device } from '../../entity/Device';
 import { MeterUnit } from '../../entity/MeterUnit';
@@ -11,6 +9,7 @@ import noise from '../../images/noise.svg';
 import pressure from '../../images/pressure.svg';
 import temperature from '../../images/temperature.svg';
 import tvoc from '../../images/tvoc.svg';
+import '../../sass/Card.scss';
 import { DataRow } from '../datarow/DataRow';
 import { Header } from '../header/Header';
 import { AirQualityData } from './../../entity/AirQualityData';
@@ -34,7 +33,7 @@ const Home: React.FC<HomeProps> = (props: HomeProps) => {
   });
 
   return (
-    <div className={`home ${airQualityToClassName(averageAirStatus(props.airStatus))}`}>
+    <div className={`home`}>
       <Header
         airStatus={props.airStatus}
         currentDeviceId={props.currentDeviceId}
@@ -42,7 +41,7 @@ const Home: React.FC<HomeProps> = (props: HomeProps) => {
         suggestions={props.suggestions}
         onCurrentDeviceIdChange={props.onCurrentDeviceIdChange}
       />
-      <main className="main home-main">
+      <main className="main home-main card">
         <DataRow
           title="Temperature"
           icon={temperature}
@@ -86,9 +85,6 @@ const Home: React.FC<HomeProps> = (props: HomeProps) => {
           quality={props.airStatus.tvoc} />
 
       </main>
-      {/* <footer>
-        <AppBar />
-      </footer> */}
     </div>
   );
 };
