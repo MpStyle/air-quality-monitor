@@ -11,15 +11,16 @@ import './Header.scss';
 
 export const Header: React.FC<HeaderProps> = (props: HeaderProps) => {
     const average = averageAirStatus(props.airStatus);
+    const areThereDevices = !!(props.devices && props.devices.length);
     return <header className={`header home-header md-header`}>
         <div className="sub-header first">
-            <select
+            {areThereDevices && <select
                 value={props.currentDeviceId || (props.devices && props.devices.length && props.devices[0].id)}
                 onChange={event => props.onCurrentDeviceIdChange(event.target.value)}>
                 {props.devices.map((device) => (
                     <option key={device.id} value={device.id}>{device.name}</option>
                 ))}
-            </select>
+            </select>}
 
             <div className="md-icon">
                 <Link to="/credits">

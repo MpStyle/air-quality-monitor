@@ -42,6 +42,7 @@ const Home: React.FC<HomeProps> = (props: HomeProps) => {
         onCurrentDeviceIdChange={props.onCurrentDeviceIdChange}
       />
       <main className="main home-main card">
+        {!props.airQualityData.inserted && <div className="no-data">No data available</div>}
         <DataRow
           title="Temperature"
           icon={temperature}
@@ -84,7 +85,7 @@ const Home: React.FC<HomeProps> = (props: HomeProps) => {
           meter={props.meterUnit.tvoc}
           quality={props.airStatus.tvoc} />
 
-        <div className="last-update"><span>Last update:</span> {a(props.airQualityData.inserted)}</div>
+        {props.airQualityData.inserted && <div className="last-update"><span>Last update:</span> {a(props.airQualityData.inserted)}</div>}
       </main>
     </div>
   );
