@@ -1,7 +1,6 @@
+@import '../../sass/Colors.scss';
+
 .data {
-    width: -webkit-calc(98% - 2em);
-    width: -moz-calc(98% - 2em);
-    width: calc(98% - 2em);
     margin: 0px auto;
     padding: 15px 1em;
     display: flex;
@@ -55,4 +54,8 @@
     .quality-level.very-bad {
         color: $color-very-bad
     }
+}
+
+.data:last-of-type{
+    border-bottom: 0px;
 }

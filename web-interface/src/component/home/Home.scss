@@ -5,10 +5,9 @@
 
   .home-main {
     margin: 1em auto 0px auto; 
+    width: calc(95% - 32px);
     max-width: 600px;
     background-color: #fff;
-
-    @import "../datarow/DataRow.scss";
   }
 }
 

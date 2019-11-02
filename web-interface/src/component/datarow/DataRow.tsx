@@ -3,6 +3,7 @@ import { airQualityToClassName } from '../../book/AirQualityToClassName';
 import { airQualityToLabel } from '../../book/AirQualityToLabel';
 import { AirQuality } from '../../entity/AirStatus';
 import warning from '../../images/warning.svg';
+import './DataRow.scss';
 
 export const DataRow: React.FC<DataRowProps> = (props: DataRowProps) => {
     return <div className="data" title={props.title}>
