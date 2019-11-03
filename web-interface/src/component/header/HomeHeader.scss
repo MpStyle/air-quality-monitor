@@ -2,8 +2,9 @@
 
 .home-header {
     padding-bottom: 10px;
-    background: #fff;
-    background: linear-gradient(180deg, #31d8ff 0%, #fe80ff 100%);
+    color: $color-text-alternative;
+    background: $color-primary;
+    background: linear-gradient(180deg, $color-primary 0%, $color-secondary 100%);
 
     .sub-header {
         width: 100%;

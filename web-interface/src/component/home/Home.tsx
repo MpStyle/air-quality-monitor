@@ -11,7 +11,7 @@ import temperature from '../../images/temperature.svg';
 import tvoc from '../../images/tvoc.svg';
 import '../../sass/Card.scss';
 import { DataRow } from '../datarow/DataRow';
-import { Header } from '../header/Header';
+import { Header } from '../header/HomeHeader';
 import { AirQualityData } from './../../entity/AirQualityData';
 import './Home.scss';
 

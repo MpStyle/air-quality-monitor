@@ -1,0 +1,18 @@
+@import "../../sass/Colors.scss";
+
+$gradient-1-percentage: 0%;
+$gradient-2-percentage: 100%;
+
+.app-header{
+    color: $color-text-alternative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    z-index: 1100;
+    padding-left: 16px;
+    padding-right: 16px;
+    min-height: 48px;
+
+    background: #fff;
+    background: linear-gradient(90deg, #31d8ff $gradient-1-percentage, #fe80ff $gradient-2-percentage);
+}

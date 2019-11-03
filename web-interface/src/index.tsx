@@ -5,6 +5,7 @@ import { Route } from 'react-router';
 import { HashRouter } from 'react-router-dom';
 import { Credits } from './component/credits/Credits';
 import { HomeContainer } from './component/home/HomeContainer';
+import Login from './component/login/Login';
 import './index.scss';
 import * as serviceWorker from './serviceWorker';
 import { appStore } from './store/AppStore';
@@ -13,7 +14,8 @@ ReactDOM.render(
     <Provider store={appStore}>
         <HashRouter>
             <Route path="/credits" component={Credits} />
-            <Route exact path="/" component={HomeContainer} />
+            <Route exact path="/" component={Login} />
+            <Route path="/home" component={HomeContainer} />
         </HashRouter>
     </Provider>
     , document.getElementById('root')

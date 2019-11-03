@@ -10,7 +10,7 @@ export const Credits: React.FC = () => {
     return <div className={`credits`}>
         <header className="md-header md-header-fixed credits-header">
             <div className="md-icon">
-                <Link to="/">
+                <Link to="/home">
                     <img src={back} alt="Return to home" />
                 </Link>
             </div>

@@ -7,7 +7,7 @@ import { AirStatus } from '../../entity/AirStatus';
 import { Device } from '../../entity/Device';
 import info from '../../images/info.svg';
 import '../../sass/Header.scss';
-import './Header.scss';
+import './HomeHeader.scss';
 
 export const Header: React.FC<HeaderProps> = (props: HeaderProps) => {
     const average = averageAirStatus(props.airStatus);
