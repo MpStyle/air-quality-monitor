@@ -26,7 +26,7 @@ export const userAuthentication = (logging: ILogging) => (req: UserAuthenticatio
             const email: string = payload['email'];
 
             return <UserAuthenticationResponse>{
-                payload: emails.indexOf(email) !== -1
+                payload: emails.split(";").indexOf(email) !== -1
             };
         })
         .catch((error: any) => {
