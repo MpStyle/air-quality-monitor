@@ -16,8 +16,8 @@ const logging = Logging.get();
 app.use(cors);
 
 app.get('/health-check', (req, res) => { res.send(healthCheck(logging)()); });
-app.get('/device-data-ingestion', (req, res) => { res.send(deviceDataIngestion(logging)(req.body)); });
-app.get('/user-device-search', (req, res) => { res.send(userDeviceSearch(logging)(req.body)); });
-app.get('/user-measurement-search', (req, res) => { res.send(userMeasurementSearch(logging)(req.body)); });
+app.put('/device-data-ingestion', (req, res) => { res.send(deviceDataIngestion(logging)(req.body)); });
+app.post('/user-device-search', (req, res) => { res.send(userDeviceSearch(logging)(req.body)); });
+app.post('/user-measurement-search', (req, res) => { res.send(userMeasurementSearch(logging)(req.body)); });
 
 exports.app = functions.https.onRequest(app);
