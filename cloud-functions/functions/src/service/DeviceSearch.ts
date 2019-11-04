@@ -1,6 +1,7 @@
 import { ILogging } from "../book/Logging";
 import { Collections } from "../entity/Collections";
 import { Device } from "../entity/Device";
+import { PagedRequest } from "../entity/PagedRequest";
 import { ServiceRequest } from "../entity/ServiceRequest";
 import { ServiceResponse } from "../entity/ServiceResponse";
 import admin = require('firebase-admin');
@@ -13,6 +14,14 @@ export const deviceSearch = (logging: ILogging) => (req: DeviceSearchRequest): P
 
     if (req.deviceId) {
         collectionRef = collectionRef.where('deviceId', '==', req.deviceId);
+    }
+
+    if (req.offset) {
+        collectionRef = collectionRef.startAfter(req.offset);
+    }
+
+    if (req.limit) {
+        collectionRef = collectionRef.endAt(req.offset ? req.offset + req.limit : req.limit);
     }
 
     return collectionRef.get()
@@ -32,7 +41,7 @@ export const deviceSearch = (logging: ILogging) => (req: DeviceSearchRequest): P
         });
 };
 
-export interface DeviceSearchRequest extends ServiceRequest {
+export interface DeviceSearchRequest extends ServiceRequest, PagedRequest {
     deviceId: string;
 }
 

@@ -1,6 +1,7 @@
 import { ILogging } from "../book/Logging";
 import { Collections } from "../entity/Collections";
 import { Measurement } from "../entity/Measurement";
+import { PagedRequest } from "../entity/PagedRequest";
 import { ServiceRequest } from "../entity/ServiceRequest";
 import { ServiceResponse } from "../entity/ServiceResponse";
 import admin = require('firebase-admin');
@@ -17,6 +18,14 @@ export const measurementSearch = (logging: ILogging) => (req: MeasurementSearchR
 
     if (req.deviceId) {
         collectionRef = collectionRef.where('deviceId', '==', req.deviceId);
+    }
+
+    if (req.offset) {
+        collectionRef = collectionRef.startAfter(req.offset);
+    }
+
+    if (req.limit) {
+        collectionRef = collectionRef.endAt(req.offset ? req.offset + req.limit : req.limit);
     }
 
     return collectionRef.get()
@@ -36,7 +45,7 @@ export const measurementSearch = (logging: ILogging) => (req: MeasurementSearchR
         });
 };
 
-export interface MeasurementSearchRequest extends ServiceRequest {
+export interface MeasurementSearchRequest extends ServiceRequest, PagedRequest {
     measurementId: string;
     deviceId: string;
 }
