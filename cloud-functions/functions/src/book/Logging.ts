@@ -72,13 +72,24 @@ export class Logging {
     error(param01: string, param02?: string): void { isNullOrUndefined(param02) ? this.log(param01, LogLevel.error) : this.log(param01, param02, LogLevel.error); }
 
     private print(context: string | null, message: string, level: LogLevel): void {
-        const toPrint = `${this.getFormatedDate()} - ${this.getLogLevelName(level)} ${context ? `- ${context}` : ''} - ${message}`;
+        const toPrint = `${this.getFormatedDate()} - ${this.getLogLevelName(level)}${context ? `- ${context}` : ''} - ${message}`;
 
         switch (level) {
             case LogLevel.error:
                 console.error(toPrint);
+                break;
+            case LogLevel.warning:
+                console.warn(toPrint);
+                break;
+            case LogLevel.info:
+                console.info(toPrint);
+                break;
+            case LogLevel.debug:
+                console.debug(toPrint);
+                break;
             default:
                 console.log(toPrint);
+                break;
         }
     }
 
