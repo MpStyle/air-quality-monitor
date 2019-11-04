@@ -18,7 +18,7 @@ export const deviceAdd = (logging: ILogging) => (req: DeviceAddRequest): Promise
     const docRef = db.collection(Collections.DEVICE).doc(req.deviceId);
     const deviceSearchService = deviceSearch(logging);
 
-    return deviceSearchService({ deviceId: req.deviceId })
+    return deviceSearchService({ deviceId: req.deviceId } as DeviceSearchRequest)
         .then(deviceSearchResponse => {
             if (deviceSearchResponse.error) {
                 return Promise.resolve(<DeviceAddResponse>{ error: deviceSearchResponse.error });
