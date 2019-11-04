@@ -39,7 +39,6 @@ export const measurementSearch = (logging: ILogging) => (req: MeasurementSearchR
 export interface MeasurementSearchRequest extends ServiceRequest {
     measurementId: string;
     deviceId: string;
-    token: string;
 }
 
 export interface MeasurementSearchResponse extends ServiceResponse<Measurement[]> {

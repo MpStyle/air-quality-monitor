@@ -34,7 +34,6 @@ export const deviceSearch = (logging: ILogging) => (req: DeviceSearchRequest): P
 
 export interface DeviceSearchRequest extends ServiceRequest {
     deviceId: string;
-    token: string;
 }
 
 export interface DeviceSearchResponse extends ServiceResponse<Device[]> {
