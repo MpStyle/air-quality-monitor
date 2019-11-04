@@ -3,8 +3,15 @@ import { ServiceRequest } from "../entity/ServiceRequest";
 import { ServiceResponse } from "../entity/ServiceResponse";
 const { OAuth2Client } = require('google-auth-library');
 import functions = require('firebase-functions');
+import { Errors } from "../entity/Errors";
 
 export const userAuthentication = (logging: ILogging) => (req: UserAuthenticationRequest): Promise<UserAuthenticationResponse> => {
+    if (!req.token || req.token === '') {
+        return Promise.resolve(<UserAuthenticationResponse>{ error: Errors.INVALID_USER_AUTHENTICATION_REQUEST });
+    }
+
+    logging.info("userAuthentication", "Starts");
+
     const clientId = functions.config().airqualitymonitor.clientId;
     const emails: string = functions.config().airqualitymonitor.usersEmails;
     const client = new OAuth2Client(clientId);
