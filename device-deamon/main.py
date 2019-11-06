@@ -57,7 +57,7 @@ while(1):
         if clock % 60 == 0:
             # send data
             threading.Thread(target=dataUpload, args=(
-                data, options.airCareUrl,)).start()
+                data, options.airCareUrl, options.uploadTimeout, options.uploadRetry,)).start()
 
             clock = 0
 

@@ -6,3 +6,6 @@ class Options:
     deviceId: str
     deviceName: str
     airCareUrl: str
+
+    uploadTimeout = 30
+    uploadRetry = 60

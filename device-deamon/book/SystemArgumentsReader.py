@@ -37,15 +37,27 @@ def systemArgumentsReader(args) -> Options:
             i += 1
             continue
 
+        if arg == '--upload-timeout':
+            options.uploadTimeout = args[i+1]
+            i += 1
+            continue
+        if arg == '--upload-retry':
+            options.uploadRetry = args[i+1]
+            i += 1
+            continue
+
         i += 1
 
     return options
 
 
 def printHelp():
-    print("--no-upload    Not upload data to back-end")
-    print("--secret-key   The secret key use in Cloud Functions")
-    print("--device-id    The unique id of the device")
-    print("--device--name The name of the device")
-    print("--air-care-url The Cloud Functions back-end url")
-    print("-v             Verbose")
+    print("Device deamon")
+    print("--no-upload      Not upload data to back-end")
+    print("--secret-key     The secret key use in Cloud Functions")
+    print("--device-id      The unique id of the device")
+    print("--device--name   The name of the device")
+    print("--air-care-url   The Cloud Functions back-end url")
+    print("--upload-timeout The maximun time to wait a response from back-end")
+    print("--upload-retry   The time to wait before retry the upload, set it to -1 to avoid retry")
+    print("-v               Verbose")
