@@ -7,7 +7,7 @@ export const deviceAuthorization = (logging: ILogging) => (req: DeviceAuthorizat
     logging.info("deviceAuthorization", "Starts");
 
     return new Promise((resolve, reject) => {
-        resolve(<DeviceAuthorizationResponse>{ payload: req.secretKey === functions.config().airqualitymonitor.secretkey });
+        resolve(<DeviceAuthorizationResponse>{ payload: (functions.config().airqualitymonitor.secretkeys as string).split(";").indexOf(req.secretKey) !== -1 });
         return;
     });
 };
