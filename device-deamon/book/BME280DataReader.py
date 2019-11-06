@@ -8,8 +8,6 @@ class BME280DataReader:
 
     def __init__(self):
         self.bus = smbus2.SMBus(0x01)
-
-    def calibration(self):
         bme280.load_calibration_params(self.bus, 0x76)
 
     def getData(self) -> BME280Data:
