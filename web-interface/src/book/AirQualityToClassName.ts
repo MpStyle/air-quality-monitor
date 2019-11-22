@@ -1,5 +1,9 @@
 import { AirQuality } from "../entity/AirStatus";
 
+/**
+ * Returns the css class name for the different air quality state
+ * @param s Air quality data
+ */
 export const airQualityToClassName = (s: AirQuality): string => {
     switch (s) {
         default:
