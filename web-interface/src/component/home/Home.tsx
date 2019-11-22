@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import "react-alice-carousel/lib/scss/alice-carousel.scss";
+import { epochToFormatedDate } from '../../book/DateTimeUtils';
 import { AirStatus } from '../../entity/AirStatus';
 import { Device } from '../../entity/Device';
 import { MeterUnit } from '../../entity/MeterUnit';
@@ -85,23 +86,11 @@ const Home: React.FC<HomeProps> = (props: HomeProps) => {
           meter={props.meterUnit.tvoc}
           quality={props.airStatus.tvoc} />
 
-        {props.airQualityData.inserted && <div className="last-update"><span>Last update:</span> {a(props.airQualityData.inserted)}</div>}
+        {props.airQualityData.inserted && <div className="last-update"><span>Last update:</span> {epochToFormatedDate(props.airQualityData.inserted)}</div>}
       </main>
     </div>
   );
 };
-
-function a(ms: number) {
-  const date = new Date(ms);
-  const d = new Date(date.getTime() + date.getTimezoneOffset() * 60 * 1000);
-  const offset = date.getTimezoneOffset() / 60;
-  const hours = date.getHours();
-
-  d.setHours(hours - offset);
-
-  const date_format_str = d.getFullYear().toString() + "-" + ((d.getMonth() + 1).toString().length === 2 ? (d.getMonth() + 1).toString() : "0" + (d.getMonth() + 1).toString()) + "-" + (d.getDate().toString().length === 2 ? d.getDate().toString() : "0" + d.getDate().toString()) + " " + (d.getHours().toString().length === 2 ? d.getHours().toString() : "0" + d.getHours().toString()) + ":" + ((d.getMinutes() / 5 * 5).toString().length === 2 ? ((d.getMinutes() / 5) * 5).toString() : "0" + ((d.getMinutes() / 5) * 5).toString()) + ":00";
-  return date_format_str;
-}
 
 export default Home;
 
