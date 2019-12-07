@@ -4,8 +4,8 @@ import { Errors } from "../entity/Errors";
 import { Measurement } from "../entity/Measurement";
 import { ServiceRequest } from "../entity/ServiceRequest";
 import { ServiceResponse } from "../entity/ServiceResponse";
-import { deviceSearch, DeviceSearchRequest } from "./DeviceSearch";
-import { measurementSearch, MeasurementSearchRequest, MeasurementSearchResponse } from "./MeasurementSearch";
+import { devicesSearch, DevicesSearchRequest } from "./DevicesSearch";
+import { measurementsSearch, MeasurementSearchRequest, MeasurementSearchResponse } from "./MeasurementsSearch";
 import admin = require('firebase-admin');
 import Bluebird = require("bluebird");
 
@@ -22,9 +22,9 @@ export const measurementAdd = (logging: ILogging) => (req: MeasurementAddRequest
     }
 
     const db = admin.firestore();
-    const deviceSearchService = deviceSearch(logging);
+    const deviceSearchService = devicesSearch(logging);
 
-    return deviceSearchService(<DeviceSearchRequest>{ deviceId: req.deviceId })
+    return deviceSearchService(<DevicesSearchRequest>{ deviceId: req.deviceId })
         .then(deviceSearchResponse => {
             if (deviceSearchResponse.error) {
                 return Promise.resolve({ error: deviceSearchResponse.error });
@@ -54,7 +54,7 @@ export const measurementAdd = (logging: ILogging) => (req: MeasurementAddRequest
                                 return Promise.reject(<MeasurementAddResponse>{ error: Errors.ERROR_WHILE_ADD_MEASUREMENT });
                             }
 
-                            return measurementSearch(logging)(<MeasurementSearchRequest>{
+                            return measurementsSearch(logging)(<MeasurementSearchRequest>{
                                 measurementId: m.id,
                                 deviceId: req.deviceId
                             })

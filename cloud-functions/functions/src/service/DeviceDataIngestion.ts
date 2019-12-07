@@ -1,7 +1,7 @@
 import { ILogging } from "../book/Logging"
 import { ServiceRequest } from "../entity/ServiceRequest"
 import { ServiceResponse } from "../entity/ServiceResponse"
-import { deviceAuthorization } from "./DeviceAuthorization"
+import { authorization } from "./Authorization"
 import { Errors } from "../entity/Errors"
 import { deviceAdd, DeviceAddRequest } from "./DeviceAdd"
 import { measurementAdd } from "./MeasurementAdd"
@@ -14,7 +14,7 @@ export const deviceDataIngestion = (logging: ILogging) => (req: DeviceDataIngest
 
     logging.info("deviceDataIngestion", "Starts");
 
-    return deviceAuthorization(logging)({ secretKey: req.secretKey })
+    return authorization(logging)({ secretKey: req.secretKey })
         .then(deviceAuthorizationResponse => {
             if (deviceAuthorizationResponse.error) {
                 return <DeviceDataIngestionResponse>{ error: deviceAuthorizationResponse.error };

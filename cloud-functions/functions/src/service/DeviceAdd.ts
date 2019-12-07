@@ -4,7 +4,7 @@ import { Device } from "../entity/Device";
 import { Errors } from "../entity/Errors";
 import { ServiceRequest } from "../entity/ServiceRequest";
 import { ServiceResponse } from "../entity/ServiceResponse";
-import { deviceSearch, DeviceSearchRequest, DeviceSearchResponse } from "./DeviceSearch";
+import { devicesSearch, DevicesSearchRequest, DevicesSearchResponse } from "./DevicesSearch";
 import admin = require('firebase-admin');
 
 export const deviceAdd = (logging: ILogging) => (req: DeviceAddRequest): Promise<DeviceAddResponse> => {
@@ -16,9 +16,9 @@ export const deviceAdd = (logging: ILogging) => (req: DeviceAddRequest): Promise
 
     const db = admin.firestore();
     const docRef = db.collection(Collections.DEVICE).doc(req.deviceId);
-    const deviceSearchService = deviceSearch(logging);
+    const deviceSearchService = devicesSearch(logging);
 
-    return deviceSearchService({ deviceId: req.deviceId } as DeviceSearchRequest)
+    return deviceSearchService({ deviceId: req.deviceId } as DevicesSearchRequest)
         .then(deviceSearchResponse => {
             if (deviceSearchResponse.error) {
                 return Promise.resolve(<DeviceAddResponse>{ error: deviceSearchResponse.error });
@@ -48,8 +48,8 @@ export const deviceAdd = (logging: ILogging) => (req: DeviceAddRequest): Promise
                         return Promise.resolve({ error: Errors.ERROR_WHILE_ADD_DEVICE });
                     }
 
-                    return deviceSearchService(<DeviceSearchRequest>{ deviceId: req.deviceId })
-                        .then((response: DeviceSearchResponse) => {
+                    return deviceSearchService(<DevicesSearchRequest>{ deviceId: req.deviceId })
+                        .then((response: DevicesSearchResponse) => {
                             if (response.error) {
                                 logging.error("deviceAdd", `Error 01: ${response.error}`);
                                 return Promise.resolve(<DeviceAddResponse>{ error: response.error });

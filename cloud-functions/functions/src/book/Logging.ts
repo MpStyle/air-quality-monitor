@@ -1,4 +1,3 @@
-import { isNullOrUndefined, isString } from "util";
 import { StringUtils } from "./StringUtils";
 
 export enum LogLevel {
@@ -38,13 +37,13 @@ export class Logging {
     log(message: string, level?: LogLevel): void;
     log(context: string, message: string, level?: LogLevel): void;
     log(param01: string, param02?: string | LogLevel | null, param03?: LogLevel): void {
-        if (isNullOrUndefined(param03)) {
-            if (isNullOrUndefined(param02)) {
+        if (param03 === null || param03 === undefined) {
+            if (param02 === null || param02 === undefined) {
                 this.print(null, param01, Logging.DEFAULT_LOG_LEVEL);
                 return;
             }
 
-            if (isString(param02)) {
+            if (typeof param02 === 'string') {
                 this.print(param01, param02, Logging.DEFAULT_LOG_LEVEL);
                 return;
             }
@@ -53,7 +52,7 @@ export class Logging {
             return;
         }
 
-        if (isString(param02)) {
+        if (typeof param02 === 'string') {
             this.print(param01, param02, param03);
             return;
         }
@@ -61,18 +60,18 @@ export class Logging {
         throw new Error(`Invalid parameters type: param01 => ${typeof (param01)}, param02 => ${typeof (param02)}, param03 => ${typeof (param03)}`);
     }
 
-    debug(param01: string, param02?: string): void { isNullOrUndefined(param02) ? this.log(param01, LogLevel.debug) : this.log(param01, param02, LogLevel.debug); }
+    debug(param01: string, param02?: string): void { param02 === null || param02 === undefined ? this.log(param01, LogLevel.debug) : this.log(param01, param02, LogLevel.debug); }
 
-    info(param01: string, param02?: string): void { isNullOrUndefined(param02) ? this.log(param01, LogLevel.info) : this.log(param01, param02, LogLevel.info); }
+    info(param01: string, param02?: string): void { param02 === null || param02 === undefined ? this.log(param01, LogLevel.info) : this.log(param01, param02, LogLevel.info); }
 
-    notice(param01: string, param02?: string): void { isNullOrUndefined(param02) ? this.log(param01, LogLevel.notice) : this.log(param01, param02, LogLevel.notice); }
+    notice(param01: string, param02?: string): void { param02 === null || param02 === undefined ? this.log(param01, LogLevel.notice) : this.log(param01, param02, LogLevel.notice); }
 
-    warn(param01: string, param02?: string): void { isNullOrUndefined(param02) ? this.log(param01, LogLevel.warning) : this.log(param01, param02, LogLevel.warning); }
+    warn(param01: string, param02?: string): void { param02 === null || param02 === undefined ? this.log(param01, LogLevel.warning) : this.log(param01, param02, LogLevel.warning); }
 
-    error(param01: string, param02?: string): void { isNullOrUndefined(param02) ? this.log(param01, LogLevel.error) : this.log(param01, param02, LogLevel.error); }
+    error(param01: string, param02?: string): void { param02 === null || param02 === undefined ? this.log(param01, LogLevel.error) : this.log(param01, param02, LogLevel.error); }
 
     private print(context: string | null, message: string, level: LogLevel): void {
-        const toPrint = `${this.getFormatedDate()} - ${this.getLogLevelName(level)}${context ? `- ${context}` : ''} - ${message}`;
+        const toPrint = `${this.getFormatedDate()} - ${this.getLogLevelName(level)} ${context ? `- ${context}` : ''} - ${message}`;
 
         switch (level) {
             case LogLevel.error:

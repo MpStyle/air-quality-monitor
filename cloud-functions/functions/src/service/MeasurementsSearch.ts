@@ -6,8 +6,8 @@ import { ServiceRequest } from "../entity/ServiceRequest";
 import { ServiceResponse } from "../entity/ServiceResponse";
 import admin = require('firebase-admin');
 
-export const measurementSearch = (logging: ILogging) => (req: MeasurementSearchRequest): Promise<MeasurementSearchResponse> => {
-    logging.info("measurementSearch", "Starts");
+export const measurementsSearch = (logging: ILogging) => (req: MeasurementSearchRequest): Promise<MeasurementSearchResponse> => {
+    logging.info("measurementsSearch", "Starts");
 
     const db = admin.firestore();
     let collectionRef: FirebaseFirestore.CollectionReference | FirebaseFirestore.Query = db.collection(Collections.MEASUREMENT);
@@ -31,7 +31,7 @@ export const measurementSearch = (logging: ILogging) => (req: MeasurementSearchR
     return collectionRef.get()
         .then(snapshots => {
             if (!snapshots || snapshots.docs.length === 0) {
-                logging.debug("measurementSearch", "No measurement found");
+                logging.debug("measurementsSearch", "No measurement found");
                 return Promise.resolve(<MeasurementSearchResponse>{ payload: [] });
             }
 
@@ -40,7 +40,7 @@ export const measurementSearch = (logging: ILogging) => (req: MeasurementSearchR
             });
         })
         .catch((err: any) => {
-            logging.error("measurementSearch", `Error while searching measurements: ${err}`);
+            logging.error("measurementsSearch", `Error while searching measurements: ${err}`);
             return Promise.resolve({ error: err });
         });
 };

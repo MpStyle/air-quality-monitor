@@ -66,3 +66,6 @@ node_modules/
 
 # MINE
 functions/config
+
+*.js
+*.js.map
