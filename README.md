@@ -17,3 +17,19 @@ A full stack IoT Project.
 - [Cloud functions](cloud-functions/README.md)
 - [Device Deamon](device-deamon/README.md)
 - [Web Interface](web-interface/README.md)
+
+## Project Plan
+
+#### Step 1
+- Device Deamon <-> Cloud Functions: every requests must contains "_secret_key_", which identify the device.
+- Web interface <-> Cloud Functions: every requests must continas "_secret_key_", which identify the user.
+
+The secret keys must be different.
+
+#### Step 2
+
+- Web interface <-> Cloud Functions: using Google authentication.
+
+#### Step 3
+
+- Show charts in the web interface for temperature, CO<sub>2</sub>, pressure and ppb.
