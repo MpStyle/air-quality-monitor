@@ -4,7 +4,7 @@ Python.
 
 The configuration file must be in:
 ```
-/opt/configuration.json
+/opt/aircare.configuration.json
 ```
 
 and looks like:
@@ -13,6 +13,7 @@ and looks like:
 {
         "deviceId": "__DEVICE_ID__",
         "deviceName": "__DEVICE_NAME__",
+        "deviceAddress": "__DEVICE_ADDRESS__",
         "secretKey": "__SECRET_KEY__",
         "airCareUrl": "__AIR_CARE_URL__"
 }

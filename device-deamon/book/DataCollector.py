@@ -69,7 +69,7 @@ class DataCollector:
         if len(self.co2s) > 0:
             data.co2 = round(sum(self.co2s) / len(self.co2s), 2)
         else:
-            data.co2s = None
+            data.co2 = None
 
         data.pressure = round(sum(self.pressures) / len(self.pressures), 2)
 
