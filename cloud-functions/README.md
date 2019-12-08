@@ -19,6 +19,15 @@ firebase emulators:start
 
 ## Deploy
 
+### Create index
+
+In the database you must create the index for the _measurement_ collection and indexed fields:
+- deviceId ascending 
+- type ascending 
+- inserted descending
+
+### Deploy functions
+
 ```bash
 firebase deploy --only functions
 ```

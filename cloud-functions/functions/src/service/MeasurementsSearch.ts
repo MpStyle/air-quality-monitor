@@ -12,6 +12,8 @@ export const measurementsSearch = (logging: ILogging) => (req: MeasurementSearch
     const db = admin.firestore();
     let collectionRef: FirebaseFirestore.CollectionReference | FirebaseFirestore.Query = db.collection(Collections.MEASUREMENT);
 
+    collectionRef = collectionRef.where('inserted', '>', 0);
+
     if (req.measurementId) {
         collectionRef = collectionRef.where('measurementId', '==', req.measurementId);
     }
@@ -20,13 +22,19 @@ export const measurementsSearch = (logging: ILogging) => (req: MeasurementSearch
         collectionRef = collectionRef.where('deviceId', '==', req.deviceId);
     }
 
+    if (req.type) {
+        collectionRef = collectionRef.where('type', '==', req.type);
+    }
+
     if (req.offset) {
         collectionRef = collectionRef.startAfter(req.offset);
     }
 
     if (req.limit) {
-        collectionRef = collectionRef.endAt(req.offset ? req.offset + req.limit : req.limit);
+        collectionRef = collectionRef.limit(req.limit);
     }
+
+    collectionRef = collectionRef.orderBy("inserted", "desc");
 
     return collectionRef.get()
         .then(snapshots => {
@@ -48,6 +56,7 @@ export const measurementsSearch = (logging: ILogging) => (req: MeasurementSearch
 export interface MeasurementSearchRequest extends ServiceRequest, PagedRequest {
     measurementId: string;
     deviceId: string;
+    type: string;
 }
 
 export interface MeasurementSearchResponse extends ServiceResponse<Measurement[]> {
