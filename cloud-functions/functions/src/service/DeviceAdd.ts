@@ -60,7 +60,7 @@ export const deviceAdd = (logging: ILogging) => (req: DeviceAddRequest): Promise
                                 return Promise.resolve(<DeviceAddResponse>{ error: Errors.DEVICE_NOT_FOUND });
                             }
 
-                            return Promise.resolve(<DeviceAddResponse>{ device: response.payload[0] });
+                            return Promise.resolve(<DeviceAddResponse>{ payload: response.payload[0] });
                         });
                 })
                 .catch((err: any) => {
