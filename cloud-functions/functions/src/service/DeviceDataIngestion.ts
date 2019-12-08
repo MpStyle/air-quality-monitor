@@ -8,7 +8,7 @@ import { measurementAdd } from "./MeasurementAdd"
 import uuid = require("uuid")
 
 export const deviceDataIngestion = (logging: ILogging) => (req: DeviceDataIngestionRequest): Promise<DeviceDataIngestionResponse> => {
-    if (!req.secretKey || !req.device.id || !req.measurementDate || !req.airData.co2 || !req.airData.humidity || !req.airData.pressure || !req.airData.temperature || !req.airData.tvoc) {
+    if (!req.secretKey || !req.device.id || !req.measurementDate) {
         return Promise.resolve(<DeviceDataIngestionResponse>{ error: Errors.INVALID_DEVICE_DATA_INGESTION_REQUEST });
     }
 
@@ -62,7 +62,7 @@ export const deviceDataIngestion = (logging: ILogging) => (req: DeviceDataIngest
                                     type: 'humidity',
                                     value: req.airData.humidity
                                 },
-                            ]
+                            ].filter(m => !!m.value)
                         })
                         .then(addMeasurementResponse => {
                             if (addMeasurementResponse.error) {
