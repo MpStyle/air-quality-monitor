@@ -1,0 +1,16 @@
+@import '../book/Colors.scss';
+
+.dashboard {
+    .header {
+        text-align: center;
+        color: $color-text-alternative;
+        background: $color-primary;
+        background: linear-gradient(180deg, $color-primary 0%, $color-secondary 100%);
+    }
+
+    .air-quality-data {
+        width: 98%;
+        max-width: 600px;
+        margin: 0px auto;
+    }
+}

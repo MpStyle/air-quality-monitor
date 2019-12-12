@@ -5,6 +5,7 @@ import { airQualityDataReducer } from './AirQualityDataReducer';
 import { airStatusReducer } from "./AirStatusReducer";
 import { currentDeviceReducer } from "./CurrentDeviceReducer";
 import { devicesReducer } from "./DevicesReducer";
+import { secretKeyReducer } from "./SecretKeyReducer";
 import { suggestionsReducer } from './SuggestionsReducer';
 
 export const appReducer = combineReducers<AppState>({
@@ -13,5 +14,6 @@ export const appReducer = combineReducers<AppState>({
     airStatus: airStatusReducer,
     devices: devicesReducer,
     currentDevice: currentDeviceReducer,
-    suggestions: suggestionsReducer
+    suggestions: suggestionsReducer,
+    secretKey: secretKeyReducer
 });

@@ -1,12 +1,12 @@
 import { Action } from "redux";
+import { FetchAirQualityDataSuccessAction, FetchAirQualityDataSuccessActionName } from '../action/FetchAirQualityDataSuccessAction';
 import { AirQuality, AirStatus } from "../entity/AirStatus";
 import { initialAppState } from "../store/InitialAppState";
-import { UpdateAirQualityDataAction, UpdateAirQualityDataActionName } from './../action/UpdateAirQualityDataAction';
 
 export const airStatusReducer = (state: AirStatus = initialAppState.airStatus, action: Action): AirStatus => {
     switch (action.type) {
-        case UpdateAirQualityDataActionName:
-            const updateAirQualityDataAction = action as UpdateAirQualityDataAction;
+        case FetchAirQualityDataSuccessActionName:
+            const updateAirQualityDataAction = action as FetchAirQualityDataSuccessAction;
             const airStatus: AirStatus = {
                 co2: co2Quality(updateAirQualityDataAction.data.co2),
                 humidity: humidityQuality(updateAirQualityDataAction.data.humidity),

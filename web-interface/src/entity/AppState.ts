@@ -10,4 +10,5 @@ export interface AppState {
     devices: Device[];
     currentDevice: string | null;
     suggestions: string[];
+    secretKey: string | null;
 }

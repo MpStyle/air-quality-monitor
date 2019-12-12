@@ -1,5 +1,6 @@
 import { AirQualityData } from '../entity/AirQualityData';
 import { AirStatus } from '../entity/AirStatus';
+import { SECRET_KEY_KEY } from './../book/SessionStorageKeys';
 import { AppState } from './../entity/AppState';
 
 export const initialAppState: AppState = {
@@ -15,5 +16,6 @@ export const initialAppState: AppState = {
     airStatus: {} as AirStatus,
     devices: [],
     currentDevice: null,
-    suggestions: []
+    suggestions: [],
+    secretKey: sessionStorage.getItem(SECRET_KEY_KEY)
 };

@@ -1,10 +1,7 @@
-@import '../../sass/Colors.scss';
-
 .data {
     margin: 0px auto;
     padding: 30px 1em;
     display: flex;
-    border-bottom: 1px solid $color-text-very-light;
 
     .icon {
         flex-grow: 1;
@@ -24,7 +21,6 @@
 
         .unit {
             font-size: .55em;
-            color: $color-text-light;
         }
     }
 
@@ -38,24 +34,8 @@
             margin-right: 10px;
         }
     }
-
-    .quality-level.excellent {
-        color: $color-excellent
-    }
-
-    .quality-level.good {
-        color: $color-good
-    }
-
-    .quality-level.not-good {
-        color: $color-not-good
-    }
-
-    .quality-level.very-bad {
-        color: $color-very-bad
-    }
 }
 
-.data:last-of-type{
+.data:last-of-type {
     border-bottom: 0px;
 }
