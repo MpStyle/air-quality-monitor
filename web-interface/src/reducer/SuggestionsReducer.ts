@@ -56,7 +56,7 @@ export const suggestionsReducer = (state: string[] = initialAppState.suggestions
 
             switch (airStatus.tvoc) {
                 case AirQuality.VeryBad:
-                    suggestions.push("Do you switch of the cooker?");
+                    suggestions.push("Do you switch off the cooker?");
                     break;
             }
 
