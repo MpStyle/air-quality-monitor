@@ -6,8 +6,6 @@ import warning from '../images/warning.svg';
 import './DataRow.scss';
 
 export const DataRow: FunctionComponent<DataRowProps> = (props: DataRowProps) => {
-    console.log("DataRow", props);
-
     if (!props.value) {
         return null;
     }

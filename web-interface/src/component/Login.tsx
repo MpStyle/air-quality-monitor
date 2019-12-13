@@ -7,7 +7,6 @@ function useQuery() {
 }
 
 export const Login: FunctionComponent<LoginProps> = (props) => {
-    console.log("Login", props);
     let query = useQuery();
     const [secretKey, setSecretKey] = useState<string | null>(props.secretKey);
 

@@ -1,8 +1,14 @@
 import Box from '@material-ui/core/Box/Box';
 import Divider from '@material-ui/core/Divider/Divider';
+import Drawer from '@material-ui/core/Drawer/Drawer';
+import IconButton from '@material-ui/core/IconButton/IconButton';
+import List from '@material-ui/core/List/List';
+import ListItem from '@material-ui/core/ListItem/ListItem';
+import ListItemText from '@material-ui/core/ListItemText/ListItemText';
 import Menu from '@material-ui/core/Menu/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Paper from '@material-ui/core/Paper/Paper';
+import MenuIcon from '@material-ui/icons/Menu';
 import React, { useEffect, FunctionComponent } from 'react';
 import AliceCarousel from 'react-alice-carousel';
 import 'react-alice-carousel/lib/alice-carousel.css';
@@ -37,35 +43,70 @@ export const Dashboard: FunctionComponent<HomeProps> = (props) => {
     const areThereDevices = !!(props.devices && props.devices.length);
     const currentDevice = props.devices.find(d => d.id === props.currentDeviceId);
 
+    const [isAppDrawerOpen, setIsAppDrawerOpen] = React.useState(false);
+
+    const toggleDrawer = (open: boolean) => (
+        event: React.KeyboardEvent | React.MouseEvent
+    ) => {
+        if (
+            event.type === "keydown" &&
+            ((event as React.KeyboardEvent).key === "Tab" ||
+                (event as React.KeyboardEvent).key === "Shift")
+        ) {
+            return;
+        }
+
+        setIsAppDrawerOpen(open);
+    };
+
     return <div className="dashboard">
-        <Box boxShadow={2} className="header">
-            {areThereDevices &&
-                <div className="sub-header device-list">
-                    <div aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-                        {currentDevice ? currentDevice.name : "Select a device..."}
-                    </div>
-                    <Menu
-                        id="simple-menu"
-                        anchorEl={anchorEl}
-                        keepMounted
-                        open={Boolean(anchorEl)}
-                        onClose={handleClose}
-                    >
-                        {props.devices.map((device) => (
-                            <MenuItem key={device.id} value={device.id} onClick={() => {
-                                props.onCurrentDeviceIdChange(device.id);
-                                handleClose();
-                            }}>{device.name}</MenuItem>
-                        ))}
-                    </Menu>
-                </div>}
-            <div className="sub-header quality">
-                {airQualityToLabel(average)}
+        <Drawer open={isAppDrawerOpen} onClose={toggleDrawer(false)}>
+            <div
+                role="presentation"
+                onClick={toggleDrawer(false)}
+                onKeyDown={toggleDrawer(false)}
+            >
+                <List>
+                    <ListItem button>
+                        <ListItemText primary="ciao" />
+                    </ListItem>
+                </List>
             </div>
-            <div className="sub-header carousel">
-                {props.suggestions && props.suggestions.length > 0 && <AliceCarousel autoPlayInterval={6000} buttonsDisabled={true} autoPlay={true}>
-                    {props.suggestions.map((s, i) => <div key={`slide-${i}`}>{s}</div>)}
-                </AliceCarousel >}
+        </Drawer>
+
+        <Box boxShadow={2} className="header">
+            <IconButton onClick={toggleDrawer(true)} className="hamburger">
+                <MenuIcon />
+            </IconButton>
+            <div className="sub-headers">
+                {areThereDevices &&
+                    <div className="sub-header device-list">
+                        <div aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+                            {currentDevice ? currentDevice.name : "Select a device..."}
+                        </div>
+                        <Menu
+                            id="simple-menu"
+                            anchorEl={anchorEl}
+                            keepMounted
+                            open={Boolean(anchorEl)}
+                            onClose={handleClose}
+                        >
+                            {props.devices.map((device) => (
+                                <MenuItem key={device.id} value={device.id} onClick={() => {
+                                    props.onCurrentDeviceIdChange(device.id);
+                                    handleClose();
+                                }}>{device.name}</MenuItem>
+                            ))}
+                        </Menu>
+                    </div>}
+                <div className="sub-header quality">
+                    {airQualityToLabel(average)}
+                </div>
+                <div className="sub-header carousel">
+                    {props.suggestions && props.suggestions.length > 0 && <AliceCarousel autoPlayInterval={6000} buttonsDisabled={true} autoPlay={true}>
+                        {props.suggestions.map((s, i) => <div key={`slide-${i}`}>{s}</div>)}
+                    </AliceCarousel >}
+                </div>
             </div>
         </Box>
         <Paper className="air-quality-data">

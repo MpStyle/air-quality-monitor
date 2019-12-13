@@ -2,40 +2,50 @@
 
 .dashboard {
     .header {
-        padding: 1em;
+        padding: 1em 16px;
         position: fixed;
         top: 0px;
         right: 0px;
         left: 0px;
-        display: flex;
-        flex-direction: column;
-        text-align: center;
         color: $color-text-alternative;
         background: $color-primary;
         background: linear-gradient(180deg, $color-primary 0%, $color-secondary 100%);
 
-        .sub-header {
-            display: inline-block;
+        .hamburger {
+            margin-left: -12px;
+            margin-top: -12px;
+            color: #fff;
         }
 
-        .sub-header.device-list {
-            font-size: 1.1em;
-            margin: 0px auto 0px auto;
-        }
+        .sub-headers {
+            margin-top: -35px;
+            display: flex;
+            flex-direction: column;
 
-        .sub-header.quality {
-            font-size: 2.5em;
-            margin: 0.5em auto;
-        }
+            .sub-header {
+                display: inline-block;
+                text-align: center;
+            }
 
-        .sub-header.carousel {
-            font-size: 1.2em;
-            display: block;
-            width: 100%;
-            margin-bottom: 0px;
-
-            .alice-carousel__dots {
+            .sub-header.device-list {
+                font-size: 1.1em;
                 margin: 0px auto 0px auto;
+            }
+
+            .sub-header.quality {
+                font-size: 2.5em;
+                margin: 0.5em auto;
+            }
+
+            .sub-header.carousel {
+                font-size: 1.2em;
+                display: block;
+                width: 100%;
+                margin-bottom: 0px;
+
+                .alice-carousel__dots {
+                    margin: 0px auto 0px auto;
+                }
             }
         }
     }
