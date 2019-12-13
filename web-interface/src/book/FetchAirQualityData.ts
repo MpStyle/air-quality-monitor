@@ -7,7 +7,7 @@ export const fetchAirQualityData = (currentDeviceId: string): Promise<AirQuality
                 {
                     co2: 400,
                     humidity: 60,
-                    inserted: 128712781728,
+                    inserted: 1576247467000,
                     pressure: 82,
                     temperature: 21,
                     tvoc: 300

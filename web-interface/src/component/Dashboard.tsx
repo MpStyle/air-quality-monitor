@@ -8,6 +8,7 @@ import AliceCarousel from 'react-alice-carousel';
 import 'react-alice-carousel/lib/alice-carousel.css';
 import { airQualityToLabel } from "../book/AirQualityToLabel";
 import { averageAirStatus } from "../book/AverageAirStatus";
+import { epochToFormatedDate } from '../book/DateTimeUtils';
 import { AirQualityData } from '../entity/AirQualityData';
 import { AirStatus } from "../entity/AirStatus";
 import { Device } from "../entity/Device";
@@ -23,17 +24,15 @@ import { DataRow } from './DataRow';
 
 export const Dashboard: FunctionComponent<HomeProps> = (props) => {
     useEffect(() => { props.fetchDevices(); }, []);
-    useEffect(() => { if (props.currentDeviceId) props.fetchAirQualityData(props.currentDeviceId as string); }, [props.currentDeviceId]);
+    useEffect(() => {
+        if (props.currentDeviceId)
+            props.fetchAirQualityData(props.currentDeviceId as string);
+    }, [props.currentDeviceId]);
+
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
-    const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
-
+    const handleClick = (event: React.MouseEvent<HTMLDivElement>) => setAnchorEl(event.currentTarget);
+    const handleClose = () => setAnchorEl(null);
     const average = averageAirStatus(props.airStatus);
     const areThereDevices = !!(props.devices && props.devices.length);
     const currentDevice = props.devices.find(d => d.id === props.currentDeviceId);
@@ -121,6 +120,11 @@ export const Dashboard: FunctionComponent<HomeProps> = (props) => {
                 value={props.airQualityData.tvoc}
                 meter={props.meterUnit.tvoc}
                 quality={props.airStatus.tvoc} />
+
+            <Divider light />
+
+            <div>{props.airQualityData.inserted && <div className="last-update"><span>Last update:</span> {epochToFormatedDate(props.airQualityData.inserted)}</div>}</div>
+
         </Paper>
     </div>;
 };
