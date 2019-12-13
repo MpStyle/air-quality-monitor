@@ -6,6 +6,6 @@ export const airQualityToLabel = (s: AirQuality): string => {
         case AirQuality.Good: return "Good";
         case AirQuality.NotGood: return "Not good";
         case AirQuality.VeryBad: return "Very Bad";
-        default: return "Waiting data....";
+        default: return "...";
     }
 };
