@@ -1,7 +1,8 @@
+import Box from '@material-ui/core/Box/Box';
 import Divider from '@material-ui/core/Divider/Divider';
+import Menu from '@material-ui/core/Menu/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Paper from '@material-ui/core/Paper/Paper';
-import Select from '@material-ui/core/Select';
 import React, { useEffect, FunctionComponent } from 'react';
 import AliceCarousel from 'react-alice-carousel';
 import 'react-alice-carousel/lib/alice-carousel.css';
@@ -23,30 +24,51 @@ import { DataRow } from './DataRow';
 export const Dashboard: FunctionComponent<HomeProps> = (props) => {
     useEffect(() => { props.fetchDevices(); }, []);
     useEffect(() => { if (props.currentDeviceId) props.fetchAirQualityData(props.currentDeviceId as string); }, [props.currentDeviceId]);
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
+    const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
 
     const average = averageAirStatus(props.airStatus);
     const areThereDevices = !!(props.devices && props.devices.length);
+    const currentDevice = props.devices.find(d => d.id === props.currentDeviceId);
 
     return <div className="dashboard">
-        <div className="header">
-            <div>
-                {areThereDevices && <Select
-                    value={props.currentDeviceId || (props.devices && props.devices.length && props.devices[0].id)}
-                    onChange={event => props.onCurrentDeviceIdChange(event.target.value as string)}>
-                    {props.devices.map((device) => (
-                        <MenuItem key={device.id} value={device.id}>{device.name}</MenuItem>
-                    ))}
-                </Select>}
-            </div>
-            <div>
+        <Box boxShadow={2} className="header">
+            {areThereDevices &&
+                <div className="sub-header device-list">
+                    <div aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+                        {currentDevice ? currentDevice.name : "Select a device..."}
+                    </div>
+                    <Menu
+                        id="simple-menu"
+                        anchorEl={anchorEl}
+                        keepMounted
+                        open={Boolean(anchorEl)}
+                        onClose={handleClose}
+                    >
+                        {props.devices.map((device) => (
+                            <MenuItem key={device.id} value={device.id} onClick={() => {
+                                props.onCurrentDeviceIdChange(device.id);
+                                handleClose();
+                            }}>{device.name}</MenuItem>
+                        ))}
+                    </Menu>
+                </div>}
+            <div className="sub-header quality">
                 {airQualityToLabel(average)}
             </div>
-            <div>
+            <div className="sub-header carousel">
                 {props.suggestions && props.suggestions.length > 0 && <AliceCarousel autoPlayInterval={6000} buttonsDisabled={true} autoPlay={true}>
                     {props.suggestions.map((s, i) => <div key={`slide-${i}`}>{s}</div>)}
                 </AliceCarousel >}
             </div>
-        </div>
+        </Box>
         <Paper className="air-quality-data">
             <DataRow
                 title="Temperature"
