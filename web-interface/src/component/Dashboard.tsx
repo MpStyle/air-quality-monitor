@@ -1,15 +1,11 @@
 import Box from '@material-ui/core/Box/Box';
 import Divider from '@material-ui/core/Divider/Divider';
-import Drawer from '@material-ui/core/Drawer/Drawer';
 import IconButton from '@material-ui/core/IconButton/IconButton';
-import List from '@material-ui/core/List/List';
-import ListItem from '@material-ui/core/ListItem/ListItem';
-import ListItemText from '@material-ui/core/ListItemText/ListItemText';
 import Menu from '@material-ui/core/Menu/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Paper from '@material-ui/core/Paper/Paper';
 import MenuIcon from '@material-ui/icons/Menu';
-import React, { useEffect, FunctionComponent } from 'react';
+import React, { FunctionComponent, useEffect } from 'react';
 import AliceCarousel from 'react-alice-carousel';
 import 'react-alice-carousel/lib/alice-carousel.css';
 import { airQualityToLabel } from "../book/AirQualityToLabel";
@@ -25,6 +21,7 @@ import noise from '../images/noise.svg';
 import pressure from '../images/pressure.svg';
 import temperature from '../images/temperature.svg';
 import tvoc from '../images/tvoc.svg';
+import { AppDrawer } from './AppDrawer';
 import './Dashboard.scss';
 import { DataRow } from './DataRow';
 
@@ -45,9 +42,7 @@ export const Dashboard: FunctionComponent<HomeProps> = (props) => {
 
     const [isAppDrawerOpen, setIsAppDrawerOpen] = React.useState(false);
 
-    const toggleDrawer = (open: boolean) => (
-        event: React.KeyboardEvent | React.MouseEvent
-    ) => {
+    const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
         if (
             event.type === "keydown" &&
             ((event as React.KeyboardEvent).key === "Tab" ||
@@ -60,19 +55,7 @@ export const Dashboard: FunctionComponent<HomeProps> = (props) => {
     };
 
     return <div className="dashboard">
-        <Drawer open={isAppDrawerOpen} onClose={toggleDrawer(false)}>
-            <div
-                role="presentation"
-                onClick={toggleDrawer(false)}
-                onKeyDown={toggleDrawer(false)}
-            >
-                <List>
-                    <ListItem button>
-                        <ListItemText primary="ciao" />
-                    </ListItem>
-                </List>
-            </div>
-        </Drawer>
+        <AppDrawer isOpen={isAppDrawerOpen} toggleDrawer={toggleDrawer} />
 
         <Box boxShadow={2} className="header">
             <IconButton onClick={toggleDrawer(true)} className="hamburger">
