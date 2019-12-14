@@ -6,6 +6,7 @@ import ListItemText from "@material-ui/core/ListItemText/ListItemText";
 import InfoIcon from '@material-ui/icons/Info';
 import React, { FunctionComponent } from "react";
 import { Link } from "react-router-dom";
+import { CREDITS_URL } from '../book/Pages';
 import "./AppDrawer.scss";
 
 export const AppDrawer: FunctionComponent<AppDrawerProps> = (props) => {
@@ -16,7 +17,7 @@ export const AppDrawer: FunctionComponent<AppDrawerProps> = (props) => {
             onKeyDown={props.toggleDrawer(false)}
             className="list-container">
             <List>
-                <ListItem button className="list-item" component={Link} to="/credits">
+                <ListItem button className="list-item" component={Link} to={CREDITS_URL}>
                     <ListItemIcon>
                         <InfoIcon />
                     </ListItemIcon>
