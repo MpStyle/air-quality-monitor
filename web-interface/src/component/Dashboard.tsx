@@ -1,14 +1,7 @@
-import Box from '@material-ui/core/Box/Box';
 import Divider from '@material-ui/core/Divider/Divider';
-import IconButton from '@material-ui/core/IconButton/IconButton';
-import Menu from '@material-ui/core/Menu/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
 import Paper from '@material-ui/core/Paper/Paper';
-import MenuIcon from '@material-ui/icons/Menu';
 import React, { FunctionComponent, useEffect } from 'react';
-import AliceCarousel from 'react-alice-carousel';
 import 'react-alice-carousel/lib/alice-carousel.css';
-import { airQualityToLabel } from "../book/AirQualityToLabel";
 import { averageAirStatus } from "../book/AverageAirStatus";
 import { epochToFormatedDate } from '../book/DateTimeUtils';
 import { AirQualityData } from '../entity/AirQualityData';
@@ -23,6 +16,7 @@ import temperature from '../images/temperature.svg';
 import tvoc from '../images/tvoc.svg';
 import { AppDrawer } from './AppDrawer';
 import './Dashboard.scss';
+import { DashboardHeader } from './DashboardHeader';
 import { DataRow } from './DataRow';
 
 export const Dashboard: FunctionComponent<HomeProps> = (props) => {
@@ -32,10 +26,6 @@ export const Dashboard: FunctionComponent<HomeProps> = (props) => {
             props.fetchAirQualityData(props.currentDeviceId as string);
     }, [props.currentDeviceId]);
 
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-
-    const handleClick = (event: React.MouseEvent<HTMLDivElement>) => setAnchorEl(event.currentTarget);
-    const handleClose = () => setAnchorEl(null);
     const average = averageAirStatus(props.airStatus);
     const areThereDevices = !!(props.devices && props.devices.length);
     const currentDevice = props.devices.find(d => d.id === props.currentDeviceId);
@@ -43,11 +33,7 @@ export const Dashboard: FunctionComponent<HomeProps> = (props) => {
     const [isAppDrawerOpen, setIsAppDrawerOpen] = React.useState(false);
 
     const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
-        if (
-            event.type === "keydown" &&
-            ((event as React.KeyboardEvent).key === "Tab" ||
-                (event as React.KeyboardEvent).key === "Shift")
-        ) {
+        if (event.type === "keydown" && ((event as React.KeyboardEvent).key === "Tab" || (event as React.KeyboardEvent).key === "Shift")) {
             return;
         }
 
@@ -57,41 +43,15 @@ export const Dashboard: FunctionComponent<HomeProps> = (props) => {
     return <div className="dashboard">
         <AppDrawer isOpen={isAppDrawerOpen} toggleDrawer={toggleDrawer} />
 
-        <Box boxShadow={2} className="header">
-            <IconButton onClick={toggleDrawer(true)} className="hamburger">
-                <MenuIcon />
-            </IconButton>
-            <div className="sub-headers">
-                {areThereDevices &&
-                    <div className="sub-header device-list">
-                        <div aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-                            {currentDevice ? currentDevice.name : "Select a device..."}
-                        </div>
-                        <Menu
-                            id="simple-menu"
-                            anchorEl={anchorEl}
-                            keepMounted
-                            open={Boolean(anchorEl)}
-                            onClose={handleClose}
-                        >
-                            {props.devices.map((device) => (
-                                <MenuItem key={device.id} value={device.id} onClick={() => {
-                                    props.onCurrentDeviceIdChange(device.id);
-                                    handleClose();
-                                }}>{device.name}</MenuItem>
-                            ))}
-                        </Menu>
-                    </div>}
-                <div className="sub-header quality">
-                    {airQualityToLabel(average)}
-                </div>
-                <div className="sub-header carousel">
-                    {props.suggestions && props.suggestions.length > 0 && <AliceCarousel autoPlayInterval={6000} buttonsDisabled={true} autoPlay={true}>
-                        {props.suggestions.map((s, i) => <div key={`slide-${i}`}>{s}</div>)}
-                    </AliceCarousel >}
-                </div>
-            </div>
-        </Box>
+        <DashboardHeader
+            devices={props.devices}
+            currentDevice={currentDevice}
+            average={average}
+            areThereDevices={areThereDevices}
+            toggleDrawer={toggleDrawer}
+            onCurrentDeviceIdChange={props.onCurrentDeviceIdChange}
+            suggestions={props.suggestions} />
+
         <Paper className="air-quality-data">
             <DataRow
                 title="Temperature"
