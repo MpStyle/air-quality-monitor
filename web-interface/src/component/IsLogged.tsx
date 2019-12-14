@@ -1,6 +1,11 @@
-import React, { useEffect, useState, Fragment, FunctionComponent } from 'react';
+import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress';
+import Paper from '@material-ui/core/Paper/Paper';
+import Typography from '@material-ui/core/Typography/Typography';
+import React, { Fragment, FunctionComponent, useEffect, useState } from 'react';
 import { Redirect } from "react-router-dom";
+import logo from '../images/logo.svg';
 import { appStore } from '../store/AppStore';
+import "./IsLogged.scss";
 
 export const IsLogged: FunctionComponent<IsLoggedProps> = (props: IsLoggedProps) => {
 
@@ -17,7 +22,15 @@ export const IsLogged: FunctionComponent<IsLoggedProps> = (props: IsLoggedProps)
     }
 
     if (authenticationResult == null) {
-        return <span>Authenticating...</span>;
+        return <span className="authenticating-message">
+            <Paper elevation={2} className="content">
+                <Typography variant="h6">
+                    <img src={logo} /> Air Quality Monitor
+            </Typography>
+                <div className="message">Authenticating...</div>
+                <CircularProgress />
+            </Paper>
+        </span>;
     }
 
     if (authenticationResult) {
