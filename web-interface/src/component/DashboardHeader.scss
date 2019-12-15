@@ -30,6 +30,11 @@
         .sub-header.device-list {
             font-size: 1.1em;
             margin: 0px auto 0px auto;
+            cursor: pointer;
+
+            svg{
+                vertical-align: text-bottom;
+            }
         }
 
         .sub-header.quality {

@@ -2,6 +2,7 @@ import Box from '@material-ui/core/Box/Box';
 import IconButton from '@material-ui/core/IconButton/IconButton';
 import Menu from '@material-ui/core/Menu/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import MenuIcon from '@material-ui/icons/Menu';
 import React, { FunctionComponent } from 'react';
 import AliceCarousel from 'react-alice-carousel';
@@ -25,6 +26,7 @@ export const DashboardHeader: FunctionComponent<DashboardHeaderProps> = (props) 
                 <div className="sub-header device-list">
                     <div aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
                         {props.currentDevice ? props.currentDevice.name : "Select a device..."}
+                        <ArrowDropDownIcon />
                     </div>
                     <Menu
                         id="simple-menu"
