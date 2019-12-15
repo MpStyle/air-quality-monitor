@@ -9,6 +9,5 @@ export interface AirStatus {
     tvoc: AirQuality;
     pressure: AirQuality;
     humidity: AirQuality;
-    noise: AirQuality;
     temperature: AirQuality;
 }

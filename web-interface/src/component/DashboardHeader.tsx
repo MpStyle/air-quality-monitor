@@ -8,7 +8,7 @@ import AliceCarousel from 'react-alice-carousel';
 import 'react-alice-carousel/lib/alice-carousel.css';
 import { airQualityToLabel } from "../book/AirQualityToLabel";
 import { Device } from '../entity/Device';
-import './Dashboard.scss';
+import './DashboardHeader.scss';
 
 export const DashboardHeader: FunctionComponent<DashboardHeaderProps> = (props) => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -16,7 +16,7 @@ export const DashboardHeader: FunctionComponent<DashboardHeaderProps> = (props) 
     const handleClick = (event: React.MouseEvent<HTMLDivElement>) => setAnchorEl(event.currentTarget);
     const handleClose = () => setAnchorEl(null);
 
-    return <Box boxShadow={2} className="header">
+    return <Box boxShadow={2} className="dashboard-header">
         <IconButton onClick={props.toggleDrawer(true)} className="hamburger">
             <MenuIcon />
         </IconButton>

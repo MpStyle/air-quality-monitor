@@ -8,10 +8,10 @@ import { fetchDevices } from '../book/FetchDevices';
 import { AirQualityData } from '../entity/AirQualityData';
 import { AppState } from '../entity/AppState';
 import { Device } from '../entity/Device';
-import { Dashboard, HomeProps } from './Dashboard';
+import { Dashboard, DashboardProps } from './Dashboard';
 
 export const DashboardContainer = connect(
-    (appState: AppState): HomeProps => {
+    (appState: AppState): DashboardProps => {
         return {
             airQualityData: appState.airQualityData,
             airStatus: appState.airStatus,
@@ -19,9 +19,9 @@ export const DashboardContainer = connect(
             currentDeviceId: appState.currentDevice,
             devices: appState.devices,
             suggestions: appState.suggestions
-        } as HomeProps;
+        } as DashboardProps;
     },
-    (dispatch: Dispatch): HomeProps => {
+    (dispatch: Dispatch): DashboardProps => {
         return {
             onCurrentDeviceIdChange: (deviceId: string) => { dispatch(updateCurrentDeviceIdActionBuilder(deviceId)); },
             fetchDevices: () => {
@@ -48,6 +48,6 @@ export const DashboardContainer = connect(
 
                 setTimeout(() => poller(), parseInt(process.env.REACT_APP_AIR_QUALITY_DATA_REFRESH_TIME as string));
             }
-        } as HomeProps;
+        } as DashboardProps;
     }
 )(Dashboard);

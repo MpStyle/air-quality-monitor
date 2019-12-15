@@ -5,7 +5,6 @@ export const averageAirStatus = (airStatus: AirStatus) => {
         airStatus.temperature +
         airStatus.co2 +
         airStatus.humidity +
-        airStatus.noise +
         airStatus.pressure +
         airStatus.tvoc
     ) / 6);

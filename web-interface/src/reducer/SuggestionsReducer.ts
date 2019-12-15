@@ -38,15 +38,6 @@ export const suggestionsReducer = (state: string[] = initialAppState.suggestions
                     break;
             }
 
-            switch (airStatus.noise) {
-                case AirQuality.NotGood:
-                    suggestions.push("It's time to take earmuffs");
-                    break;
-                case AirQuality.VeryBad:
-                    suggestions.push("Bye bye ears");
-                    break;
-            }
-
             switch (airStatus.temperature) {
                 case AirQuality.NotGood:
                     break;

@@ -10,7 +10,7 @@ import './Dashboard.scss';
 import { DashboardHeader } from './DashboardHeader';
 import { DeviceAirQualityData } from './DeviceAirQualityData';
 
-export const Dashboard: FunctionComponent<HomeProps> = (props) => {
+export const Dashboard: FunctionComponent<DashboardProps> = (props) => {
     useEffect(() => { props.fetchDevices(); }, []);
     useEffect(() => {
         if (props.currentDeviceId)
@@ -52,7 +52,7 @@ export const Dashboard: FunctionComponent<HomeProps> = (props) => {
     </div>;
 };
 
-export interface HomeProps {
+export interface DashboardProps {
     airQualityData: AirQualityData;
     airStatus: AirStatus;
     meterUnit: MeterUnit;
