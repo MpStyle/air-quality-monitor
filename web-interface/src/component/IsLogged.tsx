@@ -22,15 +22,15 @@ export const IsLogged: FunctionComponent<IsLoggedProps> = (props: IsLoggedProps)
     }
 
     if (authenticationResult == null) {
-        return <span className="authenticating-message">
+        return <div className="authenticating-message">
             <Paper elevation={2} className="content">
                 <Typography variant="h6">
                     <img src={logo} /> Air Quality Monitor
-            </Typography>
+                </Typography>
                 <div className="message">Authenticating...</div>
                 <CircularProgress />
             </Paper>
-        </span>;
+        </div>;
     }
 
     if (authenticationResult) {

@@ -1,6 +1,8 @@
-import { Button, TextField } from "@material-ui/core";
-import React, { useState, FunctionComponent } from 'react';
-import { useLocation, Redirect, RouteChildrenProps } from 'react-router';
+import { Button, Paper, TextField, Typography } from "@material-ui/core";
+import React, { FunctionComponent, useState } from 'react';
+import { Redirect, RouteChildrenProps, useLocation } from 'react-router';
+import logo from '../images/logo.svg';
+import "./Login.scss";
 
 function useQuery() {
     return new URLSearchParams(useLocation().search);
@@ -14,21 +16,30 @@ export const Login: FunctionComponent<LoginProps> = (props) => {
         return <Redirect to={{ pathname: query.get("sourceUrl") || props.fallbackUrl }} />;
     }
 
-    return <div>
-        <div>
-            <span>Sign in</span>
+    return <div className="login">
+        <Paper elevation={2} className="content">
+            <Typography variant="h6">
+                <img src={logo} /> Air Quality Monitor
+                </Typography>
+            <div className="title">Sign in</div>
             <TextField
-                id="outlined-password-input"
+                className="password"
                 label="Secret key"
                 type="password"
                 variant="outlined"
                 value={secretKey || ""}
                 onChange={event => setSecretKey(event.target.value as string)}
             />
-            <Button variant="contained" color="primary" onClick={() => props.onSignInClick(secretKey)} >
-                Sign in
-            </Button>
-        </div>
+            <div className="sign-in-button-container">
+                <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => props.onSignInClick(secretKey)}
+                    className="sign-in-button">
+                    Sign in
+                </Button>
+            </div>
+        </Paper>
     </div>;
 };
 

@@ -1,0 +1,28 @@
+.login{
+    display: block;
+    max-width: 400px;
+    width: 98%;
+    margin: 20px auto 0px auto;
+    text-align: center;
+
+    .content{
+        padding: 30px;
+
+        img{
+            width: 24px;
+            vertical-align: middle;
+        }
+
+        .title{
+            margin: 20px 0 20px 0;
+            font-weight: bold;
+        }
+
+        .sign-in-button-container{
+            margin-top: 30px;
+
+            .sign-in-button{
+            }
+        }
+    }
+}
