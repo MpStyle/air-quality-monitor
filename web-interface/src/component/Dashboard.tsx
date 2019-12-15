@@ -41,7 +41,9 @@ export const Dashboard: FunctionComponent<HomeProps> = (props) => {
     };
 
     return <div className="dashboard">
-        <AppDrawer isOpen={isAppDrawerOpen} toggleDrawer={toggleDrawer} />
+        <AppDrawer
+            isOpen={isAppDrawerOpen}
+            toggleDrawer={toggleDrawer} />
 
         <DashboardHeader
             devices={props.devices}
