@@ -1,4 +1,18 @@
 .app-drawer{
+    .app{
+        margin: 16px;
+
+        .logo-container{
+            min-width: 40px;
+            display: inline-block;
+
+            img{
+                width: 24px;
+                vertical-align: middle;
+            }
+        }
+    }
+
     .list-container{
         min-width: 250px;
 
