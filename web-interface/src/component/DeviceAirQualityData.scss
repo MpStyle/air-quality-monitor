@@ -1,0 +1,27 @@
+.loading{
+    padding: 20px;
+    margin: 150px auto 20px auto;
+    max-width: 400px;
+    width: 98%;
+    text-align: center;
+
+    .message{
+        margin: 10px 0 20px 0;
+    }
+}
+
+.air-quality-data {
+    width: 96%;
+    max-width: 600px;
+    margin: 195px auto 20px auto;
+}
+
+.last-update {
+    text-align: center;
+    font-size: 0.8em;
+    padding: 20px 0px;
+
+    span {
+        font-weight: bold;
+    }
+}
