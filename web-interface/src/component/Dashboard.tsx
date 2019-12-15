@@ -5,10 +5,10 @@ import { AirQualityData } from '../entity/AirQualityData';
 import { AirStatus } from "../entity/AirStatus";
 import { Device } from "../entity/Device";
 import { MeterUnit } from '../entity/MeterUnit';
-import { DeviceAirQualityData } from './DeviceAirQualityData';
 import { AppDrawer } from './AppDrawer';
 import './Dashboard.scss';
 import { DashboardHeader } from './DashboardHeader';
+import { DeviceAirQualityData } from './DeviceAirQualityData';
 
 export const Dashboard: FunctionComponent<HomeProps> = (props) => {
     useEffect(() => { props.fetchDevices(); }, []);
