@@ -9,7 +9,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import InfoIcon from '@material-ui/icons/Info';
 import { History } from 'history';
 import React, { FunctionComponent } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { updateSecretKeyActionBuilder } from "../action/UpdateSecretKeyAction";
 import { CREDITS_URL } from '../book/Pages';
 import logo from '../images/logo.svg';
@@ -29,7 +29,7 @@ export const AppDrawer: FunctionComponent<AppDrawerProps> = (props) => {
             <div className="app">
                 <Typography variant="h6">
                     <div className="logo-container">
-                        <img src={logo} />
+                        <img src={logo} alt="Air Quality Monitor" />
                     </div>
                     Air Quality Monitor
                 </Typography>

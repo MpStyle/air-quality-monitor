@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect } from 'react';
+import React, { useEffect, FunctionComponent } from 'react';
 import 'react-alice-carousel/lib/alice-carousel.css';
 import { averageAirStatus } from "../book/AverageAirStatus";
 import { AirQualityData } from '../entity/AirQualityData';
@@ -9,6 +9,7 @@ import { AppDrawer } from './AppDrawer';
 import './Dashboard.scss';
 import { DashboardHeader } from './DashboardHeader';
 import { DeviceAirQualityData } from './DeviceAirQualityData';
+import { Weather } from './Weather';
 
 export const Dashboard: FunctionComponent<DashboardProps> = (props) => {
     useEffect(() => { props.fetchDevices(); }, []);
@@ -44,6 +45,10 @@ export const Dashboard: FunctionComponent<DashboardProps> = (props) => {
             toggleDrawer={toggleDrawer}
             onCurrentDeviceIdChange={props.onCurrentDeviceIdChange}
             suggestions={props.suggestions} />
+
+        <div className="spacer" />
+
+        <Weather />
 
         <DeviceAirQualityData
             airQualityData={props.airQualityData}

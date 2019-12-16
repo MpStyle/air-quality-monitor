@@ -1,6 +1,6 @@
 import { Action } from "redux";
 import { FetchAirQualityDataSuccessAction, FetchAirQualityDataSuccessActionName } from '../action/FetchAirQualityDataSuccessAction';
-import { co2Quality, humidityQuality, noiseQuality, temperatureQuality, tvocQuality } from "../book/AirQuality";
+import { co2Quality, humidityQuality, temperatureQuality, tvocQuality } from "../book/AirQuality";
 import { AirQuality, AirStatus } from "../entity/AirStatus";
 import { initialAppState } from "../store/InitialAppState";
 

@@ -1,0 +1,42 @@
+.weather {
+    padding: 20px;
+    width: 96%;
+    max-width: 600px;
+    margin: 0px auto 20px auto;
+    text-align: center;
+
+    .table {
+        text-align: center;
+        overflow: hidden;
+        width: 350px;
+        margin: 0px auto;
+    }
+
+    .col {
+        display: inline-block;
+        margin: 0px 10px;
+        float: left;
+    }
+
+    .row {
+        text-align: center;
+    }
+
+    .icon-container {}
+
+    .date-container {
+        font-size: 1.4em;
+    }
+
+    .current-temperature-description-container {
+        .current-temperature {
+            font-size: 1.4em;
+        }
+
+        .description {
+            font-size: 1.2em;
+        }
+    }
+
+    .location-container {}
+}
