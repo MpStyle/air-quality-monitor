@@ -19,7 +19,7 @@ export const Weather: FunctionComponent<{}> = () => {
                 })
                 .catch(error => console.log("Error while fetching health data", error));
         };
-        if (!appKey) {
+        if (!!appKey) {
             poller();
         }
     }, []);
