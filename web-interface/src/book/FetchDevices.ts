@@ -1,25 +1,16 @@
-import { Device } from '../entity/Device';
+import { ServiceResponse } from '../entity/ServiceResponse';
+import { UserDevicesSearchRequest, UserDevicesSearchResponse } from '../entity/UserDevicesSearch';
 
-export const fetchDevices = (): Promise<Device[]> => {
-    return new Promise((resolve, _reject) => {
-        setTimeout(function () {
-            resolve([
-                {
-                    id: "1",
-                    name: "Ingresso"
-                } as Device
-            ]);
-        }, 100);
+export const fetchDevices = (secretKey: string): Promise<ServiceResponse<UserDevicesSearchResponse>> => {
+    const url = process.env.REACT_APP_AIR_QUALITY_DATA_REMOTE_URL as string;
+    return fetch(`${url}/app/user-devices-search`, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ secretKey: secretKey } as UserDevicesSearchRequest)
+    }).then((response): Promise<ServiceResponse<UserDevicesSearchResponse>> => {
+        return response.json();
     });
-
-    // const url = process.env.REACT_APP_AIR_QUALITY_DATA_REMOTE_URL as string;
-    // return fetch(`${url}/device`)
-    //     .then((response): Promise<Device[]> => {
-    //         if (!response.ok) {
-    //             console.error(`Error while fetch devices`);
-    //             return Promise.resolve([]);
-    //         }
-
-    //         return response.json();
-    //     });
 };

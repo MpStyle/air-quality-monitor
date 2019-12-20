@@ -12,7 +12,7 @@ import { DeviceAirQualityData } from './DeviceAirQualityData';
 import { Weather } from './Weather';
 
 export const Dashboard: FunctionComponent<DashboardProps> = (props) => {
-    useEffect(() => { props.fetchDevices(); }, []);
+    useEffect(() => { props.fetchDevices(props.secretKey); }, []);
     useEffect(() => {
         if (props.currentDeviceId)
             props.fetchAirQualityData(props.currentDeviceId as string);
@@ -20,7 +20,7 @@ export const Dashboard: FunctionComponent<DashboardProps> = (props) => {
 
     const average = averageAirStatus(props.airStatus);
     const areThereDevices = !!(props.devices && props.devices.length);
-    const currentDevice = props.devices.find(d => d.id === props.currentDeviceId);
+    const currentDevice = props.devices.find(d => d.deviceId === props.currentDeviceId);
 
     const [isAppDrawerOpen, setIsAppDrawerOpen] = React.useState(false);
 
@@ -58,6 +58,8 @@ export const Dashboard: FunctionComponent<DashboardProps> = (props) => {
 };
 
 export interface DashboardProps {
+    secretKey: string;
+
     airQualityData: AirQualityData;
     airStatus: AirStatus;
     meterUnit: MeterUnit;
@@ -68,6 +70,6 @@ export interface DashboardProps {
     currentDeviceId: string | null;
     onCurrentDeviceIdChange: (deviceId: string) => void;
 
-    fetchDevices: () => void;
+    fetchDevices: (secretKey: string) => void;
     fetchAirQualityData: (currentDeviceId: string) => void;
 }

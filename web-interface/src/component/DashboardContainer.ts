@@ -7,7 +7,6 @@ import { fetchAirQualityData } from '../book/FetchAirQualityData';
 import { fetchDevices } from '../book/FetchDevices';
 import { AirQualityData } from '../entity/AirQualityData';
 import { AppState } from '../entity/AppState';
-import { Device } from '../entity/Device';
 import { Dashboard, DashboardProps } from './Dashboard';
 
 export const DashboardContainer = connect(
@@ -18,16 +17,22 @@ export const DashboardContainer = connect(
             meterUnit: appState.meterUnit,
             currentDeviceId: appState.currentDevice,
             devices: appState.devices,
-            suggestions: appState.suggestions
+            suggestions: appState.suggestions,
+            secretKey: appState.secretKey
         } as DashboardProps;
     },
     (dispatch: Dispatch): DashboardProps => {
         return {
             onCurrentDeviceIdChange: (deviceId: string) => { dispatch(updateCurrentDeviceIdActionBuilder(deviceId)); },
-            fetchDevices: () => {
-                fetchDevices()
-                    .then((response: Device[]) => {
-                        dispatch(fetchDevicesSuccessActionBuilder(response));
+            fetchDevices: (secretKey: string) => {
+                fetchDevices(secretKey)
+                    .then(response => {
+                        if (response.error) {
+                            console.log(response.error);
+                            return;
+                        }
+
+                        dispatch(fetchDevicesSuccessActionBuilder(response.payload?.devices || []));
                     })
                     .catch((error) => {
                         // TODO: dispatch an error message

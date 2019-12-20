@@ -36,8 +36,8 @@ export const DashboardHeader: FunctionComponent<DashboardHeaderProps> = (props) 
                         onClose={handleClose}
                     >
                         {props.devices.map((device) => (
-                            <MenuItem key={device.id} value={device.id} onClick={() => {
-                                props.onCurrentDeviceIdChange(device.id);
+                            <MenuItem key={device.deviceId} value={device.deviceId} onClick={() => {
+                                props.onCurrentDeviceIdChange(device.deviceId);
                                 handleClose();
                             }}>{device.name}</MenuItem>
                         ))}

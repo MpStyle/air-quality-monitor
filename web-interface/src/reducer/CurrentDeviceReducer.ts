@@ -8,7 +8,7 @@ export const currentDeviceReducer = (state: string | null = initialAppState.curr
         case FetchDevicesSuccessActionName:
             const updateDevicesAction = action as FetchDevicesSuccessAction;
             if (updateDevicesAction.devices && updateDevicesAction.devices.length) {
-                return updateDevicesAction.devices[0].id;
+                return updateDevicesAction.devices[0].deviceId;
             }
             break;
         case UpdateCurrentDeviceIdActionName:

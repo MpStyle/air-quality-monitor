@@ -3,6 +3,8 @@ import Paper from '@material-ui/core/Paper/Paper';
 import Typography from '@material-ui/core/Typography/Typography';
 import React, { Fragment, FunctionComponent, useEffect, useState } from 'react';
 import { Redirect } from "react-router-dom";
+import { ServiceResponse } from '../entity/ServiceResponse';
+import { UserAuthorizationResponse } from '../entity/UserAuthorization';
 import logo from '../images/logo.svg';
 import { appStore } from '../store/AppStore';
 import "./IsLogged.scss";
@@ -13,7 +15,17 @@ export const IsLogged: FunctionComponent<IsLoggedProps> = (props: IsLoggedProps)
 
     useEffect(() => {
         if (appStore.getState().secretKey && authenticationResult == null) {
-            props.authentication(appStore.getState().secretKey as string).then(u => setAuthenticationResult(u));
+            props
+                .authentication(appStore.getState().secretKey as string)
+                .then(u => {
+                    if (u.error) {
+                        console.log(u.error);
+                        setAuthenticationResult(false);
+                        return;
+                    }
+
+                    setAuthenticationResult(u.payload?.success || false);
+                });
         }
     }, []);
 
@@ -47,6 +59,6 @@ export interface IsLoggedProps {
     // secretKey: string | null;
     children: React.ReactNode;
     sourceUrl: string | null;
-    authentication: (secretKey: string) => Promise<boolean | null>;
+    authentication: (secretKey: string) => Promise<ServiceResponse<UserAuthorizationResponse>>;
     resetSecretKey: () => void;
 }
