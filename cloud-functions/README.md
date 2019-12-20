@@ -56,3 +56,9 @@ The configuration `airqualitymonitor.authorizations` collects the secret keys an
 - The field `authorizations`
 - The field `deviceId`
 - The field `scopes`
+
+To set the variable:
+
+```bash
+firebase functions:config:set airqualitymonitor.authorizations="..."
+```
