@@ -1,15 +1,14 @@
-import { ILogging } from "../book/Logging"
-import { ServiceRequest } from "../entity/ServiceRequest"
-import { ServiceResponse } from "../entity/ServiceResponse"
-import { authorization } from "./Authorization"
-import { Errors } from "../entity/Errors"
-import { deviceAdd, DeviceAddRequest } from "./DeviceAdd"
-import { measurementAdd } from "./MeasurementAdd"
+import { ILogging } from "../book/Logging";
+import { Errors } from "../entity/Errors";
+import { buildErrorResponse, Service, buildResponse } from "../entity/Service";
+import { authorization } from "./Authorization";
+import { deviceAdd, DeviceAddRequest } from "./DeviceAdd";
+import { measurementAdd } from "./MeasurementAdd";
 import uuid = require("uuid")
 
-export const deviceDataIngestion = (logging: ILogging) => (req: DeviceDataIngestionRequest): Promise<DeviceDataIngestionResponse> => {
+export const deviceDataIngestion = (logging: ILogging): Service<DeviceDataIngestionRequest, {}> => req => {
     if (!req.secretKey || !req.device.id || !req.measurementDate) {
-        return Promise.resolve(<DeviceDataIngestionResponse>{ error: Errors.INVALID_DEVICE_DATA_INGESTION_REQUEST });
+        return buildErrorResponse(Errors.INVALID_DEVICE_DATA_INGESTION_REQUEST);
     }
 
     logging.info("deviceDataIngestion", "Starts");
@@ -17,21 +16,21 @@ export const deviceDataIngestion = (logging: ILogging) => (req: DeviceDataIngest
     return authorization(logging)({ secretKey: req.secretKey })
         .then(deviceAuthorizationResponse => {
             if (deviceAuthorizationResponse.error) {
-                return <DeviceDataIngestionResponse>{ error: deviceAuthorizationResponse.error };
+                return buildErrorResponse(deviceAuthorizationResponse.error);
             }
 
             if (!deviceAuthorizationResponse.payload) {
-                return <DeviceDataIngestionResponse>{ error: Errors.DEVICE_UNAUTHORIZED };
+                return buildErrorResponse(Errors.DEVICE_UNAUTHORIZED);
             }
 
             return deviceAdd(logging)(<DeviceAddRequest>{ deviceId: req.device.id, deviceName: req.device.name, deviceIp: req.device.ip })
                 .then(deviceAddResponse => {
                     if (deviceAddResponse.error) {
-                        return <DeviceDataIngestionResponse>{ error: deviceAddResponse.error };
+                        return buildErrorResponse(deviceAddResponse.error);
                     }
 
-                    if (!deviceAddResponse.payload) {
-                        return <DeviceDataIngestionResponse>{ error: Errors.ERROR_WHILE_ADD_DEVICE };
+                    if (!deviceAddResponse.payload || !deviceAddResponse.payload.device) {
+                        return buildErrorResponse(Errors.ERROR_WHILE_ADD_DEVICE);
                     }
 
                     return measurementAdd(logging)
@@ -66,29 +65,29 @@ export const deviceDataIngestion = (logging: ILogging) => (req: DeviceDataIngest
                         })
                         .then(addMeasurementResponse => {
                             if (addMeasurementResponse.error) {
-                                return <DeviceDataIngestionResponse>{ error: deviceAuthorizationResponse.error };
+                                return buildErrorResponse(deviceAuthorizationResponse.error);
                             }
 
                             if (!addMeasurementResponse.payload) {
-                                return <DeviceDataIngestionResponse>{ error: Errors.ERROR_WHILE_ADD_MEASUREMENT };
+                                return buildErrorResponse(Errors.ERROR_WHILE_ADD_MEASUREMENT);
                             }
 
-                            return <DeviceDataIngestionResponse>{ payload: true };
+                            return buildResponse({});
                         })
                         .catch(error => {
-                            return <DeviceDataIngestionResponse>{ error: `Error ${Errors.ERROR_WHILE_ADD_MEASUREMENT} - ${error}` };
+                            return buildErrorResponse(`Error ${Errors.ERROR_WHILE_ADD_MEASUREMENT} - ${error}`);
                         });
                 })
                 .catch(error => {
-                    return <DeviceDataIngestionResponse>{ error: `Error ${Errors.ERROR_WHILE_ADD_DEVICE} - ${error}` };
+                    return buildErrorResponse(`Error ${Errors.ERROR_WHILE_ADD_DEVICE} - ${error}`);
                 });
         })
         .catch(error => {
-            return <DeviceDataIngestionResponse>{ error: `Error ${Errors.DEVICE_AUTHORIZATION_ERROR} - ${error}` };
+            return buildErrorResponse(`Error ${Errors.DEVICE_AUTHORIZATION_ERROR} - ${error}`);
         });
 }
 
-export interface DeviceDataIngestionRequest extends ServiceRequest {
+export interface DeviceDataIngestionRequest {
     secretKey: string,
     device: {
         id: string,
@@ -104,5 +103,3 @@ export interface DeviceDataIngestionRequest extends ServiceRequest {
     },
     measurementDate: number
 }
-
-export interface DeviceDataIngestionResponse extends ServiceResponse<boolean> { }

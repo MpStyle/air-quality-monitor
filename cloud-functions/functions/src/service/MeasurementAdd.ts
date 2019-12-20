@@ -2,14 +2,13 @@ import { ILogging } from "../book/Logging";
 import { Collections } from "../entity/Collections";
 import { Errors } from "../entity/Errors";
 import { Measurement } from "../entity/Measurement";
-import { ServiceRequest } from "../entity/ServiceRequest";
-import { ServiceResponse } from "../entity/ServiceResponse";
+import { buildErrorResponse, buildResponse, Service, ServiceResponse } from "../entity/Service";
 import { devicesSearch, DevicesSearchRequest } from "./DevicesSearch";
-import { measurementsSearch, MeasurementSearchRequest, MeasurementSearchResponse } from "./MeasurementsSearch";
+import { measurementsSearch } from "./MeasurementsSearch";
 import admin = require('firebase-admin');
 import Bluebird = require("bluebird");
 
-export const measurementAdd = (logging: ILogging) => (req: MeasurementAddRequest): Promise<MeasurementAddResponse> => {
+export const measurementAdd = (logging: ILogging): Service<MeasurementAddRequest, MeasurementAddResponse> => req => {
     if (!req.deviceId || req.deviceId === ''
         || !req.measurements || !req.measurements.length
         || !req.inserted || req.inserted <= 0
@@ -18,7 +17,7 @@ export const measurementAdd = (logging: ILogging) => (req: MeasurementAddRequest
         logging.debug("measurementAdd", `Check parameter deviceId: ${!req.deviceId || req.deviceId === ''}`);
         logging.debug("measurementAdd", `Check parameter inserted: ${!req.inserted || req.inserted <= 0}`);
 
-        return Promise.resolve(<MeasurementAddResponse>{ error: Errors.INVALID_MEASUREMENT_ADD_REQUEST });
+        return buildErrorResponse(Errors.INVALID_MEASUREMENT_ADD_REQUEST);
     }
 
     const db = admin.firestore();
@@ -27,17 +26,17 @@ export const measurementAdd = (logging: ILogging) => (req: MeasurementAddRequest
     return deviceSearchService(<DevicesSearchRequest>{ deviceId: req.deviceId })
         .then(deviceSearchResponse => {
             if (deviceSearchResponse.error) {
-                return Promise.resolve({ error: deviceSearchResponse.error });
+                return buildErrorResponse(deviceSearchResponse.error);
             }
 
-            if (!deviceSearchResponse.payload || !deviceSearchResponse.payload.length) {
-                return Promise.resolve({ error: Errors.DEVICE_NOT_FOUND });
+            if (!deviceSearchResponse.payload || !deviceSearchResponse.payload || !deviceSearchResponse.payload.devices.length) {
+                return buildErrorResponse(Errors.DEVICE_NOT_FOUND);
             }
 
             return Bluebird
-                .map(req.measurements, (m, index) => {
+                .map(req.measurements, (m, index): Promise<ServiceResponse<MeasurementAddResponse>> => {
                     if (!m.id || m.id === '') {
-                        return Promise.reject(<MeasurementAddResponse>{ error: `${Errors.INVALID_MEASUREMENT} - [${index}]` });
+                        return buildErrorResponse(`${Errors.INVALID_MEASUREMENT} - [${index}]`);
                     }
 
                     const docRef = db.collection(Collections.MEASUREMENT).doc(m.id);
@@ -51,23 +50,23 @@ export const measurementAdd = (logging: ILogging) => (req: MeasurementAddRequest
                         })
                         .then(result => {
                             if (!result.writeTime) {
-                                return Promise.reject(<MeasurementAddResponse>{ error: Errors.ERROR_WHILE_ADD_MEASUREMENT });
+                                return buildErrorResponse(Errors.ERROR_WHILE_ADD_MEASUREMENT);
                             }
 
-                            return measurementsSearch(logging)(<MeasurementSearchRequest>{
+                            return measurementsSearch(logging)({
                                 measurementId: m.id,
                                 deviceId: req.deviceId
                             })
-                                .then((measurementSearchResponse: MeasurementSearchResponse) => {
+                                .then(measurementSearchResponse => {
                                     if (measurementSearchResponse.error) {
-                                        return Promise.reject(<MeasurementAddResponse>{ error: measurementSearchResponse.error });
+                                        return buildErrorResponse(measurementSearchResponse.error);
                                     }
 
-                                    if (!measurementSearchResponse.payload || (measurementSearchResponse.payload && measurementSearchResponse.payload.length !== 1)) {
-                                        return Promise.reject(<MeasurementAddResponse>{ error: Errors.MEASUREMENT_NOT_FOUND });
+                                    if (!measurementSearchResponse.payload || !measurementSearchResponse.payload.measurements || measurementSearchResponse.payload.measurements.length !== 1) {
+                                        return buildErrorResponse(Errors.MEASUREMENT_NOT_FOUND);
                                     }
 
-                                    return Promise.resolve(<MeasurementAddResponse>{ payload: measurementSearchResponse.payload });
+                                    return buildResponse({ measurements: measurementSearchResponse.payload.measurements });
                                 });
                         })
                         .catch((err: any) => {
@@ -75,15 +74,17 @@ export const measurementAdd = (logging: ILogging) => (req: MeasurementAddRequest
                             return Promise.resolve({ error: err });
                         });
                 }, { concurrency: 2 })
-                .then((result: MeasurementAddResponse[]) => Promise.resolve(<MeasurementAddResponse>{
-                    payload: result.reduce((acc, curr) => {
-                        if (curr.error || !curr.payload || !curr.payload.length) {
-                            return acc;
-                        }
+                .then(result => {
+                    return buildResponse({
+                        measurements: result.reduce((acc, curr) => {
+                            if (curr.error || !curr.payload || !curr.payload.measurements || !curr.payload.measurements.length) {
+                                return acc;
+                            }
 
-                        return acc.concat(curr.payload[0]);
-                    }, <Measurement[]>[])
-                }));
+                            return acc.concat(curr.payload.measurements[0]);
+                        }, <Measurement[]>[])
+                    });
+                });
         })
         .catch((err: any) => {
             logging.error("measurementAdd", `Error while adding device device: ${err}`);
@@ -91,7 +92,7 @@ export const measurementAdd = (logging: ILogging) => (req: MeasurementAddRequest
         });
 };
 
-export interface MeasurementAddRequest extends ServiceRequest {
+export interface MeasurementAddRequest {
     deviceId: string;
     measurements: {
         id: string,
@@ -101,5 +102,6 @@ export interface MeasurementAddRequest extends ServiceRequest {
     inserted: number;
 }
 
-export interface MeasurementAddResponse extends ServiceResponse<Measurement[]> {
+export interface MeasurementAddResponse {
+    measurements: Measurement[];
 }

@@ -2,11 +2,10 @@ import { ILogging } from "../book/Logging";
 import { Collections } from "../entity/Collections";
 import { Measurement } from "../entity/Measurement";
 import { PagedRequest } from "../entity/PagedRequest";
-import { ServiceRequest } from "../entity/ServiceRequest";
-import { ServiceResponse } from "../entity/ServiceResponse";
+import { buildErrorResponse, buildResponse, Service } from "../entity/Service";
 import admin = require('firebase-admin');
 
-export const measurementsSearch = (logging: ILogging) => (req: MeasurementSearchRequest): Promise<MeasurementSearchResponse> => {
+export const measurementsSearch = (logging: ILogging): Service<MeasurementSearchRequest, MeasurementSearchResponse> => req => {
     logging.info("measurementsSearch", "Starts");
 
     const db = admin.firestore();
@@ -40,24 +39,23 @@ export const measurementsSearch = (logging: ILogging) => (req: MeasurementSearch
         .then(snapshots => {
             if (!snapshots || snapshots.docs.length === 0) {
                 logging.debug("measurementsSearch", "No measurement found");
-                return Promise.resolve(<MeasurementSearchResponse>{ payload: [] });
+                return buildResponse<MeasurementSearchResponse>({ measurements: [] });
             }
 
-            return Promise.resolve({
-                payload: snapshots.docs.map(snapshot => <Measurement>snapshot.data())
-            });
+            return buildResponse<MeasurementSearchResponse>({ measurements: snapshots.docs.map(snapshot => <Measurement>snapshot.data()) });
         })
         .catch((err: any) => {
             logging.error("measurementsSearch", `Error while searching measurements: ${err}`);
-            return Promise.resolve({ error: err });
+            return buildErrorResponse(err);
         });
 };
 
-export interface MeasurementSearchRequest extends ServiceRequest, PagedRequest {
-    measurementId: string;
-    deviceId: string;
-    type: string;
+export interface MeasurementSearchRequest extends PagedRequest {
+    measurementId?: string;
+    deviceId?: string;
+    type?: string;
 }
 
-export interface MeasurementSearchResponse extends ServiceResponse<Measurement[]> {
+export interface MeasurementSearchResponse {
+    measurements: Measurement[];
 }

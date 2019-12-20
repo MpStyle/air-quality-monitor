@@ -1,4 +1,4 @@
 import { ILogging } from "../book/Logging";
-import { ServiceResponse } from "../entity/ServiceResponse";
+import { Service } from "../entity/Service";
 
-export const healthCheck = (_logging: ILogging) => () => <ServiceResponse<string>>{ payload: 'ok' };
+export const healthCheck = (_logging: ILogging): Service<{}, string> => (_) => (Promise.resolve({ payload: 'ok' }));

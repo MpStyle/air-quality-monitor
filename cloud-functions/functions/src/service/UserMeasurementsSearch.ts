@@ -1,12 +1,13 @@
 import { ILogging } from "../book/Logging";
 import { Errors } from "../entity/Errors";
 import { measurementsSearch, MeasurementSearchRequest as MeasurementsSearchRequest, MeasurementSearchResponse as MeasurementsSearchResponse } from "./MeasurementsSearch";
-import { authorization } from "./Authorization"
+import { authorization } from "./Authorization";
+import { Service, buildErrorResponse, buildResponse } from "../entity/Service";
 
-export const userMeasurementsSearch = (logging: ILogging) => (req: UserMeasurementsSearchRequest): Promise<UserMeasurementsSearchResponse> => {
+export const userMeasurementsSearch = (logging: ILogging): Service<UserMeasurementsSearchRequest, UserMeasurementsSearchResponse> => req => {
     try {
         if (!req.secretKey || req.secretKey === '') {
-            return Promise.resolve(<MeasurementsSearchResponse>{ error: Errors.INVALID_USER_MEASUREMENT_SEARCH_REQUEST });
+            return buildErrorResponse(Errors.INVALID_USER_MEASUREMENT_SEARCH_REQUEST);
         }
 
         logging.info("userMeasurementsSearch", "Starts");
@@ -14,28 +15,27 @@ export const userMeasurementsSearch = (logging: ILogging) => (req: UserMeasureme
         return authorization(logging)({ secretKey: req.secretKey })
             .then(authorizationResponse => {
                 if (authorizationResponse.error) {
-                    return Promise.resolve({ error: authorizationResponse.error });
+                    return buildErrorResponse(authorizationResponse.error);
                 }
 
                 if (!authorizationResponse.payload) {
-                    return Promise.resolve({ error: Errors.USER_UNAUTHORIZED });
+                    return buildErrorResponse(Errors.USER_UNAUTHORIZED);
                 }
                 return measurementsSearch(logging)(req)
                     .then(response => {
-                        return Promise.resolve(<MeasurementsSearchResponse>{
-                            payload: response.payload,
-                            error: response.error
-                        });
+                        return buildResponse({
+                            measurements: response.payload ? response.payload.measurements : []
+                        }, response.error);
                     });
             })
             .catch((err: any) => {
                 logging.error("userMeasurementSearch", `Error while searching measurements: ${err}`);
-                return Promise.resolve(<MeasurementsSearchResponse>{ error: err })
+                return buildErrorResponse(err);
             });
     }
     catch (error) {
         logging.error("userMeasurementSearch", `Error while searching measurements: ${error}`);
-        return Promise.resolve(<MeasurementsSearchResponse>{ error: error })
+        return buildErrorResponse(error);
     }
 };
 

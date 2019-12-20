@@ -1,11 +1,10 @@
 import { ILogging } from "../book/Logging";
 import { Collections } from "../entity/Collections";
 import { Device } from "../entity/Device";
-import { ServiceRequest } from "../entity/ServiceRequest";
-import { ServiceResponse } from "../entity/ServiceResponse";
+import { Service, buildResponse, buildErrorResponse } from "../entity/Service";
 import admin = require('firebase-admin');
 
-export const devicesSearch = (logging: ILogging) => (req: DevicesSearchRequest): Promise<DevicesSearchResponse> => {
+export const devicesSearch = (logging: ILogging): Service<DevicesSearchRequest, DevicesSearchResponse> => req => {
     logging.info("devicesSearch", "Starts");
 
     const db = admin.firestore();
@@ -19,22 +18,21 @@ export const devicesSearch = (logging: ILogging) => (req: DevicesSearchRequest):
         .then(snapshots => {
             if (!snapshots || snapshots.docs.length === 0) {
                 logging.debug("devicesSearch", "No device found");
-                return Promise.resolve(<DevicesSearchResponse>{ payload: [] });
+                return buildResponse({ devices: [] });
             }
 
-            return Promise.resolve({
-                payload: snapshots.docs.map(snapshot => <Device>snapshot.data())
-            });
+            return buildResponse({ devices: snapshots.docs.map(snapshot => <Device>snapshot.data()) });
         })
         .catch((err: any) => {
             logging.error("devicesSearch", `Error while searching device: ${err}`);
-            return Promise.resolve({ error: err })
+            return buildErrorResponse(err);
         });
 };
 
-export interface DevicesSearchRequest extends ServiceRequest {
+export interface DevicesSearchRequest {
     deviceId: string;
 }
 
-export interface DevicesSearchResponse extends ServiceResponse<Device[]> {
+export interface DevicesSearchResponse {
+    devices: Device[];
 }

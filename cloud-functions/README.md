@@ -34,12 +34,25 @@ firebase deploy --only functions
 
 ## Configuration 
 
-### Secret keys
+### Authorizations
 
-Split secret keys with `;`.
+The configuration `airqualitymonitor.authorizations` collects the secret keys and what air quality data is possible to read and/or to write from a device.
 
-Set environment variable `airqualitymonitor.secretkeys` using Firebase CLI:
-
-```bash
-firebase functions:config:set airqualitymonitor.secretkeys="__SECRET_KEYS__"
+```json
+[
+    {
+        "secretKey": "...",
+        "authorizations": [
+            {
+                "deviceId": "...",
+                "scopes": [ "...", "..." ]
+            }
+        ]
+    }
+]
 ```
+
+- The field `secretKey`
+- The field `authorizations`
+- The field `deviceId`
+- The field `scopes`
