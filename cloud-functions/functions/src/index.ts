@@ -7,6 +7,7 @@ import { healthCheck } from './service/HealthCheck';
 import { userDevicesSearch } from './service/UserDevicesSearch';
 import { userMeasurementsSearch } from './service/UserMeasurementsSearch';
 import { buildErrorResponse } from './entity/Service';
+import { userAuthorization } from './service/UserAuthorization';
 
 admin.initializeApp(functions.config().firebase);
 
@@ -23,6 +24,11 @@ app.get('/health-check', (req, res) => {
 });
 app.put('/device-data-ingestion', (req, res) => {
     deviceDataIngestion(logging)(req.body)
+        .then(data => res.send(data))
+        .catch(err => buildErrorResponse(err));
+});
+app.post('/user-authorization', (req, res) => {
+    userAuthorization(logging)(req.body)
         .then(data => res.send(data))
         .catch(err => buildErrorResponse(err));
 });
