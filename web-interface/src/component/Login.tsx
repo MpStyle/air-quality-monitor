@@ -19,7 +19,7 @@ export const Login: FunctionComponent<LoginProps> = (props) => {
     return <div className="login">
         <Paper elevation={2} className="content">
             <Typography variant="h6">
-                <img src={logo} /> Air Quality Monitor
+                <img src={logo} alt="Air Quality Monitor logo" /> Air Quality Monitor
                 </Typography>
             <div className="title">Sign in</div>
             <TextField

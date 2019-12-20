@@ -37,7 +37,7 @@ export const Weather: FunctionComponent<{}> = () => {
             <div className="table">
                 <div className="col">
                     <div className="row icon-container">
-                        <img src={weaterState.current.weather_icons[0]} />
+                        <img src={weaterState.current.weather_icons[0]} alt="Weather icon" />
                     </div>
                 </div>
                 <div className="col">
