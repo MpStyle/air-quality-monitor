@@ -7,7 +7,8 @@ import { Errors } from "../entity/Errors";
 export const authorization = (logging: ILogging): Service<AuthorizationRequest, AuthorizationResponse> => req => {
     try {
         logging.info("authorization", "Starts");
-        const appAuthorizations: AppAuthorizations[] = functions.config().airqualitymonitor.authorizations;
+
+        const appAuthorizations: AppAuthorizations[] = JSON.parse(functions.config().airqualitymonitor.authorizations);
 
         if (!appAuthorizations) {
             return buildErrorResponse(Errors.AUTHORIZATIONS_CONFIGURATION_NOT_FOUND);
