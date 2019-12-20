@@ -5,6 +5,7 @@ import { authorization } from "./Authorization";
 import { deviceAdd, DeviceAddRequest } from "./DeviceAdd";
 import { measurementAdd } from "./MeasurementAdd";
 import uuid = require("uuid")
+import { Scopes } from "../entity/Scopes";
 
 export const deviceDataIngestion = (logging: ILogging): Service<DeviceDataIngestionRequest, {}> => req => {
     if (!req.secretKey || !req.device.id || !req.measurementDate) {
@@ -21,6 +22,11 @@ export const deviceDataIngestion = (logging: ILogging): Service<DeviceDataIngest
 
             if (!deviceAuthorizationResponse.payload) {
                 return buildErrorResponse(Errors.DEVICE_UNAUTHORIZED);
+            }
+
+            // Only with the write scope permission
+            if (!deviceAuthorizationResponse.payload.authorizations.filter(a => a.deviceId === req.device.id && a.scopes.indexOf(Scopes.device_air_quality_data_write) !== -1).length) {
+                return buildErrorResponse(Errors.INVALID_AUTORIZATION);
             }
 
             return deviceAdd(logging)(<DeviceAddRequest>{ deviceId: req.device.id, deviceName: req.device.name, deviceIp: req.device.ip })

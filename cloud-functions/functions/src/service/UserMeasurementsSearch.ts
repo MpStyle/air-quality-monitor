@@ -1,8 +1,9 @@
 import { ILogging } from "../book/Logging";
 import { Errors } from "../entity/Errors";
-import { measurementsSearch, MeasurementSearchRequest as MeasurementsSearchRequest, MeasurementSearchResponse as MeasurementsSearchResponse } from "./MeasurementsSearch";
+import { Scopes } from "../entity/Scopes";
+import { buildErrorResponse, buildResponse, Service } from "../entity/Service";
 import { authorization } from "./Authorization";
-import { Service, buildErrorResponse, buildResponse } from "../entity/Service";
+import { MeasurementSearchRequest as MeasurementsSearchRequest, MeasurementSearchResponse as MeasurementsSearchResponse, measurementsSearch } from "./MeasurementsSearch";
 
 export const userMeasurementsSearch = (logging: ILogging): Service<UserMeasurementsSearchRequest, UserMeasurementsSearchResponse> => req => {
     try {
@@ -21,11 +22,24 @@ export const userMeasurementsSearch = (logging: ILogging): Service<UserMeasureme
                 if (!authorizationResponse.payload) {
                     return buildErrorResponse(Errors.USER_UNAUTHORIZED);
                 }
+
+                const deviceIds = authorizationResponse.payload.authorizations
+                    .filter(a => a.scopes.indexOf(Scopes.device_air_quality_data_read) !== -1)
+                    .map(a => a.deviceId);
+
                 return measurementsSearch(logging)(req)
                     .then(response => {
-                        return buildResponse({
-                            measurements: response.payload ? response.payload.measurements : []
-                        }, response.error);
+                        if (response.error) {
+                            return buildErrorResponse(response.error);
+                        }
+
+                        if (!response.payload) {
+                            return buildErrorResponse(Errors.MEASUREMENT_NOT_FOUND);
+                        }
+
+                        return buildResponse<UserMeasurementsSearchResponse>({
+                            measurements: response.payload.measurements.filter(m => deviceIds.indexOf(m.deviceId) !== -1)
+                        });
                     });
             })
             .catch((err: any) => {
