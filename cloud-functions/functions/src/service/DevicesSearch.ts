@@ -14,10 +14,6 @@ export const devicesSearch = (logging: ILogging): Service<DevicesSearchRequest, 
         collectionRef = collectionRef.where('deviceId', '==', req.deviceId);
     }
 
-    if (req.deviceIds) {
-        collectionRef = collectionRef.where('deviceId', 'in', req.deviceIds);
-    }
-
     return collectionRef.get()
         .then(snapshots => {
             if (!snapshots || snapshots.docs.length === 0) {
@@ -35,7 +31,6 @@ export const devicesSearch = (logging: ILogging): Service<DevicesSearchRequest, 
 
 export interface DevicesSearchRequest {
     deviceId: string;
-    deviceIds: string[];
 }
 
 export interface DevicesSearchResponse {
