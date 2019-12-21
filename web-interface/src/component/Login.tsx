@@ -31,7 +31,7 @@ export const Login: FunctionComponent<LoginProps> = (props) => {
                 onChange={event => setSecretKey(event.target.value as string)}
                 onKeyDown={event => {
                     if (event.key === 'Enter') {
-                        props.onSignInClick(secretKey)
+                        props.onSignInClick(secretKey);
                     }
                 }}
             />
