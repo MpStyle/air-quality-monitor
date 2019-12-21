@@ -34,7 +34,9 @@ export const Dashboard: FunctionComponent<DashboardProps> = (props) => {
 
     return <div className="dashboard">
         <AppDrawer
+            currentDevice={currentDevice}
             isOpen={isAppDrawerOpen}
+            average={average}
             toggleDrawer={toggleDrawer} />
 
         <DashboardHeader

@@ -7,11 +7,14 @@ import ListItemText from "@material-ui/core/ListItemText/ListItemText";
 import Typography from "@material-ui/core/Typography/Typography";
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import InfoIcon from '@material-ui/icons/Info';
+import PhonelinkRingIcon from '@material-ui/icons/PhonelinkRing';
 import { History } from 'history';
 import React, { FunctionComponent } from "react";
-import { useHistory, Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { updateSecretKeyActionBuilder } from "../action/UpdateSecretKeyAction";
+import { airQualityToLabel } from "../book/AirQualityToLabel";
 import { CREDITS_URL } from '../book/Pages';
+import { Device } from "../entity/Device";
 import logo from '../images/logo.svg';
 import { appStore } from "../store/AppStore";
 import "./AppDrawer.scss";
@@ -34,6 +37,19 @@ export const AppDrawer: FunctionComponent<AppDrawerProps> = (props) => {
                     Air Quality Monitor
                 </Typography>
             </div>
+
+            <Divider />
+
+            {props.currentDevice && <div className="device">
+                <Typography variant="h6">
+                    <PhonelinkRingIcon className="icon" />
+                    {props.currentDevice.name} <span className="air-quality-average">({airQualityToLabel(props.average)})</span>
+                </Typography>
+                <div className="ip">
+                    {props.currentDevice.deviceIP.split(";")[0]}
+                </div>
+                {props.currentDevice.address && props.currentDevice.address.length && <div className="address">{props.currentDevice.address}</div>}
+            </div>}
 
             <Divider />
 
@@ -60,6 +76,8 @@ export const AppDrawer: FunctionComponent<AppDrawerProps> = (props) => {
 
 export interface AppDrawerProps {
     isOpen: boolean;
+    average: number;
     toggleDrawer: (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => void;
     history?: History;
+    currentDevice: Device | undefined;
 }

@@ -13,6 +13,35 @@
         }
     }
 
+    .device{
+        margin: 16px;
+
+        .icon{
+            vertical-align: text-bottom;
+            margin-right: 10px;
+        }
+
+        .air-quality-average{
+            font-size: 0.7em;
+            display: inline-block;
+            margin-left: 20px;
+            opacity: 0.8;
+            text-transform: uppercase;
+        }
+
+        .ip{    
+            margin: 15px 0px;
+
+            .text-input-ip{
+                display:none;
+            }
+        }
+
+        .address{      
+            margin: 5px 0px;
+        }
+    }
+
     .list-container{
         min-width: 250px;
 
