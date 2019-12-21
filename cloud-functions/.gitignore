@@ -70,3 +70,5 @@ functions/config
 *.js
 *.js.map
 .runtimeconfig.json
+
+public
