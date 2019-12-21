@@ -9,5 +9,10 @@ export interface UserMeasurementsSearchRequest {
 
 // tslint:disable-next-line: no-empty-interface
 export interface UserMeasurementsSearchResponse {
-    measurements: Measurement[];
+    humidity: number | null;
+    temperature: number | null;
+    pressure: number | null;
+    tvoc: number | null;
+    co2: number | null;
+    inserted: number;
 }

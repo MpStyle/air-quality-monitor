@@ -4,6 +4,5 @@ export interface AirQualityData {
     tvoc: number;
     pressure: number;
     humidity: number;
-    noise: number;
     temperature: number;
 }

@@ -1,29 +1,16 @@
-import { AirQualityData } from "../entity/AirQualityData";
+import { ServiceResponse } from "../entity/ServiceResponse";
+import { UserMeasurementsSearchRequest, UserMeasurementsSearchResponse } from "../entity/UserMeasurementsSearch";
 
-export const fetchAirQualityData = (currentDeviceId: string): Promise<AirQualityData[]> => {
-    // return new Promise((resolve, _reject) => {
-    //     setTimeout(function () {
-    //         resolve([
-    //             {
-    //                 co2: 400,
-    //                 humidity: 60,
-    //                 inserted: 1576247467000,
-    //                 pressure: 82,
-    //                 temperature: 21,
-    //                 tvoc: 300
-    //             } as AirQualityData
-    //         ]);
-    //     }, 100);
-    // });
-
+export const fetchAirQualityData = (currentDeviceId: string, secretKey: String): Promise<ServiceResponse<UserMeasurementsSearchResponse>> => {
     const url = process.env.REACT_APP_AIR_QUALITY_DATA_REMOTE_URL as string;
-    return fetch(`${url}/app/user-measurements-search`)
-        .then((response): Promise<AirQualityData[]> => {
-            if (!response.ok) {
-                console.error(`Error while fetch air quality data`);
-                return Promise.resolve([]);
-            }
-
-            return response.json();
-        });
+    return fetch(`${url}/app/user-measurements-search`, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ secretKey: secretKey, deviceId: currentDeviceId } as UserMeasurementsSearchRequest)
+    }).then((response): Promise<ServiceResponse<UserMeasurementsSearchResponse>> => {
+        return response.json();
+    });
 };

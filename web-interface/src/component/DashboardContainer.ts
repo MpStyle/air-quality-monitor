@@ -39,11 +39,16 @@ export const DashboardContainer = connect(
                         console.error(`Error while fetch devices: ${error}`);
                     });
             },
-            fetchAirQualityData: (currentDeviceId: string) => {
+            fetchAirQualityData: (currentDeviceId: string, secretKey: string) => {
                 const poller = () => {
-                    fetchAirQualityData(currentDeviceId)
-                        .then((response: AirQualityData[]) => {
-                            dispatch(fetchAirQualityDataSuccessActionBuilder(response[0]));
+                    fetchAirQualityData(currentDeviceId, secretKey)
+                        .then(response => {
+                            if (response.error) {
+                                console.log(response.error);
+                                return;
+                            }
+
+                            dispatch(fetchAirQualityDataSuccessActionBuilder(response.payload as AirQualityData));
                         })
                         .catch((error) => {
                             // TODO: dispatch an error message

@@ -15,7 +15,7 @@ export const Dashboard: FunctionComponent<DashboardProps> = (props) => {
     useEffect(() => { props.fetchDevices(props.secretKey); }, []);
     useEffect(() => {
         if (props.currentDeviceId)
-            props.fetchAirQualityData(props.currentDeviceId as string);
+            props.fetchAirQualityData(props.currentDeviceId, props.secretKey);
     }, [props.currentDeviceId]);
 
     const average = averageAirStatus(props.airStatus);
@@ -71,5 +71,5 @@ export interface DashboardProps {
     onCurrentDeviceIdChange: (deviceId: string) => void;
 
     fetchDevices: (secretKey: string) => void;
-    fetchAirQualityData: (currentDeviceId: string) => void;
+    fetchAirQualityData: (currentDeviceId: string, secretKey: string) => void;
 }
