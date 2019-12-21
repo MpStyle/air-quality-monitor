@@ -29,6 +29,11 @@ export const Login: FunctionComponent<LoginProps> = (props) => {
                 variant="outlined"
                 value={secretKey || ""}
                 onChange={event => setSecretKey(event.target.value as string)}
+                onKeyDown={event => {
+                    if (event.key === 'Enter') {
+                        props.onSignInClick(secretKey)
+                    }
+                }}
             />
             <div className="sign-in-button-container">
                 <Button
