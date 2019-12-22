@@ -6,7 +6,8 @@ import { Route } from 'react-router';
 import { HashRouter } from 'react-router-dom';
 import { updateSecretKeyActionBuilder } from './action/UpdateSecretKeyAction';
 import { authentication } from './book/Authentication';
-import { CREDITS_URL, DASHBOARD_URL, LOGIN_URL } from './book/Pages';
+import { APP_SETTINGS_URL, CREDITS_URL, DASHBOARD_URL, LOGIN_URL } from './book/Pages';
+import { AppSettingsContainer } from './component/AppSettingsContainer';
 import { Credits } from './component/Credits';
 import { DashboardContainer } from './component/DashboardContainer';
 import { IsLogged } from './component/IsLogged';
@@ -30,6 +31,7 @@ ReactDOM.render(
             </Route>
             <Route exact path="/" component={LoginContainer} />
             <Route path={LOGIN_URL} component={LoginContainer} />
+            <Route path={APP_SETTINGS_URL} component={AppSettingsContainer} />
         </HashRouter>
     </Provider>,
     document.getElementById('root')

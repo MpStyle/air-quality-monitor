@@ -8,12 +8,13 @@ import Typography from "@material-ui/core/Typography/Typography";
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import InfoIcon from '@material-ui/icons/Info';
 import PhonelinkRingIcon from '@material-ui/icons/PhonelinkRing';
+import SettingsIcon from '@material-ui/icons/Settings';
 import { History } from 'history';
 import React, { FunctionComponent } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { updateSecretKeyActionBuilder } from "../action/UpdateSecretKeyAction";
 import { airQualityToLabel } from "../book/AirQualityToLabel";
-import { CREDITS_URL } from '../book/Pages';
+import { APP_SETTINGS_URL, CREDITS_URL } from '../book/Pages';
 import { Device } from "../entity/Device";
 import logo from '../images/logo.svg';
 import { appStore } from "../store/AppStore";
@@ -54,6 +55,12 @@ export const AppDrawer: FunctionComponent<AppDrawerProps> = (props) => {
             <Divider />
 
             <List>
+                <ListItem button className="list-item" component={Link} to={APP_SETTINGS_URL}>
+                    <ListItemIcon>
+                        <SettingsIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Settings" />
+                </ListItem>
                 <ListItem button className="list-item" component={Link} to={CREDITS_URL}>
                     <ListItemIcon>
                         <InfoIcon />

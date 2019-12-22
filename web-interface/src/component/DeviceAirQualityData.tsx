@@ -2,6 +2,8 @@ import { CircularProgress, Divider } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper/Paper";
 import React, { FunctionComponent } from "react";
 import { epochToFormatedDate } from "../book/DateTimeUtils";
+import { celsiusToFahrenheit } from "../book/TemperatureConverter";
+import { TemperatureUnit } from "../book/Unit";
 import { AirQualityData } from "../entity/AirQualityData";
 import { AirStatus } from "../entity/AirStatus";
 import { MeterUnit } from "../entity/MeterUnit";
@@ -31,8 +33,8 @@ export const DeviceAirQualityData: FunctionComponent<AirQualityDataProps> = (pro
         <DataRow
             title="Temperature"
             icon={temperature}
-            value={props.airQualityData.temperature}
-            meter={props.meterUnit.temperature}
+            value={props.meterUnit.temperature === TemperatureUnit.CELSIUS ? props.airQualityData.temperature : celsiusToFahrenheit(props.airQualityData.temperature)}
+            meter={props.meterUnit.temperature === TemperatureUnit.CELSIUS ? "°C" : "°F"}
             quality={props.airStatus.temperature} />
 
         <Divider light />

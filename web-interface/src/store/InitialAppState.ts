@@ -1,7 +1,9 @@
 import { co2Quality, humidityQuality, temperatureQuality, tvocQuality } from '../book/AirQuality';
+import { TemperatureUnit } from '../book/Unit';
 import { AirQualityData } from '../entity/AirQualityData';
 import { AirQuality, AirStatus } from '../entity/AirStatus';
-import { AIR_QUALITY_DATA_CO2_KEY, AIR_QUALITY_DATA_HUMIDITY_KEY, AIR_QUALITY_DATA_INSERTED_KEY, AIR_QUALITY_DATA_PRESSURE_KEY, AIR_QUALITY_DATA_TEMPERATURE_KEY, AIR_QUALITY_DATA_TVOC_KEY, SECRET_KEY_KEY } from './../book/SessionStorageKeys';
+import { AIR_QUALITY_DATA_CO2_KEY, AIR_QUALITY_DATA_HUMIDITY_KEY, AIR_QUALITY_DATA_INSERTED_KEY, AIR_QUALITY_DATA_PRESSURE_KEY, AIR_QUALITY_DATA_TEMPERATURE_KEY, AIR_QUALITY_DATA_TVOC_KEY, TEMPERATURE_UNIT_KEY } from './../book/LocalStorageKeys';
+import { SECRET_KEY_KEY } from './../book/SessionStorageKeys';
 import { AppState } from './../entity/AppState';
 
 export const initialAppState: AppState = {
@@ -19,7 +21,7 @@ export const initialAppState: AppState = {
         pressure: "hPa",
         humidity: "% RH",
         noise: "db",
-        temperature: "°C",
+        temperature: localStorage.getItem(TEMPERATURE_UNIT_KEY) ?? TemperatureUnit.CELSIUS,
     },
     airStatus: {
         co2: co2Quality(parseFloat(sessionStorage.getItem(AIR_QUALITY_DATA_CO2_KEY) as string)),
