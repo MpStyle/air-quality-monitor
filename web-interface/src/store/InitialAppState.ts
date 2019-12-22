@@ -6,13 +6,12 @@ import { AppState } from './../entity/AppState';
 
 export const initialAppState: AppState = {
     airQualityData: {
-        inserted: parseInt(sessionStorage.getItem(AIR_QUALITY_DATA_INSERTED_KEY) as string),
-        co2: parseInt(sessionStorage.getItem(AIR_QUALITY_DATA_CO2_KEY) as string),
-        tvoc: parseInt(sessionStorage.getItem(AIR_QUALITY_DATA_TVOC_KEY) as string),
-        pressure: parseInt(sessionStorage.getItem(AIR_QUALITY_DATA_PRESSURE_KEY) as string),
-        humidity: parseInt(sessionStorage.getItem(AIR_QUALITY_DATA_HUMIDITY_KEY) as string),
-        noise: parseInt(sessionStorage.getItem(AIR_QUALITY_DATA_NOISE_KEY) as string),
-        temperature: parseInt(sessionStorage.getItem(AIR_QUALITY_DATA_TEMPERATURE_KEY) as string),
+        inserted: parseFloat(sessionStorage.getItem(AIR_QUALITY_DATA_INSERTED_KEY) as string),
+        co2: parseFloat(sessionStorage.getItem(AIR_QUALITY_DATA_CO2_KEY) as string),
+        tvoc: parseFloat(sessionStorage.getItem(AIR_QUALITY_DATA_TVOC_KEY) as string),
+        pressure: parseFloat(sessionStorage.getItem(AIR_QUALITY_DATA_PRESSURE_KEY) as string),
+        humidity: parseFloat(sessionStorage.getItem(AIR_QUALITY_DATA_HUMIDITY_KEY) as string),
+        temperature: parseFloat(sessionStorage.getItem(AIR_QUALITY_DATA_TEMPERATURE_KEY) as string),
     } as AirQualityData,
     meterUnit: {
         co2: "ppm",
@@ -23,11 +22,11 @@ export const initialAppState: AppState = {
         temperature: "°C",
     },
     airStatus: {
-        co2: co2Quality(parseInt(sessionStorage.getItem(AIR_QUALITY_DATA_CO2_KEY) as string)),
-        humidity: humidityQuality(parseInt(sessionStorage.getItem(AIR_QUALITY_DATA_HUMIDITY_KEY) as string)),
+        co2: co2Quality(parseFloat(sessionStorage.getItem(AIR_QUALITY_DATA_CO2_KEY) as string)),
+        humidity: humidityQuality(parseFloat(sessionStorage.getItem(AIR_QUALITY_DATA_HUMIDITY_KEY) as string)),
         pressure: AirQuality.Excellent,
-        temperature: temperatureQuality(parseInt(sessionStorage.getItem(AIR_QUALITY_DATA_TEMPERATURE_KEY) as string)),
-        tvoc: tvocQuality(parseInt(sessionStorage.getItem(AIR_QUALITY_DATA_TVOC_KEY) as string)),
+        temperature: temperatureQuality(parseFloat(sessionStorage.getItem(AIR_QUALITY_DATA_TEMPERATURE_KEY) as string)),
+        tvoc: tvocQuality(parseFloat(sessionStorage.getItem(AIR_QUALITY_DATA_TVOC_KEY) as string)),
     } as AirStatus,
     devices: [],
     currentDevice: null,
