@@ -1,5 +1,6 @@
 import { Action } from "redux";
 import { FetchAirQualityDataSuccessActionName } from "../action/FetchAirQualityDataSuccessAction";
+import { averageAirStatus } from "../book/AverageAirStatus";
 import { AirQuality, AirStatus } from "../entity/AirStatus";
 import { initialAppState } from "../store/InitialAppState";
 import { airStatusReducer } from './AirStatusReducer';
@@ -49,6 +50,10 @@ export const suggestionsReducer = (state: string[] = initialAppState.suggestions
                 case AirQuality.VeryBad:
                     suggestions.push("Do you switch off the cooker?");
                     break;
+            }
+
+            if (averageAirStatus(airStatus) === AirQuality.Excellent) {
+                suggestions.push("Really?! Where is the paradise you're living?");
             }
 
             return suggestions;

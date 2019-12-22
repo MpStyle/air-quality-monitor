@@ -8,12 +8,12 @@ export const airQualityDataReducer = (state: AirQualityData = initialAppState.ai
     switch (action.type) {
         case FetchAirQualityDataSuccessActionName:
             const updateAirQualityDataAction = action as FetchAirQualityDataSuccessAction;
-            sessionStorage.setItem(AIR_QUALITY_DATA_CO2_KEY, updateAirQualityDataAction.data.co2.toString());
-            sessionStorage.setItem(AIR_QUALITY_DATA_HUMIDITY_KEY, updateAirQualityDataAction.data.humidity.toString());
-            sessionStorage.setItem(AIR_QUALITY_DATA_INSERTED_KEY, updateAirQualityDataAction.data.inserted.toString());
-            sessionStorage.setItem(AIR_QUALITY_DATA_PRESSURE_KEY, updateAirQualityDataAction.data.pressure.toString());
-            sessionStorage.setItem(AIR_QUALITY_DATA_TEMPERATURE_KEY, updateAirQualityDataAction.data.temperature.toString());
-            sessionStorage.setItem(AIR_QUALITY_DATA_TVOC_KEY, updateAirQualityDataAction.data.tvoc.toString());
+            localStorage.setItem(AIR_QUALITY_DATA_CO2_KEY, updateAirQualityDataAction.data.co2.toString());
+            localStorage.setItem(AIR_QUALITY_DATA_HUMIDITY_KEY, updateAirQualityDataAction.data.humidity.toString());
+            localStorage.setItem(AIR_QUALITY_DATA_INSERTED_KEY, updateAirQualityDataAction.data.inserted.toString());
+            localStorage.setItem(AIR_QUALITY_DATA_PRESSURE_KEY, updateAirQualityDataAction.data.pressure.toString());
+            localStorage.setItem(AIR_QUALITY_DATA_TEMPERATURE_KEY, updateAirQualityDataAction.data.temperature.toString());
+            localStorage.setItem(AIR_QUALITY_DATA_TVOC_KEY, updateAirQualityDataAction.data.tvoc.toString());
             return updateAirQualityDataAction.data;
     }
     return state;

@@ -8,7 +8,7 @@ export const secretKeyReducer = (state: string | null = initialAppState.secretKe
         case UpdateSecretKeyActionName:
             const secretKey = (action as UpdateSecretKeyAction).secretKey;
             if (secretKey == null) {
-                sessionStorage.clear();
+                localStorage.clear();
             }
             else {
                 sessionStorage.setItem(SECRET_KEY_KEY, secretKey);
