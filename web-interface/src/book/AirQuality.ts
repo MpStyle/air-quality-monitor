@@ -77,8 +77,16 @@ export const co2Quality = (co2: number): AirQuality => {
 };
 
 export const tvocQuality = (tvoc: number): AirQuality => {
-    if (tvoc > 0.5) {
+    if (tvoc >= 660) {
         return AirQuality.VeryBad;
+    }
+
+    if (tvoc >= 220 && tvoc < 660) {
+        return AirQuality.NotGood;
+    }
+
+    if (tvoc >= 65 && tvoc < 220) {
+        return AirQuality.Good;
     }
 
     return AirQuality.Excellent;
