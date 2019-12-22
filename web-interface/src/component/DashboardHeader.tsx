@@ -47,7 +47,11 @@ export const DashboardHeader: FunctionComponent<DashboardHeaderProps> = (props) 
                 {airQualityToLabel(props.average)}
             </div>
             <div className="sub-header carousel">
-                {props.suggestions && props.suggestions.length > 0 && <AliceCarousel autoPlayInterval={6000} buttonsDisabled={true} autoPlay={true}>
+                {props.suggestions && props.suggestions.length > 0 && <AliceCarousel
+                    autoPlayInterval={6000}
+                    buttonsDisabled={true}
+                    dotsDisabled={props.suggestions.length === 1}
+                    autoPlay={props.suggestions.length > 1}>
                     {props.suggestions.map((s, i) => <div key={`slide-${i}`}>{s}</div>)}
                 </AliceCarousel >}
             </div>
