@@ -33,7 +33,7 @@ export const DeviceAirQualityData: FunctionComponent<AirQualityDataProps> = (pro
         <DataRow
             title="Temperature"
             icon={temperature}
-            value={props.meterUnit.temperature === TemperatureUnit.CELSIUS ? props.airQualityData.temperature : celsiusToFahrenheit(props.airQualityData.temperature)}
+            value={(props.meterUnit.temperature === TemperatureUnit.CELSIUS ? props.airQualityData.temperature : celsiusToFahrenheit(props.airQualityData.temperature)).toFixed(1)}
             meter={props.meterUnit.temperature === TemperatureUnit.CELSIUS ? "°C" : "°F"}
             quality={props.airStatus.temperature} />
 
@@ -42,7 +42,7 @@ export const DeviceAirQualityData: FunctionComponent<AirQualityDataProps> = (pro
         <DataRow
             title="Humidity"
             icon={humidity}
-            value={props.airQualityData.humidity}
+            value={props.airQualityData.humidity.toFixed(0)}
             meter={props.meterUnit.humidity}
             quality={props.airStatus.humidity} />
 
@@ -51,25 +51,16 @@ export const DeviceAirQualityData: FunctionComponent<AirQualityDataProps> = (pro
         <DataRow
             title="CO2"
             icon={co2}
-            value={props.airQualityData.co2}
+            value={props.airQualityData.co2.toFixed(0)}
             meter={props.meterUnit.co2}
             quality={props.airStatus.co2} />
 
         <Divider light />
 
-        {/* <DataRow
-                title="Noise"
-                icon={noise}
-                value={props.airQualityData.noise}
-                meter={props.meterUnit.noise}
-                quality={props.airStatus.noise} />
-
-            <Divider light /> */}
-
         <DataRow
             title="Pressure"
             icon={pressure}
-            value={props.airQualityData.pressure}
+            value={props.airQualityData.pressure.toFixed(0)}
             meter={props.meterUnit.pressure}
             quality={props.airStatus.pressure} />
 
@@ -78,7 +69,7 @@ export const DeviceAirQualityData: FunctionComponent<AirQualityDataProps> = (pro
         <DataRow
             title="TVOC"
             icon={tvoc}
-            value={props.airQualityData.tvoc}
+            value={props.airQualityData.tvoc.toFixed(1)}
             meter={props.meterUnit.tvoc}
             quality={props.airStatus.tvoc} />
 

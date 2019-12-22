@@ -27,7 +27,7 @@ export const DataRow: FunctionComponent<DataRowProps> = (props: DataRowProps) =>
 export interface DataRowProps {
     title: string;
     icon: string;
-    value: number;
+    value: number | string;
     meter: string;
     quality: AirQuality;
 }
