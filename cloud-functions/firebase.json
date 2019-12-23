@@ -5,14 +5,5 @@
       "npm --prefix \"$RESOURCE_DIR\" run build"
     ],
     "source": "functions"
-  },
-  "hosting": {
-    "public": "public",
-    "rewrites": [
-      {
-        "source": "**",
-        "function": "app"
-      }
-    ]
   }
 }
