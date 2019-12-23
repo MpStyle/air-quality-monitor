@@ -50,6 +50,8 @@ export const DashboardContainer = connect(
                             }
 
                             dispatch(fetchAirQualityDataSuccessActionBuilder(response.payload as AirQualityData));
+
+                            setTimeout(() => poller(), parseInt(process.env.REACT_APP_AIR_QUALITY_DATA_REFRESH_TIME as string));
                         })
                         .catch((error) => {
                             // TODO: dispatch an error message
@@ -57,7 +59,7 @@ export const DashboardContainer = connect(
                         });
                 };
 
-                setTimeout(() => poller(), parseInt(process.env.REACT_APP_AIR_QUALITY_DATA_REFRESH_TIME as string));
+                poller();
             }
         } as DashboardProps;
     }
