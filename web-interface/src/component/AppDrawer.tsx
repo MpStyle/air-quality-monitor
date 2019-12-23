@@ -14,6 +14,7 @@ import React, { FunctionComponent } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { updateSecretKeyActionBuilder } from "../action/UpdateSecretKeyAction";
 import { airQualityToLabel } from "../book/AirQualityToLabel";
+import { epochToFormatedDate } from "../book/DateTimeUtils";
 import { APP_SETTINGS_URL, CREDITS_URL } from '../book/Pages';
 import { Device } from "../entity/Device";
 import logo from '../images/logo.svg';
@@ -47,7 +48,10 @@ export const AppDrawer: FunctionComponent<AppDrawerProps> = (props) => {
                     {props.currentDevice.name} <span className="air-quality-average">({airQualityToLabel(props.average)})</span>
                 </Typography>
                 <div className="ip">
-                    {props.currentDevice.deviceIP.split(";")[0]}
+                    <strong>IP:</strong> {props.currentDevice.deviceIP.split(";")[0]}
+                </div>
+                <div className="last-update">
+                    <strong>Last update:</strong> {epochToFormatedDate(props.deviceLastUpdate)}
                 </div>
                 {props.currentDevice.address && props.currentDevice.address.length && <div className="address">{props.currentDevice.address}</div>}
             </div>}
@@ -87,4 +91,5 @@ export interface AppDrawerProps {
     toggleDrawer: (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => void;
     history?: History;
     currentDevice: Device | undefined;
+    deviceLastUpdate: number;
 }

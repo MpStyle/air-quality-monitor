@@ -1,27 +1,27 @@
-.app-drawer{
-    .app{
+.app-drawer {
+    .app {
         margin: 16px;
 
-        .logo-container{
+        .logo-container {
             min-width: 40px;
             display: inline-block;
 
-            img{
+            img {
                 width: 24px;
                 vertical-align: middle;
             }
         }
     }
 
-    .device{
+    .device {
         margin: 16px;
 
-        .icon{
+        .icon {
             vertical-align: text-bottom;
             margin-right: 10px;
         }
 
-        .air-quality-average{
+        .air-quality-average {
             font-size: 0.7em;
             display: inline-block;
             margin-left: 20px;
@@ -29,23 +29,20 @@
             text-transform: uppercase;
         }
 
-        .ip{    
+        .ip,
+        .last-update {
             margin: 15px 0px;
-
-            .text-input-ip{
-                display:none;
-            }
         }
 
-        .address{      
+        .address {
             margin: 5px 0px;
         }
     }
 
-    .list-container{
+    .list-container {
         min-width: 250px;
 
-        .list-item-link{
+        .list-item-link {
             text-decoration: none;
             display: inline-block;
         }

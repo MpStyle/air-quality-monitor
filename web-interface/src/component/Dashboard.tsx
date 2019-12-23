@@ -37,6 +37,7 @@ export const Dashboard: FunctionComponent<DashboardProps> = (props) => {
             currentDevice={currentDevice}
             isOpen={isAppDrawerOpen}
             average={average}
+            deviceLastUpdate={props.airQualityData.inserted}
             toggleDrawer={toggleDrawer} />
 
         <DashboardHeader

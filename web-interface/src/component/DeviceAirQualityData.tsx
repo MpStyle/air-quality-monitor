@@ -76,11 +76,6 @@ export const DeviceAirQualityData: FunctionComponent<AirQualityDataProps> = (pro
             value={props.airQualityData.tvoc.toFixed(1).replace(".", props.decimalSeparator)}
             meter={props.meterUnit.tvoc}
             quality={props.airStatus.tvoc} />
-
-        <Divider light />
-
-        <div>{props.airQualityData.inserted && <div className="last-update"><span>Last update:</span> {epochToFormatedDate(props.airQualityData.inserted)}</div>}</div>
-
     </Paper >;
 };
 
