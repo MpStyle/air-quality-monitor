@@ -14,7 +14,7 @@ import React, { FunctionComponent } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { updateSecretKeyActionBuilder } from "../action/UpdateSecretKeyAction";
 import { airQualityToLabel } from "../book/AirQualityToLabel";
-import { epochToFormatedDate } from "../book/DateTimeUtils";
+import { epochToLocaleDate } from "../book/DateTimeUtils";
 import { APP_SETTINGS_URL, CREDITS_URL } from '../book/Pages';
 import { Device } from "../entity/Device";
 import logo from '../images/logo.svg';
@@ -51,7 +51,7 @@ export const AppDrawer: FunctionComponent<AppDrawerProps> = (props) => {
                     <strong>IP:</strong> {props.currentDevice.deviceIP.split(";")[0]}
                 </div>
                 <div className="last-update">
-                    <strong>Last update:</strong> {epochToFormatedDate(props.deviceLastUpdate)}
+                    <strong>Last update:</strong> {epochToLocaleDate(props.deviceLastUpdate)}
                 </div>
                 {props.currentDevice.address && props.currentDevice.address.length && <div className="address">{props.currentDevice.address}</div>}
             </div>}

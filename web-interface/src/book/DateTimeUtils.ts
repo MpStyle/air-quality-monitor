@@ -4,6 +4,10 @@ export const epochToFormatedDate = (ms: number): string => {
     return date_format_str;
 };
 
+export const epochToLocaleDate = (ms: number) => {
+    return epochToDate(ms).toLocaleDateString(undefined, { dateStyle: "short", timeStyle: "medium", year: "numeric" } as Intl.DateTimeFormatOptions);
+};
+
 export const epochToDate = (ms: number): Date => {
     const date = new Date(ms);
     const d = new Date(date.getTime() + date.getTimezoneOffset() * 60 * 1000);
