@@ -5,7 +5,7 @@ export const epochToFormatedDate = (ms: number): string => {
 };
 
 export const epochToLocaleDate = (ms: number) => {
-    return epochToDate(ms).toLocaleDateString(undefined, { dateStyle: "short", timeStyle: "medium", year: "numeric" } as Intl.DateTimeFormatOptions);
+    return epochToDate(ms).toLocaleDateString(undefined, { dateStyle: "medium", timeStyle: "medium", year: "numeric" } as Intl.DateTimeFormatOptions);
 };
 
 export const epochToDate = (ms: number): Date => {

@@ -1,7 +1,7 @@
 import { CircularProgress, Divider } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper/Paper";
 import React, { FunctionComponent } from "react";
-import { epochToFormatedDate } from "../book/DateTimeUtils";
+import { epochToLocaleDate } from "../book/DateTimeUtils";
 import { celsiusToFahrenheit } from "../book/TemperatureConverter";
 import { TemperatureUnit } from "../book/Unit";
 import { AirQualityData } from "../entity/AirQualityData";
@@ -76,6 +76,11 @@ export const DeviceAirQualityData: FunctionComponent<AirQualityDataProps> = (pro
             value={props.airQualityData.tvoc.toFixed(1).replace(".", props.decimalSeparator)}
             meter={props.meterUnit.tvoc}
             quality={props.airStatus.tvoc} />
+
+        <Divider light />
+
+        <div>{props.airQualityData.inserted && <div className="last-update"><span>Last update:</span> {epochToLocaleDate(props.airQualityData.inserted)}</div>}</div>
+
     </Paper >;
 };
 

@@ -50,9 +50,6 @@ export const AppDrawer: FunctionComponent<AppDrawerProps> = (props) => {
                 <div className="ip">
                     <strong>IP:</strong> {props.currentDevice.deviceIP.split(";")[0]}
                 </div>
-                <div className="last-update">
-                    <strong>Last update:</strong> {epochToLocaleDate(props.deviceLastUpdate)}
-                </div>
                 {props.currentDevice.address && props.currentDevice.address.length && <div className="address">{props.currentDevice.address}</div>}
             </div>}
 
