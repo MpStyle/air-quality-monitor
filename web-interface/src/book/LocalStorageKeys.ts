@@ -6,3 +6,4 @@ export const AIR_QUALITY_DATA_PRESSURE_KEY = "air_quality_data_pressure_key";
 export const AIR_QUALITY_DATA_HUMIDITY_KEY = "air_quality_data_humidity_key";
 export const AIR_QUALITY_DATA_TEMPERATURE_KEY = "air_quality_data_temperature_key";
 export const AIR_QUALITY_DATA_DECIMAL_SEPARATOR_KEY = "air_quality_data_decimal_separator_key";
+export const AIR_QUALITY_DATA_CURRENT_DEVICE_ID_KEY = "air_quality_data_current_device_id_key";

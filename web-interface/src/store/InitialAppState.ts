@@ -3,7 +3,7 @@ import { defaultDecimalSeparator } from '../book/DefaultDecimalSeparator';
 import { TemperatureUnit } from '../book/Unit';
 import { AirQualityData } from '../entity/AirQualityData';
 import { AirQuality, AirStatus } from '../entity/AirStatus';
-import { AIR_QUALITY_DATA_CO2_KEY, AIR_QUALITY_DATA_HUMIDITY_KEY, AIR_QUALITY_DATA_INSERTED_KEY, AIR_QUALITY_DATA_PRESSURE_KEY, AIR_QUALITY_DATA_TEMPERATURE_KEY, AIR_QUALITY_DATA_TVOC_KEY, TEMPERATURE_UNIT_KEY } from './../book/LocalStorageKeys';
+import { AIR_QUALITY_DATA_CO2_KEY, AIR_QUALITY_DATA_HUMIDITY_KEY, AIR_QUALITY_DATA_INSERTED_KEY, AIR_QUALITY_DATA_PRESSURE_KEY, AIR_QUALITY_DATA_TEMPERATURE_KEY, AIR_QUALITY_DATA_TVOC_KEY, TEMPERATURE_UNIT_KEY, AIR_QUALITY_DATA_CURRENT_DEVICE_ID_KEY } from './../book/LocalStorageKeys';
 import { SECRET_KEY_KEY } from './../book/SessionStorageKeys';
 import { AppState } from './../entity/AppState';
 
@@ -32,7 +32,7 @@ export const initialAppState: AppState = {
         tvoc: tvocQuality(parseFloat(localStorage.getItem(AIR_QUALITY_DATA_TVOC_KEY) as string)),
     } as AirStatus,
     devices: [],
-    currentDevice: null,
+    currentDevice: localStorage.getItem(AIR_QUALITY_DATA_CURRENT_DEVICE_ID_KEY),
     suggestions: [],
     secretKey: sessionStorage.getItem(SECRET_KEY_KEY),
     decimalSeparator: defaultDecimalSeparator()
