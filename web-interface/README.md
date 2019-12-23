@@ -18,3 +18,17 @@ Measured data:
 
 - `REACT_APP_AIR_QUALITY_DATA_WHEATER_APP_KEY`: the app key to use for WeatherStack APIs
 - `REACT_APP_AIR_QUALITY_DATA_WHEATER_CITY`: the city for the weather data
+
+## Build
+
+```bash
+npm run build
+```
+
+## Deploy
+
+After build, run:
+
+```bash
+firebase deploy --only hosting
+```
