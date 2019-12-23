@@ -18,7 +18,8 @@ export const DashboardContainer = connect(
             currentDeviceId: appState.currentDevice,
             devices: appState.devices,
             suggestions: appState.suggestions,
-            secretKey: appState.secretKey
+            secretKey: appState.secretKey,
+            decimalSeparator: appState.decimalSeparator
         } as DashboardProps;
     },
     (dispatch: Dispatch): DashboardProps => {

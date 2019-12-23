@@ -29,11 +29,15 @@ export const DeviceAirQualityData: FunctionComponent<AirQualityDataProps> = (pro
         </Paper>;
     }
 
-    return <Paper className="air-quality-data">
+    let temperatureValue: string | number = props.meterUnit.temperature === TemperatureUnit.CELSIUS ? props.airQualityData.temperature : celsiusToFahrenheit(props.airQualityData.temperature);
+    temperatureValue = temperatureValue.toFixed(1);
+    temperatureValue = temperatureValue.replace(".", props.decimalSeparator);
+
+    return < Paper className="air-quality-data" >
         <DataRow
             title="Temperature"
             icon={temperature}
-            value={(props.meterUnit.temperature === TemperatureUnit.CELSIUS ? props.airQualityData.temperature : celsiusToFahrenheit(props.airQualityData.temperature)).toFixed(1)}
+            value={temperatureValue}
             meter={props.meterUnit.temperature === TemperatureUnit.CELSIUS ? "°C" : "°F"}
             quality={props.airStatus.temperature} />
 
@@ -69,7 +73,7 @@ export const DeviceAirQualityData: FunctionComponent<AirQualityDataProps> = (pro
         <DataRow
             title="TVOC"
             icon={tvoc}
-            value={props.airQualityData.tvoc.toFixed(1)}
+            value={props.airQualityData.tvoc.toFixed(1).replace(".", props.decimalSeparator)}
             meter={props.meterUnit.tvoc}
             quality={props.airStatus.tvoc} />
 
@@ -77,11 +81,12 @@ export const DeviceAirQualityData: FunctionComponent<AirQualityDataProps> = (pro
 
         <div>{props.airQualityData.inserted && <div className="last-update"><span>Last update:</span> {epochToFormatedDate(props.airQualityData.inserted)}</div>}</div>
 
-    </Paper>;
+    </Paper >;
 };
 
 export interface AirQualityDataProps {
     airQualityData: AirQualityData;
     airStatus: AirStatus;
     meterUnit: MeterUnit;
+    decimalSeparator: string;
 }

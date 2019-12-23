@@ -55,12 +55,15 @@ export const Dashboard: FunctionComponent<DashboardProps> = (props) => {
         <DeviceAirQualityData
             airQualityData={props.airQualityData}
             airStatus={props.airStatus}
+            decimalSeparator={props.decimalSeparator}
             meterUnit={props.meterUnit} />
     </div>;
 };
 
 export interface DashboardProps {
     secretKey: string;
+
+    decimalSeparator: string;
 
     airQualityData: AirQualityData;
     airStatus: AirStatus;

@@ -11,4 +11,5 @@ export interface AppState {
     currentDevice: string | null;
     suggestions: string[];
     secretKey: string | null;
+    decimalSeparator: string;
 }

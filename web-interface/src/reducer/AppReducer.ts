@@ -3,6 +3,7 @@ import { AppState } from "../entity/AppState";
 import { airQualityDataReducer } from './AirQualityDataReducer';
 import { airStatusReducer } from "./AirStatusReducer";
 import { currentDeviceReducer } from "./CurrentDeviceReducer";
+import { decimalSeparatorReducer } from './DecimalSeparatorReducer';
 import { devicesReducer } from "./DevicesReducer";
 import { meterUnitReducer } from "./MeterUnitReducer";
 import { secretKeyReducer } from "./SecretKeyReducer";
@@ -15,5 +16,6 @@ export const appReducer = combineReducers<AppState>({
     devices: devicesReducer,
     currentDevice: currentDeviceReducer,
     suggestions: suggestionsReducer,
-    secretKey: secretKeyReducer
+    secretKey: secretKeyReducer,
+    decimalSeparator: decimalSeparatorReducer
 });

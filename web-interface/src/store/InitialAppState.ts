@@ -1,4 +1,5 @@
 import { co2Quality, humidityQuality, temperatureQuality, tvocQuality } from '../book/AirQuality';
+import { defaultDecimalSeparator } from '../book/DefaultDecimalSeparator';
 import { TemperatureUnit } from '../book/Unit';
 import { AirQualityData } from '../entity/AirQualityData';
 import { AirQuality, AirStatus } from '../entity/AirStatus';
@@ -33,5 +34,6 @@ export const initialAppState: AppState = {
     devices: [],
     currentDevice: null,
     suggestions: [],
-    secretKey: sessionStorage.getItem(SECRET_KEY_KEY)
+    secretKey: sessionStorage.getItem(SECRET_KEY_KEY),
+    decimalSeparator: defaultDecimalSeparator()
 };

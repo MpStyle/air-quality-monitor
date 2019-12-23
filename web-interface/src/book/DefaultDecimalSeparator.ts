@@ -1,0 +1,1 @@
+export const defaultDecimalSeparator = () => (1.1).toLocaleString().substring(1, 2) || '.';

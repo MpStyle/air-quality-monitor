@@ -41,6 +41,19 @@ export const AppSettings: FunctionComponent<AppSettingsProps> = (props) => {
                 </div>
 
                 <Divider />
+
+                <div className="settings">
+                    <div className="labels">
+                        <Typography variant="subtitle1">Decimal separator</Typography>
+                        <Typography variant="subtitle2" className="secondary-label"></Typography>
+                    </div>
+                    <div className="configuration">
+                        <Select value={props.decimalSeparator} onChange={(event) => props.onDecimalSeparatorChange(event.target.value as string)} displayEmpty>
+                            <MenuItem value=",">Coma (,)</MenuItem>
+                            <MenuItem value=".">Dot (.)</MenuItem>
+                        </Select>
+                    </div>
+                </div>
             </Paper>
         </main>
     </div>;
@@ -49,4 +62,7 @@ export const AppSettings: FunctionComponent<AppSettingsProps> = (props) => {
 export interface AppSettingsProps {
     temperatureUnit: string;
     onTemperatureUnitChange: (temperatureUnit: string) => void;
+
+    decimalSeparator: string;
+    onDecimalSeparatorChange: (decimalSeparator: string) => void;
 }
