@@ -1,27 +1,35 @@
-.login{
+@import '../book/Colors.scss';
+
+.login {
     display: block;
     max-width: 400px;
     width: 98%;
     margin: 20px auto 0px auto;
     text-align: center;
 
-    .content{
+    .content {
         padding: 30px;
 
-        img{
+        .subtitle1 {
+            margin: 30px;
+        }
+
+        .secret-key {
+            width: 95%;
+        }
+
+        img {
             width: 24px;
             vertical-align: middle;
         }
 
-        .title{
-            margin: 20px 0 20px 0;
-            font-weight: bold;
-        }
+        .sign-in-button-container {
+            margin: 50px 0px 20px;
 
-        .sign-in-button-container{
-            margin-top: 30px;
-
-            .sign-in-button{
+            .sign-in-button {
+                color: $color-text-alternative;
+                background: $color-primary;
+                background: linear-gradient(135deg, $color-primary 0%, $color-secondary 100%);
             }
         }
     }

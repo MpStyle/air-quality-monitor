@@ -21,9 +21,11 @@ export const Login: FunctionComponent<LoginProps> = (props) => {
             <Typography variant="h6">
                 <img src={logo} alt="Air Quality Monitor logo" /> Air Quality Monitor
                 </Typography>
-            <div className="title">Sign in</div>
+            <Typography variant="h6" className="subtitle1">
+                Sign in
+            </Typography>
             <TextField
-                className="password"
+                className="secret-key"
                 label="Secret key"
                 type="password"
                 variant="outlined"
