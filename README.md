@@ -30,9 +30,9 @@ A full stack IoT Project.
 
 - Documentation - How to guide
 
-#### Step 3
+#### ~~Step 3~~
 
-- Web interface <-> Cloud Functions: using Google authentication.
+- ~~Web interface <-> Cloud Functions: using username and password authentication.~~
 
 #### Step 4
 
