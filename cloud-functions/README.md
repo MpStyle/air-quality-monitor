@@ -4,7 +4,8 @@ It is the back-end of the project infrastructure.
 
 Used:
 - Google Firebase: REST API and database.
-- Secret key authentication for devices and users.
+- Secret key authentication for devices.
+- Username and password pair to authenticating the users
 
 Written in Typescript.
 
@@ -34,9 +35,28 @@ firebase deploy --only functions
 
 ## Configuration 
 
-### Authorizations
+### Users
 
-The configuration `airqualitymonitor.authorizations` collects the secret keys and what air quality data is possible to read and/or to write from a device.
+The configuration `airqualitymonitor.users` collects the granted users to access to the application.
+
+```json
+[
+    {
+        "username": "...",
+        "password": "..."
+    }
+]
+```
+
+To set the variable:
+
+```bash
+firebase functions:config:set airqualitymonitor.users="__the_escaped_json__"
+```
+
+### Devices Authorizations
+
+The configuration `airqualitymonitor.devicesauthorizations` collects the secret keys and what air quality data is possible to read and/or to write from a device.
 
 ```json
 [
@@ -60,5 +80,34 @@ The configuration `airqualitymonitor.authorizations` collects the secret keys an
 To set the variable:
 
 ```bash
-firebase functions:config:set airqualitymonitor.authorizations="..."
+firebase functions:config:set airqualitymonitor.devicesauthorizations="__the_escaped_json__"
+```
+
+### Users Authorizations
+
+The configuration `airqualitymonitor.usersauthorizations` collects the username and what air quality data is possible to read and/or to write from a device.
+
+```json
+[
+    {
+        "username": "...",
+        "authorizations": [
+            {
+                "deviceId": "...",
+                "scopes": [ "...", "..." ]
+            }
+        ]
+    }
+]
+```
+
+- The field `username`
+- The field `authorizations`
+- The field `deviceId`
+- The field `scopes`
+
+To set the variable:
+
+```bash
+firebase functions:config:set airqualitymonitor.usersauthorizations="__the_escaped_json__"
 ```

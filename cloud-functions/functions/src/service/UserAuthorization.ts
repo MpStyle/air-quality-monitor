@@ -1,43 +1,60 @@
 import { ILogging } from "../book/Logging";
+import { Service, buildResponse, buildErrorResponse } from "../entity/Service";
+import functions = require('firebase-functions');
 import { Errors } from "../entity/Errors";
-import { buildErrorResponse, buildResponse, Service } from "../entity/Service";
-import { authorization } from "./Authorization";
+import admin = require('firebase-admin');
+import { Collections } from "../entity/Collections";
+import { LoginToken } from "../entity/LoginToken";
+import { UserAuthorizations } from "../entity/UserAuthorizations";
+import { Authorization } from "../entity/Authorization";
 
-export const userAuthorization = (logging: ILogging): Service<UserAuthorizationRequest, UserAuthorizationResponse> => req => {
-    try {
-        if (!req.secretKey || req.secretKey === '') {
-            return buildErrorResponse(Errors.INVALID_USER_DEVICE_SEARCH_REQUEST);
-        }
+export const userAuthorization = (logging: ILogging): Service<AuthorizationRequest, AuthorizationResponse> => req => {
+    if (!req.accessToken) {
+        return buildErrorResponse(Errors.INVALID_AUTHORIZATION_REQUEST);
+    }
 
-        logging.info("userDevicesSearch", "Starts");
+    logging.info("authorization", "Starts");
 
-        return authorization(logging)({ secretKey: req.secretKey })
-            .then(authorizationResponse => {
-                if (authorizationResponse.error) {
-                    return buildErrorResponse(authorizationResponse.error);
-                }
+    const db = admin.firestore();
+    let collectionRef: FirebaseFirestore.CollectionReference | FirebaseFirestore.Query = db.collection(Collections.LOGIN_TOKEN);
 
-                if (!authorizationResponse.payload) {
-                    return buildErrorResponse(Errors.USER_UNAUTHORIZED);
-                }
+    collectionRef = collectionRef.where('accessToken', '==', req.accessToken);
 
-                return buildResponse<UserAuthorizationResponse>({ success: !!authorizationResponse.payload.authorizations.length });
-            })
-            .catch((err: any) => {
-                logging.error("userDevicesSearch", `Error while searching devices: ${err}`);
-                return buildErrorResponse(err);
+    return collectionRef.get()
+        .then(snapshots => {
+            if (!snapshots || snapshots.docs.length === 0) {
+                logging.debug("authorization", "No access token found");
+                return buildErrorResponse(Errors.INVALID_ACCESS_TOKEN);
+            }
+
+            const doc = snapshots.docs[0].data() as LoginToken;
+
+            if (doc.expiredAt < (new Date()).getTime()) {
+                return buildErrorResponse(Errors.EXPIRED_ACCESS_TOKEN);
+            }
+
+            const appAuthorizations: UserAuthorizations[] = JSON.parse(functions.config().airqualitymonitor.usersauthorizations);
+
+            if (!appAuthorizations) {
+                return buildErrorResponse(Errors.AUTHORIZATIONS_CONFIGURATION_NOT_FOUND);
+            }
+
+            return buildResponse<AuthorizationResponse>({
+                authorizations: appAuthorizations
+                    .filter(a => a.username === doc.username)
+                    .reduce((acc, cur) => acc.concat(cur.authorizations), <Authorization[]>[])
             });
-    }
-    catch (error) {
-        logging.error("userDevicesSearch", `Error while searching devices: ${error}`);
-        return buildErrorResponse(error);
-    }
+        })
+        .catch((err: any) => {
+            logging.error("authorization", `Error while authorizing user: ${err}`);
+            return buildErrorResponse(err);
+        });
+};
+
+export interface AuthorizationRequest {
+    accessToken: string;
 }
 
-export interface UserAuthorizationRequest {
-    secretKey: string;
-}
-
-export interface UserAuthorizationResponse {
-    success: boolean;
-}
+export interface AuthorizationResponse {
+    authorizations: Authorization[]
+};

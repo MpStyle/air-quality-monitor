@@ -1,19 +1,19 @@
 import { ILogging } from "../book/Logging";
 import { Errors } from "../entity/Errors";
 import { devicesSearch, DevicesSearchRequest, DevicesSearchResponse as DevicesSearchResponse } from './DevicesSearch';
-import { authorization } from "./Authorization";
+import { userAuthorization } from "./UserAuthorization";
 import { Service, buildErrorResponse, buildResponse } from "../entity/Service";
 import { Scopes } from "../entity/Scopes";
 
 export const userDevicesSearch = (logging: ILogging): Service<UserDevicesSearchRequest, UserDevicesSearchResponse> => req => {
     try {
-        if (!req.secretKey || req.secretKey === '') {
+        if (!req.accessToken || req.accessToken === '') {
             return buildErrorResponse(Errors.INVALID_USER_DEVICE_SEARCH_REQUEST);
         }
 
         logging.info("userDevicesSearch", "Starts");
 
-        return authorization(logging)({ secretKey: req.secretKey })
+        return userAuthorization(logging)({ accessToken: req.accessToken })
             .then(authorizationResponse => {
                 if (authorizationResponse.error) {
                     return buildErrorResponse(authorizationResponse.error);
@@ -54,7 +54,7 @@ export const userDevicesSearch = (logging: ILogging): Service<UserDevicesSearchR
 };
 
 export interface UserDevicesSearchRequest extends DevicesSearchRequest {
-    secretKey: string,
+    accessToken: string,
 }
 
 // tslint:disable-next-line: no-empty-interface

@@ -1,4 +1,5 @@
 export const Collections = {
     DEVICE: "device",
-    MEASUREMENT: "measurement"
+    MEASUREMENT: "measurement",
+    LOGIN_TOKEN: "logintoken"
 }

@@ -2,12 +2,14 @@ import functions = require('firebase-functions');
 import admin = require('firebase-admin');
 import express = require('express');
 import { Logging } from './book/Logging';
+import { buildErrorResponse } from './entity/Service';
 import { deviceDataIngestion } from './service/DeviceDataIngestion';
 import { healthCheck } from './service/HealthCheck';
 import { userDevicesSearch } from './service/UserDevicesSearch';
+import { userLogin } from './service/UserLogin';
 import { userMeasurementsSearch } from './service/UserMeasurementsSearch';
-import { buildErrorResponse } from './entity/Service';
-import { userAuthorization } from './service/UserAuthorization';
+import { userNewAccessToken as userRenewAccessToken } from './service/UserRenewAccessToken';
+import { userRevokeRefreshToken } from './service/UserRevokeRefreshToken';
 
 admin.initializeApp(functions.config().firebase);
 
@@ -22,16 +24,15 @@ app.get('/health-check', (req, res) => {
         .then(data => res.send(data))
         .catch(err => buildErrorResponse(err));
 });
+
+// Device - To add data
 app.put('/device-data-ingestion', (req, res) => {
     deviceDataIngestion(logging)(req.body)
         .then(data => res.send(data))
         .catch(err => buildErrorResponse(err));
 });
-app.post('/user-authorization', (req, res) => {
-    userAuthorization(logging)(req.body)
-        .then(data => res.send(data))
-        .catch(err => buildErrorResponse(err));
-});
+
+// User - To retrieve data
 app.post('/user-devices-search', (req, res) => {
     userDevicesSearch(logging)(req.body)
         .then(data => res.send(data))
@@ -39,6 +40,23 @@ app.post('/user-devices-search', (req, res) => {
 });
 app.post('/user-measurements-search', (req, res) => {
     userMeasurementsSearch(logging)(req.body)
+        .then(data => res.send(data))
+        .catch(err => buildErrorResponse(err));
+});
+
+// User - Authentication/Authorization
+app.post('/user-login', (req, res) => {
+    userLogin(logging)(req.body)
+        .then(data => res.send(data))
+        .catch(err => buildErrorResponse(err));
+});
+app.post('/user-renew-access-token', (req, res) => {
+    userRenewAccessToken(logging)(req.body)
+        .then(data => res.send(data))
+        .catch(err => buildErrorResponse(err));
+});
+app.post('/user-revoke-refresh-token', (req, res) => {
+    userRevokeRefreshToken(logging)(req.body)
         .then(data => res.send(data))
         .catch(err => buildErrorResponse(err));
 });

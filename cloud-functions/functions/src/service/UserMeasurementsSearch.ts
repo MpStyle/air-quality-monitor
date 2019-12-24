@@ -2,19 +2,19 @@ import { ILogging } from "../book/Logging";
 import { Errors } from "../entity/Errors";
 import { Scopes } from "../entity/Scopes";
 import { buildErrorResponse, buildResponse, Service } from "../entity/Service";
-import { authorization } from "./Authorization";
+import { userAuthorization } from "./UserAuthorization";
 import { MeasurementSearchRequest, measurementsSearch } from "./MeasurementsSearch";
 import Bluebird = require("bluebird");
 
 export const userMeasurementsSearch = (logging: ILogging): Service<UserMeasurementsSearchRequest, UserMeasurementsSearchResponse> => req => {
     try {
-        if (!req.secretKey || req.secretKey === '') {
+        if (!req.accessToken || req.accessToken === '') {
             return buildErrorResponse(Errors.INVALID_USER_MEASUREMENT_SEARCH_REQUEST);
         }
 
         logging.info("userMeasurementsSearch", "Starts");
 
-        return authorization(logging)({ secretKey: req.secretKey })
+        return userAuthorization(logging)({ accessToken: req.accessToken })
             .then(authorizationResponse => {
                 if (authorizationResponse.error) {
                     return buildErrorResponse(authorizationResponse.error);
@@ -72,7 +72,7 @@ export const userMeasurementsSearch = (logging: ILogging): Service<UserMeasureme
 };
 
 export interface UserMeasurementsSearchRequest {
-    secretKey: string;
+    accessToken: string;
     deviceId: string;
 }
 

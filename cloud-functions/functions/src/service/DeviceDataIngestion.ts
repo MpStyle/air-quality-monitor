@@ -1,11 +1,11 @@
 import { ILogging } from "../book/Logging";
 import { Errors } from "../entity/Errors";
 import { buildErrorResponse, Service, buildResponse } from "../entity/Service";
-import { authorization } from "./Authorization";
 import { deviceAdd, DeviceAddRequest } from "./DeviceAdd";
 import { measurementAdd } from "./MeasurementAdd";
 import uuid = require("uuid")
 import { Scopes } from "../entity/Scopes";
+import { deviceAuthorization } from "./DeviceAuthorization";
 
 export const deviceDataIngestion = (logging: ILogging): Service<DeviceDataIngestionRequest, {}> => req => {
     if (!req.secretKey || !req.device.id || !req.measurementDate) {
@@ -14,7 +14,7 @@ export const deviceDataIngestion = (logging: ILogging): Service<DeviceDataIngest
 
     logging.info("deviceDataIngestion", "Starts");
 
-    return authorization(logging)({ secretKey: req.secretKey })
+    return deviceAuthorization(logging)({ secretKey: req.secretKey })
         .then(deviceAuthorizationResponse => {
             if (deviceAuthorizationResponse.error) {
                 return buildErrorResponse(deviceAuthorizationResponse.error);
