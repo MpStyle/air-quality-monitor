@@ -6,8 +6,8 @@ import { currentDeviceReducer } from "./CurrentDeviceReducer";
 import { decimalSeparatorReducer } from './DecimalSeparatorReducer';
 import { devicesReducer } from "./DevicesReducer";
 import { meterUnitReducer } from "./MeterUnitReducer";
-import { secretKeyReducer } from "./SecretKeyReducer";
 import { suggestionsReducer } from './SuggestionsReducer';
+import { tokenReducer } from "./TokenReducer";
 
 export const appReducer = combineReducers<AppState>({
     airQualityData: airQualityDataReducer,
@@ -16,6 +16,6 @@ export const appReducer = combineReducers<AppState>({
     devices: devicesReducer,
     currentDevice: currentDeviceReducer,
     suggestions: suggestionsReducer,
-    secretKey: secretKeyReducer,
+    token: tokenReducer,
     decimalSeparator: decimalSeparatorReducer
 });

@@ -34,6 +34,6 @@ export const initialAppState: AppState = {
     devices: [],
     currentDevice: localStorage.getItem(AIR_QUALITY_DATA_CURRENT_DEVICE_ID_KEY),
     suggestions: [],
-    secretKey: sessionStorage.getItem(SECRET_KEY_KEY),
+    token: null,
     decimalSeparator: defaultDecimalSeparator()
 };

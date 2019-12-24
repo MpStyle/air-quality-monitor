@@ -4,8 +4,6 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { Route } from 'react-router';
 import { HashRouter } from 'react-router-dom';
-import { updateSecretKeyActionBuilder } from './action/UpdateSecretKeyAction';
-import { authentication } from './book/Authentication';
 import { APP_SETTINGS_URL, CREDITS_URL, DASHBOARD_URL, LOGIN_URL } from './book/Pages';
 import { AppSettingsContainer } from './component/AppSettingsContainer';
 import { Credits } from './component/Credits';
@@ -22,10 +20,8 @@ ReactDOM.render(
             <Route exact path={CREDITS_URL} component={Credits} />
             <Route exact path={DASHBOARD_URL}>
                 <IsLogged
-                    resetSecretKey={() => { appStore.dispatch(updateSecretKeyActionBuilder(null)); }}
                     loginPageUrl={LOGIN_URL}
-                    sourceUrl={DASHBOARD_URL}
-                    authentication={authentication}>
+                    sourceUrl={DASHBOARD_URL}>
                     <DashboardContainer />
                 </IsLogged>
             </Route>

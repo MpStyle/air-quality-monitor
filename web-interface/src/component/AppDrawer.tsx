@@ -12,10 +12,10 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import { History } from 'history';
 import React, { FunctionComponent } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { updateSecretKeyActionBuilder } from "../action/UpdateSecretKeyAction";
+import { updateTokenActionBuilder } from "../action/UpdateTokenAction";
 import { airQualityToLabel } from "../book/AirQualityToLabel";
-import { epochToLocaleDate } from "../book/DateTimeUtils";
 import { APP_SETTINGS_URL, CREDITS_URL } from '../book/Pages';
+import { userRevokeRefreshToken } from "../book/UserRevokeRefreshToken";
 import { Device } from "../entity/Device";
 import logo from '../images/logo.svg';
 import { appStore } from "../store/AppStore";
@@ -69,8 +69,19 @@ export const AppDrawer: FunctionComponent<AppDrawerProps> = (props) => {
                     <ListItemText primary="Credits" />
                 </ListItem>
                 <ListItem button className="list-item" onClick={() => {
-                    appStore.dispatch(updateSecretKeyActionBuilder(null));
-                    history.push('/login');
+                    userRevokeRefreshToken(props.refreshToken)
+                        .then(response => {
+                            if (response.error) {
+                                console.error(response.error);
+                                return;
+                            }
+
+                            appStore.dispatch(updateTokenActionBuilder(null));
+                            history.push('/login');
+                        })
+                        .catch(err => {
+                            console.error(err);
+                        });
                 }}>
                     <ListItemIcon>
                         <ExitToAppIcon />
@@ -89,4 +100,5 @@ export interface AppDrawerProps {
     history?: History;
     currentDevice: Device | undefined;
     deviceLastUpdate: number;
+    refreshToken: string;
 }

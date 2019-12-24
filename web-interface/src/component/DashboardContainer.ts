@@ -3,8 +3,8 @@ import { Dispatch } from 'redux';
 import { fetchAirQualityDataSuccessActionBuilder } from '../action/FetchAirQualityDataSuccessAction';
 import { fetchDevicesSuccessActionBuilder } from '../action/FetchDevicesSuccessAction';
 import { updateCurrentDeviceIdActionBuilder } from '../action/UpdateCurrentDeviceIdAction';
-import { fetchAirQualityData } from '../book/FetchAirQualityData';
-import { fetchDevices } from '../book/FetchDevices';
+import { userMeasurementsSearch } from '../book/UserMeasurementsSearch';
+import { userDevicesSearch } from '../book/UserDevicesSearch';
 import { AirQualityData } from '../entity/AirQualityData';
 import { AppState } from '../entity/AppState';
 import { Dashboard, DashboardProps } from './Dashboard';
@@ -18,7 +18,7 @@ export const DashboardContainer = connect(
             currentDeviceId: appState.currentDevice,
             devices: appState.devices,
             suggestions: appState.suggestions,
-            secretKey: appState.secretKey,
+            token: appState.token,
             decimalSeparator: appState.decimalSeparator
         } as DashboardProps;
     },
@@ -26,7 +26,7 @@ export const DashboardContainer = connect(
         return {
             onCurrentDeviceIdChange: (deviceId: string) => { dispatch(updateCurrentDeviceIdActionBuilder(deviceId)); },
             fetchDevices: (secretKey: string) => {
-                fetchDevices(secretKey)
+                userDevicesSearch(secretKey)
                     .then(response => {
                         if (response.error) {
                             console.log(response.error);
@@ -42,7 +42,7 @@ export const DashboardContainer = connect(
             },
             fetchAirQualityData: (currentDeviceId: string, secretKey: string) => {
                 const poller = () => {
-                    fetchAirQualityData(currentDeviceId, secretKey)
+                    userMeasurementsSearch(currentDeviceId, secretKey)
                         .then(response => {
                             if (response.error) {
                                 console.log(response.error);

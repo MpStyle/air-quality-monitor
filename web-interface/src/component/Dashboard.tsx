@@ -1,21 +1,24 @@
-import React, { useEffect, FunctionComponent } from 'react';
+import React, { FunctionComponent, useEffect } from 'react';
 import 'react-alice-carousel/lib/alice-carousel.css';
 import { averageAirStatus } from "../book/AverageAirStatus";
 import { AirQualityData } from '../entity/AirQualityData';
 import { AirStatus } from "../entity/AirStatus";
 import { Device } from "../entity/Device";
+import { LoginToken } from '../entity/LoginToken';
 import { MeterUnit } from '../entity/MeterUnit';
 import { AppDrawer } from './AppDrawer';
 import './Dashboard.scss';
 import { DashboardHeader } from './DashboardHeader';
 import { DeviceAirQualityData } from './DeviceAirQualityData';
-import { Weather } from './Weather';
 
 export const Dashboard: FunctionComponent<DashboardProps> = (props) => {
-    useEffect(() => { props.fetchDevices(props.secretKey); }, []);
     useEffect(() => {
-        if (props.currentDeviceId)
-            props.fetchAirQualityData(props.currentDeviceId, props.secretKey);
+        props.fetchDevices(props.token.accessToken);
+    }, []);
+    useEffect(() => {
+        if (props.currentDeviceId) {
+            props.fetchAirQualityData(props.currentDeviceId, props.token.accessToken);
+        }
     }, [props.currentDeviceId]);
 
     const average = averageAirStatus(props.airStatus);
@@ -37,6 +40,7 @@ export const Dashboard: FunctionComponent<DashboardProps> = (props) => {
             currentDevice={currentDevice}
             isOpen={isAppDrawerOpen}
             average={average}
+            refreshToken={props.token?.refreshToken}
             deviceLastUpdate={props.airQualityData.inserted}
             toggleDrawer={toggleDrawer} />
 
@@ -51,8 +55,6 @@ export const Dashboard: FunctionComponent<DashboardProps> = (props) => {
 
         <div className="spacer" />
 
-        <Weather />
-
         <DeviceAirQualityData
             airQualityData={props.airQualityData}
             airStatus={props.airStatus}
@@ -62,7 +64,7 @@ export const Dashboard: FunctionComponent<DashboardProps> = (props) => {
 };
 
 export interface DashboardProps {
-    secretKey: string;
+    token: LoginToken;
 
     decimalSeparator: string;
 

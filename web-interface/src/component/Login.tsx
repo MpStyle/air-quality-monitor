@@ -1,6 +1,8 @@
 import { Button, Paper, TextField, Typography } from "@material-ui/core";
 import React, { FunctionComponent, useState } from 'react';
-import { Redirect, RouteChildrenProps, useLocation } from 'react-router';
+import { RouteChildrenProps, useLocation } from 'react-router';
+import { Redirect } from "react-router-dom";
+import { LoginToken } from "../entity/LoginToken";
 import logo from '../images/logo.svg';
 import "./Login.scss";
 
@@ -10,9 +12,10 @@ function useQuery() {
 
 export const Login: FunctionComponent<LoginProps> = (props) => {
     let query = useQuery();
-    const [secretKey, setSecretKey] = useState<string | null>(props.secretKey);
+    const [password, setPassword] = useState<string | null>(null);
+    const [username, setUsername] = useState<string | null>(null);
 
-    if (props.secretKey) {
+    if (props.token) {
         return <Redirect to={{ pathname: query.get("sourceUrl") || props.fallbackUrl }} />;
     }
 
@@ -25,23 +28,26 @@ export const Login: FunctionComponent<LoginProps> = (props) => {
                 Sign in
             </Typography>
             <TextField
-                className="secret-key"
-                label="Secret key"
+                className="username"
+                label="Username"
+                type="text"
+                variant="outlined"
+                onChange={event => setUsername(event.target.value as string)}
+            />
+            <TextField
+                className="password"
+                label="Password"
                 type="password"
                 variant="outlined"
-                value={secretKey || ""}
-                onChange={event => setSecretKey(event.target.value as string)}
-                onKeyDown={event => {
-                    if (event.key === 'Enter') {
-                        props.onSignInClick(secretKey);
-                    }
-                }}
+                value={password || ""}
+                onChange={event => setPassword(event.target.value as string)}
             />
             <div className="sign-in-button-container">
                 <Button
                     variant="contained"
                     color="primary"
-                    onClick={() => props.onSignInClick(secretKey)}
+                    disabled={!username || !password}
+                    onClick={() => props.onSignInClick(username, password)}
                     className="sign-in-button">
                     Sign in
                 </Button>
@@ -51,7 +57,7 @@ export const Login: FunctionComponent<LoginProps> = (props) => {
 };
 
 export interface LoginProps extends RouteChildrenProps {
-    onSignInClick: (secretKey: string | null) => void;
-    secretKey: string | null;
+    onSignInClick: (username: string | null, password: string | null) => void;
     fallbackUrl: string;
+    token: LoginToken | null;
 }

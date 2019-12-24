@@ -1,6 +1,7 @@
 import { AirQualityData } from "./AirQualityData";
 import { AirStatus } from "./AirStatus";
 import { Device } from "./Device";
+import { LoginToken } from "./LoginToken";
 import { MeterUnit } from "./MeterUnit";
 
 export interface AppState {
@@ -10,6 +11,6 @@ export interface AppState {
     devices: Device[];
     currentDevice: string | null;
     suggestions: string[];
-    secretKey: string | null;
+    token: LoginToken | null;
     decimalSeparator: string;
 }
