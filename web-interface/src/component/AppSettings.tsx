@@ -1,9 +1,9 @@
-import { Divider } from "@material-ui/core";
 import AppBar from "@material-ui/core/AppBar/AppBar";
+import Divider from "@material-ui/core/Divider/Divider";
 import IconButton from "@material-ui/core/IconButton/IconButton";
 import MenuItem from "@material-ui/core/MenuItem/MenuItem";
+import NativeSelect from "@material-ui/core/NativeSelect/NativeSelect";
 import Paper from "@material-ui/core/Paper/Paper";
-import Select from "@material-ui/core/Select/Select";
 import Toolbar from "@material-ui/core/Toolbar/Toolbar";
 import Typography from "@material-ui/core/Typography/Typography";
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
@@ -33,10 +33,10 @@ export const AppSettings: FunctionComponent<AppSettingsProps> = (props) => {
                         <Typography variant="subtitle2" className="secondary-label"></Typography>
                     </div>
                     <div className="configuration">
-                        <Select value={props.temperatureUnit} onChange={(event) => props.onTemperatureUnitChange(event.target.value as string)} displayEmpty>
-                            <MenuItem value={TemperatureUnit.CELSIUS}>Celsius</MenuItem>
-                            <MenuItem value={TemperatureUnit.FAHRENHEIT}>Fahrenheit</MenuItem>
-                        </Select>
+                        <NativeSelect value={props.temperatureUnit} onChange={(event) => props.onTemperatureUnitChange(event.target.value as string)}>
+                            <option value={TemperatureUnit.CELSIUS}>Celsius</option>
+                            <option value={TemperatureUnit.FAHRENHEIT}>Fahrenheit</option>
+                        </NativeSelect>
                     </div>
                 </div>
 
@@ -48,10 +48,10 @@ export const AppSettings: FunctionComponent<AppSettingsProps> = (props) => {
                         <Typography variant="subtitle2" className="secondary-label"></Typography>
                     </div>
                     <div className="configuration">
-                        <Select value={props.decimalSeparator} onChange={(event) => props.onDecimalSeparatorChange(event.target.value as string)} displayEmpty>
-                            <MenuItem value=",">Coma (,)</MenuItem>
-                            <MenuItem value=".">Dot (.)</MenuItem>
-                        </Select>
+                        <NativeSelect value={props.decimalSeparator} onChange={(event) => props.onDecimalSeparatorChange(event.target.value as string)}>
+                            <option value=",">Coma (,)</option>
+                            <option value=".">Dot (.)</option>
+                        </NativeSelect>
                     </div>
                 </div>
             </Paper>
