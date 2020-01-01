@@ -28,7 +28,7 @@ export const userLogin = (logging: ILogging): Service<UserLoginRequest, UserLogi
     const userLoginData = {
         accessToken: StringUtils.randomString(),
         refreshToken: StringUtils.randomString(),
-        expiredAt: (new Date()).getTime() + 300000, // 5 minutes
+        expiredAt: Date.now() + 300000, // 5 minutes
         username: user.username
     } as LoginToken;
 

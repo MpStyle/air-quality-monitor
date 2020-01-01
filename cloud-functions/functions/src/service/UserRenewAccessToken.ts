@@ -29,7 +29,7 @@ export const userNewAccessToken = (logging: ILogging): Service<UserNewAccessToke
             const userLoginData = {
                 accessToken: StringUtils.randomString(),
                 refreshToken: doc.refreshToken,
-                expiredAt: (new Date()).getTime() + 300000, // 5 minutes
+                expiredAt: Date.now() + 300000, // 5 minutes
                 username: doc.username
             } as LoginToken;
 
