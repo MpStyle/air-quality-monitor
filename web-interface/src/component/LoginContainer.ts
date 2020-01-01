@@ -1,6 +1,8 @@
 import { connect } from "react-redux";
 import { RouteChildrenProps } from "react-router";
 import { Action, Dispatch } from "redux";
+import { loginErrorActionBuilder } from "../action/LoginErrorAction";
+import { loginInProgressActionBuilder } from "../action/LoginInProgressAction";
 import { updateTokenActionBuilder } from "../action/UpdateTokenAction";
 import { DASHBOARD_URL } from "../book/Pages";
 import { userLogin } from "../book/UserLogin";
@@ -11,15 +13,18 @@ export const LoginContainer = connect(
     (appState: AppState): LoginProps => {
         return {
             fallbackUrl: DASHBOARD_URL,
-            token: appState.token
+            token: appState.token,
+            loginStatus: appState.loginStatus
         } as LoginProps;
     },
     (dispatch: Dispatch<Action>): LoginProps => {
         return {
             onSignInClick: (username: string, password: string) => {
+                dispatch(loginInProgressActionBuilder());
                 userLogin(username, password)
                     .then(response => {
                         if (response.error) {
+                            dispatch(loginErrorActionBuilder());
                             console.error(response.error);
                             return;
                         }

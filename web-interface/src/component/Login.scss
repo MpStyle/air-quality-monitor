@@ -10,6 +10,21 @@
     .content {
         padding: 30px;
 
+        .login-in-progress{
+            margin-top: 20px;
+
+            .message{
+                font-size: 0.95em;
+                margin-top: 10px;
+            }
+        }
+
+        .login-error{
+            font-size: 0.95em;
+            margin-top: 20px;
+            margin-bottom: -20px;
+        }
+
         .subtitle1 {
             margin: 30px;
         }

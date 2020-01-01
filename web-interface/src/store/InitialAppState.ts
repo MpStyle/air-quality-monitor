@@ -3,8 +3,8 @@ import { defaultDecimalSeparator } from '../book/DefaultDecimalSeparator';
 import { TemperatureUnit } from '../book/Unit';
 import { AirQualityData } from '../entity/AirQualityData';
 import { AirQuality, AirStatus } from '../entity/AirStatus';
-import { AIR_QUALITY_DATA_CO2_KEY, AIR_QUALITY_DATA_HUMIDITY_KEY, AIR_QUALITY_DATA_INSERTED_KEY, AIR_QUALITY_DATA_PRESSURE_KEY, AIR_QUALITY_DATA_TEMPERATURE_KEY, AIR_QUALITY_DATA_TVOC_KEY, TEMPERATURE_UNIT_KEY, AIR_QUALITY_DATA_CURRENT_DEVICE_ID_KEY } from './../book/LocalStorageKeys';
-import { SECRET_KEY_KEY } from './../book/SessionStorageKeys';
+import { LoginStatus } from '../entity/LoginStatus';
+import { AIR_QUALITY_DATA_CO2_KEY, AIR_QUALITY_DATA_CURRENT_DEVICE_ID_KEY, AIR_QUALITY_DATA_HUMIDITY_KEY, AIR_QUALITY_DATA_INSERTED_KEY, AIR_QUALITY_DATA_PRESSURE_KEY, AIR_QUALITY_DATA_TEMPERATURE_KEY, AIR_QUALITY_DATA_TVOC_KEY, TEMPERATURE_UNIT_KEY } from './../book/LocalStorageKeys';
 import { AppState } from './../entity/AppState';
 
 export const initialAppState: AppState = {
@@ -35,5 +35,6 @@ export const initialAppState: AppState = {
     currentDevice: localStorage.getItem(AIR_QUALITY_DATA_CURRENT_DEVICE_ID_KEY),
     suggestions: [],
     token: null,
-    decimalSeparator: defaultDecimalSeparator()
+    decimalSeparator: defaultDecimalSeparator(),
+    loginStatus: LoginStatus.None
 };
