@@ -1,5 +1,6 @@
 import { co2Quality, humidityQuality, temperatureQuality, tvocQuality } from '../book/AirQuality';
 import { defaultDecimalSeparator } from '../book/DefaultDecimalSeparator';
+import { TOKEN_KEY } from '../book/SessionStorageKeys';
 import { TemperatureUnit } from '../book/Unit';
 import { AirQualityData } from '../entity/AirQualityData';
 import { AirQuality, AirStatus } from '../entity/AirStatus';
@@ -34,7 +35,7 @@ export const initialAppState: AppState = {
     devices: [],
     currentDevice: localStorage.getItem(AIR_QUALITY_DATA_CURRENT_DEVICE_ID_KEY),
     suggestions: [],
-    token: null,
+    token: sessionStorage.getItem(TOKEN_KEY) ? JSON.parse(sessionStorage.getItem(TOKEN_KEY) as string) : null,
     decimalSeparator: defaultDecimalSeparator(),
     loginStatus: LoginStatus.None
 };
