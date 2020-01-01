@@ -8,7 +8,7 @@ export const meterUnitReducer = (state: MeterUnit = initialAppState.meterUnit, a
     switch (action.type) {
         case UpdateTemperatureUnitActionName:
             const updateTemperatureUnitActionName = action as UpdateTemperatureUnitAction;
-            localStorage.setItem(TEMPERATURE_UNIT_KEY, updateTemperatureUnitActionName.temperatureUnit)
+            localStorage.setItem(TEMPERATURE_UNIT_KEY, updateTemperatureUnitActionName.temperatureUnit);
             return Object.assign({}, { ...state }, { temperature: updateTemperatureUnitActionName.temperatureUnit });
     }
     return state;
