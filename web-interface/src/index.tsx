@@ -1,4 +1,4 @@
-import { CssBaseline, Typography } from '@material-ui/core';
+import { CssBaseline } from '@material-ui/core';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
@@ -10,6 +10,7 @@ import { Credits } from './component/Credits';
 import { DashboardContainer } from './component/DashboardContainer';
 import { IsLogged } from './component/IsLogged';
 import { LoginContainer } from './component/LoginContainer';
+import { NotFoundPage } from './component/NotFoundPage';
 import './index.scss';
 import { appStore } from './store/AppStore';
 
@@ -29,7 +30,7 @@ ReactDOM.render(
                 <Route exact path="/" component={LoginContainer} />
                 <Route path={LOGIN_URL} component={LoginContainer} />
                 <Route path={APP_SETTINGS_URL} component={AppSettingsContainer} />
-                <Route render={() => (<Typography variant="h6" color="error">404 Not Found</Typography>)} />
+                <Route component={NotFoundPage} />
             </Switch>
         </HashRouter>
     </Provider>,
