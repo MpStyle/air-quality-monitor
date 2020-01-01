@@ -5,7 +5,7 @@ import "./IsLogged.scss";
 
 export const IsLogged: FunctionComponent<IsLoggedProps> = (props: IsLoggedProps) => {
     if (!appStore.getState().token) {
-        return <Redirect to={{ pathname: `${props.loginPageUrl}?sourceUrl=${props.sourceUrl}` }} />;
+        return <Redirect to={{ pathname: `${props.loginPageUrl}`, search: `?sourceUrl=${props.sourceUrl}` }} />;
     }
 
     return <Fragment>{props.children}</Fragment>;
