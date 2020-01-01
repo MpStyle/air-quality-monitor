@@ -1,7 +1,6 @@
 import AppBar from "@material-ui/core/AppBar/AppBar";
 import Divider from "@material-ui/core/Divider/Divider";
 import IconButton from "@material-ui/core/IconButton/IconButton";
-import MenuItem from "@material-ui/core/MenuItem/MenuItem";
 import NativeSelect from "@material-ui/core/NativeSelect/NativeSelect";
 import Paper from "@material-ui/core/Paper/Paper";
 import Toolbar from "@material-ui/core/Toolbar/Toolbar";
