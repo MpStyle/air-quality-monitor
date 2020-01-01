@@ -1,22 +1,23 @@
 import { Action } from "redux";
 import { FetchDevicesSuccessAction, FetchDevicesSuccessActionName } from "../action/FetchDevicesSuccessAction";
-import { UpdateCurrentDeviceIdAction, UpdateCurrentDeviceIdActionName } from "../action/UpdateCurrentDeviceIdAction";
-import { AIR_QUALITY_DATA_CURRENT_DEVICE_ID_KEY } from "../book/LocalStorageKeys";
+import { UpdateCurrentDeviceAction, UpdateCurrentDeviceActionName } from "../action/UpdateCurrentDeviceAction";
+import { AIR_QUALITY_DATA_CURRENT_DEVICE_KEY } from "../book/LocalStorageKeys";
+import { Device } from "../entity/Device";
 import { initialAppState } from "../store/InitialAppState";
 
-export const currentDeviceReducer = (state: string | null = initialAppState.currentDevice, action: Action): string | null => {
+export const currentDeviceReducer = (state: Device | null = initialAppState.currentDevice, action: Action): Device | null => {
     switch (action.type) {
         case FetchDevicesSuccessActionName:
             const updateDevicesAction = action as FetchDevicesSuccessAction;
             if (updateDevicesAction.devices && updateDevicesAction.devices.length && !state) {
-                localStorage.setItem(AIR_QUALITY_DATA_CURRENT_DEVICE_ID_KEY, updateDevicesAction.devices[0].deviceId);
-                return updateDevicesAction.devices[0].deviceId;
+                localStorage.setItem(AIR_QUALITY_DATA_CURRENT_DEVICE_KEY, JSON.stringify(updateDevicesAction.devices[0]));
+                return updateDevicesAction.devices[0];
             }
             break;
-        case UpdateCurrentDeviceIdActionName:
-            const updateCurrentDeviceAction = action as UpdateCurrentDeviceIdAction;
-            localStorage.setItem(AIR_QUALITY_DATA_CURRENT_DEVICE_ID_KEY, updateCurrentDeviceAction.currentDeviceId);
-            return updateCurrentDeviceAction.currentDeviceId;
+        case UpdateCurrentDeviceActionName:
+            const updateCurrentDeviceAction = action as UpdateCurrentDeviceAction;
+            localStorage.setItem(AIR_QUALITY_DATA_CURRENT_DEVICE_KEY, JSON.stringify(updateCurrentDeviceAction.currentDevice));
+            return updateCurrentDeviceAction.currentDevice;
     }
     return state;
 };

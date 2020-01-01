@@ -13,17 +13,16 @@ import { DeviceAirQualityData } from './DeviceAirQualityData';
 
 export const Dashboard: FunctionComponent<DashboardProps> = (props) => {
     useEffect(() => {
-        props.fetchDevices(props.token.accessToken);
+        props.fetchDevices(props.token);
     }, []);
     useEffect(() => {
-        if (props.currentDeviceId) {
-            props.fetchAirQualityData(props.currentDeviceId, props.token.accessToken);
+        if (props.loadAirQualityData && props.currentDevice) {
+            props.fetchAirQualityData(props.currentDevice.deviceId, props.token);
         }
-    }, [props.currentDeviceId]);
+    }, [props.loadAirQualityData, props.currentDevice]);
 
     const average = averageAirStatus(props.airStatus);
-    const areThereDevices = !!(props.devices && props.devices.length);
-    const currentDevice = props.devices.find(d => d.deviceId === props.currentDeviceId);
+    const currentDevice = props.devices.find(d => d.deviceId === props.currentDevice?.deviceId);
 
     const [isAppDrawerOpen, setIsAppDrawerOpen] = React.useState(false);
 
@@ -48,9 +47,8 @@ export const Dashboard: FunctionComponent<DashboardProps> = (props) => {
             devices={props.devices}
             currentDevice={currentDevice}
             average={average}
-            areThereDevices={areThereDevices}
             toggleDrawer={toggleDrawer}
-            onCurrentDeviceIdChange={props.onCurrentDeviceIdChange}
+            onCurrentDeviceChange={props.onCurrentDeviceChange}
             suggestions={props.suggestions} />
 
         <div className="spacer" />
@@ -64,6 +62,8 @@ export const Dashboard: FunctionComponent<DashboardProps> = (props) => {
 };
 
 export interface DashboardProps {
+    loadAirQualityData: boolean;
+
     token: LoginToken;
 
     decimalSeparator: string;
@@ -75,9 +75,9 @@ export interface DashboardProps {
     devices: Device[];
     suggestions: string[];
 
-    currentDeviceId: string | null;
-    onCurrentDeviceIdChange: (deviceId: string) => void;
+    currentDevice: Device | null;
+    onCurrentDeviceChange: (device: Device) => void;
 
-    fetchDevices: (secretKey: string) => void;
-    fetchAirQualityData: (currentDeviceId: string, secretKey: string) => void;
+    fetchDevices: (token: LoginToken) => void;
+    fetchAirQualityData: (currentDeviceId: string, token: LoginToken) => void;
 }

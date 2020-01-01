@@ -22,7 +22,7 @@ export const DashboardHeader: FunctionComponent<DashboardHeaderProps> = (props) 
             <MenuIcon />
         </IconButton>
         <div className="sub-headers">
-            {props.areThereDevices &&
+            {props.currentDevice &&
                 <div className="sub-header device-list">
                     <div aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
                         {props.currentDevice ? props.currentDevice.name : "Select a device..."}
@@ -33,13 +33,14 @@ export const DashboardHeader: FunctionComponent<DashboardHeaderProps> = (props) 
                         anchorEl={anchorEl}
                         keepMounted
                         open={Boolean(anchorEl)}
-                        onClose={handleClose}
-                    >
+                        onClose={handleClose}>
                         {props.devices.map((device) => (
                             <MenuItem key={device.deviceId} value={device.deviceId} onClick={() => {
-                                props.onCurrentDeviceIdChange(device.deviceId);
+                                props.onCurrentDeviceChange(device);
                                 handleClose();
-                            }}>{device.name}</MenuItem>
+                            }}>
+                                {device.name}
+                            </MenuItem>
                         ))}
                     </Menu>
                 </div>}
@@ -60,11 +61,10 @@ export const DashboardHeader: FunctionComponent<DashboardHeaderProps> = (props) 
 };
 
 export interface DashboardHeaderProps {
-    areThereDevices: boolean;
     suggestions: string[];
     average: number;
     devices: Device[];
     currentDevice: Device | undefined;
-    onCurrentDeviceIdChange: (deviceId: string) => void;
+    onCurrentDeviceChange: (device: Device) => void;
     toggleDrawer: (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => void;
 }

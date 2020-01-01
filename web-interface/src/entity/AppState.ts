@@ -10,7 +10,7 @@ export interface AppState {
     meterUnit: MeterUnit;
     airStatus: AirStatus;
     devices: Device[];
-    currentDevice: string | null;
+    currentDevice: Device | null;
     suggestions: string[];
     token: LoginToken | null;
     decimalSeparator: string;
