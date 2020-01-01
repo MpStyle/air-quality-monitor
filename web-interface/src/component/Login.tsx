@@ -13,8 +13,8 @@ function useQuery() {
 
 export const Login: FunctionComponent<LoginProps> = (props) => {
     let query = useQuery();
-    const [password, setPassword] = useState<string | null>(null);
-    const [username, setUsername] = useState<string | null>(null);
+    const [password, setPassword] = useState<string | null | undefined>(process.env.REACT_APP_AIR_QUALITY_DATA_password);
+    const [username, setUsername] = useState<string | null | undefined>(process.env.REACT_APP_AIR_QUALITY_DATA_USERNAME);
 
     if (props.token) {
         return <Redirect to={{ pathname: query.get("sourceUrl") || props.fallbackUrl }} />;
@@ -42,6 +42,7 @@ export const Login: FunctionComponent<LoginProps> = (props) => {
                     label="Username"
                     type="text"
                     variant="outlined"
+                    value={username || ""}
                     onChange={event => setUsername(event.target.value as string)}
                 />
                 <TextField
@@ -72,7 +73,7 @@ export const Login: FunctionComponent<LoginProps> = (props) => {
 };
 
 export interface LoginProps extends RouteChildrenProps {
-    onSignInClick: (username: string | null, password: string | null) => void;
+    onSignInClick: (username: string | null | undefined, password: string | null | undefined) => void;
     fallbackUrl: string;
     token: LoginToken | null;
     loginStatus: LoginStatus;
