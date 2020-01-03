@@ -11,6 +11,7 @@ import PersonIcon from '@material-ui/icons/Person';
 import PhonelinkRingIcon from '@material-ui/icons/PhonelinkRing';
 import SettingsIcon from '@material-ui/icons/Settings';
 import React, { FunctionComponent } from "react";
+<<<<<<< HEAD:web-interface/src/component/common/AppDrawer.tsx
 import { useHistory, Link } from "react-router-dom";
 import { updateTokenActionBuilder } from "../../action/UpdateTokenAction";
 import { airQualityToLabel } from "../../book/AirQualityToLabel";
@@ -19,6 +20,13 @@ import { userRevokeRefreshToken } from "../../book/UserRevokeRefreshToken";
 import { Device } from "../../entity/Device";
 import logo from '../../images/logo.svg';
 import { appStore } from "../../store/AppStore";
+=======
+import { Link, useHistory } from "react-router-dom";
+import { airQualityToLabel } from "../book/AirQualityToLabel";
+import { APP_SETTINGS_URL, CREDITS_URL } from '../book/Pages';
+import { Device } from "../entity/Device";
+import logo from '../images/logo.svg';
+>>>>>>> Web Interface - Removed login from components:web-interface/src/component/AppDrawer.tsx
 import "./AppDrawer.scss";
 
 export const AppDrawer: FunctionComponent<AppDrawerProps> = (props) => {

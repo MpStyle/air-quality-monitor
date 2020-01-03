@@ -1,5 +1,6 @@
 import React, { FunctionComponent, useEffect } from 'react';
 import 'react-alice-carousel/lib/alice-carousel.css';
+<<<<<<< HEAD:web-interface/src/component/dashboard/Dashboard.tsx
 import { averageAirStatus } from "../../book/AverageAirStatus";
 import { AirQualityData } from '../../entity/AirQualityData';
 import { AirStatus } from "../../entity/AirStatus";
@@ -7,6 +8,14 @@ import { Device } from "../../entity/Device";
 import { LoginToken } from '../../entity/LoginToken';
 import { MeterUnit } from '../../entity/MeterUnit';
 import { AppDrawer } from '../common/AppDrawer';
+=======
+import { averageAirStatus } from "../book/AverageAirStatus";
+import { AirQualityData } from '../entity/AirQualityData';
+import { AirStatus } from "../entity/AirStatus";
+import { Device } from "../entity/Device";
+import { MeterUnit } from '../entity/MeterUnit';
+import { AppDrawerContainer } from './AppDrawerContainer';
+>>>>>>> Web Interface - Removed login from components:web-interface/src/component/Dashboard.tsx
 import './Dashboard.scss';
 import { DashboardHeader } from './DashboardHeader';
 import { DeviceAirQualityData } from './DeviceAirQualityData';
@@ -70,8 +79,13 @@ export interface DashboardProps {
     currentDevice: Device | null;
     onCurrentDeviceChange: (device: Device) => void;
 
-    fetchDevices: () => void;
-    fetchAirQualityData: (currentDeviceId: string) => void;
+<<<<<<< HEAD:web-interface/src/component/dashboard/Dashboard.tsx
+    fetchDevices: (token: LoginToken) => void;
+    fetchAirQualityData: (currentDeviceId: string, token: LoginToken) => void;
 
     iconVisualizationType: string;
+=======
+    fetchDevices: () => void;
+    fetchAirQualityData: (currentDeviceId: string) => void;
+>>>>>>> Web Interface - Removed login from components:web-interface/src/component/Dashboard.tsx
 }

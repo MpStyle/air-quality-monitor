@@ -64,7 +64,7 @@ export interface DashboardHeaderProps {
     suggestions: string[];
     average: number;
     devices: Device[];
-    currentDevice: Device | undefined;
+    currentDevice: Device | null;
     onCurrentDeviceChange: (device: Device) => void;
     toggleDrawer: (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => void;
 }

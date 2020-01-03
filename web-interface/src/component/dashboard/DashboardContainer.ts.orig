@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
+<<<<<<< HEAD:web-interface/src/component/dashboard/DashboardContainer.ts
 import { fetchAirQualityDataSuccessActionBuilder } from '../../action/FetchAirQualityDataSuccessAction';
 import { fetchDevicesSuccessActionBuilder } from '../../action/FetchDevicesSuccessAction';
 import { updateCurrentDeviceActionBuilder } from '../../action/UpdateCurrentDeviceAction';
@@ -11,6 +12,20 @@ import { AppState } from '../../entity/AppState';
 import { Device } from '../../entity/Device';
 import { LoginToken } from '../../entity/LoginToken';
 import { ServiceResponse } from '../../entity/ServiceResponse';
+=======
+import { fetchAirQualityDataSuccessActionBuilder } from '../action/FetchAirQualityDataSuccessAction';
+import { fetchDevicesSuccessActionBuilder } from '../action/FetchDevicesSuccessAction';
+import { updateCurrentDeviceActionBuilder } from '../action/UpdateCurrentDeviceAction';
+import { updateTokenActionBuilder } from '../action/UpdateTokenAction';
+import { userDevicesSearch } from '../book/UserDevicesSearch';
+import { userMeasurementsSearch } from '../book/UserMeasurementsSearch';
+import { UserNewAccessTokenResponse, userRenewAccessToken } from '../book/UserRenewAccessToken';
+import { AirQualityData } from '../entity/AirQualityData';
+import { AppState } from '../entity/AppState';
+import { Device } from '../entity/Device';
+import { LoginToken } from '../entity/LoginToken';
+import { ServiceResponse } from '../entity/ServiceResponse';
+>>>>>>> Web Interface - Removed login from components:web-interface/src/component/DashboardContainer.ts
 import { Dashboard, DashboardProps } from './Dashboard';
 
 export const DashboardContainer = connect(
@@ -22,9 +37,17 @@ export const DashboardContainer = connect(
             currentDevice: appState.currentDevice,
             devices: appState.devices,
             suggestions: appState.suggestions,
+<<<<<<< HEAD:web-interface/src/component/dashboard/DashboardContainer.ts
+            token: appState.token,
             decimalSeparator: appState.settings.decimalSeparator,
             loadAirQualityData: !!appState.devices.length,
             iconVisualizationType: appState.settings.iconVisualizationType
+        } as DashboardProps;
+=======
+            decimalSeparator: appState.decimalSeparator,
+            token: appState.token
+        };
+>>>>>>> Web Interface - Removed login from components:web-interface/src/component/DashboardContainer.ts
     },
     (dispatch: Dispatch) => {
         return {
@@ -33,8 +56,14 @@ export const DashboardContainer = connect(
             dispatchFetchAirQualityDataSuccess: (airQualityData: AirQualityData) => (dispatch(fetchAirQualityDataSuccessActionBuilder(airQualityData as AirQualityData))),
             refreshToken: (token: LoginToken): Promise<LoginToken> => {
                 const isExpired = Date.now() > token.expiredAt;
+<<<<<<< HEAD:web-interface/src/component/dashboard/DashboardContainer.ts
                 const renewToken: Promise<ServiceResponse<UserRenewAccessTokenResponse>> = isExpired ? userRenewAccessToken(token.refreshToken) : Promise.resolve({ payload: { accessToken: token.accessToken, expiresIn: token.expiredAt } });
+
+                renewToken.then(response => {
+=======
+                const renewToken: Promise<ServiceResponse<UserNewAccessTokenResponse>> = isExpired ? userRenewAccessToken(token.refreshToken) : Promise.resolve({ payload: { accessToken: token.accessToken, expiredAt: token.expiredAt } })
                 return renewToken.then(response => {
+>>>>>>> Web Interface - Removed login from components:web-interface/src/component/DashboardContainer.ts
                     if (response.error) {
                         console.error(`Error while renew access token: ${response.error}`);
                         throw new Error(`Error while renew access token: ${response.error}`);
@@ -88,8 +117,12 @@ export const DashboardContainer = connect(
             },
             fetchAirQualityData: (currentDeviceId: string) => {
                 const poller = () => {
-                    const renewToken = dispatchToProps.refreshToken(stateToProps.token as LoginToken);
+<<<<<<< HEAD:web-interface/src/component/dashboard/DashboardContainer.ts
+                    const isExpired = Date.now() > token.expiredAt;
                     const renewToken: Promise<ServiceResponse<UserRenewAccessTokenResponse>> = isExpired ? userRenewAccessToken(token.refreshToken) : Promise.resolve({ payload: { accessToken: token.accessToken, expiresIn: token.expiredAt } });
+=======
+                    const renewToken = dispatchToProps.refreshToken(stateToProps.token as LoginToken);
+>>>>>>> Web Interface - Removed login from components:web-interface/src/component/DashboardContainer.ts
 
                     renewToken.then(response => {
                         userMeasurementsSearch(currentDeviceId, response.accessToken)
