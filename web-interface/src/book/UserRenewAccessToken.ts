@@ -33,5 +33,5 @@ interface UserRenewAccessTokenRequest {
 
 export interface UserRenewAccessTokenResponse {
     accessToken: string;
-    expiresIn: number;
+    expiredAt: number;
 }
