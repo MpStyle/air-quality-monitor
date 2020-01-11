@@ -1,7 +1,7 @@
 import { Button, CircularProgress, Paper, TextField, Typography } from "@material-ui/core";
 import React, { FunctionComponent, useState } from 'react';
 import { RouteChildrenProps, useLocation } from 'react-router';
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import { LoginStatus } from "../entity/LoginStatus";
 import { LoginToken } from "../entity/LoginToken";
 import logo from '../images/logo.svg';
@@ -66,6 +66,9 @@ export const Login: FunctionComponent<LoginProps> = (props) => {
                         Sign in
                     </Button>
                 </div>
+
+                <Link to="/credits" className="credits-link">Credits</Link>
+
             </React.Fragment>}
 
         </Paper>

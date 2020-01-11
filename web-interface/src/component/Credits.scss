@@ -1,20 +1,20 @@
 @import '../book/Colors.scss';
 
-.credits{
-    .app-bar{
+.credits {
+    .app-bar {
         color: $color-text-alternative;
         background: $color-primary;
         background: linear-gradient(90deg, $color-primary 0%, $color-secondary 100%);
 
-        .back-button{
+        .back-button {
             cursor: pointer;
         }
     }
 
-    .links-container{
+    .links-container {
         width: 96%;
         max-width: 600px;
         margin: 20px auto 20px auto;
-        padding: 7px;
+        padding: 20px;
     }
 }

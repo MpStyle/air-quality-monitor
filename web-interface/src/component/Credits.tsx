@@ -24,6 +24,7 @@ export const Credits: FunctionComponent<CreditsProps> = (_props) => {
         </AppBar>
         <main>
             <Paper elevation={2} className="links-container">
+                <Typography variant="h6">Icons</Typography>
                 <ul>
                     <li>Icons made by <MUILink href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</MUILink> from <MUILink href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</MUILink></li>
                     <li>Icons made by <MUILink href="https://www.flaticon.com/authors/hirschwolf" title="hirschwolf">hirschwolf</MUILink> from <MUILink href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</MUILink></li>
@@ -35,10 +36,13 @@ export const Credits: FunctionComponent<CreditsProps> = (_props) => {
                     <li>Icons made by <MUILink href="https://www.flaticon.com/authors/roundicons" title="Roundicons">Roundicons</MUILink> from <MUILink href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</MUILink></li>
                     <li>Icons made by <MUILink href="https://www.flaticon.com/authors/roundicons" title="Roundicons">Roundicons</MUILink> from <MUILink href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</MUILink></li>
                     <li>Icons made by <MUILink href="https://www.flaticon.com/authors/gregor-cresnar" title="Gregor Cresnar">Gregor Cresnar</MUILink> from <MUILink href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</MUILink></li>
+                </ul>
+
+                <Typography variant="h6">Packages</Typography>
+                <ul>
                     <li><MUILink href="https://it.reactjs.org/">React</MUILink></li>
                     <li><MUILink href="https://redux.js.org/">Redux</MUILink></li>
                     <li><MUILink href="https://github.com/kelektiv/node-uuid">uuid</MUILink></li>
-                    <li><MUILink href="https://github.com/typicode/json-server">JSON Server</MUILink></li>
                     <li><MUILink href="https://palantir.github.io/tslint/">TSLint</MUILink></li>
                     <li><MUILink href="https://sass-lang.com/">Sass</MUILink></li>
                     <li><MUILink href="https://www.typescriptlang.org/">Typescript</MUILink></li>
