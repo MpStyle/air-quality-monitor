@@ -7,12 +7,17 @@ import { MeterUnit } from "./MeterUnit";
 
 export interface AppState {
     airQualityData: AirQualityData;
-    meterUnit: MeterUnit;
     airStatus: AirStatus;
     devices: Device[];
     currentDevice: Device | null;
     suggestions: string[];
     token: LoginToken | null;
-    decimalSeparator: string;
     loginStatus: LoginStatus;
+    settings: Settings;
+}
+
+export interface Settings {
+    iconVisualizationType: string;
+    decimalSeparator: string;
+    meterUnit: MeterUnit;
 }

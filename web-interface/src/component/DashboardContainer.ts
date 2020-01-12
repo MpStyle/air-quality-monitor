@@ -18,13 +18,14 @@ export const DashboardContainer = connect(
         return {
             airQualityData: appState.airQualityData,
             airStatus: appState.airStatus,
-            meterUnit: appState.meterUnit,
+            meterUnit: appState.settings.meterUnit,
             currentDevice: appState.currentDevice,
             devices: appState.devices,
             suggestions: appState.suggestions,
             token: appState.token,
-            decimalSeparator: appState.decimalSeparator,
-            loadAirQualityData: !!appState.devices.length
+            decimalSeparator: appState.settings.decimalSeparator,
+            loadAirQualityData: !!appState.devices.length,
+            iconVisualizationType: appState.settings.iconVisualizationType
         } as DashboardProps;
     },
     (dispatch: Dispatch): DashboardProps => {

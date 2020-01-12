@@ -1,6 +1,6 @@
 .data {
     margin: 0px auto;
-    padding: 30px 1em;
+    padding: 30px 2em;
     display: flex;
 
     .icon {
@@ -11,6 +11,12 @@
             width: 18px;
             vertical-align: middle;
         }
+    }
+
+    .label {
+        font-weight: bolder;
+        font-size: 1.2em;
+        width: 40%;
     }
 
     .value {
@@ -27,6 +33,7 @@
     .quality-level {
         text-align: right;
         flex-grow: 1;
+        vertical-align: middle;
 
         .warning-icon {
             width: 22px;

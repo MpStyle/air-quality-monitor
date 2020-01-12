@@ -3,21 +3,19 @@ import { AppState } from "../entity/AppState";
 import { airQualityDataReducer } from './AirQualityDataReducer';
 import { airStatusReducer } from "./AirStatusReducer";
 import { currentDeviceReducer } from "./CurrentDeviceReducer";
-import { decimalSeparatorReducer } from './DecimalSeparatorReducer';
 import { devicesReducer } from "./DevicesReducer";
 import { loginStatusReducer } from "./LoginStatusReducer";
-import { meterUnitReducer } from "./MeterUnitReducer";
+import { settingsReducer } from "./SettingsReducer";
 import { suggestionsReducer } from './SuggestionsReducer';
 import { tokenReducer } from "./TokenReducer";
 
 export const appReducer = combineReducers<AppState>({
     airQualityData: airQualityDataReducer,
-    meterUnit: meterUnitReducer,
     airStatus: airStatusReducer,
     devices: devicesReducer,
     currentDevice: currentDeviceReducer,
     suggestions: suggestionsReducer,
     token: tokenReducer,
-    decimalSeparator: decimalSeparatorReducer,
-    loginStatus: loginStatusReducer
+    loginStatus: loginStatusReducer,
+    settings: settingsReducer
 });

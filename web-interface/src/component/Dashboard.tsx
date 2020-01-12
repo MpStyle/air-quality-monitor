@@ -57,7 +57,8 @@ export const Dashboard: FunctionComponent<DashboardProps> = (props) => {
             airQualityData={props.airQualityData}
             airStatus={props.airStatus}
             decimalSeparator={props.decimalSeparator}
-            meterUnit={props.meterUnit} />
+            meterUnit={props.meterUnit}
+            iconVisualizationType={props.iconVisualizationType} />
     </div>;
 };
 
@@ -80,4 +81,6 @@ export interface DashboardProps {
 
     fetchDevices: (token: LoginToken) => void;
     fetchAirQualityData: (currentDeviceId: string, token: LoginToken) => void;
+
+    iconVisualizationType: string;
 }

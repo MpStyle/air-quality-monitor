@@ -39,7 +39,8 @@ export const DeviceAirQualityData: FunctionComponent<AirQualityDataProps> = (pro
             icon={temperature}
             value={temperatureValue}
             meter={props.meterUnit.temperature === TemperatureUnit.CELSIUS ? "°C" : "°F"}
-            quality={props.airStatus.temperature} />
+            quality={props.airStatus.temperature}
+            iconVisualizationType={props.iconVisualizationType} />
 
         <Divider light />
 
@@ -48,7 +49,8 @@ export const DeviceAirQualityData: FunctionComponent<AirQualityDataProps> = (pro
             icon={humidity}
             value={props.airQualityData.humidity.toFixed(0)}
             meter={props.meterUnit.humidity}
-            quality={props.airStatus.humidity} />
+            quality={props.airStatus.humidity}
+            iconVisualizationType={props.iconVisualizationType} />
 
         <Divider light />
 
@@ -57,7 +59,8 @@ export const DeviceAirQualityData: FunctionComponent<AirQualityDataProps> = (pro
             icon={co2}
             value={props.airQualityData.co2.toFixed(0)}
             meter={props.meterUnit.co2}
-            quality={props.airStatus.co2} />
+            quality={props.airStatus.co2}
+            iconVisualizationType={props.iconVisualizationType} />
 
         <Divider light />
 
@@ -66,7 +69,8 @@ export const DeviceAirQualityData: FunctionComponent<AirQualityDataProps> = (pro
             icon={pressure}
             value={props.airQualityData.pressure.toFixed(0)}
             meter={props.meterUnit.pressure}
-            quality={props.airStatus.pressure} />
+            quality={props.airStatus.pressure}
+            iconVisualizationType={props.iconVisualizationType} />
 
         <Divider light />
 
@@ -75,7 +79,8 @@ export const DeviceAirQualityData: FunctionComponent<AirQualityDataProps> = (pro
             icon={tvoc}
             value={props.airQualityData.tvoc.toFixed(1).replace(".", props.decimalSeparator)}
             meter={props.meterUnit.tvoc}
-            quality={props.airStatus.tvoc} />
+            quality={props.airStatus.tvoc}
+            iconVisualizationType={props.iconVisualizationType} />
 
         <Divider light />
 
@@ -89,4 +94,5 @@ export interface AirQualityDataProps {
     airStatus: AirStatus;
     meterUnit: MeterUnit;
     decimalSeparator: string;
+    iconVisualizationType: string;
 }
