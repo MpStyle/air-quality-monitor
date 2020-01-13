@@ -10,6 +10,7 @@ import { userLogin } from './service/UserLogin';
 import { userMeasurementsSearch } from './service/UserMeasurementsSearch';
 import { userNewAccessToken as userRenewAccessToken } from './service/UserRenewAccessToken';
 import { userRevokeRefreshToken } from './service/UserRevokeRefreshToken';
+import { userTimeRangeMeasurementsSearch } from './service/UserTimeRangeMeasurementsSearch';
 
 admin.initializeApp(functions.config().firebase);
 
@@ -40,6 +41,12 @@ app.post('/user-devices-search', (req, res) => {
 });
 app.post('/user-measurements-search', (req, res) => {
     userMeasurementsSearch(logging)(req.body)
+        .then(data => res.send(data))
+        .catch(err => buildErrorResponse(err));
+});
+
+app.post('/user-time-range-measurements-search', (req, res) => {
+    userTimeRangeMeasurementsSearch(logging)(req.body)
         .then(data => res.send(data))
         .catch(err => buildErrorResponse(err));
 });
