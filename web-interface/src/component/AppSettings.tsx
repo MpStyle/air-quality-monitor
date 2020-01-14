@@ -8,10 +8,10 @@ import Typography from "@material-ui/core/Typography/Typography";
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import React, { FunctionComponent } from "react";
 import { Link } from "react-router-dom";
+import { IconVisualizationType } from "../book/IconVisualizationType";
 import { DASHBOARD_URL } from "../book/Pages";
 import { TemperatureUnit } from "../book/Unit";
 import "./AppSettings.scss";
-import { IconVisualizationType } from "../book/IconVisualizationType";
 
 export const AppSettings: FunctionComponent<AppSettingsProps> = (props) => {
     return <div className="app-settings">
