@@ -1,4 +1,4 @@
-@import '../book/Colors.scss';
+@import '../../book/Colors.scss';
 
 .dashboard-header {
     height: 185px;
@@ -32,7 +32,7 @@
             margin: 0px auto 0px auto;
             cursor: pointer;
 
-            svg{
+            svg {
                 vertical-align: text-bottom;
             }
         }

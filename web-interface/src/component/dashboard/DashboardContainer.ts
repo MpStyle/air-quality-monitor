@@ -1,16 +1,16 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import { fetchAirQualityDataSuccessActionBuilder } from '../action/FetchAirQualityDataSuccessAction';
-import { fetchDevicesSuccessActionBuilder } from '../action/FetchDevicesSuccessAction';
-import { updateCurrentDeviceActionBuilder } from '../action/UpdateCurrentDeviceAction';
-import { userDevicesSearch } from '../book/UserDevicesSearch';
-import { userMeasurementsSearch } from '../book/UserMeasurementsSearch';
-import { userRenewAccessToken, UserRenewAccessTokenResponse } from '../book/UserRenewAccessToken';
-import { AirQualityData } from '../entity/AirQualityData';
-import { AppState } from '../entity/AppState';
-import { Device } from '../entity/Device';
-import { LoginToken } from '../entity/LoginToken';
-import { ServiceResponse } from '../entity/ServiceResponse';
+import { fetchAirQualityDataSuccessActionBuilder } from '../../action/FetchAirQualityDataSuccessAction';
+import { fetchDevicesSuccessActionBuilder } from '../../action/FetchDevicesSuccessAction';
+import { updateCurrentDeviceActionBuilder } from '../../action/UpdateCurrentDeviceAction';
+import { userDevicesSearch } from '../../book/UserDevicesSearch';
+import { userMeasurementsSearch } from '../../book/UserMeasurementsSearch';
+import { userRenewAccessToken, UserRenewAccessTokenResponse } from '../../book/UserRenewAccessToken';
+import { AirQualityData } from '../../entity/AirQualityData';
+import { AppState } from '../../entity/AppState';
+import { Device } from '../../entity/Device';
+import { LoginToken } from '../../entity/LoginToken';
+import { ServiceResponse } from '../../entity/ServiceResponse';
 import { Dashboard, DashboardProps } from './Dashboard';
 
 export const DashboardContainer = connect(

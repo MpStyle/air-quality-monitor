@@ -4,8 +4,8 @@ import Paper from "@material-ui/core/Paper/Paper";
 import Toolbar from "@material-ui/core/Toolbar/Toolbar";
 import Typography from "@material-ui/core/Typography/Typography";
 import React, { FunctionComponent } from "react";
-import { DASHBOARD_URL } from "../book/Pages";
-import "./NotFoundPage.scss";
+import { DASHBOARD_URL } from "../../book/Pages";
+import "./PageNotFound.scss";
 
 export const NotFoundPage: FunctionComponent<{}> = () => {
     return <div className="not-found-page">

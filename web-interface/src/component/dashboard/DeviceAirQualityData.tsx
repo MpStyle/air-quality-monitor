@@ -1,17 +1,17 @@
 import { CircularProgress, Divider } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper/Paper";
 import React, { FunctionComponent } from "react";
-import { epochToLocaleDate } from "../book/DateTimeUtils";
-import { celsiusToFahrenheit } from "../book/TemperatureConverter";
-import { TemperatureUnit } from "../book/Unit";
-import { AirQualityData } from "../entity/AirQualityData";
-import { AirStatus } from "../entity/AirStatus";
-import { MeterUnit } from "../entity/MeterUnit";
-import co2 from '../images/co2.svg';
-import humidity from '../images/humidity.svg';
-import pressure from '../images/pressure.svg';
-import temperature from '../images/temperature.svg';
-import tvoc from '../images/tvoc.svg';
+import { epochToLocaleDate } from "../../book/DateTimeUtils";
+import { celsiusToFahrenheit } from "../../book/TemperatureConverter";
+import { TemperatureUnit } from "../../book/Unit";
+import { AirQualityData } from "../../entity/AirQualityData";
+import { AirStatus } from "../../entity/AirStatus";
+import { MeterUnit } from "../../entity/MeterUnit";
+import co2 from '../../images/co2.svg';
+import humidity from '../../images/humidity.svg';
+import pressure from '../../images/pressure.svg';
+import temperature from '../../images/temperature.svg';
+import tvoc from '../../images/tvoc.svg';
 import { DataRow } from "./DataRow";
 import "./DeviceAirQualityData.scss";
 

@@ -1,12 +1,12 @@
 import { connect } from "react-redux";
 import { RouteChildrenProps } from "react-router";
 import { Action, Dispatch } from "redux";
-import { loginErrorActionBuilder } from "../action/LoginErrorAction";
-import { loginInProgressActionBuilder } from "../action/LoginInProgressAction";
-import { updateTokenActionBuilder } from "../action/UpdateTokenAction";
-import { DASHBOARD_URL } from "../book/Pages";
-import { userLogin } from "../book/UserLogin";
-import { AppState } from './../entity/AppState';
+import { loginErrorActionBuilder } from "../../action/LoginErrorAction";
+import { loginInProgressActionBuilder } from "../../action/LoginInProgressAction";
+import { updateTokenActionBuilder } from "../../action/UpdateTokenAction";
+import { DASHBOARD_URL } from "../../book/Pages";
+import { userLogin } from "../../book/UserLogin";
+import { AppState } from '../../entity/AppState';
 import { Login, LoginProps } from "./Login";
 
 export const LoginContainer = connect(

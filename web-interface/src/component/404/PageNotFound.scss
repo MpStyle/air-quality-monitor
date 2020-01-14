@@ -1,20 +1,20 @@
-@import '../book/Colors.scss';
+@import '../../book/Colors.scss';
 
-.not-found-page{
+.not-found-page {
     .app-bar {
         color: $color-text-alternative;
         background: $color-primary;
         background: linear-gradient(90deg, $color-primary 0%, $color-secondary 100%);
     }
 
-    .content{
+    .content {
         width: 96%;
         max-width: 600px;
         margin: 20px auto 20px auto;
         padding: 30px 15px 40px 15px;
         text-align: center;
 
-        .title{
+        .title {
             margin-bottom: 30px;
         }
 
@@ -24,7 +24,7 @@
             background: linear-gradient(135deg, $color-primary 0%, $color-secondary 100%);
         }
 
-        .or-play{
+        .or-play {
             margin: 40px;
         }
     }

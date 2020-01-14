@@ -1,9 +1,9 @@
 import React, { FunctionComponent } from 'react';
-import { airQualityToClassName } from '../book/AirQualityToClassName';
-import { airQualityToLabel } from '../book/AirQualityToLabel';
-import { IconVisualizationType } from '../book/IconVisualizationType';
-import { AirQuality } from '../entity/AirStatus';
-import warning from '../images/warning.svg';
+import { airQualityToClassName } from '../../book/AirQualityToClassName';
+import { airQualityToLabel } from '../../book/AirQualityToLabel';
+import { IconVisualizationType } from '../../book/IconVisualizationType';
+import { AirQuality } from '../../entity/AirStatus';
+import warning from '../../images/warning.svg';
 import './DataRow.scss';
 
 export const DataRow: FunctionComponent<DataRowProps> = (props: DataRowProps) => {

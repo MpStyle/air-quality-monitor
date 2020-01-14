@@ -1,6 +1,6 @@
 import React, { Fragment, FunctionComponent } from 'react';
 import { Redirect } from "react-router-dom";
-import { appStore } from '../store/AppStore';
+import { appStore } from '../../store/AppStore';
 import "./IsLogged.scss";
 
 export const IsLogged: FunctionComponent<IsLoggedProps> = (props: IsLoggedProps) => {

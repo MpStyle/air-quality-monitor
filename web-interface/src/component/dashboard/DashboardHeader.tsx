@@ -7,8 +7,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 import React, { FunctionComponent } from 'react';
 import AliceCarousel from 'react-alice-carousel';
 import 'react-alice-carousel/lib/alice-carousel.css';
-import { airQualityToLabel } from "../book/AirQualityToLabel";
-import { Device } from '../entity/Device';
+import { airQualityToLabel } from "../../book/AirQualityToLabel";
+import { Device } from '../../entity/Device';
 import './DashboardHeader.scss';
 
 export const DashboardHeader: FunctionComponent<DashboardHeaderProps> = (props) => {

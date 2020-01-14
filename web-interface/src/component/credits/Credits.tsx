@@ -1,27 +1,24 @@
-import AppBar from "@material-ui/core/AppBar/AppBar";
 import IconButton from "@material-ui/core/IconButton/IconButton";
 import MUILink from '@material-ui/core/Link';
 import Paper from '@material-ui/core/Paper/Paper';
-import Toolbar from "@material-ui/core/Toolbar/Toolbar";
 import Typography from "@material-ui/core/Typography/Typography";
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import React, { FunctionComponent } from 'react';
 import { Link } from "react-router-dom";
-import { DASHBOARD_URL } from "../book/Pages";
+import { DASHBOARD_URL } from "../../book/Pages";
 import "./Credits.scss";
+import { AppBarOneRow } from '../common/AppBarOneRow';
 
 export const Credits: FunctionComponent<CreditsProps> = (_props) => {
     return <div className="credits">
-        <AppBar position="static" className="app-bar">
-            <Toolbar>
-                <IconButton edge="start" color="inherit" aria-label="menu" component={Link} to={DASHBOARD_URL} className="back-button">
-                    <ArrowBackIosIcon />
-                </IconButton>
-                <Typography variant="h6">
-                    Credits
-                </Typography>
-            </Toolbar>
-        </AppBar>
+        <AppBarOneRow>
+            <IconButton edge="start" color="inherit" aria-label="menu" component={Link} to={DASHBOARD_URL} className="back-button">
+                <ArrowBackIosIcon />
+            </IconButton>
+            <Typography variant="h6">
+                Credits
+            </Typography>
+        </AppBarOneRow>
         <main>
             <Paper elevation={2} className="links-container">
                 <Typography variant="h6">Icons</Typography>

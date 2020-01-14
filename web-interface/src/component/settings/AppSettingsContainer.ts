@@ -1,9 +1,9 @@
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { updateDecimalSeparatorActionBuilder } from "../action/UpdateDecimalSeparatorAction";
-import { updateIconVisualizationTypeActionBuilder } from "../action/UpdateIconVisualizationTypeAction";
-import { updateTemperatureUnitActionBuilder } from "../action/UpdateTemperatureUnitAction";
-import { AppState } from "../entity/AppState";
+import { updateDecimalSeparatorActionBuilder } from "../../action/UpdateDecimalSeparatorAction";
+import { updateIconVisualizationTypeActionBuilder } from "../../action/UpdateIconVisualizationTypeAction";
+import { updateTemperatureUnitActionBuilder } from "../../action/UpdateTemperatureUnitAction";
+import { AppState } from "../../entity/AppState";
 import { AppSettings, AppSettingsProps } from "./AppSettings";
 
 export const AppSettingsContainer = connect(

@@ -1,16 +1,6 @@
-@import '../book/Colors.scss';
+@import '../../book/Colors.scss';
 
 .app-settings {
-    .app-bar {
-        color: $color-text-alternative;
-        background: $color-primary;
-        background: linear-gradient(90deg, $color-primary 0%, $color-secondary 100%);
-
-        .back-button {
-            cursor: pointer;
-        }
-    }
-
     .settings-container {
         width: 96%;
         max-width: 600px;

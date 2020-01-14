@@ -1,30 +1,27 @@
-import AppBar from "@material-ui/core/AppBar/AppBar";
 import Divider from "@material-ui/core/Divider/Divider";
 import IconButton from "@material-ui/core/IconButton/IconButton";
 import NativeSelect from "@material-ui/core/NativeSelect/NativeSelect";
 import Paper from "@material-ui/core/Paper/Paper";
-import Toolbar from "@material-ui/core/Toolbar/Toolbar";
 import Typography from "@material-ui/core/Typography/Typography";
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import React, { FunctionComponent } from "react";
 import { Link } from "react-router-dom";
-import { IconVisualizationType } from "../book/IconVisualizationType";
-import { DASHBOARD_URL } from "../book/Pages";
-import { TemperatureUnit } from "../book/Unit";
+import { IconVisualizationType } from "../../book/IconVisualizationType";
+import { DASHBOARD_URL } from "../../book/Pages";
+import { TemperatureUnit } from "../../book/Unit";
 import "./AppSettings.scss";
+import { AppBarOneRow } from "../common/AppBarOneRow";
 
 export const AppSettings: FunctionComponent<AppSettingsProps> = (props) => {
     return <div className="app-settings">
-        <AppBar position="static" className="app-bar">
-            <Toolbar>
-                <IconButton edge="start" color="inherit" aria-label="menu" component={Link} to={DASHBOARD_URL} className="back-button">
-                    <ArrowBackIosIcon />
-                </IconButton>
-                <Typography variant="h6">
-                    App Settings
+        <AppBarOneRow>
+            <IconButton edge="start" color="inherit" aria-label="menu" component={Link} to={DASHBOARD_URL} className="back-button">
+                <ArrowBackIosIcon />
+            </IconButton>
+            <Typography variant="h6">
+                App Settings
                 </Typography>
-            </Toolbar>
-        </AppBar>
+        </AppBarOneRow>
         <main>
             <Paper elevation={2} className="settings-container">
                 <div className="settings">
