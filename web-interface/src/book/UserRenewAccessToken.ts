@@ -1,24 +1,37 @@
 import { ServiceResponse } from "../entity/ServiceResponse";
 
-export const userRenewAccessToken = (refreshToken: string): Promise<ServiceResponse<UserNewAccessTokenResponse>> => {
-    const url = process.env.REACT_APP_AIR_QUALITY_DATA_REMOTE_URL as string;
-    return fetch(`${url}/app/user-renew-access-token`, {
+const url = process.env.REACT_APP_AIR_QUALITY_DATA_REMOTE_URL as string;
+
+let isRunning = false;
+let promise: Promise<ServiceResponse<UserRenewAccessTokenResponse>>;
+
+export const userRenewAccessToken = (refreshToken: string): Promise<ServiceResponse<UserRenewAccessTokenResponse>> => {
+    if (isRunning && promise) {
+        return promise;
+    }
+
+    isRunning = true;
+
+    promise = fetch(`${url}/app/user-renew-access-token`, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ refreshToken: refreshToken } as UserNewAccessTokenRequest)
-    }).then((response): Promise<ServiceResponse<UserNewAccessTokenResponse>> => {
+        body: JSON.stringify({ refreshToken: refreshToken } as UserRenewAccessTokenRequest)
+    }).then((response): Promise<ServiceResponse<UserRenewAccessTokenResponse>> => {
+        isRunning = false;
         return response.json();
     });
+
+    return promise;
 };
 
-interface UserNewAccessTokenRequest {
+interface UserRenewAccessTokenRequest {
     refreshToken: string;
 }
 
-export interface UserNewAccessTokenResponse {
+export interface UserRenewAccessTokenResponse {
     accessToken: string;
     expiresIn: number;
 }

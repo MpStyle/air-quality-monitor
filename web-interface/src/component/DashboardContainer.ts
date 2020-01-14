@@ -5,7 +5,7 @@ import { fetchDevicesSuccessActionBuilder } from '../action/FetchDevicesSuccessA
 import { updateCurrentDeviceActionBuilder } from '../action/UpdateCurrentDeviceAction';
 import { userDevicesSearch } from '../book/UserDevicesSearch';
 import { userMeasurementsSearch } from '../book/UserMeasurementsSearch';
-import { UserNewAccessTokenResponse, userRenewAccessToken } from '../book/UserRenewAccessToken';
+import { userRenewAccessToken, UserRenewAccessTokenResponse } from '../book/UserRenewAccessToken';
 import { AirQualityData } from '../entity/AirQualityData';
 import { AppState } from '../entity/AppState';
 import { Device } from '../entity/Device';
@@ -33,7 +33,7 @@ export const DashboardContainer = connect(
             onCurrentDeviceChange: (device: Device) => { dispatch(updateCurrentDeviceActionBuilder(device)); },
             fetchDevices: (token: LoginToken) => {
                 const isExpired = Date.now() > token.expiredAt;
-                const renewToken: Promise<ServiceResponse<UserNewAccessTokenResponse>> = isExpired ? userRenewAccessToken(token.refreshToken) : Promise.resolve({ payload: { accessToken: token.accessToken, expiresIn: token.expiredAt } });
+                const renewToken: Promise<ServiceResponse<UserRenewAccessTokenResponse>> = isExpired ? userRenewAccessToken(token.refreshToken) : Promise.resolve({ payload: { accessToken: token.accessToken, expiresIn: token.expiredAt } });
 
                 renewToken.then(response => {
                     if (response.error) {
@@ -64,7 +64,7 @@ export const DashboardContainer = connect(
             fetchAirQualityData: (currentDeviceId: string, token: LoginToken) => {
                 const poller = () => {
                     const isExpired = Date.now() > token.expiredAt;
-                    const renewToken: Promise<ServiceResponse<UserNewAccessTokenResponse>> = isExpired ? userRenewAccessToken(token.refreshToken) : Promise.resolve({ payload: { accessToken: token.accessToken, expiresIn: token.expiredAt } });
+                    const renewToken: Promise<ServiceResponse<UserRenewAccessTokenResponse>> = isExpired ? userRenewAccessToken(token.refreshToken) : Promise.resolve({ payload: { accessToken: token.accessToken, expiresIn: token.expiredAt } });
 
                     renewToken.then(response => {
                         if (response.error) {
