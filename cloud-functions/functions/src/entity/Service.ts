@@ -6,13 +6,13 @@ export interface ServiceResponse<TPayload> extends ServiceErrorResponse, Service
 }
 
 export interface ServiceErrorResponse {
-    error?: any;
+    error?: number;
 }
 
 export interface ServicePayloadResponse<TPayload> {
     payload?: TPayload;
 }
 
-export const buildErrorResponse: (error: any) => Promise<ServiceResponse<any>> = (error: any) => Promise.resolve({ error });
+export const buildErrorResponse: (error: number) => Promise<ServiceResponse<any>> = (error: number) => Promise.resolve({ error });
 
 export const buildResponse: <TPayload>(payload: TPayload, error?: any) => Promise<ServiceResponse<TPayload>> = <TPayload>(payload: TPayload, error?: any) => Promise.resolve({ payload, error });

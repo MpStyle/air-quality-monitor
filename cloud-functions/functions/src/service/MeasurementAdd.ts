@@ -36,7 +36,8 @@ export const measurementAdd = (logging: ILogging): Service<MeasurementAddRequest
             return Bluebird
                 .map(req.measurements, (m, index): Promise<ServiceResponse<MeasurementAddResponse>> => {
                     if (!m.id || m.id === '') {
-                        return buildErrorResponse(`${Errors.INVALID_MEASUREMENT} - [${index}]`);
+                        logging.error("measurementAdd", `Error while adding measurement ${index}`);
+                        return buildErrorResponse(Errors.INVALID_MEASUREMENT);
                     }
 
                     const docRef = db.collection(Collections.MEASUREMENT).doc(m.id);

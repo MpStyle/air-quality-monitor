@@ -4,12 +4,13 @@ import { PagedRequest } from "../entity/PagedRequest";
 import { buildErrorResponse, buildResponse, Service } from "../entity/Service";
 import { TimeRangeMeasurement } from "../entity/TimeRangeMeasurement";
 import admin = require('firebase-admin');
+import { Granularity } from "../entity/Granularity";
 
 export const timeRangeMeasurementsSearch = (logging: ILogging): Service<TimeRangeMeasurementSearchRequest, TimeRangeMeasurementSearchResponse> => req => {
-    logging.info("measurementsSearch", "Starts");
+    logging.info("timeRangeMeasurementsSearch", "Starts");
 
     const db = admin.firestore();
-    let collectionRef: FirebaseFirestore.CollectionReference | FirebaseFirestore.Query = db.collection(Collections.MEASUREMENT);
+    let collectionRef: FirebaseFirestore.CollectionReference | FirebaseFirestore.Query = db.collection(Collections.TIME_RANGE_MEASUREMENT);
 
     if (req.deviceId) {
         collectionRef = collectionRef.where('deviceId', '==', req.deviceId);
@@ -17,6 +18,10 @@ export const timeRangeMeasurementsSearch = (logging: ILogging): Service<TimeRang
 
     if (req.type) {
         collectionRef = collectionRef.where('type', '==', req.type);
+    }
+
+    if (req.granularity) {
+        collectionRef = collectionRef.where('granularity', '==', req.granularity);
     }
 
     if (req.timeRange) {
@@ -50,6 +55,7 @@ export interface TimeRangeMeasurementSearchRequest extends PagedRequest {
     deviceId?: string;
     type?: string;
     timeRange?: string;
+    granularity?: Granularity;
 }
 
 export interface TimeRangeMeasurementSearchResponse {

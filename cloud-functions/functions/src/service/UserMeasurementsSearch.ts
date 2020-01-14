@@ -5,6 +5,7 @@ import { buildErrorResponse, buildResponse, Service } from "../entity/Service";
 import { userAuthorization } from "./UserAuthorization";
 import { MeasurementSearchRequest, measurementsSearch } from "./MeasurementsSearch";
 import Bluebird = require("bluebird");
+import { MeasurementTypes } from "../entity/MeasurementTypes";
 
 export const userMeasurementsSearch = (logging: ILogging): Service<UserMeasurementsSearchRequest, UserMeasurementsSearchResponse> => req => {
     try {
@@ -32,10 +33,10 @@ export const userMeasurementsSearch = (logging: ILogging): Service<UserMeasureme
                     return buildErrorResponse(Errors.DEVICE_AUTHORIZATION_ERROR);
                 }
 
-                const measurementTypes = ['pressure', 'temperature', 'co2', 'humidity', 'tvoc'];
+                const measurementTypes = [MeasurementTypes.PRESSURE, MeasurementTypes.TEMPERATURE, MeasurementTypes.CO2, MeasurementTypes.HUMIDITY, MeasurementTypes.TVOC];
 
                 return Bluebird
-                    .map(measurementTypes, (measurementType, index) => {
+                    .map(measurementTypes, (measurementType) => {
                         return measurementsSearch(logging)(<MeasurementSearchRequest>{ deviceId: req.deviceId, limit: 1, type: measurementType });
                     }, { concurrency: 3 })
                     .then(results => results.reduce((acc, curr) => {
@@ -45,11 +46,11 @@ export const userMeasurementsSearch = (logging: ILogging): Service<UserMeasureme
 
                         const value = curr.payload.measurements[0].value ? parseFloat(curr.payload.measurements[0].value) : null;
                         switch (curr.payload.measurements[0].type) {
-                            case 'temperature': acc.temperature = value; break;
-                            case 'co2': acc.co2 = value; break;
-                            case 'humidity': acc.humidity = value; break;
-                            case 'tvoc': acc.tvoc = value; break;
-                            case 'pressure': acc.pressure = value; break;
+                            case MeasurementTypes.TEMPERATURE: acc.temperature = value; break;
+                            case MeasurementTypes.CO2: acc.co2 = value; break;
+                            case MeasurementTypes.HUMIDITY: acc.humidity = value; break;
+                            case MeasurementTypes.TVOC: acc.tvoc = value; break;
+                            case MeasurementTypes.PRESSURE: acc.pressure = value; break;
                         }
 
                         if (!acc.inserted || acc.inserted > curr.payload.measurements[0].inserted) {

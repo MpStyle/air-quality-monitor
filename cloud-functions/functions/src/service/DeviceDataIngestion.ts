@@ -7,6 +7,8 @@ import uuid = require("uuid")
 import { Scopes } from "../entity/Scopes";
 import { deviceAuthorization } from "./DeviceAuthorization";
 import { timeRangeMeasurementAdd } from './TimeRangeMeasurementAdd';
+import { Granularity } from "../entity/Granularity";
+import { MeasurementTypes } from './../entity/MeasurementTypes';
 
 export const deviceDataIngestion = (logging: ILogging): Service<DeviceDataIngestionRequest, {}> => req => {
     if (!req.secretKey || !req.device.id || !req.measurementDate) {
@@ -48,33 +50,33 @@ export const deviceDataIngestion = (logging: ILogging): Service<DeviceDataIngest
                         deviceId: req.device.id, inserted: req.measurementDate, measurements: [
                             {
                                 id: uuid.v4(),
-                                type: 'temperature',
+                                type: MeasurementTypes.TEMPERATURE,
                                 value: req.airData.temperature
                             },
                             {
                                 id: uuid.v4(),
-                                type: 'tvoc',
+                                type: MeasurementTypes.TVOC,
                                 value: req.airData.tvoc
                             },
                             {
                                 id: uuid.v4(),
-                                type: 'co2',
+                                type: MeasurementTypes.CO2,
                                 value: req.airData.co2
                             },
                             {
                                 id: uuid.v4(),
-                                type: 'pressure',
+                                type: MeasurementTypes.PRESSURE,
                                 value: req.airData.pressure
                             },
                             {
                                 id: uuid.v4(),
-                                type: 'humidity',
+                                type: MeasurementTypes.HUMIDITY,
                                 value: req.airData.humidity
                             },
                         ].filter(m => !!m.value)
                     })
                         .then(addMeasurementResponse => {
-                            if (addMeasurementResponse.error) {
+                            if (deviceAuthorizationResponse.error) {
                                 return buildErrorResponse(deviceAuthorizationResponse.error);
                             }
 
@@ -89,40 +91,43 @@ export const deviceDataIngestion = (logging: ILogging): Service<DeviceDataIngest
 
                             return Promise
                                 .all([
-                                    timeRangeMeasurementAddService({ deviceId: req.device.id, timeRange: year + month + day, type: 'humidity', value: req.airData.humidity }),
-                                    timeRangeMeasurementAddService({ deviceId: req.device.id, timeRange: year + month, type: 'humidity', value: req.airData.humidity }),
-                                    timeRangeMeasurementAddService({ deviceId: req.device.id, timeRange: year, type: 'humidity', value: req.airData.humidity }),
+                                    timeRangeMeasurementAddService({ deviceId: req.device.id, timeRange: year + month + day, type: MeasurementTypes.HUMIDITY, value: req.airData.humidity, granularity: Granularity.daily }),
+                                    timeRangeMeasurementAddService({ deviceId: req.device.id, timeRange: year + month, type: MeasurementTypes.HUMIDITY, value: req.airData.humidity, granularity: Granularity.monthly }),
+                                    timeRangeMeasurementAddService({ deviceId: req.device.id, timeRange: year, type: MeasurementTypes.HUMIDITY, value: req.airData.humidity, granularity: Granularity.yearly }),
 
-                                    timeRangeMeasurementAddService({ deviceId: req.device.id, timeRange: year + month + day, type: 'pressure', value: req.airData.pressure }),
-                                    timeRangeMeasurementAddService({ deviceId: req.device.id, timeRange: year + month, type: 'pressure', value: req.airData.pressure }),
-                                    timeRangeMeasurementAddService({ deviceId: req.device.id, timeRange: year, type: 'pressure', value: req.airData.pressure }),
+                                    timeRangeMeasurementAddService({ deviceId: req.device.id, timeRange: year + month + day, type: MeasurementTypes.PRESSURE, value: req.airData.pressure, granularity: Granularity.daily }),
+                                    timeRangeMeasurementAddService({ deviceId: req.device.id, timeRange: year + month, type: MeasurementTypes.PRESSURE, value: req.airData.pressure, granularity: Granularity.monthly }),
+                                    timeRangeMeasurementAddService({ deviceId: req.device.id, timeRange: year, type: MeasurementTypes.PRESSURE, value: req.airData.pressure, granularity: Granularity.yearly }),
 
-                                    timeRangeMeasurementAddService({ deviceId: req.device.id, timeRange: year + month + day, type: 'co2', value: req.airData.co2 }),
-                                    timeRangeMeasurementAddService({ deviceId: req.device.id, timeRange: year + month, type: 'co2', value: req.airData.co2 }),
-                                    timeRangeMeasurementAddService({ deviceId: req.device.id, timeRange: year, type: 'co2', value: req.airData.co2 }),
+                                    timeRangeMeasurementAddService({ deviceId: req.device.id, timeRange: year + month + day, type: MeasurementTypes.CO2, value: req.airData.co2, granularity: Granularity.daily }),
+                                    timeRangeMeasurementAddService({ deviceId: req.device.id, timeRange: year + month, type: MeasurementTypes.CO2, value: req.airData.co2, granularity: Granularity.monthly }),
+                                    timeRangeMeasurementAddService({ deviceId: req.device.id, timeRange: year, type: MeasurementTypes.CO2, value: req.airData.co2, granularity: Granularity.yearly }),
 
-                                    timeRangeMeasurementAddService({ deviceId: req.device.id, timeRange: year + month + day, type: 'tvoc', value: req.airData.tvoc }),
-                                    timeRangeMeasurementAddService({ deviceId: req.device.id, timeRange: year + month, type: 'tvoc', value: req.airData.tvoc }),
-                                    timeRangeMeasurementAddService({ deviceId: req.device.id, timeRange: year, type: 'tvoc', value: req.airData.tvoc }),
+                                    timeRangeMeasurementAddService({ deviceId: req.device.id, timeRange: year + month + day, type: MeasurementTypes.TVOC, value: req.airData.tvoc, granularity: Granularity.daily }),
+                                    timeRangeMeasurementAddService({ deviceId: req.device.id, timeRange: year + month, type: MeasurementTypes.TVOC, value: req.airData.tvoc, granularity: Granularity.monthly }),
+                                    timeRangeMeasurementAddService({ deviceId: req.device.id, timeRange: year, type: MeasurementTypes.TVOC, value: req.airData.tvoc, granularity: Granularity.yearly }),
 
-                                    timeRangeMeasurementAddService({ deviceId: req.device.id, timeRange: year + month + day, type: 'temperature', value: req.airData.temperature }),
-                                    timeRangeMeasurementAddService({ deviceId: req.device.id, timeRange: year + month, type: 'temperature', value: req.airData.temperature }),
-                                    timeRangeMeasurementAddService({ deviceId: req.device.id, timeRange: year, type: 'temperature', value: req.airData.temperature }),
+                                    timeRangeMeasurementAddService({ deviceId: req.device.id, timeRange: year + month + day, type: MeasurementTypes.TEMPERATURE, value: req.airData.temperature, granularity: Granularity.daily }),
+                                    timeRangeMeasurementAddService({ deviceId: req.device.id, timeRange: year + month, type: MeasurementTypes.TEMPERATURE, value: req.airData.temperature, granularity: Granularity.monthly }),
+                                    timeRangeMeasurementAddService({ deviceId: req.device.id, timeRange: year, type: MeasurementTypes.TEMPERATURE, value: req.airData.temperature, granularity: Granularity.yearly }),
                                 ])
                                 .then(_ => {
                                     return buildResponse({});
                                 })
                         })
                         .catch(error => {
-                            return buildErrorResponse(`Error ${Errors.ERROR_WHILE_ADD_MEASUREMENT} - ${error}`);
+                            logging.error("deviceDataIngestion", `Error while adding measurement: ${error}`);
+                            return buildErrorResponse(Errors.ERROR_WHILE_ADD_MEASUREMENT);
                         });
                 })
                 .catch(error => {
-                    return buildErrorResponse(`Error ${Errors.ERROR_WHILE_ADD_DEVICE} - ${error}`);
+                    logging.error("deviceDataIngestion", `Error while adding device: ${error}`);
+                    return buildErrorResponse(Errors.ERROR_WHILE_ADD_DEVICE);
                 });
         })
         .catch(error => {
-            return buildErrorResponse(`Error ${Errors.DEVICE_AUTHORIZATION_ERROR} - ${error}`);
+            logging.error("deviceDataIngestion", `Not authorized for device: ${error}`);
+            return buildErrorResponse(Errors.DEVICE_AUTHORIZATION_ERROR);
         });
 }
 

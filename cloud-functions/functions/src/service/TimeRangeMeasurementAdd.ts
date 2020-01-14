@@ -7,15 +7,19 @@ import { TimeRangeMeasurement } from './../entity/TimeRangeMeasurement';
 import { devicesSearch, DevicesSearchRequest } from "./DevicesSearch";
 import { TimeRangeMeasurementSearchRequest, timeRangeMeasurementsSearch } from './TimeRangeMeasurementsSearch';
 import admin = require('firebase-admin');
+import { Granularity } from "../entity/Granularity";
 
 export const timeRangeMeasurementAdd = (logging: ILogging): Service<TimeRangeMeasurementAddRequest, TimeRangeMeasurementAddResponse> => req => {
     if (!req.deviceId || req.deviceId === ''
         || !req.type || req.type === ''
         || req.value === null || req.value === undefined
         || !req.timeRange || req.timeRange === ''
+        || req.granularity === null || req.granularity === undefined
     ) {
         return buildErrorResponse(Errors.INVALID_MEASUREMENT_ADD_REQUEST);
     }
+
+    logging.info("timeRangeMeasurementAdd", "Starts");
 
     const db = admin.firestore();
     const deviceSearchService = devicesSearch(logging);
@@ -50,9 +54,10 @@ export const timeRangeMeasurementAdd = (logging: ILogging): Service<TimeRangeMea
                         deviceId: req.deviceId,
                         timeRange: req.timeRange,
                         type: req.type,
-                        value: "0"
+                        value: 0,
+                        granularity: req.granularity
                     };
-                    measurement = { ...measurement, value: "" + parseFloat(measurement.value) + req.value, counter: measurement.counter + 1 };
+                    measurement = { ...measurement, value: measurement.value + req.value, counter: measurement.counter + 1 };
 
                     const docRef = db.collection(Collections.TIME_RANGE_MEASUREMENT).doc(`${req.timeRange}_${req.type}_${req.deviceId}`);
                     return docRef
@@ -94,6 +99,7 @@ export interface TimeRangeMeasurementAddRequest {
     type: string,
     value: number,
     timeRange: string
+    granularity: Granularity
 }
 
 export interface TimeRangeMeasurementAddResponse {
