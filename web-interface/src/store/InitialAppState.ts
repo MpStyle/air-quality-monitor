@@ -5,6 +5,7 @@ import { TOKEN_KEY } from '../book/SessionStorageKeys';
 import { TemperatureUnit } from '../book/Unit';
 import { AirQualityData } from '../entity/AirQualityData';
 import { AirQuality, AirStatus } from '../entity/AirStatus';
+import { LoadingState } from '../entity/LoadingState';
 import { LoginStatus } from '../entity/LoginStatus';
 import { AIR_QUALITY_DATA_CO2_KEY, AIR_QUALITY_DATA_CURRENT_DEVICE_KEY, AIR_QUALITY_DATA_HUMIDITY_KEY, AIR_QUALITY_DATA_ICON_LABEL_VISUALIZATION_TYPE_KEY, AIR_QUALITY_DATA_INSERTED_KEY, AIR_QUALITY_DATA_PRESSURE_KEY, AIR_QUALITY_DATA_TEMPERATURE_KEY, AIR_QUALITY_DATA_TVOC_KEY, TEMPERATURE_UNIT_KEY } from './../book/LocalStorageKeys';
 import { AppState } from './../entity/AppState';
@@ -44,5 +45,11 @@ export const initialAppState: AppState = {
             noise: "db",
             temperature: localStorage.getItem(TEMPERATURE_UNIT_KEY) ?? TemperatureUnit.CELSIUS,
         }
-    }
+    },
+    airQualityDataAverages: {
+        yearlyAverages: [],
+        monthlyAverages: [],
+        dailyAverages: [],
+        loadingState: LoadingState.none
+    },
 };

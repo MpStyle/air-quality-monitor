@@ -1,5 +1,6 @@
 import { combineReducers } from "redux";
 import { AppState } from "../entity/AppState";
+import { airQualityDataAveragesReducer } from "./AirQualityDataAveragesReducer";
 import { airQualityDataReducer } from './AirQualityDataReducer';
 import { airStatusReducer } from "./AirStatusReducer";
 import { currentDeviceReducer } from "./CurrentDeviceReducer";
@@ -17,5 +18,6 @@ export const appReducer = combineReducers<AppState>({
     suggestions: suggestionsReducer,
     token: tokenReducer,
     loginStatus: loginStatusReducer,
-    settings: settingsReducer
+    settings: settingsReducer,
+    airQualityDataAverages: airQualityDataAveragesReducer
 });

@@ -2,6 +2,7 @@ import { CircularProgress, Divider } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper/Paper";
 import React, { FunctionComponent } from "react";
 import { epochToLocaleDate } from "../../book/DateTimeUtils";
+import { MeasurementTypes } from "../../book/MeasurementTypes";
 import { celsiusToFahrenheit } from "../../book/TemperatureConverter";
 import { TemperatureUnit } from "../../book/Unit";
 import { AirQualityData } from "../../entity/AirQualityData";
@@ -40,7 +41,8 @@ export const DeviceAirQualityData: FunctionComponent<AirQualityDataProps> = (pro
             value={temperatureValue}
             meter={props.meterUnit.temperature === TemperatureUnit.CELSIUS ? "°C" : "°F"}
             quality={props.airStatus.temperature}
-            iconVisualizationType={props.iconVisualizationType} />
+            iconVisualizationType={props.iconVisualizationType}
+            measurementType={MeasurementTypes.TEMPERATURE} />
 
         <Divider light />
 
@@ -50,7 +52,8 @@ export const DeviceAirQualityData: FunctionComponent<AirQualityDataProps> = (pro
             value={props.airQualityData.humidity.toFixed(0)}
             meter={props.meterUnit.humidity}
             quality={props.airStatus.humidity}
-            iconVisualizationType={props.iconVisualizationType} />
+            iconVisualizationType={props.iconVisualizationType}
+            measurementType={MeasurementTypes.HUMIDITY} />
 
         <Divider light />
 
@@ -60,7 +63,8 @@ export const DeviceAirQualityData: FunctionComponent<AirQualityDataProps> = (pro
             value={props.airQualityData.co2.toFixed(0)}
             meter={props.meterUnit.co2}
             quality={props.airStatus.co2}
-            iconVisualizationType={props.iconVisualizationType} />
+            iconVisualizationType={props.iconVisualizationType}
+            measurementType={MeasurementTypes.CO2} />
 
         <Divider light />
 
@@ -70,7 +74,8 @@ export const DeviceAirQualityData: FunctionComponent<AirQualityDataProps> = (pro
             value={props.airQualityData.pressure.toFixed(0)}
             meter={props.meterUnit.pressure}
             quality={props.airStatus.pressure}
-            iconVisualizationType={props.iconVisualizationType} />
+            iconVisualizationType={props.iconVisualizationType}
+            measurementType={MeasurementTypes.PRESSURE} />
 
         <Divider light />
 
@@ -80,7 +85,8 @@ export const DeviceAirQualityData: FunctionComponent<AirQualityDataProps> = (pro
             value={props.airQualityData.tvoc.toFixed(1).replace(".", props.decimalSeparator)}
             meter={props.meterUnit.tvoc}
             quality={props.airStatus.tvoc}
-            iconVisualizationType={props.iconVisualizationType} />
+            iconVisualizationType={props.iconVisualizationType}
+            measurementType={MeasurementTypes.TVOC} />
 
         <Divider light />
 

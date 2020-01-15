@@ -1,9 +1,13 @@
+import IconButton from '@material-ui/core/IconButton/IconButton';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import React, { FunctionComponent } from 'react';
+import { Link } from 'react-router-dom';
 import { airQualityToClassName } from '../../book/AirQualityToClassName';
 import { airQualityToLabel } from '../../book/AirQualityToLabel';
 import { IconVisualizationType } from '../../book/IconVisualizationType';
 import { AirQuality } from '../../entity/AirStatus';
 import warning from '../../images/warning.svg';
+import { CHARTS_URL } from './../../book/Pages';
 import './DataRow.scss';
 
 export const DataRow: FunctionComponent<DataRowProps> = (props: DataRowProps) => {
@@ -25,6 +29,11 @@ export const DataRow: FunctionComponent<DataRowProps> = (props: DataRowProps) =>
             {props.quality === AirQuality.VeryBad && <img src={warning} className="warning-icon" alt="Warning" />}
             {airQualityToLabel(props.quality)}
         </span>
+        <span className="details">
+            <IconButton edge="start" color="inherit" aria-label="menu" component={Link} to={`${CHARTS_URL}/${props.measurementType}`} className="details-button">
+                <ArrowForwardIosIcon />
+            </IconButton>
+        </span>
     </div>;
 };
 
@@ -35,4 +44,5 @@ export interface DataRowProps {
     meter: string;
     quality: AirQuality;
     iconVisualizationType: string;
+    measurementType: string;
 }

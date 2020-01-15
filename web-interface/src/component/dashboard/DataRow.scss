@@ -2,6 +2,7 @@
     margin: 0px auto;
     padding: 30px 2em;
     display: flex;
+    align-items: center;
 
     .icon {
         flex-grow: 1;
@@ -32,13 +33,24 @@
 
     .quality-level {
         text-align: right;
-        flex-grow: 1;
+        flex-grow: 2;
         vertical-align: middle;
 
         .warning-icon {
             width: 22px;
             vertical-align: middle;
             margin-right: 10px;
+        }
+    }
+
+    .details {
+        margin: 0px -12px 0px 12px;
+        display: inline-block;
+
+        .details-button {
+            text-align: right;
+            flex-grow: 1;
+            padding: 12px;
         }
     }
 }

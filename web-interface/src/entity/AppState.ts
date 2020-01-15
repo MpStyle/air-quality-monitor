@@ -1,4 +1,5 @@
 import { AirQualityData } from "./AirQualityData";
+import { AirQualityDataAverages } from "./AirQualityDataAverages";
 import { AirStatus } from "./AirStatus";
 import { Device } from "./Device";
 import { LoginStatus } from "./LoginStatus";
@@ -14,6 +15,7 @@ export interface AppState {
     token: LoginToken | null;
     loginStatus: LoginStatus;
     settings: Settings;
+    airQualityDataAverages: AirQualityDataAverages;
 }
 
 export interface Settings {

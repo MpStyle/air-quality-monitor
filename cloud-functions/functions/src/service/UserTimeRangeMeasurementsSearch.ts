@@ -66,5 +66,5 @@ export interface UserTimeRangeMeasurementsSearchRequest {
 }
 
 export interface UserTimeRangeMeasurementsSearchResponse {
-    timeRangeMeasurement: TimeRangeMeasurement;
+    timeRangeMeasurements: TimeRangeMeasurement[];
 }
