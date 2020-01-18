@@ -5,12 +5,12 @@ import { Logging } from './book/Logging';
 import { buildErrorResponse } from './entity/Service';
 import { deviceDataIngestion } from './service/DeviceDataIngestion';
 import { healthCheck } from './service/HealthCheck';
-import { userDevicesSearch } from './service/UserDevicesSearch';
+import { userDevicesList } from './service/UserDevicesList';
 import { userLogin } from './service/UserLogin';
-import { userMeasurementsSearch } from './service/UserMeasurementsSearch';
+import { userLastMeasurements as userLastMeasurements } from './service/UserLastMeasurements';
 import { userNewAccessToken as userRenewAccessToken } from './service/UserRenewAccessToken';
 import { userRevokeRefreshToken } from './service/UserRevokeRefreshToken';
-import { userTimeRangeMeasurementsSearch } from './service/UserTimeRangeMeasurementsSearch';
+import { userTimeRangeMeasurements } from './service/UserTimeRangeMeasurements';
 
 admin.initializeApp(functions.config().firebase);
 
@@ -34,19 +34,19 @@ app.put('/device-data-ingestion', (req, res) => {
 });
 
 // User - To retrieve data
-app.post('/user-devices-search', (req, res) => {
-    userDevicesSearch(logging)(req.body)
+app.post('/user-devices-list', (req, res) => {
+    userDevicesList(logging)(req.body)
         .then(data => res.send(data))
         .catch(err => buildErrorResponse(err));
 });
-app.post('/user-measurements-search', (req, res) => {
-    userMeasurementsSearch(logging)(req.body)
+app.post('/user-last-measurements', (req, res) => {
+    userLastMeasurements(logging)(req.body)
         .then(data => res.send(data))
         .catch(err => buildErrorResponse(err));
 });
 
-app.post('/user-time-range-measurements-search', (req, res) => {
-    userTimeRangeMeasurementsSearch(logging)(req.body)
+app.post('/user-time-range-measurements', (req, res) => {
+    userTimeRangeMeasurements(logging)(req.body)
         .then(data => res.send(data))
         .catch(err => buildErrorResponse(err));
 });

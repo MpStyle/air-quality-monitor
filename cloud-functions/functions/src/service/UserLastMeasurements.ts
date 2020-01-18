@@ -7,13 +7,13 @@ import { MeasurementSearchRequest, measurementsSearch } from "./MeasurementsSear
 import Bluebird = require("bluebird");
 import { MeasurementTypes } from "../entity/MeasurementTypes";
 
-export const userMeasurementsSearch = (logging: ILogging): Service<UserMeasurementsSearchRequest, UserMeasurementsSearchResponse> => req => {
+export const userLastMeasurements = (logging: ILogging): Service<UserMeasurementsSearchRequest, UserMeasurementsSearchResponse> => req => {
     try {
-        if (!req.accessToken || req.accessToken === '') {
+        if (!req.accessToken || req.accessToken === '' || !req.deviceId || req.deviceId === '') {
             return buildErrorResponse(Errors.INVALID_USER_MEASUREMENT_SEARCH_REQUEST);
         }
 
-        logging.info("userMeasurementsSearch", "Starts");
+        logging.info("userLastMeasurements", "Starts");
 
         return userAuthorization(logging)({ accessToken: req.accessToken })
             .then(authorizationResponse => {
@@ -62,12 +62,12 @@ export const userMeasurementsSearch = (logging: ILogging): Service<UserMeasureme
                     .then(response => buildResponse(response));
             })
             .catch((err: any) => {
-                logging.error("userMeasurementSearch", `Error while searching measurements: ${err}`);
+                logging.error("userLastMeasurements", `Error while searching measurements: ${err}`);
                 return buildErrorResponse(err);
             });
     }
     catch (error) {
-        logging.error("userMeasurementSearch", `Error while searching measurements: ${error}`);
+        logging.error("userLastMeasurements", `Error while searching measurements: ${error}`);
         return buildErrorResponse(error);
     }
 };

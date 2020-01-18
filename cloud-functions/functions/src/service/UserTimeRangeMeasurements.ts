@@ -2,12 +2,11 @@ import { ILogging } from "../book/Logging";
 import { Errors } from "../entity/Errors";
 import { Scopes } from "../entity/Scopes";
 import { buildErrorResponse, Service } from "../entity/Service";
-import { TimeRangeMeasurement } from './../entity/TimeRangeMeasurement';
+import { TimeRangeMeasurement } from '../entity/TimeRangeMeasurement';
 import { TimeRangeMeasurementSearchRequest, timeRangeMeasurementsSearch } from "./TimeRangeMeasurementsSearch";
 import { userAuthorization } from "./UserAuthorization";
-import { Granularity } from "../entity/Granularity";
 
-export const userTimeRangeMeasurementsSearch = (logging: ILogging): Service<UserTimeRangeMeasurementsSearchRequest, UserTimeRangeMeasurementsSearchResponse> => req => {
+export const userTimeRangeMeasurements = (logging: ILogging): Service<UserTimeRangeMeasurementsSearchRequest, UserTimeRangeMeasurementsSearchResponse> => req => {
     if (
         !req.accessToken || req.accessToken === ''
         || !req.deviceId || req.deviceId === ''
@@ -16,7 +15,7 @@ export const userTimeRangeMeasurementsSearch = (logging: ILogging): Service<User
         return buildErrorResponse(Errors.INVALID_USER_MEASUREMENT_SEARCH_REQUEST);
     }
 
-    logging.info("userTimeRangeMeasurementsSearch", "Starts");
+    logging.info("userTimeRangeMeasurements", "Starts");
 
     return userAuthorization(logging)({ accessToken: req.accessToken })
         .then(authorizationResponse => {
@@ -36,23 +35,15 @@ export const userTimeRangeMeasurementsSearch = (logging: ILogging): Service<User
                 return buildErrorResponse(Errors.DEVICE_AUTHORIZATION_ERROR);
             }
 
-            let searchRequest: TimeRangeMeasurementSearchRequest = {
+            const searchRequest: TimeRangeMeasurementSearchRequest = {
                 deviceId: req.deviceId,
                 type: req.type
             };
 
-            if (req.timeRange) {
-                searchRequest = { ...searchRequest, timeRange: req.timeRange };
-            }
-
-            if (req.granularity) {
-                searchRequest = { ...searchRequest, granularity: req.granularity };
-            }
-
             return timeRangeMeasurementsSearch(logging)(searchRequest);
         })
         .catch((err: any) => {
-            logging.error("userTimeRangeMeasurementsSearch", `Error while searching time range measurements: ${err}`);
+            logging.error("userTimeRangeMeasurements", `Error while searching time range measurements: ${err}`);
             return buildErrorResponse(err);
         });
 };
@@ -60,9 +51,7 @@ export const userTimeRangeMeasurementsSearch = (logging: ILogging): Service<User
 export interface UserTimeRangeMeasurementsSearchRequest {
     accessToken: string;
     deviceId: string;
-    timeRange?: string;
     type: string;
-    granularity?: Granularity;
 }
 
 export interface UserTimeRangeMeasurementsSearchResponse {

@@ -5,13 +5,13 @@ import { userAuthorization } from "./UserAuthorization";
 import { Service, buildErrorResponse, buildResponse } from "../entity/Service";
 import { Scopes } from "../entity/Scopes";
 
-export const userDevicesSearch = (logging: ILogging): Service<UserDevicesSearchRequest, UserDevicesSearchResponse> => req => {
+export const userDevicesList = (logging: ILogging): Service<UserDevicesSearchRequest, UserDevicesSearchResponse> => req => {
     try {
         if (!req.accessToken || req.accessToken === '') {
             return buildErrorResponse(Errors.INVALID_USER_DEVICE_SEARCH_REQUEST);
         }
 
-        logging.info("userDevicesSearch", "Starts");
+        logging.info("userDevicesList", "Starts");
 
         return userAuthorization(logging)({ accessToken: req.accessToken })
             .then(authorizationResponse => {
@@ -43,12 +43,12 @@ export const userDevicesSearch = (logging: ILogging): Service<UserDevicesSearchR
                     });
             })
             .catch((err: any) => {
-                logging.error("userDevicesSearch", `Error while searching devices: ${err}`);
+                logging.error("userDevicesList", `Error while searching devices: ${err}`);
                 return buildErrorResponse(err);
             });
     }
     catch (error) {
-        logging.error("userDevicesSearch", `Error while searching devices: ${error}`);
+        logging.error("userDevicesList", `Error while searching devices: ${error}`);
         return buildErrorResponse(error);
     }
 };
