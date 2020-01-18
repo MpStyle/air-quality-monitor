@@ -9,6 +9,7 @@ import { deviceAuthorization } from "./DeviceAuthorization";
 import { timeRangeReadingAdd } from './TimeRangeReadingAdd';
 import { Granularity } from "../entity/Granularity";
 import { ReadingTypes } from './../entity/ReadingTypes';
+import { StringUtils } from "../book/StringUtils";
 
 export const deviceDataIngestion = (logging: ILogging): Service<DeviceDataIngestionRequest, {}> => req => {
     if (!req.secretKey || !req.device.id || !req.readingDate) {
@@ -85,8 +86,8 @@ export const deviceDataIngestion = (logging: ILogging): Service<DeviceDataIngest
                             }
 
                             const dateObj = new Date(req.readingDate);
-                            const month = "" + dateObj.getUTCMonth() + 1;
-                            const day = "" + dateObj.getUTCDate();
+                            const month = StringUtils.padLeft(dateObj.getUTCMonth() + 1, '0', 2);
+                            const day = StringUtils.padLeft(dateObj.getUTCDate(), '0', 2);
                             const year = "" + dateObj.getUTCFullYear();
 
                             return Promise
