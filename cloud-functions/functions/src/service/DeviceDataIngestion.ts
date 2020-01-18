@@ -84,7 +84,7 @@ export const deviceDataIngestion = (logging: ILogging): Service<DeviceDataIngest
                                 return buildErrorResponse(Errors.ERROR_WHILE_ADD_READING);
                             }
 
-                            const dateObj = new Date();
+                            const dateObj = new Date(req.readingDate);
                             const month = "" + dateObj.getUTCMonth() + 1;
                             const day = "" + dateObj.getUTCDate();
                             const year = "" + dateObj.getUTCFullYear();
