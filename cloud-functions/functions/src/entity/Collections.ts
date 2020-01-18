@@ -1,6 +1,6 @@
 export const Collections = {
     DEVICE: "device",
-    MEASUREMENT: "measurement",
-    TIME_RANGE_MEASUREMENT: "time_range_measurement",
+    READING: "reading",
+    TIME_RANGE_READING: "time_range_reading",
     LOGIN_TOKEN: "logintoken"
 }

@@ -1,29 +1,29 @@
 import { ILogging } from "../book/Logging";
 import { Collections } from "../entity/Collections";
 import { Errors } from "../entity/Errors";
-import { Measurement } from "../entity/Measurement";
+import { Reading } from "../entity/Reading";
 import { buildErrorResponse, buildResponse, Service } from "../entity/Service";
-import { TimeRangeMeasurement } from './../entity/TimeRangeMeasurement';
+import { TimeRangeReading } from './../entity/TimeRangeReading';
 import { devicesSearch, DevicesSearchRequest } from "./DevicesSearch";
-import { TimeRangeMeasurementSearchRequest, timeRangeMeasurementsSearch } from './TimeRangeMeasurementsSearch';
+import { TimeRangeReadingSearchRequest, timeRangeReadingsSearch } from './TimeRangeReadingsSearch';
 import admin = require('firebase-admin');
 import { Granularity } from "../entity/Granularity";
 
-export const timeRangeMeasurementAdd = (logging: ILogging): Service<TimeRangeMeasurementAddRequest, TimeRangeMeasurementAddResponse> => req => {
+export const timeRangeReadingAdd = (logging: ILogging): Service<TimeRangeReadingAddRequest, TimeRangeReadingAddResponse> => req => {
     if (!req.deviceId || req.deviceId === ''
         || !req.type || req.type === ''
         || req.value === null || req.value === undefined
         || !req.timeRange || req.timeRange === ''
         || req.granularity === null || req.granularity === undefined
     ) {
-        return buildErrorResponse(Errors.INVALID_MEASUREMENT_ADD_REQUEST);
+        return buildErrorResponse(Errors.INVALID_READING_ADD_REQUEST);
     }
 
-    logging.info("timeRangeMeasurementAdd", "Starts");
+    logging.info("timeRangeReadingAdd", "Starts");
 
     const db = admin.firestore();
     const deviceSearchService = devicesSearch(logging);
-    const timeRangeMeasurementsSearchService = timeRangeMeasurementsSearch(logging);
+    const timeRangeReadingsSearchService = timeRangeReadingsSearch(logging);
 
     return deviceSearchService(<DevicesSearchRequest>{ deviceId: req.deviceId })
         .then(deviceSearchResponse => {
@@ -35,7 +35,7 @@ export const timeRangeMeasurementAdd = (logging: ILogging): Service<TimeRangeMea
                 return buildErrorResponse(Errors.DEVICE_NOT_FOUND);
             }
 
-            return timeRangeMeasurementsSearchService(<TimeRangeMeasurementSearchRequest>{
+            return timeRangeReadingsSearchService(<TimeRangeReadingSearchRequest>{
                 timeRange: req.timeRange,
                 deviceId: req.deviceId,
                 type: req.type
@@ -45,11 +45,11 @@ export const timeRangeMeasurementAdd = (logging: ILogging): Service<TimeRangeMea
                         return buildErrorResponse(response.error);
                     }
 
-                    if (!response.payload || !response.payload.timeRangeMeasurements) {
-                        return buildErrorResponse(Errors.TIME_RANGE_MEASUREMENT_NOT_FOUND);
+                    if (!response.payload || !response.payload.timeRangeReadings) {
+                        return buildErrorResponse(Errors.TIME_RANGE_READING_NOT_FOUND);
                     }
 
-                    let measurement = response.payload.timeRangeMeasurements[0] ?? <TimeRangeMeasurement>{
+                    let reading = response.payload.timeRangeReadings[0] ?? <TimeRangeReading>{
                         counter: 0,
                         deviceId: req.deviceId,
                         timeRange: req.timeRange,
@@ -57,44 +57,44 @@ export const timeRangeMeasurementAdd = (logging: ILogging): Service<TimeRangeMea
                         value: 0,
                         granularity: req.granularity
                     };
-                    measurement = { ...measurement, value: measurement.value + req.value, counter: measurement.counter + 1 };
+                    reading = { ...reading, value: reading.value + req.value, counter: reading.counter + 1 };
 
-                    const docRef = db.collection(Collections.TIME_RANGE_MEASUREMENT).doc(`${req.timeRange}_${req.type}_${req.deviceId}`);
+                    const docRef = db.collection(Collections.TIME_RANGE_READING).doc(`${req.timeRange}_${req.type}_${req.deviceId}`);
                     return docRef
-                        .set(measurement)
+                        .set(reading)
                         .then(result => {
                             if (!result.writeTime) {
-                                return buildErrorResponse(Errors.ERROR_WHILE_ADD_TIME_RANGE_MEASUREMENT);
+                                return buildErrorResponse(Errors.ERROR_WHILE_ADD_TIME_RANGE_READING);
                             }
 
-                            return timeRangeMeasurementsSearchService({
+                            return timeRangeReadingsSearchService({
                                 timeRange: req.timeRange
                             })
-                                .then(measurementSearchResponse => {
-                                    if (measurementSearchResponse.error) {
-                                        return buildErrorResponse(measurementSearchResponse.error);
+                                .then(readingSearchResponse => {
+                                    if (readingSearchResponse.error) {
+                                        return buildErrorResponse(readingSearchResponse.error);
                                     }
 
-                                    if (!measurementSearchResponse.payload || !measurementSearchResponse.payload.timeRangeMeasurements || measurementSearchResponse.payload.timeRangeMeasurements.length !== 1) {
-                                        return buildErrorResponse(Errors.TIME_RANGE_MEASUREMENT_NOT_FOUND);
+                                    if (!readingSearchResponse.payload || !readingSearchResponse.payload.timeRangeReadings || readingSearchResponse.payload.timeRangeReadings.length !== 1) {
+                                        return buildErrorResponse(Errors.TIME_RANGE_READING_NOT_FOUND);
                                     }
 
-                                    return buildResponse({ measurements: measurementSearchResponse.payload.timeRangeMeasurements });
+                                    return buildResponse({ readings: readingSearchResponse.payload.timeRangeReadings });
                                 });
                         })
                         .catch((err: any) => {
-                            logging.error("timeRangeMeasurementAdd", `Error while adding time range measurement (${req.timeRange}-${req.type}-${req.deviceId}): ${err}]`);
+                            logging.error("timeRangeReadingAdd", `Error while adding time range reading (${req.timeRange}-${req.type}-${req.deviceId}): ${err}]`);
                             return Promise.resolve({ error: err });
                         });
                 });
         })
         .catch((err: any) => {
-            logging.error("timeRangeMeasurementAdd", `Error while adding time range measurement: ${err}`);
+            logging.error("timeRangeReadingAdd", `Error while adding time range reading: ${err}`);
             return Promise.resolve({ error: err });
         });
 };
 
-export interface TimeRangeMeasurementAddRequest {
+export interface TimeRangeReadingAddRequest {
     deviceId: string,
     type: string,
     value: number,
@@ -102,6 +102,6 @@ export interface TimeRangeMeasurementAddRequest {
     granularity: Granularity
 }
 
-export interface TimeRangeMeasurementAddResponse {
-    measurements: Measurement[];
+export interface TimeRangeReadingAddResponse {
+    readings: Reading[];
 }

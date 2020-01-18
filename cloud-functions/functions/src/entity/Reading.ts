@@ -1,5 +1,5 @@
-export interface Measurement {
-    measurementId: string,
+export interface Reading {
+    readingId: string,
     deviceId: string,
     type: string,
     value: string,

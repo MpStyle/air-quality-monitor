@@ -1,4 +1,4 @@
-export class MeasurementTypes {
+export class ReadingTypes {
     public static readonly TEMPERATURE = "temperature";
     public static readonly CO2 = "co2";
     public static readonly TVOC = "tvoc";

@@ -2,15 +2,15 @@ import { ILogging } from "../book/Logging";
 import { Collections } from "../entity/Collections";
 import { PagedRequest } from "../entity/PagedRequest";
 import { buildErrorResponse, buildResponse, Service } from "../entity/Service";
-import { TimeRangeMeasurement } from "../entity/TimeRangeMeasurement";
+import { TimeRangeReading } from "../entity/TimeRangeReading";
 import admin = require('firebase-admin');
 import { Granularity } from "../entity/Granularity";
 
-export const timeRangeMeasurementsSearch = (logging: ILogging): Service<TimeRangeMeasurementSearchRequest, TimeRangeMeasurementSearchResponse> => req => {
-    logging.info("timeRangeMeasurementsSearch", "Starts");
+export const timeRangeReadingsSearch = (logging: ILogging): Service<TimeRangeReadingSearchRequest, TimeRangeReadingSearchResponse> => req => {
+    logging.info("timeRangeReadingsSearch", "Starts");
 
     const db = admin.firestore();
-    let collectionRef: FirebaseFirestore.CollectionReference | FirebaseFirestore.Query = db.collection(Collections.TIME_RANGE_MEASUREMENT);
+    let collectionRef: FirebaseFirestore.CollectionReference | FirebaseFirestore.Query = db.collection(Collections.TIME_RANGE_READING);
 
     if (req.deviceId) {
         collectionRef = collectionRef.where('deviceId', '==', req.deviceId);
@@ -39,25 +39,25 @@ export const timeRangeMeasurementsSearch = (logging: ILogging): Service<TimeRang
     return collectionRef.get()
         .then(snapshots => {
             if (!snapshots || snapshots.docs.length === 0) {
-                logging.debug("timeRangeMeasurementsSearch", "No time range measurement found");
-                return buildResponse<TimeRangeMeasurementSearchResponse>({ timeRangeMeasurements: [] });
+                logging.debug("timeRangeReadingsSearch", "No time range reading found");
+                return buildResponse<TimeRangeReadingSearchResponse>({ timeRangeReadings: [] });
             }
 
-            return buildResponse<TimeRangeMeasurementSearchResponse>({ timeRangeMeasurements: snapshots.docs.map(snapshot => <TimeRangeMeasurement>snapshot.data()) });
+            return buildResponse<TimeRangeReadingSearchResponse>({ timeRangeReadings: snapshots.docs.map(snapshot => <TimeRangeReading>snapshot.data()) });
         })
         .catch((err: any) => {
-            logging.error("timeRangeMeasurementsSearch", `Error while searching time range measurements: ${err}`);
+            logging.error("timeRangeReadingsSearch", `Error while searching time range readings: ${err}`);
             return buildErrorResponse(err);
         });
 };
 
-export interface TimeRangeMeasurementSearchRequest extends PagedRequest {
+export interface TimeRangeReadingSearchRequest extends PagedRequest {
     deviceId?: string;
     type?: string;
     timeRange?: string;
     granularity?: Granularity;
 }
 
-export interface TimeRangeMeasurementSearchResponse {
-    timeRangeMeasurements: TimeRangeMeasurement[];
+export interface TimeRangeReadingSearchResponse {
+    timeRangeReadings: TimeRangeReading[];
 }
