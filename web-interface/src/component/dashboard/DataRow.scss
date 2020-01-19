@@ -54,3 +54,9 @@
 .data:last-of-type {
     border-bottom: 0px;
 }
+
+@media only screen and (max-width: 600px) {
+    .data {
+        padding: 30px 1em;
+    }
+}
