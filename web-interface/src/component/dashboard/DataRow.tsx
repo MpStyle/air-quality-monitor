@@ -15,7 +15,7 @@ export const DataRow: FunctionComponent<DataRowProps> = (props: DataRowProps) =>
         return null;
     }
 
-    return <div className="data" title={props.title}>
+    return <Link to={`${CHARTS_URL}/${props.measurementType}`} className="data" title={props.title}>
         {(props.iconVisualizationType === IconVisualizationType.icon || props.iconVisualizationType === IconVisualizationType.both) && <span className="icon">
             <img src={props.icon} className="value-icon" alt={props.title} />
         </span>}
@@ -30,11 +30,9 @@ export const DataRow: FunctionComponent<DataRowProps> = (props: DataRowProps) =>
             {airQualityToLabel(props.quality)}
         </span>
         <span className="details">
-            <IconButton edge="start" color="inherit" aria-label="menu" component={Link} to={`${CHARTS_URL}/${props.measurementType}`} className="details-button">
-                <ArrowForwardIosIcon />
-            </IconButton>
+            <ArrowForwardIosIcon />
         </span>
-    </div>;
+    </Link>;
 };
 
 export interface DataRowProps {

@@ -1,5 +1,5 @@
 import { Action } from "redux";
-import { TimeRangeMeasurement } from "../entity/TimeRangeMeasurement";
+import { TimeRangeReading } from "../entity/TimeRangeReading";
 
 // --- FetchTimeRangeStartAction
 
@@ -19,12 +19,12 @@ export const fetchTimeRangeStartActionBuilder = (): FetchTimeRangeStartAction =>
 export const FetchTimeRangeSuccessActionName = 'FetchTimeRangeSuccessAction';
 
 export interface FetchTimeRangeSuccessAction extends Action {
-    yearlyAverages: TimeRangeMeasurement[];
-    monthlyAverages: TimeRangeMeasurement[];
-    dailyAverages: TimeRangeMeasurement[];
+    yearlyAverages: TimeRangeReading[];
+    monthlyAverages: TimeRangeReading[];
+    dailyAverages: TimeRangeReading[];
 }
 
-export const fetchTimeRangeSuccessActionBuilder = (yearlyAverages: TimeRangeMeasurement[], monthlyAverages: TimeRangeMeasurement[], dailyAverages: TimeRangeMeasurement[]): FetchTimeRangeSuccessAction => {
+export const fetchTimeRangeSuccessActionBuilder = (yearlyAverages: TimeRangeReading[], monthlyAverages: TimeRangeReading[], dailyAverages: TimeRangeReading[]): FetchTimeRangeSuccessAction => {
     return {
         type: FetchTimeRangeSuccessActionName,
         yearlyAverages,

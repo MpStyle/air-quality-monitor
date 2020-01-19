@@ -3,6 +3,8 @@
     padding: 30px 2em;
     display: flex;
     align-items: center;
+    text-decoration: none;
+    color: inherit;
 
     .icon {
         flex-grow: 1;
@@ -35,6 +37,7 @@
         text-align: right;
         flex-grow: 2;
         vertical-align: middle;
+        padding-right: 20px;
 
         .warning-icon {
             width: 22px;
@@ -44,14 +47,7 @@
     }
 
     .details {
-        margin: 0px -12px 0px 12px;
         display: inline-block;
-
-        .details-button {
-            text-align: right;
-            flex-grow: 1;
-            padding: 12px;
-        }
     }
 }
 

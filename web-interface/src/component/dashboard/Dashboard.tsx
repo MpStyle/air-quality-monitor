@@ -6,7 +6,7 @@ import { AirStatus } from "../../entity/AirStatus";
 import { Device } from "../../entity/Device";
 import { LoginToken } from '../../entity/LoginToken';
 import { MeterUnit } from '../../entity/MeterUnit';
-import { AppDrawer } from '../common/AppDrawer';
+import { AppDrawerContainer } from '../common/AppDrawerContainer';
 import './Dashboard.scss';
 import { DashboardHeader } from './DashboardHeader';
 import { DeviceAirQualityData } from './DeviceAirQualityData';
@@ -15,11 +15,11 @@ export const Dashboard: FunctionComponent<DashboardProps> = (props) => {
     const [isAppDrawerOpen, setIsAppDrawerOpen] = React.useState(false);
 
     useEffect(() => {
-        props.fetchDevices();
+        props.fetchDevices(props.token);
     }, []);
     useEffect(() => {
         if (props.currentDevice) {
-            props.fetchAirQualityData(props.currentDevice.deviceId);
+            props.fetchAirQualityData(props.token, props.currentDevice.deviceId);
         }
     }, [props.currentDevice]);
 
@@ -58,6 +58,8 @@ export const Dashboard: FunctionComponent<DashboardProps> = (props) => {
 };
 
 export interface DashboardProps {
+    token: LoginToken;
+
     decimalSeparator: string;
 
     airQualityData: AirQualityData;
@@ -70,8 +72,8 @@ export interface DashboardProps {
     currentDevice: Device | null;
     onCurrentDeviceChange: (device: Device) => void;
 
-    fetchDevices: () => void;
-    fetchAirQualityData: (currentDeviceId: string) => void;
+    fetchDevices: (token: LoginToken) => void;
+    fetchAirQualityData: (token: LoginToken, currentDeviceId: string) => void;
 
     iconVisualizationType: string;
 }

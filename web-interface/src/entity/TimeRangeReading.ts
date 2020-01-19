@@ -1,6 +1,6 @@
 import { Granularity } from "./Granularity";
 
-export interface TimeRangeMeasurement {
+export interface TimeRangeReading {
     deviceId: string;
     type: string;
     value: number;

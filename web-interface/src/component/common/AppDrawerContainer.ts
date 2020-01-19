@@ -1,9 +1,9 @@
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { updateTokenActionBuilder } from "../action/UpdateTokenAction";
-import { averageAirStatus } from "../book/AverageAirStatus";
-import { userRevokeRefreshToken } from "../book/UserRevokeRefreshToken";
-import { AppState } from "../entity/AppState";
+import { updateTokenActionBuilder } from "../../action/UpdateTokenAction";
+import { averageAirStatus } from "../../book/AverageAirStatus";
+import { userRevokeRefreshToken } from "../../book/UserRevokeRefreshToken";
+import { AppState } from "../../entity/AppState";
 import { AppDrawer, AppDrawerProps } from "./AppDrawer";
 
 export const AppDrawerContainer = connect(

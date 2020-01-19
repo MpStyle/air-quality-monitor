@@ -1,9 +1,9 @@
 import { ServiceResponse } from "../entity/ServiceResponse";
-import { TimeRangeMeasurement } from "../entity/TimeRangeMeasurement";
+import { TimeRangeReading } from "../entity/TimeRangeReading";
 
-export const userTimeRangeMeasurementsSearch = (deviceId: string, accessToken: string, type: string): Promise<ServiceResponse<UserTimeRangeMeasurementsSearchResponse>> => {
+export const userTimeRangeReadings = (deviceId: string, accessToken: string, type: string): Promise<ServiceResponse<UserTimeRangeMeasurementsSearchResponse>> => {
     const url = process.env.REACT_APP_AIR_QUALITY_DATA_REMOTE_URL as string;
-    return fetch(`${url}/app/user-time-range-measurements-search`, {
+    return fetch(`${url}/app/user-time-range-readings`, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -22,5 +22,5 @@ export interface UserTimeRangeMeasurementsSearchRequest {
 }
 
 export interface UserTimeRangeMeasurementsSearchResponse {
-    timeRangeMeasurements: TimeRangeMeasurement[];
+    timeRangeReadings: TimeRangeReading[];
 }

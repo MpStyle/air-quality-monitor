@@ -1,9 +1,9 @@
 import { LoadingState } from "./LoadingState";
-import { TimeRangeMeasurement } from "./TimeRangeMeasurement";
+import { TimeRangeReading } from "./TimeRangeReading";
 
 export interface AirQualityDataAverages {
-    yearlyAverages: TimeRangeMeasurement[];
-    monthlyAverages: TimeRangeMeasurement[];
-    dailyAverages: TimeRangeMeasurement[];
+    yearlyAverages: TimeRangeReading[];
+    monthlyAverages: TimeRangeReading[];
+    dailyAverages: TimeRangeReading[];
     loadingState: LoadingState;
 }

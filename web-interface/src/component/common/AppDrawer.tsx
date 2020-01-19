@@ -11,14 +11,11 @@ import PersonIcon from '@material-ui/icons/Person';
 import PhonelinkRingIcon from '@material-ui/icons/PhonelinkRing';
 import SettingsIcon from '@material-ui/icons/Settings';
 import React, { FunctionComponent } from "react";
-import { useHistory, Link } from "react-router-dom";
-import { updateTokenActionBuilder } from "../../action/UpdateTokenAction";
+import { Link, useHistory } from "react-router-dom";
 import { airQualityToLabel } from "../../book/AirQualityToLabel";
 import { APP_SETTINGS_URL, CREDITS_URL } from '../../book/Pages';
-import { userRevokeRefreshToken } from "../../book/UserRevokeRefreshToken";
 import { Device } from "../../entity/Device";
 import logo from '../../images/logo.svg';
-import { appStore } from "../../store/AppStore";
 import "./AppDrawer.scss";
 
 export const AppDrawer: FunctionComponent<AppDrawerProps> = (props) => {

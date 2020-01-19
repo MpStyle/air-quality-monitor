@@ -1,8 +1,8 @@
 import { ServiceResponse } from "../entity/ServiceResponse";
 
-export const userMeasurementsSearch = (currentDeviceId: string, accessToken: String): Promise<ServiceResponse<UserMeasurementsSearchResponse>> => {
+export const userLastReadings = (currentDeviceId: string, accessToken: String): Promise<ServiceResponse<UserMeasurementsSearchResponse>> => {
     const url = process.env.REACT_APP_AIR_QUALITY_DATA_REMOTE_URL as string;
-    return fetch(`${url}/app/user-measurements-search`, {
+    return fetch(`${url}/app/user-last-readings`, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
