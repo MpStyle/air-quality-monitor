@@ -5,7 +5,7 @@ import { FunctionComponent } from 'react';
 import "./AppBarOneRow.scss";
 
 export const AppBarOneRow: FunctionComponent<{}> = (props) => {
-    return <AppBar position="static" className="app-bar-one-row">
+    return <AppBar position="fixed" className="app-bar-one-row">
         <Toolbar>
             {props.children}
         </Toolbar>
