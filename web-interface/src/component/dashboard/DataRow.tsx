@@ -1,4 +1,3 @@
-import IconButton from '@material-ui/core/IconButton/IconButton';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import React, { FunctionComponent } from 'react';
 import { Link } from 'react-router-dom';

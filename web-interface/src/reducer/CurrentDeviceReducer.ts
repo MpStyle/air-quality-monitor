@@ -1,5 +1,5 @@
 import { Action } from "redux";
-import { FetchDevicesSuccessAction, FetchDevicesSuccessActionName } from "../action/FetchDevicesSuccessAction";
+import { FetchDevicesSuccessAction, FetchDevicesSuccessActionName } from "../action/FetchDevicesAction";
 import { UpdateCurrentDeviceAction, UpdateCurrentDeviceActionName } from "../action/UpdateCurrentDeviceAction";
 import { AIR_QUALITY_DATA_CURRENT_DEVICE_KEY } from "../book/LocalStorageKeys";
 import { Device } from "../entity/Device";

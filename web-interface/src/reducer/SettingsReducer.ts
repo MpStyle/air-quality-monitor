@@ -4,7 +4,7 @@ import { UpdateDecimalSeparatorAction, UpdateDecimalSeparatorActionName } from "
 import { UpdateIconVisualizationTypeAction, UpdateIconVisualizationTypeActionName } from "../action/UpdateIconVisualizationTypeAction";
 import { UpdateTemperatureUnitAction, UpdateTemperatureUnitActionName } from "../action/UpdateTemperatureUnitAction";
 import { AIR_QUALITY_DATA_DECIMAL_SEPARATOR_KEY, AIR_QUALITY_DATA_ICON_LABEL_VISUALIZATION_TYPE_KEY, TEMPERATURE_UNIT_KEY } from "../book/LocalStorageKeys";
-import { Settings } from "../entity/AppState";
+import { Settings } from "../entity/Settings";
 import { initialAppState } from "../store/InitialAppState";
 
 export const settingsReducer = (state: Settings = initialAppState.settings, action: Action): Settings => {

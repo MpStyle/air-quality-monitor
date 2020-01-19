@@ -10,6 +10,8 @@ import { AppDrawerContainer } from '../common/AppDrawerContainer';
 import './Dashboard.scss';
 import { DashboardHeader } from './DashboardHeader';
 import { DeviceAirQualityData } from './DeviceAirQualityData';
+import { DevicesData } from '../../entity/DevicesData';
+import { LoadingState } from '../../entity/LoadingState';
 
 export const Dashboard: FunctionComponent<DashboardProps> = (props) => {
     const [isAppDrawerOpen, setIsAppDrawerOpen] = React.useState(false);
@@ -39,7 +41,8 @@ export const Dashboard: FunctionComponent<DashboardProps> = (props) => {
             toggleDrawer={toggleDrawer} />
 
         <DashboardHeader
-            devices={props.devices}
+            isLoading={props.devicesData.loadingState === LoadingState.loading || props.airQualityData.loadingState === LoadingState.loading}
+            devices={props.devicesData.devices}
             currentDevice={props.currentDevice}
             average={average}
             toggleDrawer={toggleDrawer}
@@ -66,7 +69,7 @@ export interface DashboardProps {
     airStatus: AirStatus;
     meterUnit: MeterUnit;
 
-    devices: Device[];
+    devicesData: DevicesData;
     suggestions: string[];
 
     currentDevice: Device | null;

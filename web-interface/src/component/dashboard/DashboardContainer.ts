@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import { fetchAirQualityDataSuccessActionBuilder } from '../../action/FetchAirQualityDataSuccessAction';
-import { fetchDevicesSuccessActionBuilder } from '../../action/FetchDevicesSuccessAction';
+import { fetchAirQualityDataSuccessActionBuilder, fetchAirQualityDataStartActionBuilder, fetchAirQualityDataErrorActionBuilder } from '../../action/FetchAirQualityDataAction';
+import { fetchDevicesSuccessActionBuilder, fetchDevicesStartActionBuilder, fetchDevicesErrorActionBuilder } from '../../action/FetchDevicesAction';
 import { updateCurrentDeviceActionBuilder } from '../../action/UpdateCurrentDeviceAction';
 import { userDevicesList } from '../../book/UserDevicesList';
 import { userLastReadings } from '../../book/UserLastReadings';
@@ -21,7 +21,7 @@ export const DashboardContainer = connect(
             airStatus: appState.airStatus,
             meterUnit: appState.settings.meterUnit,
             currentDevice: appState.currentDevice,
-            devices: appState.devices,
+            devicesData: appState.devicesData,
             suggestions: appState.suggestions,
             decimalSeparator: appState.settings.decimalSeparator,
             iconVisualizationType: appState.settings.iconVisualizationType
@@ -31,6 +31,8 @@ export const DashboardContainer = connect(
         return {
             onCurrentDeviceChange: (device: Device) => { dispatch(updateCurrentDeviceActionBuilder(device)); },
             fetchDevices: (token: LoginToken) => {
+                dispatch(fetchDevicesStartActionBuilder());
+
                 const renewToken: Promise<ServiceResponse<UserRenewAccessTokenResponse>> = token.expiredAt <= Date.now() ? userRenewAccessToken(token.refreshToken) : Promise.resolve({ payload: { accessToken: token.accessToken, expiredAt: token.expiredAt } });
 
                 renewToken.then(response => {
@@ -48,6 +50,7 @@ export const DashboardContainer = connect(
                         .then(response => {
                             if (response.error) {
                                 console.log(response.error);
+                                dispatch(fetchDevicesErrorActionBuilder(response.error));
                                 return;
                             }
 
@@ -56,11 +59,15 @@ export const DashboardContainer = connect(
                         .catch((error) => {
                             // TODO: dispatch an error message
                             console.error(`Error while fetch devices: ${error}`);
+
+                            dispatch(fetchDevicesErrorActionBuilder(error));
                         });
                 });
             },
             fetchAirQualityData: (token: LoginToken, currentDeviceId: string) => {
                 const poller = () => {
+                    dispatch(fetchAirQualityDataStartActionBuilder());
+
                     const renewToken: Promise<ServiceResponse<UserRenewAccessTokenResponse>> = token.expiredAt <= Date.now() ? userRenewAccessToken(token.refreshToken) : Promise.resolve({ payload: { accessToken: token.accessToken, expiredAt: token.expiredAt } });
 
                     renewToken.then(response => {
@@ -78,6 +85,7 @@ export const DashboardContainer = connect(
                             .then(response => {
                                 if (response.error) {
                                     console.log(response.error);
+                                    dispatch(fetchAirQualityDataErrorActionBuilder(response.error));
                                     return;
                                 }
 
@@ -88,6 +96,7 @@ export const DashboardContainer = connect(
                             .catch((error) => {
                                 // TODO: dispatch an error message
                                 console.error(`Error while fetch air quality data: ${error}`);
+                                dispatch(fetchAirQualityDataErrorActionBuilder(error));
                             });
                     });
                 };

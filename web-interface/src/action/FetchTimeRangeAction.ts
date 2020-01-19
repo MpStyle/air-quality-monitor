@@ -1,7 +1,7 @@
 import { Action } from "redux";
 import { TimeRangeReading } from "../entity/TimeRangeReading";
 
-// --- FetchTimeRangeStartAction
+// --- Start
 
 export const FetchTimeRangeStartActionName = 'FetchTimeRangeStartAction';
 
@@ -14,7 +14,7 @@ export const fetchTimeRangeStartActionBuilder = (): FetchTimeRangeStartAction =>
     };
 };
 
-// --- FetchTimeRangeSuccessAction
+// --- Success
 
 export const FetchTimeRangeSuccessActionName = 'FetchTimeRangeSuccessAction';
 
@@ -33,7 +33,7 @@ export const fetchTimeRangeSuccessActionBuilder = (yearlyAverages: TimeRangeRead
     };
 };
 
-// --- FetchTimeRangeEndAction
+// --- Error
 
 export const FetchTimeRangeErrorActionName = 'FetchTimeRangeErrorAction';
 

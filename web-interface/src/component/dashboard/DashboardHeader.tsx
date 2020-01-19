@@ -10,6 +10,7 @@ import 'react-alice-carousel/lib/alice-carousel.css';
 import { airQualityToLabel } from "../../book/AirQualityToLabel";
 import { Device } from '../../entity/Device';
 import './DashboardHeader.scss';
+import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress';
 
 export const DashboardHeader: FunctionComponent<DashboardHeaderProps> = (props) => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -57,6 +58,7 @@ export const DashboardHeader: FunctionComponent<DashboardHeaderProps> = (props) 
                 </AliceCarousel >}
             </div>
         </div>
+        {props.isLoading && <CircularProgress size={22} className="spinner" />}
     </Box>;
 };
 
@@ -67,4 +69,5 @@ export interface DashboardHeaderProps {
     currentDevice: Device | null;
     onCurrentDeviceChange: (device: Device) => void;
     toggleDrawer: (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => void;
+    isLoading: boolean;
 }
