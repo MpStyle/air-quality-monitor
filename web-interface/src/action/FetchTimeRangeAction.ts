@@ -38,10 +38,12 @@ export const fetchTimeRangeSuccessActionBuilder = (yearlyAverages: TimeRangeRead
 export const FetchTimeRangeErrorActionName = 'FetchTimeRangeErrorAction';
 
 export interface FetchTimeRangeErrorAction extends Action {
+    error: number;
 }
 
-export const fetchTimeRangeErrorActionBuilder = (): FetchTimeRangeErrorAction => {
+export const fetchTimeRangeErrorActionBuilder = (error: number): FetchTimeRangeErrorAction => {
     return {
-        type: FetchTimeRangeErrorActionName
+        type: FetchTimeRangeErrorActionName,
+        error
     };
 };

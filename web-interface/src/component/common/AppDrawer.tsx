@@ -5,6 +5,7 @@ import ListItem from "@material-ui/core/ListItem/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText/ListItemText";
 import Typography from "@material-ui/core/Typography/Typography";
+import DashboardIcon from '@material-ui/icons/Dashboard';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import InfoIcon from '@material-ui/icons/Info';
 import PersonIcon from '@material-ui/icons/Person';
@@ -13,7 +14,7 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import React, { FunctionComponent } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { airQualityToLabel } from "../../book/AirQualityToLabel";
-import { APP_SETTINGS_URL, CREDITS_URL } from '../../book/Pages';
+import { APP_CONSOLE_URL, APP_SETTINGS_URL, CREDITS_URL } from '../../book/Pages';
 import { Device } from "../../entity/Device";
 import logo from '../../images/logo.svg';
 import "./AppDrawer.scss";
@@ -73,6 +74,12 @@ export const AppDrawer: FunctionComponent<AppDrawerProps> = (props) => {
                         <InfoIcon />
                     </ListItemIcon>
                     <ListItemText primary="Credits" />
+                </ListItem>
+                <ListItem button className="list-item" component={Link} to={APP_CONSOLE_URL}>
+                    <ListItemIcon>
+                        <DashboardIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Console" />
                 </ListItem>
                 <ListItem button className="list-item" onClick={() => {
                     props.revokeToken().then(() => (history.push('/login')));

@@ -3,6 +3,7 @@ import { AppState } from "../entity/AppState";
 import { airQualityDataAveragesReducer } from "./AirQualityDataAveragesReducer";
 import { airQualityDataReducer } from './AirQualityDataReducer';
 import { airStatusReducer } from "./AirStatusReducer";
+import { appErrorsReducer } from "./AppErrorsReducer";
 import { currentDeviceReducer } from "./CurrentDeviceReducer";
 import { devicesDataReducer } from "./DevicesDataReducer";
 import { loginStatusReducer } from "./LoginStatusReducer";
@@ -19,5 +20,6 @@ export const appReducer = combineReducers<AppState>({
     token: tokenReducer,
     loginStatus: loginStatusReducer,
     settings: settingsReducer,
-    airQualityDataAverages: airQualityDataAveragesReducer
+    airQualityDataAverages: airQualityDataAveragesReducer,
+    appErrors: appErrorsReducer
 });

@@ -7,7 +7,7 @@ import { userTimeRangeReadings } from '../../book/UserTimeRangeReadings';
 import { Granularity } from '../../entity/Granularity';
 import { LoginToken } from '../../entity/LoginToken';
 import { ServiceResponse } from '../../entity/ServiceResponse';
-import { fetchTimeRangeStartActionBuilder, fetchTimeRangeSuccessActionBuilder } from './../../action/FetchTimeRangeAction';
+import { fetchTimeRangeStartActionBuilder, fetchTimeRangeSuccessActionBuilder, fetchTimeRangeErrorActionBuilder } from './../../action/FetchTimeRangeAction';
 import { AppState } from './../../entity/AppState';
 import { Charts, ChartsProps } from './Charts';
 
@@ -55,15 +55,31 @@ export const ChartsContainer = connect(
 
                         return userTimeRangeReadings(deviceId, response.payload?.accessToken, measurementType)
                             .then(response => {
+                                if (response.error) {
+                                    dispatch(fetchTimeRangeErrorActionBuilder(response.error));
+                                    return;
+                                }
+
+                                if (!response.payload) {
+                                    dispatch(fetchTimeRangeErrorActionBuilder(0));
+                                    return;
+                                }
+
                                 dispatch(fetchTimeRangeSuccessActionBuilder(
-                                    response.payload?.timeRangeReadings.filter(m => m.granularity === Granularity.yearly) || [],
-                                    response.payload?.timeRangeReadings.filter(m => m.granularity === Granularity.monthly) || [],
-                                    response.payload?.timeRangeReadings.filter(m => m.granularity === Granularity.daily) || []
+                                    response.payload.timeRangeReadings.filter(m => m.granularity === Granularity.yearly) || [],
+                                    response.payload.timeRangeReadings.filter(m => m.granularity === Granularity.monthly) || [],
+                                    response.payload.timeRangeReadings.filter(m => m.granularity === Granularity.daily) || []
                                 ));
                             })
-                            .catch(error => console.error(error));
+                            .catch(error => {
+                                console.error(error);
+                                dispatch(fetchTimeRangeErrorActionBuilder(error));
+                            });
                     })
-                    .catch(error => console.error(error));
+                    .catch(error => {
+                        console.error(error);
+                        dispatch(fetchTimeRangeErrorActionBuilder(error));
+                    });
             }
         } as ChartsProps;
     }

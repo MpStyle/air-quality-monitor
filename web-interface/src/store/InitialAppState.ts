@@ -56,4 +56,5 @@ export const initialAppState: AppState = {
         dailyAverages: [],
         loadingState: LoadingState.none
     },
+    appErrors: []
 };
