@@ -31,7 +31,7 @@ ReactDOM.render(
                 <Route exact path="/" component={LoginContainer} />
                 <Route path={LOGIN_URL} component={LoginContainer} />
                 <Route path={APP_SETTINGS_URL} component={AppSettingsContainer} />
-                <Route path={`${CHARTS_URL}/:measurementType`} component={ChartsContainer} />
+                <Route path={`${CHARTS_URL}/:readingType`} component={ChartsContainer} />
                 <Route component={NotFoundPage} />
             </Switch>
         </HashRouter>
