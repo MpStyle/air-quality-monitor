@@ -8,7 +8,7 @@ import { LoginToken } from "../entity/LoginToken";
 import { UserAuthorizations } from "../entity/UserAuthorizations";
 import { Authorization } from "../entity/Authorization";
 
-export const userAuthorization = (logging: ILogging): Service<AuthorizationRequest, AuthorizationResponse> => req => {
+export const userAuthorization = (logging: ILogging): Service<UserAuthorizationRequest, UserAuthorizationResponse> => req => {
     if (!req.accessToken) {
         return buildErrorResponse(Errors.INVALID_AUTHORIZATION_REQUEST);
     }
@@ -39,7 +39,7 @@ export const userAuthorization = (logging: ILogging): Service<AuthorizationReque
                 return buildErrorResponse(Errors.AUTHORIZATIONS_CONFIGURATION_NOT_FOUND);
             }
 
-            return buildResponse<AuthorizationResponse>({
+            return buildResponse<UserAuthorizationResponse>({
                 authorizations: appAuthorizations
                     .filter(a => a.username === doc.username)
                     .reduce((acc, cur) => acc.concat(cur.authorizations), <Authorization[]>[])
@@ -51,10 +51,10 @@ export const userAuthorization = (logging: ILogging): Service<AuthorizationReque
         });
 };
 
-export interface AuthorizationRequest {
+export interface UserAuthorizationRequest {
     accessToken: string;
 }
 
-export interface AuthorizationResponse {
+export interface UserAuthorizationResponse {
     authorizations: Authorization[]
 };
