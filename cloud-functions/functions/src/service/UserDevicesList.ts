@@ -5,7 +5,7 @@ import { userAuthorization } from "./UserAuthorization";
 import { Service, buildErrorResponse, buildResponse } from "../entity/Service";
 import { Scopes } from "../entity/Scopes";
 
-export const userDevicesList = (logging: ILogging): Service<UserDevicesSearchRequest, UserDevicesSearchResponse> => req => {
+export const userDevicesList = (logging: ILogging): Service<UserDevicesListRequest, UserDevicesListResponse> => req => {
     try {
         if (!req.accessToken || req.accessToken === '') {
             return buildErrorResponse(Errors.INVALID_USER_DEVICE_SEARCH_REQUEST);
@@ -37,7 +37,7 @@ export const userDevicesList = (logging: ILogging): Service<UserDevicesSearchReq
                             return buildErrorResponse(Errors.DEVICE_NOT_FOUND);
                         }
 
-                        return buildResponse<UserDevicesSearchResponse>({
+                        return buildResponse<UserDevicesListResponse>({
                             devices: response.payload.devices.filter(d => deviceIds.indexOf(d.deviceId) !== -1)
                         });
                     });
@@ -53,10 +53,10 @@ export const userDevicesList = (logging: ILogging): Service<UserDevicesSearchReq
     }
 };
 
-export interface UserDevicesSearchRequest extends DevicesSearchRequest {
+export interface UserDevicesListRequest extends DevicesSearchRequest {
     accessToken: string,
 }
 
 // tslint:disable-next-line: no-empty-interface
-export interface UserDevicesSearchResponse extends DevicesSearchResponse {
+export interface UserDevicesListResponse extends DevicesSearchResponse {
 }

@@ -7,7 +7,7 @@ import { ReadingSearchRequest, readingsSearch } from "./ReadingsSearch";
 import Bluebird = require("bluebird");
 import { ReadingTypes } from "../entity/ReadingTypes";
 
-export const userLastReadings = (logging: ILogging): Service<UserReadingsSearchRequest, UserReadingsSearchResponse> => req => {
+export const userLastReadings = (logging: ILogging): Service<UserLastReadingsRequest, UserLastReadingsResponse> => req => {
     try {
         if (!req.accessToken || req.accessToken === '' || !req.deviceId || req.deviceId === '') {
             return buildErrorResponse(Errors.INVALID_USER_READING_SEARCH_REQUEST);
@@ -58,7 +58,7 @@ export const userLastReadings = (logging: ILogging): Service<UserReadingsSearchR
                         }
 
                         return acc;
-                    }, {} as UserReadingsSearchResponse))
+                    }, {} as UserLastReadingsResponse))
                     .then(response => buildResponse(response));
             })
             .catch((err: any) => {
@@ -72,12 +72,12 @@ export const userLastReadings = (logging: ILogging): Service<UserReadingsSearchR
     }
 };
 
-export interface UserReadingsSearchRequest {
+export interface UserLastReadingsRequest {
     accessToken: string;
     deviceId: string;
 }
 
-export interface UserReadingsSearchResponse {
+export interface UserLastReadingsResponse {
     humidity: number | null;
     temperature: number | null;
     pressure: number | null;

@@ -6,7 +6,7 @@ import { LoginToken } from "../entity/LoginToken";
 import { buildErrorResponse, buildResponse, Service } from "../entity/Service";
 import admin = require('firebase-admin');
 
-export const userNewAccessToken = (logging: ILogging): Service<UserNewAccessTokenRequest, UserNewAccessTokenResponse> => req => {
+export const userRenewAccessToken = (logging: ILogging): Service<UserRenewAccessTokenRequest, UserRenewAccessTokenResponse> => req => {
     if (!req.refreshToken) {
         return buildErrorResponse(Errors.INVALID_USER_NEW_ACCESS_TOKEN_REQUEST);
     }
@@ -40,7 +40,7 @@ export const userNewAccessToken = (logging: ILogging): Service<UserNewAccessToke
                         return buildErrorResponse(Errors.ERROR_WHILE_ADD_DEVICE);
                     }
 
-                    return buildResponse<UserNewAccessTokenResponse>({
+                    return buildResponse<UserRenewAccessTokenResponse>({
                         accessToken: userLoginData.accessToken,
                         expiredAt: userLoginData.expiredAt
                     });
@@ -56,11 +56,11 @@ export const userNewAccessToken = (logging: ILogging): Service<UserNewAccessToke
         });
 };
 
-export interface UserNewAccessTokenRequest {
+export interface UserRenewAccessTokenRequest {
     refreshToken: string;
 }
 
-export interface UserNewAccessTokenResponse {
+export interface UserRenewAccessTokenResponse {
     accessToken: string;
     expiredAt: number;
 }

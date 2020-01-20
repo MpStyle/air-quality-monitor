@@ -6,7 +6,7 @@ import { TimeRangeReading } from '../entity/TimeRangeReading';
 import { TimeRangeReadingSearchRequest, timeRangeReadingsSearch } from "./TimeRangeReadingsSearch";
 import { userAuthorization } from "./UserAuthorization";
 
-export const userTimeRangeReadings = (logging: ILogging): Service<UserTimeRangeReadingsSearchRequest, UserTimeRangeReadingsSearchResponse> => req => {
+export const userTimeRangeReadings = (logging: ILogging): Service<UserTimeRangeReadingsRequest, UserTimeRangeReadingsResponse> => req => {
     if (
         !req.accessToken || req.accessToken === ''
         || !req.deviceId || req.deviceId === ''
@@ -48,12 +48,12 @@ export const userTimeRangeReadings = (logging: ILogging): Service<UserTimeRangeR
         });
 };
 
-export interface UserTimeRangeReadingsSearchRequest {
+export interface UserTimeRangeReadingsRequest {
     accessToken: string;
     deviceId: string;
     type: string;
 }
 
-export interface UserTimeRangeReadingsSearchResponse {
+export interface UserTimeRangeReadingsResponse {
     timeRangeReadings: TimeRangeReading[];
 }
