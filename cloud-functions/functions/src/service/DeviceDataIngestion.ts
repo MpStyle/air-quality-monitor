@@ -2,13 +2,17 @@ import { ILogging } from "../book/Logging";
 import { Errors } from "../entity/Errors";
 import { buildErrorResponse, Service, buildResponse } from "../entity/Service";
 import { deviceAdd, DeviceAddRequest } from "./DeviceAdd";
-import { measurementAdd } from "./MeasurementAdd";
+import { readingAdd } from "./ReadingAdd";
 import uuid = require("uuid")
 import { Scopes } from "../entity/Scopes";
 import { deviceAuthorization } from "./DeviceAuthorization";
+import { timeRangeReadingAdd } from './TimeRangeReadingAdd';
+import { Granularity } from "../entity/Granularity";
+import { ReadingTypes } from './../entity/ReadingTypes';
+import { StringUtils } from "../book/StringUtils";
 
 export const deviceDataIngestion = (logging: ILogging): Service<DeviceDataIngestionRequest, {}> => req => {
-    if (!req.secretKey || !req.device.id || !req.measurementDate) {
+    if (!req.secretKey || !req.device.id || !req.readingDate) {
         return buildErrorResponse(Errors.INVALID_DEVICE_DATA_INGESTION_REQUEST);
     }
 
@@ -29,7 +33,11 @@ export const deviceDataIngestion = (logging: ILogging): Service<DeviceDataIngest
                 return buildErrorResponse(Errors.INVALID_AUTORIZATION);
             }
 
-            return deviceAdd(logging)(<DeviceAddRequest>{ deviceId: req.device.id, deviceName: req.device.name, deviceIp: req.device.ip })
+            const readingAddService = readingAdd(logging);
+            const deviceAddService = deviceAdd(logging);
+            const timeRangeReadingAddService = timeRangeReadingAdd(logging);
+
+            return deviceAddService(<DeviceAddRequest>{ deviceId: req.device.id, deviceName: req.device.name, deviceIp: req.device.ip })
                 .then(deviceAddResponse => {
                     if (deviceAddResponse.error) {
                         return buildErrorResponse(deviceAddResponse.error);
@@ -39,57 +47,88 @@ export const deviceDataIngestion = (logging: ILogging): Service<DeviceDataIngest
                         return buildErrorResponse(Errors.ERROR_WHILE_ADD_DEVICE);
                     }
 
-                    return measurementAdd(logging)
-                        ({
-                            deviceId: req.device.id, inserted: req.measurementDate, measurements: [
-                                {
-                                    id: uuid.v4(),
-                                    type: 'temperature',
-                                    value: req.airData.temperature
-                                },
-                                {
-                                    id: uuid.v4(),
-                                    type: 'tvoc',
-                                    value: req.airData.tvoc
-                                },
-                                {
-                                    id: uuid.v4(),
-                                    type: 'co2',
-                                    value: req.airData.co2
-                                },
-                                {
-                                    id: uuid.v4(),
-                                    type: 'pressure',
-                                    value: req.airData.pressure
-                                },
-                                {
-                                    id: uuid.v4(),
-                                    type: 'humidity',
-                                    value: req.airData.humidity
-                                },
-                            ].filter(m => !!m.value)
-                        })
-                        .then(addMeasurementResponse => {
-                            if (addMeasurementResponse.error) {
+                    return readingAddService({
+                        deviceId: req.device.id, inserted: req.readingDate, readings: [
+                            {
+                                id: uuid.v4(),
+                                type: ReadingTypes.TEMPERATURE,
+                                value: req.airData.temperature
+                            },
+                            {
+                                id: uuid.v4(),
+                                type: ReadingTypes.TVOC,
+                                value: req.airData.tvoc
+                            },
+                            {
+                                id: uuid.v4(),
+                                type: ReadingTypes.CO2,
+                                value: req.airData.co2
+                            },
+                            {
+                                id: uuid.v4(),
+                                type: ReadingTypes.PRESSURE,
+                                value: req.airData.pressure
+                            },
+                            {
+                                id: uuid.v4(),
+                                type: ReadingTypes.HUMIDITY,
+                                value: req.airData.humidity
+                            },
+                        ].filter(m => !!m.value)
+                    })
+                        .then(addReadingResponse => {
+                            if (deviceAuthorizationResponse.error) {
                                 return buildErrorResponse(deviceAuthorizationResponse.error);
                             }
 
-                            if (!addMeasurementResponse.payload) {
-                                return buildErrorResponse(Errors.ERROR_WHILE_ADD_MEASUREMENT);
+                            if (!addReadingResponse.payload) {
+                                return buildErrorResponse(Errors.ERROR_WHILE_ADD_READING);
                             }
 
-                            return buildResponse({});
+                            const dateObj = new Date(req.readingDate);
+                            const month = StringUtils.padLeft(dateObj.getUTCMonth() + 1, '0', 2);
+                            const day = StringUtils.padLeft(dateObj.getUTCDate(), '0', 2);
+                            const year = "" + dateObj.getUTCFullYear();
+
+                            return Promise
+                                .all([
+                                    timeRangeReadingAddService({ deviceId: req.device.id, timeRange: year + month + day, type: ReadingTypes.HUMIDITY, value: req.airData.humidity, granularity: Granularity.daily }),
+                                    timeRangeReadingAddService({ deviceId: req.device.id, timeRange: year + month, type: ReadingTypes.HUMIDITY, value: req.airData.humidity, granularity: Granularity.monthly }),
+                                    timeRangeReadingAddService({ deviceId: req.device.id, timeRange: year, type: ReadingTypes.HUMIDITY, value: req.airData.humidity, granularity: Granularity.yearly }),
+
+                                    timeRangeReadingAddService({ deviceId: req.device.id, timeRange: year + month + day, type: ReadingTypes.PRESSURE, value: req.airData.pressure, granularity: Granularity.daily }),
+                                    timeRangeReadingAddService({ deviceId: req.device.id, timeRange: year + month, type: ReadingTypes.PRESSURE, value: req.airData.pressure, granularity: Granularity.monthly }),
+                                    timeRangeReadingAddService({ deviceId: req.device.id, timeRange: year, type: ReadingTypes.PRESSURE, value: req.airData.pressure, granularity: Granularity.yearly }),
+
+                                    timeRangeReadingAddService({ deviceId: req.device.id, timeRange: year + month + day, type: ReadingTypes.CO2, value: req.airData.co2, granularity: Granularity.daily }),
+                                    timeRangeReadingAddService({ deviceId: req.device.id, timeRange: year + month, type: ReadingTypes.CO2, value: req.airData.co2, granularity: Granularity.monthly }),
+                                    timeRangeReadingAddService({ deviceId: req.device.id, timeRange: year, type: ReadingTypes.CO2, value: req.airData.co2, granularity: Granularity.yearly }),
+
+                                    timeRangeReadingAddService({ deviceId: req.device.id, timeRange: year + month + day, type: ReadingTypes.TVOC, value: req.airData.tvoc, granularity: Granularity.daily }),
+                                    timeRangeReadingAddService({ deviceId: req.device.id, timeRange: year + month, type: ReadingTypes.TVOC, value: req.airData.tvoc, granularity: Granularity.monthly }),
+                                    timeRangeReadingAddService({ deviceId: req.device.id, timeRange: year, type: ReadingTypes.TVOC, value: req.airData.tvoc, granularity: Granularity.yearly }),
+
+                                    timeRangeReadingAddService({ deviceId: req.device.id, timeRange: year + month + day, type: ReadingTypes.TEMPERATURE, value: req.airData.temperature, granularity: Granularity.daily }),
+                                    timeRangeReadingAddService({ deviceId: req.device.id, timeRange: year + month, type: ReadingTypes.TEMPERATURE, value: req.airData.temperature, granularity: Granularity.monthly }),
+                                    timeRangeReadingAddService({ deviceId: req.device.id, timeRange: year, type: ReadingTypes.TEMPERATURE, value: req.airData.temperature, granularity: Granularity.yearly }),
+                                ])
+                                .then(_ => {
+                                    return buildResponse({});
+                                })
                         })
                         .catch(error => {
-                            return buildErrorResponse(`Error ${Errors.ERROR_WHILE_ADD_MEASUREMENT} - ${error}`);
+                            logging.error("deviceDataIngestion", `Error while adding reading: ${error}`);
+                            return buildErrorResponse(Errors.ERROR_WHILE_ADD_READING);
                         });
                 })
                 .catch(error => {
-                    return buildErrorResponse(`Error ${Errors.ERROR_WHILE_ADD_DEVICE} - ${error}`);
+                    logging.error("deviceDataIngestion", `Error while adding device: ${error}`);
+                    return buildErrorResponse(Errors.ERROR_WHILE_ADD_DEVICE);
                 });
         })
         .catch(error => {
-            return buildErrorResponse(`Error ${Errors.DEVICE_AUTHORIZATION_ERROR} - ${error}`);
+            logging.error("deviceDataIngestion", `Not authorized for device: ${error}`);
+            return buildErrorResponse(Errors.DEVICE_AUTHORIZATION_ERROR);
         });
 }
 
@@ -107,5 +146,5 @@ export interface DeviceDataIngestionRequest {
         pressure: number
         humidity: number
     },
-    measurementDate: number
+    readingDate: number
 }

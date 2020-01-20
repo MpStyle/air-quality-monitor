@@ -1,0 +1,63 @@
+@import '../../book/Colors.scss';
+
+.dashboard-header {
+    height: 185px;
+    padding: 1em 16px;
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    left: 0px;
+    color: $color-text-alternative;
+    background: $color-primary;
+    background: linear-gradient(180deg, $color-primary 0%, $color-secondary 100%);
+
+    .hamburger {
+        margin-left: -12px;
+        margin-top: -12px;
+        color: #fff;
+    }
+
+    .spinner{
+        position: fixed;
+        right: 16px;
+        top: 16px;
+        color: #fff;
+    }
+
+    .sub-headers {
+        margin-top: -35px;
+        display: flex;
+        flex-direction: column;
+
+        .sub-header {
+            display: inline-block;
+            text-align: center;
+        }
+
+        .sub-header.device-list {
+            font-size: 1.1em;
+            margin: 0px auto 0px auto;
+            cursor: pointer;
+
+            svg {
+                vertical-align: text-bottom;
+            }
+        }
+
+        .sub-header.quality {
+            font-size: 2.5em;
+            margin: 0.5em auto;
+        }
+
+        .sub-header.carousel {
+            font-size: 1.2em;
+            display: block;
+            width: 100%;
+            margin-bottom: 0px;
+
+            .alice-carousel__dots {
+                margin: 0px auto 0px auto;
+            }
+        }
+    }
+}

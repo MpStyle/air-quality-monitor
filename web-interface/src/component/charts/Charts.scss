@@ -1,0 +1,25 @@
+@import '../../book/Colors.scss';
+
+.charts {
+    margin-top: 75px;
+    margin-bottom: 2em;
+
+    .loading {
+        padding: 20px;
+        margin: 20px auto;
+        max-width: 400px;
+        width: 98%;
+        text-align: center;
+
+        .message {
+            margin: 10px 0 20px 0;
+        }
+    }
+
+    .charts-container {
+        width: 96%;
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 1px 20px;
+    }
+}

@@ -5,6 +5,7 @@ import { TOKEN_KEY } from '../book/SessionStorageKeys';
 import { TemperatureUnit } from '../book/Unit';
 import { AirQualityData } from '../entity/AirQualityData';
 import { AirQuality, AirStatus } from '../entity/AirStatus';
+import { LoadingState } from '../entity/LoadingState';
 import { LoginStatus } from '../entity/LoginStatus';
 import { AIR_QUALITY_DATA_CO2_KEY, AIR_QUALITY_DATA_CURRENT_DEVICE_KEY, AIR_QUALITY_DATA_HUMIDITY_KEY, AIR_QUALITY_DATA_ICON_LABEL_VISUALIZATION_TYPE_KEY, AIR_QUALITY_DATA_INSERTED_KEY, AIR_QUALITY_DATA_PRESSURE_KEY, AIR_QUALITY_DATA_TEMPERATURE_KEY, AIR_QUALITY_DATA_TVOC_KEY, TEMPERATURE_UNIT_KEY } from './../book/LocalStorageKeys';
 import { AppState } from './../entity/AppState';
@@ -20,6 +21,7 @@ export const initialAppState: AppState = {
         pressure: parseFloat(localStorage.getItem(AIR_QUALITY_DATA_PRESSURE_KEY) as string),
         humidity: parseFloat(localStorage.getItem(AIR_QUALITY_DATA_HUMIDITY_KEY) as string),
         temperature: parseFloat(localStorage.getItem(AIR_QUALITY_DATA_TEMPERATURE_KEY) as string),
+        loadingState: LoadingState.none
     } as AirQualityData,
     airStatus: {
         co2: co2Quality(parseFloat(localStorage.getItem(AIR_QUALITY_DATA_CO2_KEY) as string)),
@@ -28,7 +30,10 @@ export const initialAppState: AppState = {
         temperature: temperatureQuality(parseFloat(localStorage.getItem(AIR_QUALITY_DATA_TEMPERATURE_KEY) as string)),
         tvoc: tvocQuality(parseFloat(localStorage.getItem(AIR_QUALITY_DATA_TVOC_KEY) as string)),
     } as AirStatus,
-    devices: currentDevice ? [JSON.parse(currentDevice as string)] : [],
+    devicesData: {
+        devices: currentDevice ? [JSON.parse(currentDevice as string)] : [],
+        loadingState: LoadingState.none
+    },
     currentDevice: currentDevice ? JSON.parse(currentDevice as string) : null,
     suggestions: [],
     token: token ? JSON.parse(token as string) : null,
@@ -44,5 +49,12 @@ export const initialAppState: AppState = {
             noise: "db",
             temperature: localStorage.getItem(TEMPERATURE_UNIT_KEY) ?? TemperatureUnit.CELSIUS,
         }
-    }
+    },
+    airQualityDataAverages: {
+        yearlyAverages: [],
+        monthlyAverages: [],
+        dailyAverages: [],
+        loadingState: LoadingState.none
+    },
+    appErrors: []
 };

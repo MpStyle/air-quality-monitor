@@ -40,7 +40,7 @@ export const userNewAccessToken = (logging: ILogging): Service<UserNewAccessToke
                         return buildErrorResponse(Errors.ERROR_WHILE_ADD_DEVICE);
                     }
 
-                    return buildResponse({
+                    return buildResponse<UserNewAccessTokenResponse>({
                         accessToken: userLoginData.accessToken,
                         expiredAt: userLoginData.expiredAt
                     });
@@ -62,5 +62,5 @@ export interface UserNewAccessTokenRequest {
 
 export interface UserNewAccessTokenResponse {
     accessToken: string;
-    expiresIn: number;
+    expiredAt: number;
 }

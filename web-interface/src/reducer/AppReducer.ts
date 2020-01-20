@@ -1,9 +1,11 @@
 import { combineReducers } from "redux";
 import { AppState } from "../entity/AppState";
+import { airQualityDataAveragesReducer } from "./AirQualityDataAveragesReducer";
 import { airQualityDataReducer } from './AirQualityDataReducer';
 import { airStatusReducer } from "./AirStatusReducer";
+import { appErrorsReducer } from "./AppErrorsReducer";
 import { currentDeviceReducer } from "./CurrentDeviceReducer";
-import { devicesReducer } from "./DevicesReducer";
+import { devicesDataReducer } from "./DevicesDataReducer";
 import { loginStatusReducer } from "./LoginStatusReducer";
 import { settingsReducer } from "./SettingsReducer";
 import { suggestionsReducer } from './SuggestionsReducer';
@@ -12,10 +14,12 @@ import { tokenReducer } from "./TokenReducer";
 export const appReducer = combineReducers<AppState>({
     airQualityData: airQualityDataReducer,
     airStatus: airStatusReducer,
-    devices: devicesReducer,
+    devicesData: devicesDataReducer,
     currentDevice: currentDeviceReducer,
     suggestions: suggestionsReducer,
     token: tokenReducer,
     loginStatus: loginStatusReducer,
-    settings: settingsReducer
+    settings: settingsReducer,
+    airQualityDataAverages: airQualityDataAveragesReducer,
+    appErrors: appErrorsReducer
 });

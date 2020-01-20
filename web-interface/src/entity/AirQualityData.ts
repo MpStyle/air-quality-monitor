@@ -1,3 +1,5 @@
+import { LoadingState } from "./LoadingState";
+
 export interface AirQualityData {
     inserted: number;
     co2: number;
@@ -5,4 +7,5 @@ export interface AirQualityData {
     pressure: number;
     humidity: number;
     temperature: number;
+    loadingState: LoadingState;
 }

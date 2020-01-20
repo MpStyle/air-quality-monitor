@@ -1,0 +1,59 @@
+@import '../../book/Colors.scss';
+
+.login {
+    display: block;
+    max-width: 400px;
+    width: 98%;
+    margin: 20px auto 0px auto;
+    text-align: center;
+
+    .content {
+        padding: 30px;
+
+        .login-in-progress {
+            margin-top: 20px;
+
+            .message {
+                font-size: 0.95em;
+                margin-top: 10px;
+            }
+        }
+
+        .login-error {
+            font-size: 0.95em;
+            margin-top: 20px;
+            margin-bottom: -20px;
+        }
+
+        .subtitle1 {
+            margin: 30px;
+        }
+
+        .username,
+        .password {
+            width: 95%;
+            margin-top: 10px;
+        }
+
+        img {
+            width: 24px;
+            vertical-align: middle;
+        }
+
+        .sign-in-button-container {
+            margin: 50px 0px 20px;
+
+            .sign-in-button {
+                color: $color-text-alternative;
+                background: $color-primary;
+                background: linear-gradient(135deg, $color-primary 0%, $color-secondary 100%);
+            }
+        }
+
+        .credits-link {
+            margin-top: 20px;
+            display: inline-block;
+            color: blue;
+        }
+    }
+}

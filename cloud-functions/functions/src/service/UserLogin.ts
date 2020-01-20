@@ -13,6 +13,8 @@ export const userLogin = (logging: ILogging): Service<UserLoginRequest, UserLogi
         return buildErrorResponse(Errors.INVALID_USER_LOGIN_REQUEST);
     }
 
+    logging.info("userLogin", "Starts");
+
     const users: User[] = JSON.parse(functions.config().airqualitymonitor.users);
 
     if (!users || !users.length) {

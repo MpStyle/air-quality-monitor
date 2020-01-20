@@ -22,7 +22,7 @@ firebase emulators:start
 
 ### Create index
 
-In the database you must create the index for the _measurement_ collection and indexed fields:
+In the database you must create the index for the _reading_ collection and indexed fields:
 - deviceId ascending 
 - type ascending 
 - inserted descending

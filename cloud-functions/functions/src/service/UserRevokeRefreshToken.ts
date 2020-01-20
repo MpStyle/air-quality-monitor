@@ -14,7 +14,7 @@ export const userRevokeRefreshToken = (logging: ILogging): Service<UserRevokeRef
         .collection(Collections.LOGIN_TOKEN)
         .doc(req.refreshToken)
         .delete()
-        .then(result => {
+        .then(_ => {
             return buildResponse({});
         })
         .catch(err => {
