@@ -2,7 +2,7 @@
 
 # Air Quality Monitor
 
-Smart air quality monitor.
+Smart air quality monitor (less then € 50.00 *).
 
 A full stack IoT Project.
 
@@ -12,28 +12,30 @@ A full stack IoT Project.
 
 - Click [here](doc/ProjectDescription.md) for details.
 
-## Project structure
+## Installation guide
 
-- [Cloud functions](cloud-functions/README.md)
-- [Device Deamon](device-deamon/README.md)
-- [Web Interface](web-interface/README.md)
+- Click [here](doc/InstallationGuide.md) for guide.
 
 ## Project Plan
 
-#### ~~Step 1~~
+### ~~Step 1~~
 - ~~Device Deamon <-> Cloud Functions: every requests must contains "_secret_key_", which identify the device.~~
 - ~~Web interface <-> Cloud Functions: every requests must continas "_secret_key_", which identify the user.~~
 
 ~~The secret keys must be different.~~
 
-#### Step 2
+### Step 2
 
 - Documentation - How to guide
 
-#### ~~Step 3~~
+### ~~Step 3~~
 
 - ~~Web interface <-> Cloud Functions: using username and password authentication.~~
 
-#### Step 4
+### ~~Step 4~~
 
-- Show charts in the web interface for temperature, CO<sub>2</sub>, pressure and ppb.
+- ~~Show charts in the web interface for temperature, CO<sub>2</sub>, pressure and ppb.~~
+
+### Note
+
+I am working on a cheaper hardware version, using ESP32 (€ 3.52) instead of Raspberry (33.50).
