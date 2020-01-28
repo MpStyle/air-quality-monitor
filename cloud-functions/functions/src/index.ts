@@ -3,14 +3,15 @@ import admin = require('firebase-admin');
 import express = require('express');
 import { Logging } from './book/Logging';
 import { buildErrorResponse } from './entity/Service';
-import { deviceDataIngestion } from './service/DeviceDataIngestion';
-import { healthCheck } from './service/HealthCheck';
-import { userDevicesList } from './service/UserDevicesList';
-import { userLogin } from './service/UserLogin';
-import { userLastReadings as userLastReadings } from './service/UserLastReadings';
-import { userNewAccessToken as userRenewAccessToken } from './service/UserRenewAccessToken';
-import { userRevokeRefreshToken } from './service/UserRevokeRefreshToken';
-import { userTimeRangeReadings } from './service/UserTimeRangeReadings';
+import { deviceDataIngestion } from './service/domain/DeviceDataIngestion';
+import { healthCheck } from './service/domain/HealthCheck';
+import { userDevicesList } from './service/domain/UserDevicesList';
+import { userLogin } from './service/domain/UserLogin';
+import { userLastReadings as userLastReadings } from './service/domain/UserLastReadings';
+import { userRenewAccessToken } from './service/domain/UserRenewAccessToken';
+import { userRevokeRefreshToken } from './service/domain/UserRevokeRefreshToken';
+import { userTimeRangeReadings } from './service/domain/UserTimeRangeReadings';
+import { userDeviceDelete } from './service/domain/UserDeviceDelete';
 
 admin.initializeApp(functions.config().firebase);
 
@@ -36,6 +37,11 @@ app.put('/device-data-ingestion', (req, res) => {
 // User - To retrieve data
 app.post('/user-devices-list', (req, res) => {
     userDevicesList(logging)(req.body)
+        .then(data => res.send(data))
+        .catch(err => buildErrorResponse(err));
+});
+app.post('/user-device-delete', (req, res) => {
+    userDeviceDelete(logging)(req.body)
         .then(data => res.send(data))
         .catch(err => buildErrorResponse(err));
 });

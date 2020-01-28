@@ -1,8 +1,8 @@
-import { ILogging } from "../book/Logging";
-import { Authorization } from "../entity/Authorization";
-import { DeviceAuthorizations } from "../entity/DeviceAuthorizations";
-import { Errors } from "../entity/Errors";
-import { buildErrorResponse, buildResponse, Service } from "../entity/Service";
+import { ILogging } from "../../book/Logging";
+import { Authorization } from "../../entity/Authorization";
+import { DeviceAuthorizations } from "../../entity/DeviceAuthorizations";
+import { Errors } from "../../entity/Errors";
+import { buildErrorResponse, buildResponse, Service } from "../../entity/Service";
 import functions = require('firebase-functions');
 
 export const deviceAuthorization = (logging: ILogging): Service<DeviceAuthorizationRequest, DeviceAuthorizationResponse> => req => {

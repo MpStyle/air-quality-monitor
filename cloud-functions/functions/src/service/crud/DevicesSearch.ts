@@ -1,7 +1,7 @@
-import { ILogging } from "../book/Logging";
-import { Collections } from "../entity/Collections";
-import { Device } from "../entity/Device";
-import { Service, buildResponse, buildErrorResponse } from "../entity/Service";
+import { ILogging } from "../../book/Logging";
+import { Collections } from "../../entity/Collections";
+import { Device } from "../../entity/Device";
+import { Service, buildResponse, buildErrorResponse } from "../../entity/Service";
 import admin = require('firebase-admin');
 
 export const devicesSearch = (logging: ILogging): Service<DevicesSearchRequest, DevicesSearchResponse> => req => {

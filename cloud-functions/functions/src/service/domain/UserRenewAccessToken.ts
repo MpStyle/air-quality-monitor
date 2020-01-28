@@ -1,9 +1,9 @@
-import { ILogging } from "../book/Logging";
-import { StringUtils } from "../book/StringUtils";
-import { Collections } from "../entity/Collections";
-import { Errors } from "../entity/Errors";
-import { LoginToken } from "../entity/LoginToken";
-import { buildErrorResponse, buildResponse, Service } from "../entity/Service";
+import { ILogging } from "../../book/Logging";
+import { StringUtils } from "../../book/StringUtils";
+import { Collections } from "../../entity/Collections";
+import { Errors } from "../../entity/Errors";
+import { LoginToken } from "../../entity/LoginToken";
+import { buildErrorResponse, buildResponse, Service } from "../../entity/Service";
 import admin = require('firebase-admin');
 
 export const userRenewAccessToken = (logging: ILogging): Service<UserRenewAccessTokenRequest, UserRenewAccessTokenResponse> => req => {

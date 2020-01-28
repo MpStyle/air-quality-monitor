@@ -1,15 +1,15 @@
-import { ILogging } from "../book/Logging";
-import { Errors } from "../entity/Errors";
-import { buildErrorResponse, Service, buildResponse } from "../entity/Service";
-import { deviceAdd, DeviceAddRequest } from "./DeviceAdd";
-import { readingAdd } from "./ReadingAdd";
+import { ILogging } from "../../book/Logging";
+import { Errors } from "../../entity/Errors";
+import { buildErrorResponse, Service, buildResponse } from "../../entity/Service";
+import { deviceAdd, DeviceAddRequest } from "../crud/DeviceAdd";
+import { readingAdd } from "../crud/ReadingAdd";
 import uuid = require("uuid")
-import { Scopes } from "../entity/Scopes";
+import { Scopes } from "../../entity/Scopes";
 import { deviceAuthorization } from "./DeviceAuthorization";
-import { timeRangeReadingAdd } from './TimeRangeReadingAdd';
-import { Granularity } from "../entity/Granularity";
-import { ReadingTypes } from './../entity/ReadingTypes';
-import { StringUtils } from "../book/StringUtils";
+import { timeRangeReadingAdd } from '../crud/TimeRangeReadingAdd';
+import { Granularity } from "../../entity/Granularity";
+import { ReadingTypes } from '../../entity/ReadingTypes';
+import { StringUtils } from "../../book/StringUtils";
 
 export const deviceDataIngestion = (logging: ILogging): Service<DeviceDataIngestionRequest, {}> => req => {
     if (!req.secretKey || !req.device.id || !req.readingDate) {

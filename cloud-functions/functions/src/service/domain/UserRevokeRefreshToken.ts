@@ -1,8 +1,8 @@
-import { Service, buildErrorResponse, buildResponse } from "../entity/Service";
-import { ILogging } from "../book/Logging";
-import { Collections } from "../entity/Collections";
+import { Service, buildErrorResponse, buildResponse } from "../../entity/Service";
+import { ILogging } from "../../book/Logging";
+import { Collections } from "../../entity/Collections";
 import admin = require('firebase-admin');
-import { Errors } from "../entity/Errors";
+import { Errors } from "../../entity/Errors";
 
 export const userRevokeRefreshToken = (logging: ILogging): Service<UserRevokeRefreshTokenRequest, {}> => req => {
     if (!req.refreshToken) {

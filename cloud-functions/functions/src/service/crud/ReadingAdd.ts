@@ -1,8 +1,8 @@
-import { ILogging } from "../book/Logging";
-import { Collections } from "../entity/Collections";
-import { Errors } from "../entity/Errors";
-import { Reading } from "../entity/Reading";
-import { buildErrorResponse, buildResponse, Service, ServiceResponse } from "../entity/Service";
+import { ILogging } from "../../book/Logging";
+import { Collections } from "../../entity/Collections";
+import { Errors } from "../../entity/Errors";
+import { Reading } from "../../entity/Reading";
+import { buildErrorResponse, buildResponse, Service, ServiceResponse } from "../../entity/Service";
 import { devicesSearch, DevicesSearchRequest } from "./DevicesSearch";
 import { readingsSearch } from "./ReadingsSearch";
 import admin = require('firebase-admin');

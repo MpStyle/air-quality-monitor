@@ -1,8 +1,8 @@
-import { ILogging } from "../book/Logging";
-import { Collections } from "../entity/Collections";
-import { Reading } from "../entity/Reading";
-import { PagedRequest } from "../entity/PagedRequest";
-import { buildErrorResponse, buildResponse, Service } from "../entity/Service";
+import { ILogging } from "../../book/Logging";
+import { Collections } from "../../entity/Collections";
+import { Reading } from "../../entity/Reading";
+import { PagedRequest } from "../../entity/PagedRequest";
+import { buildErrorResponse, buildResponse, Service } from "../../entity/Service";
 import admin = require('firebase-admin');
 
 export const readingsSearch = (logging: ILogging): Service<ReadingSearchRequest, ReadingSearchResponse> => req => {

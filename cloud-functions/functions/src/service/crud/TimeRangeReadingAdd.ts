@@ -1,13 +1,13 @@
-import { ILogging } from "../book/Logging";
-import { Collections } from "../entity/Collections";
-import { Errors } from "../entity/Errors";
-import { Reading } from "../entity/Reading";
-import { buildErrorResponse, buildResponse, Service } from "../entity/Service";
-import { TimeRangeReading } from './../entity/TimeRangeReading';
+import { ILogging } from "../../book/Logging";
+import { Collections } from "../../entity/Collections";
+import { Errors } from "../../entity/Errors";
+import { Reading } from "../../entity/Reading";
+import { buildErrorResponse, buildResponse, Service } from "../../entity/Service";
+import { TimeRangeReading } from '../../entity/TimeRangeReading';
 import { devicesSearch, DevicesSearchRequest } from "./DevicesSearch";
 import { TimeRangeReadingSearchRequest, timeRangeReadingsSearch } from './TimeRangeReadingsSearch';
 import admin = require('firebase-admin');
-import { Granularity } from "../entity/Granularity";
+import { Granularity } from "../../entity/Granularity";
 
 export const timeRangeReadingAdd = (logging: ILogging): Service<TimeRangeReadingAddRequest, TimeRangeReadingAddResponse> => req => {
     if (!req.deviceId || req.deviceId === ''

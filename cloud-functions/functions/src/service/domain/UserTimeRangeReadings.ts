@@ -1,9 +1,9 @@
-import { ILogging } from "../book/Logging";
-import { Errors } from "../entity/Errors";
-import { Scopes } from "../entity/Scopes";
-import { buildErrorResponse, Service } from "../entity/Service";
-import { TimeRangeReading } from '../entity/TimeRangeReading';
-import { TimeRangeReadingSearchRequest, timeRangeReadingsSearch } from "./TimeRangeReadingsSearch";
+import { ILogging } from "../../book/Logging";
+import { Errors } from "../../entity/Errors";
+import { Scopes } from "../../entity/Scopes";
+import { buildErrorResponse, Service } from "../../entity/Service";
+import { TimeRangeReading } from '../../entity/TimeRangeReading';
+import { TimeRangeReadingSearchRequest, timeRangeReadingsSearch } from "../crud/TimeRangeReadingsSearch";
 import { userAuthorization } from "./UserAuthorization";
 
 export const userTimeRangeReadings = (logging: ILogging): Service<UserTimeRangeReadingsRequest, UserTimeRangeReadingsResponse> => req => {

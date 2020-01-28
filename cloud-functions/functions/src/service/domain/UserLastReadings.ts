@@ -1,11 +1,11 @@
-import { ILogging } from "../book/Logging";
-import { Errors } from "../entity/Errors";
-import { Scopes } from "../entity/Scopes";
-import { buildErrorResponse, buildResponse, Service } from "../entity/Service";
+import { ILogging } from "../../book/Logging";
+import { Errors } from "../../entity/Errors";
+import { Scopes } from "../../entity/Scopes";
+import { buildErrorResponse, buildResponse, Service } from "../../entity/Service";
 import { userAuthorization } from "./UserAuthorization";
-import { ReadingSearchRequest, readingsSearch } from "./ReadingsSearch";
+import { ReadingSearchRequest, readingsSearch } from "../crud/ReadingsSearch";
 import Bluebird = require("bluebird");
-import { ReadingTypes } from "../entity/ReadingTypes";
+import { ReadingTypes } from "../../entity/ReadingTypes";
 
 export const userLastReadings = (logging: ILogging): Service<UserLastReadingsRequest, UserLastReadingsResponse> => req => {
     try {

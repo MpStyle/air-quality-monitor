@@ -1,12 +1,12 @@
-import { ILogging } from "../book/Logging";
-import { Service, buildErrorResponse, buildResponse } from "../entity/Service";
-import { User } from "../entity/User";
+import { ILogging } from "../../book/Logging";
+import { Service, buildErrorResponse, buildResponse } from "../../entity/Service";
+import { User } from "../../entity/User";
 import functions = require('firebase-functions');
-import { Errors } from "../entity/Errors";
-import { StringUtils } from "../book/StringUtils";
+import { Errors } from "../../entity/Errors";
+import { StringUtils } from "../../book/StringUtils";
 import admin = require('firebase-admin');
-import { Collections } from "../entity/Collections";
-import { LoginToken } from "../entity/LoginToken";
+import { Collections } from "../../entity/Collections";
+import { LoginToken } from "../../entity/LoginToken";
 
 export const userLogin = (logging: ILogging): Service<UserLoginRequest, UserLoginResponse> => req => {
     if (!req.username || !req.password) {

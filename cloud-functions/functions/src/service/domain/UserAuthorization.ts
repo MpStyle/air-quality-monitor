@@ -1,12 +1,12 @@
-import { ILogging } from "../book/Logging";
-import { Service, buildResponse, buildErrorResponse } from "../entity/Service";
+import { ILogging } from "../../book/Logging";
+import { Service, buildResponse, buildErrorResponse } from "../../entity/Service";
 import functions = require('firebase-functions');
-import { Errors } from "../entity/Errors";
+import { Errors } from "../../entity/Errors";
 import admin = require('firebase-admin');
-import { Collections } from "../entity/Collections";
-import { LoginToken } from "../entity/LoginToken";
-import { UserAuthorizations } from "../entity/UserAuthorizations";
-import { Authorization } from "../entity/Authorization";
+import { Collections } from "../../entity/Collections";
+import { LoginToken } from "../../entity/LoginToken";
+import { UserAuthorizations } from "../../entity/UserAuthorizations";
+import { Authorization } from "../../entity/Authorization";
 
 export const userAuthorization = (logging: ILogging): Service<UserAuthorizationRequest, UserAuthorizationResponse> => req => {
     if (!req.accessToken) {

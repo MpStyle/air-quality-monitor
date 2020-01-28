@@ -1,10 +1,10 @@
-import { ILogging } from "../book/Logging";
-import { Collections } from "../entity/Collections";
-import { PagedRequest } from "../entity/PagedRequest";
-import { buildErrorResponse, buildResponse, Service } from "../entity/Service";
-import { TimeRangeReading } from "../entity/TimeRangeReading";
+import { ILogging } from "../../book/Logging";
+import { Collections } from "../../entity/Collections";
+import { PagedRequest } from "../../entity/PagedRequest";
+import { buildErrorResponse, buildResponse, Service } from "../../entity/Service";
+import { TimeRangeReading } from "../../entity/TimeRangeReading";
 import admin = require('firebase-admin');
-import { Granularity } from "../entity/Granularity";
+import { Granularity } from "../../entity/Granularity";
 
 export const timeRangeReadingsSearch = (logging: ILogging): Service<TimeRangeReadingSearchRequest, TimeRangeReadingSearchResponse> => req => {
     logging.info("timeRangeReadingsSearch", "Starts");
