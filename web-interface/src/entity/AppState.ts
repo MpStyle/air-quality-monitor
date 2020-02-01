@@ -4,6 +4,7 @@ import { AirStatus } from "./AirStatus";
 import { AppError } from "./AppError";
 import { Device } from "./Device";
 import { DevicesData } from "./DevicesData";
+import { LoadingState } from "./LoadingState";
 import { LoginStatus } from "./LoginStatus";
 import { LoginToken } from "./LoginToken";
 import { Settings } from "./Settings";

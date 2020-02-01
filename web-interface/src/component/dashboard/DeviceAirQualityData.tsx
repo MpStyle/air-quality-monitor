@@ -17,16 +17,25 @@ import { DataRow } from "./DataRow";
 import "./DeviceAirQualityData.scss";
 
 export const DeviceAirQualityData: FunctionComponent<AirQualityDataProps> = (props) => {
-    const isLoading = !props.airQualityData.temperature &&
+    if (props.isLoading) {
+        return <Paper elevation={2} className="loading">
+            <div className="message">Loading...</div>
+            <CircularProgress />
+        </Paper>;
+    }
+
+    const noData = !props.airQualityData.temperature &&
         !props.airQualityData.humidity &&
         !props.airQualityData.co2 &&
         !props.airQualityData.pressure &&
         !props.airQualityData.tvoc;
 
-    if (isLoading) {
-        return <Paper elevation={2} className="loading">
-            <div className="message">Loading...</div>
-            <CircularProgress />
+    if (noData) {
+        return <Paper elevation={2} className="no-data">
+            <div className="message">
+                <strong>No data</strong><br />
+                Install almost a device to show something.
+            </div>
         </Paper>;
     }
 
@@ -101,4 +110,5 @@ export interface AirQualityDataProps {
     meterUnit: MeterUnit;
     decimalSeparator: string;
     iconVisualizationType: string;
+    isLoading: boolean;
 }

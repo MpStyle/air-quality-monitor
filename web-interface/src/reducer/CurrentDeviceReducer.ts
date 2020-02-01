@@ -13,6 +13,11 @@ export const currentDeviceReducer = (state: Device | null = initialAppState.curr
                 localStorage.setItem(AIR_QUALITY_DATA_CURRENT_DEVICE_KEY, JSON.stringify(updateDevicesAction.devices[0]));
                 return updateDevicesAction.devices[0];
             }
+
+            if (!updateDevicesAction.devices || !updateDevicesAction.devices.length) {
+                localStorage.removeItem(AIR_QUALITY_DATA_CURRENT_DEVICE_KEY);
+                return null;
+            }
             break;
         case UpdateCurrentDeviceActionName:
             const updateCurrentDeviceAction = action as UpdateCurrentDeviceAction;

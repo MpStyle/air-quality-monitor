@@ -1,5 +1,6 @@
 import { Action } from "redux";
 import { FetchAirQualityDataSuccessActionName } from "../action/FetchAirQualityDataAction";
+import { FetchDevicesSuccessAction, FetchDevicesSuccessActionName } from "../action/FetchDevicesAction";
 import { averageAirStatus } from "../book/AverageAirStatus";
 import { AirQuality, AirStatus } from "../entity/AirStatus";
 import { initialAppState } from "../store/InitialAppState";
@@ -7,6 +8,12 @@ import { airStatusReducer } from './AirStatusReducer';
 
 export const suggestionsReducer = (state: string[] = initialAppState.suggestions, action: Action): string[] => {
     switch (action.type) {
+        case FetchDevicesSuccessActionName:
+            const updateDevicesAction = action as FetchDevicesSuccessAction;
+            if (!updateDevicesAction.devices || !updateDevicesAction.devices.length) {
+                return [];
+            }
+            break;
         case FetchAirQualityDataSuccessActionName:
             const airStatus: AirStatus = airStatusReducer(initialAppState.airStatus, action);
             const suggestions: string[] = [];

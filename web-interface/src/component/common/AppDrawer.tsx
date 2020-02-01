@@ -14,9 +14,10 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import React, { FunctionComponent } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { airQualityToLabel } from "../../book/AirQualityToLabel";
-import { APP_CONSOLE_URL, APP_SETTINGS_URL, CREDITS_URL } from '../../book/Pages';
+import { APP_CONSOLE_URL, APP_SETTINGS_URL, CREDITS_URL, DEVICE_LIST_URL } from '../../book/Pages';
 import { Device } from "../../entity/Device";
 import logo from '../../images/logo.svg';
+import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 import "./AppDrawer.scss";
 
 export const AppDrawer: FunctionComponent<AppDrawerProps> = (props) => {
@@ -63,6 +64,12 @@ export const AppDrawer: FunctionComponent<AppDrawerProps> = (props) => {
             <Divider />
 
             <List>
+                <ListItem button className="list-item" component={Link} to={DEVICE_LIST_URL}>
+                    <ListItemIcon>
+                        <FormatListBulletedIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Device List" />
+                </ListItem>
                 <ListItem button className="list-item" component={Link} to={APP_SETTINGS_URL}>
                     <ListItemIcon>
                         <SettingsIcon />

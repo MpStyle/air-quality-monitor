@@ -1,4 +1,5 @@
 import { Action } from "redux";
+import { DeleteDeviceErrorAction, DeleteDeviceErrorActionName } from "../action/DeleteDeviceAction";
 import { FetchAirQualityDataErrorAction, FetchAirQualityDataErrorActionName } from "../action/FetchAirQualityDataAction";
 import { FetchDevicesErrorAction, FetchDevicesErrorActionName } from "../action/FetchDevicesAction";
 import { FetchTimeRangeErrorAction, FetchTimeRangeErrorActionName } from "../action/FetchTimeRangeAction";
@@ -15,6 +16,9 @@ export const appErrorsReducer = (state: AppError[] = initialAppState.appErrors, 
 
         case FetchTimeRangeErrorActionName:
             return [...state, { code: (action as FetchTimeRangeErrorAction).error, dateTime: Date.now(), description: "Error calling fetch time range data" }];
+
+        case DeleteDeviceErrorActionName:
+            return [...state, { code: (action as DeleteDeviceErrorAction).error, dateTime: Date.now(), description: "Error calling delete device" }];
     }
 
     return state;

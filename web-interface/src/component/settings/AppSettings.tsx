@@ -9,8 +9,8 @@ import { Link } from "react-router-dom";
 import { IconVisualizationType } from "../../book/IconVisualizationType";
 import { DASHBOARD_URL } from "../../book/Pages";
 import { TemperatureUnit } from "../../book/Unit";
-import "./AppSettings.scss";
 import { AppBarOneRow } from "../common/AppBarOneRow";
+import "./AppSettings.scss";
 
 export const AppSettings: FunctionComponent<AppSettingsProps> = (props) => {
     return <div className="app-settings">

@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import { fetchAirQualityDataSuccessActionBuilder, fetchAirQualityDataStartActionBuilder, fetchAirQualityDataErrorActionBuilder } from '../../action/FetchAirQualityDataAction';
-import { fetchDevicesSuccessActionBuilder, fetchDevicesStartActionBuilder, fetchDevicesErrorActionBuilder } from '../../action/FetchDevicesAction';
+import { fetchAirQualityDataErrorActionBuilder, fetchAirQualityDataStartActionBuilder, fetchAirQualityDataSuccessActionBuilder } from '../../action/FetchAirQualityDataAction';
+import { fetchDevicesErrorActionBuilder, fetchDevicesStartActionBuilder, fetchDevicesSuccessActionBuilder } from '../../action/FetchDevicesAction';
 import { updateCurrentDeviceActionBuilder } from '../../action/UpdateCurrentDeviceAction';
 import { userDevicesList } from '../../book/UserDevicesList';
 import { userLastReadings } from '../../book/UserLastReadings';
@@ -9,6 +9,7 @@ import { userRenewAccessToken, UserRenewAccessTokenResponse } from '../../book/U
 import { AirQualityData } from '../../entity/AirQualityData';
 import { AppState } from '../../entity/AppState';
 import { Device } from '../../entity/Device';
+import { LoadingState } from '../../entity/LoadingState';
 import { LoginToken } from '../../entity/LoginToken';
 import { ServiceResponse } from '../../entity/ServiceResponse';
 import { Dashboard, DashboardProps } from './Dashboard';
@@ -24,7 +25,8 @@ export const DashboardContainer = connect(
             devicesData: appState.devicesData,
             suggestions: appState.suggestions,
             decimalSeparator: appState.settings.decimalSeparator,
-            iconVisualizationType: appState.settings.iconVisualizationType
+            iconVisualizationType: appState.settings.iconVisualizationType,
+            isLoading: appState.airQualityData.loadingState === LoadingState.loading || appState.devicesData.loadingState === LoadingState.loading
         } as DashboardProps;
     },
     (dispatch: Dispatch): DashboardProps => {
@@ -38,6 +40,7 @@ export const DashboardContainer = connect(
                 renewToken.then(response => {
                     if (response.error) {
                         console.log("Error renew token: ", response.error);
+                        dispatch(fetchDevicesErrorActionBuilder(response.error));
                         return;
                     }
 
@@ -57,7 +60,6 @@ export const DashboardContainer = connect(
                             dispatch(fetchDevicesSuccessActionBuilder(response.payload?.devices || []));
                         })
                         .catch((error) => {
-                            // TODO: dispatch an error message
                             console.error(`Error while fetch devices: ${error}`);
 
                             dispatch(fetchDevicesErrorActionBuilder(error));
@@ -94,8 +96,8 @@ export const DashboardContainer = connect(
                                 setTimeout(() => poller(), parseInt(process.env.REACT_APP_AIR_QUALITY_DATA_REFRESH_TIME as string));
                             })
                             .catch((error) => {
-                                // TODO: dispatch an error message
                                 console.error(`Error while fetch air quality data: ${error}`);
+
                                 dispatch(fetchAirQualityDataErrorActionBuilder(error));
                             });
                     });

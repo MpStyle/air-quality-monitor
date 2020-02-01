@@ -32,7 +32,8 @@ export const initialAppState: AppState = {
     } as AirStatus,
     devicesData: {
         devices: currentDevice ? [JSON.parse(currentDevice as string)] : [],
-        loadingState: LoadingState.none
+        loadingState: LoadingState.none,
+        deletingState: LoadingState.none
     },
     currentDevice: currentDevice ? JSON.parse(currentDevice as string) : null,
     suggestions: [],

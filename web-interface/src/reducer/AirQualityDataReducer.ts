@@ -1,5 +1,6 @@
 import { Action } from "redux";
 import { FetchAirQualityDataErrorActionName, FetchAirQualityDataStartActionName, FetchAirQualityDataSuccessAction, FetchAirQualityDataSuccessActionName } from '../action/FetchAirQualityDataAction';
+import { FetchDevicesSuccessAction, FetchDevicesSuccessActionName } from "../action/FetchDevicesAction";
 import { AIR_QUALITY_DATA_CO2_KEY, AIR_QUALITY_DATA_HUMIDITY_KEY, AIR_QUALITY_DATA_INSERTED_KEY, AIR_QUALITY_DATA_PRESSURE_KEY, AIR_QUALITY_DATA_TEMPERATURE_KEY, AIR_QUALITY_DATA_TVOC_KEY } from '../book/LocalStorageKeys';
 import { AirQualityData } from "../entity/AirQualityData";
 import { LoadingState } from "../entity/LoadingState";
@@ -7,6 +8,18 @@ import { initialAppState } from "../store/InitialAppState";
 
 export const airQualityDataReducer = (state: AirQualityData = initialAppState.airQualityData, action: Action): AirQualityData => {
     switch (action.type) {
+        case FetchDevicesSuccessActionName:
+            const updateDevicesAction = action as FetchDevicesSuccessAction;
+            if (!updateDevicesAction.devices || !updateDevicesAction.devices.length) {
+                localStorage.removeItem(AIR_QUALITY_DATA_CO2_KEY);
+                localStorage.removeItem(AIR_QUALITY_DATA_HUMIDITY_KEY);
+                localStorage.removeItem(AIR_QUALITY_DATA_INSERTED_KEY);
+                localStorage.removeItem(AIR_QUALITY_DATA_PRESSURE_KEY);
+                localStorage.removeItem(AIR_QUALITY_DATA_TEMPERATURE_KEY);
+                localStorage.removeItem(AIR_QUALITY_DATA_TVOC_KEY);
+                return {} as AirQualityData;
+            }
+            break;
         case FetchAirQualityDataSuccessActionName:
             const updateAirQualityDataAction = action as FetchAirQualityDataSuccessAction;
             localStorage.setItem(AIR_QUALITY_DATA_CO2_KEY, updateAirQualityDataAction.data.co2.toString());

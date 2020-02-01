@@ -4,14 +4,14 @@ import { averageAirStatus } from "../../book/AverageAirStatus";
 import { AirQualityData } from '../../entity/AirQualityData';
 import { AirStatus } from "../../entity/AirStatus";
 import { Device } from "../../entity/Device";
+import { DevicesData } from '../../entity/DevicesData';
+import { LoadingState } from '../../entity/LoadingState';
 import { LoginToken } from '../../entity/LoginToken';
 import { MeterUnit } from '../../entity/MeterUnit';
 import { AppDrawerContainer } from '../common/AppDrawerContainer';
 import './Dashboard.scss';
 import { DashboardHeader } from './DashboardHeader';
 import { DeviceAirQualityData } from './DeviceAirQualityData';
-import { DevicesData } from '../../entity/DevicesData';
-import { LoadingState } from '../../entity/LoadingState';
 
 export const Dashboard: FunctionComponent<DashboardProps> = (props) => {
     const [isAppDrawerOpen, setIsAppDrawerOpen] = React.useState(false);
@@ -56,7 +56,8 @@ export const Dashboard: FunctionComponent<DashboardProps> = (props) => {
             airStatus={props.airStatus}
             decimalSeparator={props.decimalSeparator}
             meterUnit={props.meterUnit}
-            iconVisualizationType={props.iconVisualizationType} />
+            iconVisualizationType={props.iconVisualizationType}
+            isLoading={props.isLoading} />
     </div>;
 };
 
@@ -79,4 +80,6 @@ export interface DashboardProps {
     fetchAirQualityData: (token: LoginToken, currentDeviceId: string) => void;
 
     iconVisualizationType: string;
+
+    isLoading: boolean;
 }
