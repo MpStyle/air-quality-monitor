@@ -17,18 +17,18 @@ import { DataRow } from "./DataRow";
 import "./DeviceAirQualityData.scss";
 
 export const DeviceAirQualityData: FunctionComponent<AirQualityDataProps> = (props) => {
-    if (props.isLoading) {
-        return <Paper elevation={2} className="loading">
-            <div className="message">Loading...</div>
-            <CircularProgress />
-        </Paper>;
-    }
-
     const noData = !props.airQualityData.temperature &&
         !props.airQualityData.humidity &&
         !props.airQualityData.co2 &&
         !props.airQualityData.pressure &&
         !props.airQualityData.tvoc;
+
+    if (props.isLoading && noData) {
+        return <Paper elevation={2} className="loading">
+            <div className="message">Loading...</div>
+            <CircularProgress />
+        </Paper>;
+    }
 
     if (noData) {
         return <Paper elevation={2} className="no-data">
