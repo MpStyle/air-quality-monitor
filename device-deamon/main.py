@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 from time import sleep
 import requests
 from datetime import date
@@ -35,12 +37,12 @@ ccs811DataReader = CCS811DataReader()
 dht11DataReader = DHT11DataReader()
 dataCollector = DataCollector()
 
-while(clock == -1):
+while(clock >= 0):
     clock += 1
 
     # Collects data
     if options.verbose:
-        print("Collecting data...")
+        print(str(clock) + ". Collecting data...")
 
     bme280Data = bme280DataReader.getData(),
     ccs811Data = ccs811DataReader.getData(),
@@ -65,7 +67,7 @@ while(clock == -1):
                     "ip": getIpAddress(),
                 },
                 "airData": dataCollector.getData().__dict__,
-                "measurementDate": int((time.time() * 1000)),
+                "readingDate": int((time.time() * 1000)),
             }
 
             if options.verbose:
