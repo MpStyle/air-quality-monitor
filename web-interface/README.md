@@ -39,5 +39,5 @@ npm run build
 After build, run:
 
 ```bash
-firebase deploy --only hosting
+npm run deploy
 ```
