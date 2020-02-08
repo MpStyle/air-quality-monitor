@@ -2,9 +2,9 @@ import { ILogging } from "../../book/Logging";
 import { Device } from "../../entity/Device";
 import { Errors } from "../../entity/Errors";
 import { buildErrorResponse, Service } from "../../entity/Service";
-import { deviceDelete } from "../crud/DeviceDelete";
 import { DevicesSearchRequest, DevicesSearchResponse as DevicesSearchResponse } from '../crud/DevicesSearch';
 import { userAuthorization } from "./UserAuthorization";
+import { deviceAdd } from "../crud/DeviceAdd";
 
 export const userDeviceDelete = (logging: ILogging): Service<UserDeviceDeleteRequest, UserDeviceDeleteResponse> => req => {
     if (!req.accessToken || req.accessToken === '') {
@@ -23,7 +23,7 @@ export const userDeviceDelete = (logging: ILogging): Service<UserDeviceDeleteReq
                 return buildErrorResponse(Errors.USER_UNAUTHORIZED);
             }
 
-            return deviceDelete(logging)({ deviceId: req.deviceId });
+            return deviceAdd(logging)({ deviceId: req.deviceId, enabled: false });
         })
         .catch((error: any) => {
             logging.error("userDeviceDelete", `Error while delete device: ${JSON.stringify(error)}`);

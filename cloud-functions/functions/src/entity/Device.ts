@@ -4,4 +4,6 @@ export interface Device {
     inserted: number;
     deviceIP: string;
     name: string;
+    enabled: boolean;
+    updated: number;
 }

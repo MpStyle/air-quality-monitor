@@ -14,6 +14,8 @@ export const devicesSearch = (logging: ILogging): Service<DevicesSearchRequest, 
         collectionRef = collectionRef.where('deviceId', '==', req.deviceId);
     }
 
+    collectionRef = collectionRef.where('enabled', '==', true);
+
     return collectionRef.get()
         .then(snapshots => {
             if (!snapshots || snapshots.docs.length === 0) {
