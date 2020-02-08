@@ -7,7 +7,7 @@
     .devices-list-container {
         width: 96%;
         max-width: 600px;
-        margin: 20px auto 20px auto;
+        margin: 0px auto;
         padding: 10px 15px;
 
         .message{
@@ -16,7 +16,12 @@
 
         .devices-list {
             overflow: hidden;
-            margin: 15px 0px;
+            margin: 0px;
+
+            .device{
+                margin: 0px;
+                padding: 0px;
+            }
         }
     }
 }
