@@ -35,7 +35,7 @@ ccs811DataReader = CCS811DataReader()
 dht11DataReader = DHT11DataReader()
 dataCollector = DataCollector()
 
-while(1):
+while(clock == -1):
     clock += 1
 
     # Collects data
@@ -75,6 +75,6 @@ while(1):
             threading.Thread(target=dataUpload, args=(
                 data, configuration.airCareUrl, options.uploadTimeout, options.uploadRetry,)).start()
 
-            clock = 0
+            clock = -1
 
     sleep(1)
