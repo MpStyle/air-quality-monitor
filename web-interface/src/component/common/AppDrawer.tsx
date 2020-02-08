@@ -89,7 +89,11 @@ export const AppDrawer: FunctionComponent<AppDrawerProps> = (props) => {
                     <ListItemText primary="Console" />
                 </ListItem>
                 <ListItem button className="list-item" onClick={() => {
-                    props.revokeToken().then(() => (history.push('/login')));
+                    props.revokeToken().then(() => {
+                        localStorage.clear();
+                        sessionStorage.clear();
+                        history.push('/login');
+                    });
                 }}>
                     <ListItemIcon>
                         <ExitToAppIcon />
