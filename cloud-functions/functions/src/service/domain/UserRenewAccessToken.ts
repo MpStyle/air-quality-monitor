@@ -4,6 +4,7 @@ import { Errors } from "../../entity/Errors";
 import { buildErrorResponse, buildResponse, Service } from "../../entity/Service";
 import { loginTokenSearch } from "../crud/LoginTokenSearch";
 import admin = require('firebase-admin');
+import { loginTokenAdd } from "../crud/LoginTokenAdd";
 
 export const userRenewAccessToken = (logging: ILogging): Service<UserRenewAccessTokenRequest, UserRenewAccessTokenResponse> => req => {
     if (!req.refreshToken) {
@@ -18,18 +19,34 @@ export const userRenewAccessToken = (logging: ILogging): Service<UserRenewAccess
     collectionRef = collectionRef.where('refreshToken', '==', req.refreshToken);
 
     return loginTokenSearch(logging)({ refreshToken: req.refreshToken })
-        .then(response => {
-            if (response.error) {
-                return buildErrorResponse(response.error);
+        .then(loginTokenSearchResponse => {
+            if (loginTokenSearchResponse.error) {
+                return buildErrorResponse(loginTokenSearchResponse.error);
             }
 
-            if (!response.payload || !response.payload.loginTokens || !response.payload.loginTokens.length) {
-                return buildErrorResponse(Errors.ERROR_WHILE_RENEW_ACCESS_TOKEN);
+            if (!loginTokenSearchResponse.payload || !loginTokenSearchResponse.payload.loginTokens || !loginTokenSearchResponse.payload.loginTokens.length) {
+                return buildErrorResponse(Errors.ERROR_WHILE_SEARCH_LOGIN_TOKEN);
             }
 
-            return buildResponse<UserRenewAccessTokenResponse>({
-                accessToken: response.payload.loginTokens[0].accessToken,
-                expiredAt: response.payload.loginTokens[0].expiredAt
+            const loginToken = loginTokenSearchResponse.payload.loginTokens[0];
+
+            return loginTokenAdd(logging)({
+                username: loginToken.username,
+                expiredAt: Date.now() + 300000,
+                refreshToken: loginToken.refreshToken
+            }).then(loginTokenAddResponse => {
+                if (loginTokenAddResponse.error) {
+                    return buildErrorResponse(loginTokenAddResponse.error);
+                }
+
+                if (!loginTokenAddResponse.payload || !loginTokenAddResponse.payload.loginToken) {
+                    return buildErrorResponse(Errors.ERROR_WHILE_RENEW_ACCESS_TOKEN);
+                }
+
+                return buildResponse<UserRenewAccessTokenResponse>({
+                    accessToken: loginTokenAddResponse.payload.loginToken.accessToken,
+                    expiredAt: loginTokenAddResponse.payload.loginToken.expiredAt
+                });
             });
         })
         .catch((err: any) => {
