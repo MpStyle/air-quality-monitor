@@ -35,7 +35,7 @@ export const deviceAdd = (logging: ILogging): Service<DeviceAddRequest, DeviceAd
             device.name = req.deviceName || device.name || '';
             device.address = req.deviceAddress || device.address || '';
             device.deviceIP = req.deviceIp || device.deviceIP || '';
-            device.enabled = req.enabled || device.enabled || true;
+            device.enabled = req.enabled ?? device.enabled ?? true;
             device.updated = device.updated || Date.now();
 
             logging.debug("deviceAdd", `Device to add: ${JSON.stringify(device)}`);
