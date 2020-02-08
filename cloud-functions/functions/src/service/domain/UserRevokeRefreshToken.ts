@@ -1,20 +1,19 @@
-import { Service, buildErrorResponse, buildResponse } from "../../entity/Service";
 import { ILogging } from "../../book/Logging";
-import { Collections } from "../../entity/Collections";
-import admin = require('firebase-admin');
 import { Errors } from "../../entity/Errors";
+import { buildErrorResponse, buildResponse, Service } from "../../entity/Service";
+import { loginTokenAdd } from "../crud/LoginTokenAdd";
 
 export const userRevokeRefreshToken = (logging: ILogging): Service<UserRevokeRefreshTokenRequest, {}> => req => {
     if (!req.refreshToken) {
         return buildErrorResponse(Errors.INVALID_USER_REVOKE_REFRESH_TOKEN_REQUEST);
     }
 
-    const db = admin.firestore();
-    return db
-        .collection(Collections.LOGIN_TOKEN)
-        .doc(req.refreshToken)
-        .delete()
-        .then(_ => {
+    return loginTokenAdd(logging)({ refreshToken: req.refreshToken, enabled: false })
+        .then(response => {
+            if (response.error) {
+                return buildErrorResponse(response.error);
+            }
+
             return buildResponse({});
         })
         .catch(err => {

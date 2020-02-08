@@ -1,12 +1,9 @@
 import { ILogging } from "../../book/Logging";
-import { Service, buildErrorResponse, buildResponse } from "../../entity/Service";
-import { User } from "../../entity/User";
-import functions = require('firebase-functions');
 import { Errors } from "../../entity/Errors";
-import { StringUtils } from "../../book/StringUtils";
-import admin = require('firebase-admin');
-import { Collections } from "../../entity/Collections";
-import { LoginToken } from "../../entity/LoginToken";
+import { buildErrorResponse, buildResponse, Service } from "../../entity/Service";
+import { User } from "../../entity/User";
+import { loginTokenAdd } from "../crud/LoginTokenAdd";
+import functions = require('firebase-functions');
 
 export const userLogin = (logging: ILogging): Service<UserLoginRequest, UserLoginResponse> => req => {
     if (!req.username || !req.password) {
@@ -27,27 +24,20 @@ export const userLogin = (logging: ILogging): Service<UserLoginRequest, UserLogi
         return buildErrorResponse(Errors.USER_NOT_FOUND);
     }
 
-    const userLoginData = {
-        accessToken: StringUtils.randomString(),
-        refreshToken: StringUtils.randomString(),
-        expiredAt: Date.now() + 300000, // 5 minutes
-        username: user.username
-    } as LoginToken;
-
-    const db = admin.firestore();
-    const docRef = db.collection(Collections.LOGIN_TOKEN).doc(userLoginData.refreshToken);
-
-    return docRef
-        .set(userLoginData)
+    return loginTokenAdd(logging)({ username: user.username })
         .then(result => {
-            if (!result.writeTime) {
-                return buildErrorResponse(Errors.ERROR_WHILE_ADD_DEVICE);
+            if (result.error) {
+                return buildErrorResponse(result.error);
+            }
+
+            if (!result.payload) {
+                return buildErrorResponse(Errors.ERROR_WHILE_USER_LOGIN);
             }
 
             return buildResponse({
-                accessToken: userLoginData.accessToken,
-                refreshToken: userLoginData.refreshToken,
-                expiredAt: userLoginData.expiredAt
+                accessToken: result.payload.loginToken.accessToken,
+                refreshToken: result.payload.loginToken.refreshToken,
+                expiredAt: result.payload.loginToken.expiredAt
             });
         })
         .catch(err => {
