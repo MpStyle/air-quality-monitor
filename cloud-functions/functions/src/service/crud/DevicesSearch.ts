@@ -1,7 +1,8 @@
 import { ILogging } from "../../book/Logging";
 import { Collections } from "../../entity/Collections";
 import { Device } from "../../entity/Device";
-import { Service, buildResponse, buildErrorResponse } from "../../entity/Service";
+import { PagedRequest } from "../../entity/PagedRequest";
+import { buildErrorResponse, buildResponse, Service } from "../../entity/Service";
 import admin = require('firebase-admin');
 
 export const devicesSearch = (logging: ILogging): Service<DevicesSearchRequest, DevicesSearchResponse> => req => {
@@ -12,6 +13,14 @@ export const devicesSearch = (logging: ILogging): Service<DevicesSearchRequest, 
 
     if (req.deviceId) {
         collectionRef = collectionRef.where('deviceId', '==', req.deviceId);
+    }
+
+    if (req.offset) {
+        collectionRef = collectionRef.startAt(req.offset);
+    }
+
+    if (req.limit) {
+        collectionRef = collectionRef.endAt(req.offset ? req.offset + req.limit : req.limit);
     }
 
     collectionRef = collectionRef.where('enabled', '==', true);
@@ -31,7 +40,7 @@ export const devicesSearch = (logging: ILogging): Service<DevicesSearchRequest, 
         });
 };
 
-export interface DevicesSearchRequest {
+export interface DevicesSearchRequest extends PagedRequest {
     deviceId: string;
 }
 
