@@ -23,11 +23,13 @@ export const Chart: FunctionComponent<ChartProps> = (props) => {
         <Typography variant="h6" className="title">{props.title}</Typography>
         <ResponsiveContainer width="100%" height={300}>
             <BarChart data={props.averages} maxBarSize={50}>
-                <Bar dataKey="average" fill="#e1e1e1" />
+                <Tooltip
+                    content={<ChartTooltip readingsType={props.readingType} readingUnitMeter={props.readingUnitMeter} />}
+                    cursor={{ fill: '#f5f5f5' }} />
+                <Bar dataKey="average" fill="#d4d4d4" />
                 <XAxis dataKey="xaxis" />
                 <YAxis width={yAxisWidth} />
                 <CartesianGrid strokeDasharray="3 3" />
-                <Tooltip content={<ChartTooltip readingsType={props.readingType} readingUnitMeter={props.readingUnitMeter} />} />
             </BarChart>
         </ResponsiveContainer>
     </div>;
