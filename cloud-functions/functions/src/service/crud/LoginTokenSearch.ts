@@ -32,7 +32,7 @@ export const loginTokenSearch = (logging: ILogging): Service<LoginTokenSearchReq
 
     return collectionRef.get()
         .then(snapshots => {
-            if (!snapshots || snapshots.docs.length === 0) {
+            if (!snapshots || !snapshots.docs) {
                 return buildErrorResponse(Errors.ERROR_WHILE_SEARCH_LOGIN_TOKEN);
             }
 
