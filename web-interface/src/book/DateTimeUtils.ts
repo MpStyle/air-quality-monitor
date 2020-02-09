@@ -9,14 +9,7 @@ export const epochToLocaleDate = (ms: number) => {
 };
 
 export const epochToDate = (ms: number): Date => {
-    const date = new Date(ms);
-    const d = new Date(date.getTime() + date.getTimezoneOffset() * 60 * 1000);
-    const offset = date.getTimezoneOffset() / 60;
-    const hours = date.getHours();
-
-    d.setHours(hours - offset);
-
-    return d;
+    return new Date(ms);
 };
 
 export const weekDayNames = (): string[] => {
