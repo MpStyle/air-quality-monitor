@@ -86,31 +86,32 @@ export const deviceDataIngestion = (logging: ILogging): Service<DeviceDataIngest
                             }
 
                             const dateObj = new Date(req.readingDate);
-                            const month = StringUtils.padLeft(dateObj.getUTCMonth() + 1, '0', 2);
+                            const hours = StringUtils.padLeft(dateObj.getUTCHours(), '0', 2);
                             const day = StringUtils.padLeft(dateObj.getUTCDate(), '0', 2);
+                            const month = StringUtils.padLeft(dateObj.getUTCMonth() + 1, '0', 2);
                             const year = "" + dateObj.getUTCFullYear();
 
                             return Promise
                                 .all([
-                                    timeRangeReadingAddService({ deviceId: req.device.id, timeRange: year + month + day, type: ReadingTypes.HUMIDITY, value: req.airData.humidity, granularity: Granularity.daily }),
-                                    timeRangeReadingAddService({ deviceId: req.device.id, timeRange: year + month, type: ReadingTypes.HUMIDITY, value: req.airData.humidity, granularity: Granularity.monthly }),
-                                    timeRangeReadingAddService({ deviceId: req.device.id, timeRange: year, type: ReadingTypes.HUMIDITY, value: req.airData.humidity, granularity: Granularity.yearly }),
+                                    timeRangeReadingAddService({ deviceId: req.device.id, timeRange: year + month + day + hours, type: ReadingTypes.HUMIDITY, value: req.airData.humidity, granularity: Granularity.daily }),
+                                    timeRangeReadingAddService({ deviceId: req.device.id, timeRange: year + month + day, type: ReadingTypes.HUMIDITY, value: req.airData.humidity, granularity: Granularity.monthly }),
+                                    timeRangeReadingAddService({ deviceId: req.device.id, timeRange: year + month, type: ReadingTypes.HUMIDITY, value: req.airData.humidity, granularity: Granularity.yearly }),
 
-                                    timeRangeReadingAddService({ deviceId: req.device.id, timeRange: year + month + day, type: ReadingTypes.PRESSURE, value: req.airData.pressure, granularity: Granularity.daily }),
-                                    timeRangeReadingAddService({ deviceId: req.device.id, timeRange: year + month, type: ReadingTypes.PRESSURE, value: req.airData.pressure, granularity: Granularity.monthly }),
-                                    timeRangeReadingAddService({ deviceId: req.device.id, timeRange: year, type: ReadingTypes.PRESSURE, value: req.airData.pressure, granularity: Granularity.yearly }),
+                                    timeRangeReadingAddService({ deviceId: req.device.id, timeRange: year + month + day + hours, type: ReadingTypes.PRESSURE, value: req.airData.pressure, granularity: Granularity.daily }),
+                                    timeRangeReadingAddService({ deviceId: req.device.id, timeRange: year + month + day, type: ReadingTypes.PRESSURE, value: req.airData.pressure, granularity: Granularity.monthly }),
+                                    timeRangeReadingAddService({ deviceId: req.device.id, timeRange: year + month, type: ReadingTypes.PRESSURE, value: req.airData.pressure, granularity: Granularity.yearly }),
 
-                                    timeRangeReadingAddService({ deviceId: req.device.id, timeRange: year + month + day, type: ReadingTypes.CO2, value: req.airData.co2, granularity: Granularity.daily }),
-                                    timeRangeReadingAddService({ deviceId: req.device.id, timeRange: year + month, type: ReadingTypes.CO2, value: req.airData.co2, granularity: Granularity.monthly }),
-                                    timeRangeReadingAddService({ deviceId: req.device.id, timeRange: year, type: ReadingTypes.CO2, value: req.airData.co2, granularity: Granularity.yearly }),
+                                    timeRangeReadingAddService({ deviceId: req.device.id, timeRange: year + month + day + hours, type: ReadingTypes.CO2, value: req.airData.co2, granularity: Granularity.daily }),
+                                    timeRangeReadingAddService({ deviceId: req.device.id, timeRange: year + month + day, type: ReadingTypes.CO2, value: req.airData.co2, granularity: Granularity.monthly }),
+                                    timeRangeReadingAddService({ deviceId: req.device.id, timeRange: year + month, type: ReadingTypes.CO2, value: req.airData.co2, granularity: Granularity.yearly }),
 
-                                    timeRangeReadingAddService({ deviceId: req.device.id, timeRange: year + month + day, type: ReadingTypes.TVOC, value: req.airData.tvoc, granularity: Granularity.daily }),
-                                    timeRangeReadingAddService({ deviceId: req.device.id, timeRange: year + month, type: ReadingTypes.TVOC, value: req.airData.tvoc, granularity: Granularity.monthly }),
-                                    timeRangeReadingAddService({ deviceId: req.device.id, timeRange: year, type: ReadingTypes.TVOC, value: req.airData.tvoc, granularity: Granularity.yearly }),
+                                    timeRangeReadingAddService({ deviceId: req.device.id, timeRange: year + month + day + hours, type: ReadingTypes.TVOC, value: req.airData.tvoc, granularity: Granularity.daily }),
+                                    timeRangeReadingAddService({ deviceId: req.device.id, timeRange: year + month + day, type: ReadingTypes.TVOC, value: req.airData.tvoc, granularity: Granularity.monthly }),
+                                    timeRangeReadingAddService({ deviceId: req.device.id, timeRange: year + month, type: ReadingTypes.TVOC, value: req.airData.tvoc, granularity: Granularity.yearly }),
 
-                                    timeRangeReadingAddService({ deviceId: req.device.id, timeRange: year + month + day, type: ReadingTypes.TEMPERATURE, value: req.airData.temperature, granularity: Granularity.daily }),
-                                    timeRangeReadingAddService({ deviceId: req.device.id, timeRange: year + month, type: ReadingTypes.TEMPERATURE, value: req.airData.temperature, granularity: Granularity.monthly }),
-                                    timeRangeReadingAddService({ deviceId: req.device.id, timeRange: year, type: ReadingTypes.TEMPERATURE, value: req.airData.temperature, granularity: Granularity.yearly }),
+                                    timeRangeReadingAddService({ deviceId: req.device.id, timeRange: year + month + day + hours, type: ReadingTypes.TEMPERATURE, value: req.airData.temperature, granularity: Granularity.daily }),
+                                    timeRangeReadingAddService({ deviceId: req.device.id, timeRange: year + month + day, type: ReadingTypes.TEMPERATURE, value: req.airData.temperature, granularity: Granularity.monthly }),
+                                    timeRangeReadingAddService({ deviceId: req.device.id, timeRange: year + month, type: ReadingTypes.TEMPERATURE, value: req.airData.temperature, granularity: Granularity.yearly }),
                                 ])
                                 .then(_ => {
                                     return buildResponse({});
