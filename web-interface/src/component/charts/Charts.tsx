@@ -40,7 +40,7 @@ export const Charts: FunctionComponent<ChartsProps> = (props) => {
                 <Chart title="Daily" readingUnitMeter={props.unitMeter(readingType as string)} readingType={props.title(readingType as string)} averages={props.airQualityDataAverages.dailyAverages.map(da => ({
                     ...da,
                     average: da.value / da.counter,
-                    xaxis: da.timeRange.substring(0, 4) + '-' + da.timeRange.substring(4, 6) + '-' + da.timeRange.substring(6)
+                    xaxis: da.timeRange.substring(0, 4) + '-' + da.timeRange.substring(4, 6) + '-' + da.timeRange.substring(6, 8) + ' ' + da.timeRange.substring(8, 10) + ':00'
                 }))} />
 
                 <Divider light />
@@ -48,7 +48,7 @@ export const Charts: FunctionComponent<ChartsProps> = (props) => {
                 <Chart title="Montly" readingUnitMeter={props.unitMeter(readingType as string)} readingType={props.title(readingType as string)} averages={props.airQualityDataAverages.monthlyAverages.map(da => ({
                     ...da,
                     average: da.value / da.counter,
-                    xaxis: da.timeRange.substring(0, 4) + '-' + da.timeRange.substring(4)
+                    xaxis: da.timeRange.substring(0, 4) + '-' + da.timeRange.substring(4, 6) + '-' + da.timeRange.substring(6)
                 }))} />
 
                 <Divider light />
@@ -56,7 +56,7 @@ export const Charts: FunctionComponent<ChartsProps> = (props) => {
                 <Chart title="Yearly" readingUnitMeter={props.unitMeter(readingType as string)} readingType={props.title(readingType as string)} averages={props.airQualityDataAverages.yearlyAverages.map(da => ({
                     ...da,
                     average: da.value / da.counter,
-                    xaxis: da.timeRange
+                    xaxis: da.timeRange.substring(0, 4) + '-' + da.timeRange.substring(4)
                 }))} />
             </Paper>}
         </main>
