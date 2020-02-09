@@ -1,14 +1,22 @@
+import { StringUtils } from "./StringUtils";
+
 export const epochToFormatedDate = (ms: number): string => {
-    const d = epochToDate(ms);
-    const date_format_str = d.getFullYear().toString() + "-" + ((d.getMonth() + 1).toString().length === 2 ? (d.getMonth() + 1).toString() : "0" + (d.getMonth() + 1).toString()) + "-" + (d.getDate().toString().length === 2 ? d.getDate().toString() : "0" + d.getDate().toString()) + " " + (d.getHours().toString().length === 2 ? d.getHours().toString() : "0" + d.getHours().toString()) + ":" + ((d.getMinutes() / 5 * 5).toString().length === 2 ? ((d.getMinutes() / 5) * 5).toString() : "0" + ((d.getMinutes() / 5) * 5).toString()) + ":00";
+    const d = epochToLocaleDate(ms);
+    const date_format_str = d.getFullYear().toString()
+        + "-"
+        + StringUtils.padLeft(d.getMonth() + 1, '0', 2)
+        + "-"
+        + StringUtils.padLeft(d.getDate(), '0', 2)
+        + " "
+        + StringUtils.padLeft(d.getHours(), '0', 2)
+        + ":"
+        + StringUtils.padLeft(d.getMinutes(), '0', 2)
+        + ":"
+        + StringUtils.padLeft(d.getSeconds(), '0', 2);
     return date_format_str;
 };
 
-export const epochToLocaleDate = (ms: number) => {
-    return epochToDate(ms).toLocaleDateString(undefined, { dateStyle: "medium", timeStyle: "medium", year: "numeric" } as Intl.DateTimeFormatOptions);
-};
-
-export const epochToDate = (ms: number): Date => {
+export const epochToLocaleDate = (ms: number): Date => {
     return new Date(ms);
 };
 
