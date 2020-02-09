@@ -4,6 +4,7 @@ import { Errors } from "../../entity/Errors";
 import { LoginToken } from "../../entity/LoginToken";
 import { buildErrorResponse, buildResponse, Service } from "../../entity/Service";
 import admin = require('firebase-admin');
+import { PagedRequest } from "../../entity/PagedRequest";
 
 export const loginTokenSearch = (logging: ILogging): Service<LoginTokenSearchRequest, LoginTokenSearchResponse> => req => {
     logging.info("loginTokenSearch", "Starts");
@@ -13,6 +14,18 @@ export const loginTokenSearch = (logging: ILogging): Service<LoginTokenSearchReq
 
     if (req.refreshToken) {
         collectionRef = collectionRef.where('refreshToken', '==', req.refreshToken);
+    }
+
+    if (req.expiredBefore) {
+        collectionRef = collectionRef.where('expiredAt', '<', req.expiredBefore);
+    }
+
+    if (req.offset) {
+        collectionRef = collectionRef.startAt(req.offset);
+    }
+
+    if (req.limit) {
+        collectionRef = collectionRef.endAt(req.offset ? req.offset + req.limit : req.limit);
     }
 
     collectionRef = collectionRef.where('enabled', '==', true);
@@ -31,8 +44,9 @@ export const loginTokenSearch = (logging: ILogging): Service<LoginTokenSearchReq
         });
 };
 
-export interface LoginTokenSearchRequest {
+export interface LoginTokenSearchRequest extends PagedRequest {
     refreshToken?: string;
+    expiredBefore?: number;
 }
 
 export interface LoginTokenSearchResponse {
