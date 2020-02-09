@@ -40,10 +40,6 @@ export const AppDrawerContainer = connect(
                     window.location.reload();
                 };
 
-                localStorage.clear();
-                sessionStorage.clear();
-
-                window.location.reload();
                 userRevokeRefreshToken(stateToProps.refreshToken as string)
                     .then(response => {
                         if (response.error) {
