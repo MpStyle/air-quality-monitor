@@ -7,6 +7,7 @@ import ListItemText from "@material-ui/core/ListItemText/ListItemText";
 import Typography from "@material-ui/core/Typography/Typography";
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 import InfoIcon from '@material-ui/icons/Info';
 import PersonIcon from '@material-ui/icons/Person';
 import PhonelinkRingIcon from '@material-ui/icons/PhonelinkRing';
@@ -17,7 +18,6 @@ import { airQualityToLabel } from "../../book/AirQualityToLabel";
 import { APP_CONSOLE_URL, APP_SETTINGS_URL, CREDITS_URL, DEVICE_LIST_URL } from '../../book/Pages';
 import { Device } from "../../entity/Device";
 import logo from '../../images/logo.svg';
-import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 import "./AppDrawer.scss";
 
 export const AppDrawer: FunctionComponent<AppDrawerProps> = (props) => {
@@ -88,13 +88,7 @@ export const AppDrawer: FunctionComponent<AppDrawerProps> = (props) => {
                     </ListItemIcon>
                     <ListItemText primary="Console" />
                 </ListItem>
-                <ListItem button className="list-item" onClick={() => {
-                    props.revokeToken().then(() => {
-                        localStorage.clear();
-                        sessionStorage.clear();
-                        history.push('/login');
-                    });
-                }}>
+                <ListItem button className="list-item" onClick={() => props.onLogoutClick()}>
                     <ListItemIcon>
                         <ExitToAppIcon />
                     </ListItemIcon>
@@ -110,6 +104,6 @@ export interface AppDrawerProps {
     average: number;
     toggleDrawer: (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => void;
     currentDevice: Device | null;
-    revokeToken: () => Promise<void>;
+    onLogoutClick: () => void;
     username: string;
 }
