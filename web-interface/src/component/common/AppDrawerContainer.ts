@@ -33,22 +33,31 @@ export const AppDrawerContainer = connect(
             toggleDrawer: stateToProps.toggleDrawer,
             username: stateToProps.username,
             onLogoutClick: () => {
+                const finallyOps = () => {
+                    localStorage.clear();
+                    sessionStorage.clear();
+
+                    window.location.reload();
+                };
+
+                localStorage.clear();
+                sessionStorage.clear();
+
+                window.location.reload();
                 userRevokeRefreshToken(stateToProps.refreshToken as string)
                     .then(response => {
                         if (response.error) {
                             console.error(response.error);
+                            finallyOps();
                             return;
                         }
 
                         dispatchToProps.dispatchUpdateToken();
-
-                        localStorage.clear();
-                        sessionStorage.clear();
-
-                        location.reload();
+                        finallyOps();
                     })
                     .catch(err => {
                         console.error(err);
+                        finallyOps();
                     });
             }
         } as AppDrawerProps;
