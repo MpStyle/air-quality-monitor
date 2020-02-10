@@ -1,6 +1,6 @@
 import { Typography } from "@material-ui/core";
 import React, { FunctionComponent } from "react";
-import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, TooltipProps, XAxis, YAxis } from "recharts";
+import { CartesianGrid, Line, LineChart, ReferenceLine, ResponsiveContainer, Tooltip, TooltipProps, XAxis, YAxis } from "recharts";
 import { TimeRangeReading } from "../../entity/TimeRangeReading";
 import "./Chart.scss";
 
@@ -16,21 +16,24 @@ const ChartTooltip = (props: TooltipProps & { readingsType: string, readingUnitM
 };
 
 export const Chart: FunctionComponent<ChartProps> = (props) => {
-    const maxAverage = props.averages.reduce((acc, curr) => { return acc > curr.average ? acc : curr.average; }, 0);
-    const yAxisWidth = maxAverage < 1000 ? (maxAverage < 100 ? 20 : 30) : 35;
+    const chartInfo = props.averages.reduce((acc, curr): ChartInfo => ({
+        maxValue: Math.max(acc.maxValue ?? Math.floor(curr.average), Math.floor(curr.average)),
+        minValue: Math.min(acc.minValue ?? Math.floor(curr.average), Math.floor(curr.average)),
+    }), {} as ChartInfo);
+    const yAxisWidth = chartInfo.maxValue < 1000 ? (chartInfo.maxValue < 100 ? 20 : 30) : 35;
 
     return <div className="chart">
         <Typography variant="h6" className="title">{props.title}</Typography>
         <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={props.averages} maxBarSize={50}>
+            <LineChart data={props.averages} maxBarSize={50}>
                 <Tooltip
                     content={<ChartTooltip readingsType={props.readingType} readingUnitMeter={props.readingUnitMeter} />}
                     cursor={{ fill: '#f5f5f5' }} />
-                <Bar dataKey="average" fill="#d4d4d4" />
+                <Line type="monotone" dataKey="average" fill="#d4d4d4" />
                 <XAxis dataKey="xaxis" />
-                <YAxis width={yAxisWidth} />
-                <CartesianGrid strokeDasharray="3 3" />
-            </BarChart>
+                <YAxis width={yAxisWidth} domain={[chartInfo.minValue - 2, chartInfo.maxValue + 2]} />
+                <CartesianGrid strokeDasharray="0 0" vertical={false} />
+            </LineChart>
         </ResponsiveContainer>
     </div>;
 };
@@ -40,4 +43,9 @@ export interface ChartProps {
     title: string;
     readingType: string;
     readingUnitMeter: string;
+}
+
+interface ChartInfo {
+    maxValue: number;
+    minValue: number;
 }

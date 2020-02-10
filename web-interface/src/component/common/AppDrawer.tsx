@@ -13,7 +13,7 @@ import PersonIcon from '@material-ui/icons/Person';
 import PhonelinkRingIcon from '@material-ui/icons/PhonelinkRing';
 import SettingsIcon from '@material-ui/icons/Settings';
 import React, { FunctionComponent } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { airQualityToLabel } from "../../book/AirQualityToLabel";
 import { APP_CONSOLE_URL, APP_SETTINGS_URL, CREDITS_URL, DEVICE_LIST_URL } from '../../book/Pages';
 import { Device } from "../../entity/Device";
@@ -21,8 +21,6 @@ import logo from '../../images/logo.svg';
 import "./AppDrawer.scss";
 
 export const AppDrawer: FunctionComponent<AppDrawerProps> = (props) => {
-    let history = useHistory();
-
     return <Drawer open={props.isOpen} onClose={props.toggleDrawer(false)} className="app-drawer">
         <div
             role="presentation"

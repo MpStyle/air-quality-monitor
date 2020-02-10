@@ -47,15 +47,11 @@ export const Charts: FunctionComponent<ChartsProps> = (props) => {
                     };
                 })} />
 
-                <Divider light />
-
                 <Chart title="Montly" readingUnitMeter={props.unitMeter(readingType as string)} readingType={props.title(readingType as string)} averages={props.airQualityDataAverages.monthlyAverages.map(da => ({
                     ...da,
                     average: parseFloat((da.value / da.counter).toFixed(1)),
                     xaxis: da.timeRange.substring(4, 6) + '-' + da.timeRange.substring(6)
                 }))} />
-
-                <Divider light />
 
                 <Chart title="Yearly" readingUnitMeter={props.unitMeter(readingType as string)} readingType={props.title(readingType as string)} averages={props.airQualityDataAverages.yearlyAverages.map(da => ({
                     ...da,
