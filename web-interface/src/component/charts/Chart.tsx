@@ -1,6 +1,6 @@
 import { Typography } from "@material-ui/core";
 import React, { FunctionComponent } from "react";
-import { CartesianGrid, Line, LineChart, ReferenceLine, ResponsiveContainer, Tooltip, TooltipProps, XAxis, YAxis } from "recharts";
+import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, TooltipProps, XAxis, YAxis } from "recharts";
 import { TimeRangeReading } from "../../entity/TimeRangeReading";
 import "./Chart.scss";
 

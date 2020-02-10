@@ -13,7 +13,7 @@ import PersonIcon from '@material-ui/icons/Person';
 import PhonelinkRingIcon from '@material-ui/icons/PhonelinkRing';
 import SettingsIcon from '@material-ui/icons/Settings';
 import React, { FunctionComponent } from "react";
-import { useHistory, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { airQualityToLabel } from "../../book/AirQualityToLabel";
 import { APP_CONSOLE_URL, APP_SETTINGS_URL, CREDITS_URL, DEVICE_LIST_URL } from '../../book/Pages';
 import { Device } from "../../entity/Device";
