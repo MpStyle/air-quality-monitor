@@ -2,6 +2,8 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { updateTokenActionBuilder } from "../../action/UpdateTokenAction";
 import { averageAirStatus } from "../../book/AverageAirStatus";
+import { localStorageManager } from "../../book/LocalStorageManager";
+import { sessionStorageManager } from "../../book/SessionStorageManager";
 import { userRevokeRefreshToken } from "../../book/UserRevokeRefreshToken";
 import { AppState } from "../../entity/AppState";
 import { AppDrawer, AppDrawerProps } from "./AppDrawer";
@@ -34,8 +36,8 @@ export const AppDrawerContainer = connect(
             username: stateToProps.username,
             onLogoutClick: () => {
                 const finallyOps = () => {
-                    localStorage.clear();
-                    sessionStorage.clear();
+                    localStorageManager.removeAll();
+                    sessionStorageManager.removeAll();
 
                     window.location.reload();
                 };

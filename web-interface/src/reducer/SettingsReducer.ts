@@ -4,29 +4,30 @@ import { UpdateDecimalSeparatorAction, UpdateDecimalSeparatorActionName } from "
 import { UpdateIconVisualizationTypeAction, UpdateIconVisualizationTypeActionName } from "../action/UpdateIconVisualizationTypeAction";
 import { UpdateTemperatureUnitAction, UpdateTemperatureUnitActionName } from "../action/UpdateTemperatureUnitAction";
 import { AIR_QUALITY_DATA_DECIMAL_SEPARATOR_KEY, AIR_QUALITY_DATA_ICON_LABEL_VISUALIZATION_TYPE_KEY, TEMPERATURE_UNIT_KEY } from "../book/LocalStorageKeys";
+import { localStorageManager } from "../book/LocalStorageManager";
 import { Settings } from "../entity/Settings";
 import { initialAppState } from "../store/InitialAppState";
 
 export const settingsReducer = (state: Settings = initialAppState.settings, action: Action): Settings => {
     switch (action.type) {
         case UpdateIconVisualizationTypeActionName:
-            const visualiztionTYpe = (action as UpdateIconVisualizationTypeAction).visualizationType;
+            const visualizationType = (action as UpdateIconVisualizationTypeAction).visualizationType;
 
-            localStorage.setItem(AIR_QUALITY_DATA_ICON_LABEL_VISUALIZATION_TYPE_KEY, visualiztionTYpe);
+            localStorageManager.setItem(AIR_QUALITY_DATA_ICON_LABEL_VISUALIZATION_TYPE_KEY, visualizationType);
 
-            return { ...state, iconVisualizationType: visualiztionTYpe } as Settings;
+            return { ...state, iconVisualizationType: visualizationType } as Settings;
 
         case UpdateTemperatureUnitActionName:
             const temperatureUnit = (action as UpdateTemperatureUnitAction).temperatureUnit;
 
-            localStorage.setItem(TEMPERATURE_UNIT_KEY, temperatureUnit);
+            localStorageManager.setItem(TEMPERATURE_UNIT_KEY, temperatureUnit);
 
             return { ...state, meterUnit: { ...state.meterUnit, temperature: temperatureUnit } } as Settings;
 
         case UpdateDecimalSeparatorActionName:
             const separator = (action as UpdateDecimalSeparatorAction).separator;
 
-            localStorage.setItem(AIR_QUALITY_DATA_DECIMAL_SEPARATOR_KEY, separator);
+            localStorageManager.setItem(AIR_QUALITY_DATA_DECIMAL_SEPARATOR_KEY, separator);
 
             return { ...state, decimalSeparator: separator } as Settings;
     }
