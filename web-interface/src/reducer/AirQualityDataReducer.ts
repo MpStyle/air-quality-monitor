@@ -1,7 +1,7 @@
 import { Action } from "redux";
 import { FetchAirQualityDataErrorActionName, FetchAirQualityDataStartActionName, FetchAirQualityDataSuccessAction, FetchAirQualityDataSuccessActionName } from '../action/FetchAirQualityDataAction';
 import { FetchDevicesSuccessAction, FetchDevicesSuccessActionName } from "../action/FetchDevicesAction";
-import { AIR_QUALITY_DATA_CO2_KEY, AIR_QUALITY_DATA_HUMIDITY_KEY, AIR_QUALITY_DATA_INSERTED_KEY, AIR_QUALITY_DATA_PRESSURE_KEY, AIR_QUALITY_DATA_TEMPERATURE_KEY, AIR_QUALITY_DATA_TVOC_KEY } from '../book/LocalStorageKeys';
+import { LocalStorageKey } from "../book/LocalStorageKey";
 import { localStorageManager } from "../book/LocalStorageManager";
 import { AirQualityData } from "../entity/AirQualityData";
 import { LoadingState } from "../entity/LoadingState";
@@ -12,23 +12,23 @@ export const airQualityDataReducer = (state: AirQualityData = initialAppState.ai
         case FetchDevicesSuccessActionName:
             const updateDevicesAction = action as FetchDevicesSuccessAction;
             if (!updateDevicesAction.devices || !updateDevicesAction.devices.length) {
-                localStorageManager.removeItem(AIR_QUALITY_DATA_CO2_KEY);
-                localStorageManager.removeItem(AIR_QUALITY_DATA_HUMIDITY_KEY);
-                localStorageManager.removeItem(AIR_QUALITY_DATA_INSERTED_KEY);
-                localStorageManager.removeItem(AIR_QUALITY_DATA_PRESSURE_KEY);
-                localStorageManager.removeItem(AIR_QUALITY_DATA_TEMPERATURE_KEY);
-                localStorageManager.removeItem(AIR_QUALITY_DATA_TVOC_KEY);
+                localStorageManager.removeItem(LocalStorageKey.CO2_KEY);
+                localStorageManager.removeItem(LocalStorageKey.HUMIDITY_KEY);
+                localStorageManager.removeItem(LocalStorageKey.INSERTED_KEY);
+                localStorageManager.removeItem(LocalStorageKey.PRESSURE_KEY);
+                localStorageManager.removeItem(LocalStorageKey.TEMPERATURE_KEY);
+                localStorageManager.removeItem(LocalStorageKey.TVOC_KEY);
                 return {} as AirQualityData;
             }
             break;
         case FetchAirQualityDataSuccessActionName:
             const updateAirQualityDataAction = action as FetchAirQualityDataSuccessAction;
-            localStorageManager.setItem(AIR_QUALITY_DATA_CO2_KEY, updateAirQualityDataAction.data.co2);
-            localStorageManager.setItem(AIR_QUALITY_DATA_HUMIDITY_KEY, updateAirQualityDataAction.data.humidity);
-            localStorageManager.setItem(AIR_QUALITY_DATA_INSERTED_KEY, updateAirQualityDataAction.data.inserted);
-            localStorageManager.setItem(AIR_QUALITY_DATA_PRESSURE_KEY, updateAirQualityDataAction.data.pressure);
-            localStorageManager.setItem(AIR_QUALITY_DATA_TEMPERATURE_KEY, updateAirQualityDataAction.data.temperature);
-            localStorageManager.setItem(AIR_QUALITY_DATA_TVOC_KEY, updateAirQualityDataAction.data.tvoc);
+            localStorageManager.setItem(LocalStorageKey.CO2_KEY, updateAirQualityDataAction.data.co2);
+            localStorageManager.setItem(LocalStorageKey.HUMIDITY_KEY, updateAirQualityDataAction.data.humidity);
+            localStorageManager.setItem(LocalStorageKey.INSERTED_KEY, updateAirQualityDataAction.data.inserted);
+            localStorageManager.setItem(LocalStorageKey.PRESSURE_KEY, updateAirQualityDataAction.data.pressure);
+            localStorageManager.setItem(LocalStorageKey.TEMPERATURE_KEY, updateAirQualityDataAction.data.temperature);
+            localStorageManager.setItem(LocalStorageKey.TVOC_KEY, updateAirQualityDataAction.data.tvoc);
             return { ...updateAirQualityDataAction.data, loadingState: LoadingState.success };
         case FetchAirQualityDataStartActionName: return { ...state, loadingState: LoadingState.loading };
         case FetchAirQualityDataErrorActionName: return { ...state, loadingState: LoadingState.error };

@@ -1,5 +1,5 @@
 import { UpdateTokenAction } from "../action/UpdateTokenAction";
-import { TOKEN_KEY } from "../book/SessionStorageKeys";
+import { SessionStorageKey } from "../book/SessionStorageKey";
 import { LoginToken } from "../entity/LoginToken";
 import { UpdateTokenActionName } from './../action/UpdateTokenAction';
 import { sessionStorageManager } from './../book/SessionStorageManager';
@@ -26,7 +26,7 @@ it('TokenReducer', () => {
     expect(state?.refreshToken).toEqual(refreshToken);
     expect(state?.username).toEqual(username);
 
-    const localStorageState = sessionStorageManager.getItem<LoginToken>(TOKEN_KEY);
+    const localStorageState = sessionStorageManager.getItem<LoginToken>(SessionStorageKey.TOKEN_KEY);
 
     expect(localStorageState?.accessToken).toEqual(accessToken);
     expect(localStorageState?.expiredAt).toEqual(expiredAt);
@@ -45,7 +45,7 @@ it('TokenReducer - empty token', () => {
     expect(state?.refreshToken).toBeUndefined();
     expect(state?.username).toBeUndefined();
 
-    const localStorageState = sessionStorageManager.getItem<LoginToken>(TOKEN_KEY);
+    const localStorageState = sessionStorageManager.getItem<LoginToken>(SessionStorageKey.TOKEN_KEY);
 
     expect(localStorageState?.accessToken).toBeUndefined();
     expect(localStorageState?.expiredAt).toBeUndefined();
