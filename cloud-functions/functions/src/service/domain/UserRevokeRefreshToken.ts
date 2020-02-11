@@ -8,6 +8,8 @@ export const userRevokeRefreshToken = (logging: ILogging): Service<UserRevokeRef
         return buildErrorResponse(Errors.INVALID_USER_REVOKE_REFRESH_TOKEN_REQUEST);
     }
 
+    logging.info("userRevokeRefreshToken", "Starts");
+
     return loginTokenAdd(logging)({ refreshToken: req.refreshToken, enabled: false })
         .then(response => {
             if (response.error) {
