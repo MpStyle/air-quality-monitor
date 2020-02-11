@@ -10,6 +10,7 @@ import { userRenewAccessToken } from '../service/domain/UserRenewAccessToken';
 import { userRevokeRefreshToken } from '../service/domain/UserRevokeRefreshToken';
 import { userTimeRangeReadings } from '../service/domain/UserTimeRangeReadings';
 import { userDeviceDelete } from '../service/domain/UserDeviceDelete';
+import { userSuggestions } from './../service/domain/UserSuggestions';
 
 export const controllers = (logging: Logging) => {
     const cors = require('cors')({ origin: true });
@@ -49,6 +50,12 @@ export const controllers = (logging: Logging) => {
 
     app.post('/user-time-range-readings', (req, res) => {
         userTimeRangeReadings(logging)(req.body)
+            .then(data => res.send(data))
+            .catch(err => buildErrorResponse(err));
+    });
+
+    app.post('/user-suggestions', (req, res) => {
+        userSuggestions(logging)(req.body)
             .then(data => res.send(data))
             .catch(err => buildErrorResponse(err));
     });
