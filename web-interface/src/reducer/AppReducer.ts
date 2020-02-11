@@ -16,7 +16,7 @@ export const appReducer = combineReducers<AppState>({
     airStatus: airStatusReducer,
     devicesData: devicesDataReducer,
     currentDevice: currentDeviceReducer,
-    suggestions: suggestionsReducer,
+    suggestionsData: suggestionsReducer,
     token: tokenReducer,
     loginStatus: loginStatusReducer,
     settings: settingsReducer,

@@ -8,3 +8,4 @@ export const AIR_QUALITY_DATA_TEMPERATURE_KEY = "air_quality_data_temperature_ke
 export const AIR_QUALITY_DATA_DECIMAL_SEPARATOR_KEY = "air_quality_data_decimal_separator_key";
 export const AIR_QUALITY_DATA_CURRENT_DEVICE_KEY = "air_quality_data_current_device_key";
 export const AIR_QUALITY_DATA_ICON_LABEL_VISUALIZATION_TYPE_KEY = "air_quality_data_icon_label_visualization_type_key";
+export const AIR_QUALITY_DATA_SUGGESTIONS_KEY = "air_quality_data_suggestions_key";
