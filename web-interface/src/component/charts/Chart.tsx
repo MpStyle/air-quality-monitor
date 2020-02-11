@@ -8,7 +8,7 @@ const ChartTooltip = (props: TooltipProps & { readingsType: string, readingUnitM
     if (props.active && !!props.payload) {
         return <div className="chart-tooltip">
             <div className="label"><strong>{props.readingsType}</strong>: {props.payload[0].value}{props.readingUnitMeter}</div>
-            <div><strong>Reading date</strong>: {props.label}</div>
+            <div><strong>Reading date</strong>: {props.payload[0].payload.datetime}</div>
         </div>;
     }
 
@@ -39,7 +39,7 @@ export const Chart: FunctionComponent<ChartProps> = (props) => {
 };
 
 export interface ChartProps {
-    averages: (TimeRangeReading & { average: number, xaxis: string })[];
+    averages: (TimeRangeReading & { average: number, xaxis: string, datetime: string })[];
     title: string;
     readingType: string;
     readingUnitMeter: string;

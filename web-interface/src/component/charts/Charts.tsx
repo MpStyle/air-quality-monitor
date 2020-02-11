@@ -1,11 +1,11 @@
-import { CircularProgress, Divider } from "@material-ui/core";
+import { CircularProgress } from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton/IconButton";
 import Paper from "@material-ui/core/Paper/Paper";
 import Typography from "@material-ui/core/Typography/Typography";
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import * as React from 'react';
-import { useEffect, FunctionComponent } from "react";
-import { useParams, Link } from "react-router-dom";
+import { FunctionComponent, useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
 import { DASHBOARD_URL } from "../../book/Pages";
 import { StringUtils } from "../../book/StringUtils";
 import { AirQualityDataAverages } from "../../entity/AirQualityDataAverages";
@@ -43,20 +43,23 @@ export const Charts: FunctionComponent<ChartsProps> = (props) => {
                     return {
                         ...da,
                         average: parseFloat((da.value / da.counter).toFixed(1)),
-                        xaxis: utcDate.getHours().toString()
+                        xaxis: utcDate.getHours().toString(),
+                        datetime: `${utcDate.getFullYear()}-${StringUtils.padLeft(utcDate.getMonth() + 1, '0', 2)}-${StringUtils.padLeft(utcDate.getDate(), '0', 2)} ${utcDate.getHours()}:00`
                     };
                 })} />
 
                 <Chart title="Montly" readingUnitMeter={props.unitMeter(readingType as string)} readingType={props.title(readingType as string)} averages={props.airQualityDataAverages.monthlyAverages.map(da => ({
                     ...da,
                     average: parseFloat((da.value / da.counter).toFixed(1)),
-                    xaxis: da.timeRange.substring(4, 6) + '-' + da.timeRange.substring(6)
+                    xaxis: da.timeRange.substring(4, 6) + '-' + da.timeRange.substring(6),
+                    datetime: da.timeRange.substring(0, 4) + '-' + da.timeRange.substring(4, 6) + '-' + da.timeRange.substring(6)
                 }))} />
 
                 <Chart title="Yearly" readingUnitMeter={props.unitMeter(readingType as string)} readingType={props.title(readingType as string)} averages={props.airQualityDataAverages.yearlyAverages.map(da => ({
                     ...da,
                     average: parseFloat((da.value / da.counter).toFixed(1)),
-                    xaxis: da.timeRange.substring(0, 4) + '-' + da.timeRange.substring(4)
+                    xaxis: da.timeRange.substring(0, 4) + '-' + da.timeRange.substring(4),
+                    datetime: da.timeRange.substring(0, 4) + '-' + da.timeRange.substring(4),
                 }))} />
             </Paper>}
         </main>
