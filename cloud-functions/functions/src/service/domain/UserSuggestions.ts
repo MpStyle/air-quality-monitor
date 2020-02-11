@@ -7,7 +7,7 @@ import { buildErrorResponse } from './../../entity/Service';
 import { Errors } from "../../entity/Errors";
 
 export const userSuggestions = (logging: ILogging): Service<UserSuggestionsRequest, UserSuggestionsResponse> => req => {
-    if (!req.airStatus || req.language) {
+    if (!req.airStatus || !req.language) {
         return buildErrorResponse(Errors.INVALID_USER_SUGGESTIONS_REQUEST);
     }
 
