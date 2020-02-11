@@ -5,6 +5,7 @@ import { FetchDevicesErrorAction, FetchDevicesErrorActionName } from "../action/
 import { FetchTimeRangeErrorAction, FetchTimeRangeErrorActionName } from "../action/FetchTimeRangeAction";
 import { AppError } from "../entity/AppError";
 import { initialAppState } from "../store/InitialAppState";
+import { FetchSuggestionsErrorAction, FetchSuggestionsErrorActionName } from './../action/FetchSuggestions';
 
 export const appErrorsReducer = (state: AppError[] = initialAppState.appErrors, action: Action): AppError[] => {
     switch (action.type) {
@@ -19,6 +20,9 @@ export const appErrorsReducer = (state: AppError[] = initialAppState.appErrors, 
 
         case DeleteDeviceErrorActionName:
             return [...state, { code: (action as DeleteDeviceErrorAction).error, dateTime: Date.now(), description: "Error calling delete device" }];
+
+        case FetchSuggestionsErrorActionName:
+            return [...state, { code: (action as FetchSuggestionsErrorAction).error, dateTime: Date.now(), description: "Error calling fetch suggestions" }];
     }
 
     return state;
