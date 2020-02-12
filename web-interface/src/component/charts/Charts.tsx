@@ -38,7 +38,7 @@ export const Charts: FunctionComponent<ChartsProps> = (props) => {
             </Paper>}
 
             {props.airQualityDataAverages.loadingState === LoadingState.success && <Paper elevation={2} className="charts-container">
-                <Chart title="Daily" readingUnitMeter={props.unitMeter(readingType as string)} readingType={props.title(readingType as string)} averages={props.airQualityDataAverages.dailyAverages.map(da => {
+                <Chart title="Hourly" readingUnitMeter={props.unitMeter(readingType as string)} readingType={props.title(readingType as string)} averages={props.airQualityDataAverages.dailyAverages.map(da => {
                     const utcDate = new Date(Date.UTC(parseInt(da.timeRange.substring(0, 4)), parseInt(da.timeRange.substring(4, 6)), parseInt(da.timeRange.substring(6, 8)), parseInt(da.timeRange.substring(8, 10)), 0, 0));
                     return {
                         ...da,
@@ -48,14 +48,14 @@ export const Charts: FunctionComponent<ChartsProps> = (props) => {
                     };
                 })} />
 
-                <Chart title="Montly" readingUnitMeter={props.unitMeter(readingType as string)} readingType={props.title(readingType as string)} averages={props.airQualityDataAverages.monthlyAverages.map(da => ({
+                <Chart title="Daily" readingUnitMeter={props.unitMeter(readingType as string)} readingType={props.title(readingType as string)} averages={props.airQualityDataAverages.monthlyAverages.map(da => ({
                     ...da,
                     average: parseFloat((da.value / da.counter).toFixed(1)),
                     xaxis: da.timeRange.substring(4, 6) + '-' + da.timeRange.substring(6),
                     datetime: da.timeRange.substring(0, 4) + '-' + da.timeRange.substring(4, 6) + '-' + da.timeRange.substring(6)
                 }))} />
 
-                <Chart title="Yearly" readingUnitMeter={props.unitMeter(readingType as string)} readingType={props.title(readingType as string)} averages={props.airQualityDataAverages.yearlyAverages.map(da => ({
+                <Chart title="Montly" readingUnitMeter={props.unitMeter(readingType as string)} readingType={props.title(readingType as string)} averages={props.airQualityDataAverages.yearlyAverages.map(da => ({
                     ...da,
                     average: parseFloat((da.value / da.counter).toFixed(1)),
                     xaxis: da.timeRange.substring(0, 4) + '-' + da.timeRange.substring(4),
