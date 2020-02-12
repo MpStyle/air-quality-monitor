@@ -104,4 +104,5 @@ export interface AppDrawerProps {
     currentDevice: Device | null;
     onLogoutClick: () => void;
     username: string;
+    refreshToken: string;
 }

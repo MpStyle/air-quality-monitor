@@ -9,32 +9,19 @@ import { AppState } from "../../entity/AppState";
 import { AppDrawer, AppDrawerProps } from "./AppDrawer";
 
 export const AppDrawerContainer = connect(
-    (appState: AppState, props: AppDrawerContainerProps) => {
+    (appState: AppState, props: AppDrawerContainerProps): AppDrawerProps => {
         return {
             currentDevice: appState.currentDevice,
             isOpen: props.isOpen,
             average: averageAirStatus(appState.airStatus),
-            refreshToken: appState.token?.refreshToken,
             toggleDrawer: props.toggleDrawer,
-            username: appState.token?.username,
-        };
+            refreshToken: appState.token?.refreshToken,
+            username: appState.token?.username
+        } as AppDrawerProps;
     },
-    (dispatch: Dispatch) => {
+    (dispatch: Dispatch): AppDrawerProps => {
         return {
-            dispatchUpdateToken: () => {
-                dispatch(updateTokenActionBuilder(null));
-            }
-        };
-    },
-    (stateToProps, dispatchToProps) => {
-        return {
-            currentDevice: stateToProps.currentDevice,
-            isOpen: stateToProps.isOpen,
-            average: stateToProps.average,
-            refreshToken: stateToProps.refreshToken,
-            toggleDrawer: stateToProps.toggleDrawer,
-            username: stateToProps.username,
-            onLogoutClick: () => {
+            onLogoutClick: (refreshToken: string) => {
                 const finallyOps = () => {
                     localStorageManager.removeAll();
                     sessionStorageManager.removeAll();
@@ -42,22 +29,22 @@ export const AppDrawerContainer = connect(
                     window.location.reload();
                 };
 
-                userRevokeRefreshToken(stateToProps.refreshToken as string)
+                userRevokeRefreshToken(refreshToken as string)
                     .then(response => {
                         if (response.error) {
                             console.error(response.error);
-                            finallyOps();
                             return;
                         }
 
-                        dispatchToProps.dispatchUpdateToken();
-                        finallyOps();
+                        dispatch(updateTokenActionBuilder(null));
                     })
                     .catch(err => {
                         console.error(err);
+                    })
+                    .finally(() => {
                         finallyOps();
                     });
-            }
+            },
         } as AppDrawerProps;
     }
 )(AppDrawer);
