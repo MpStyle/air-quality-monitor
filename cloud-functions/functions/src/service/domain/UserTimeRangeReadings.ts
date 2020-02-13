@@ -39,14 +39,26 @@ export const userTimeRangeReadings = (logging: ILogging): Service<UserTimeRangeR
                 return buildErrorResponse(Errors.DEVICE_AUTHORIZATION_ERROR);
             }
 
-            let timeRangeDaily = undefined;
-            let timeRangeMonthly = undefined;
-            let timeRangeYearly = undefined;
+            let timeRangeDailysGET = undefined;
+            let timeRangeDailysLET = undefined;
+            let timeRangeMonthlysGET = undefined;
+            let timeRangeMonthlysLET = undefined;
+            let timeRangeYearlysGET = undefined;
+            let timeRangeYearlysLET = undefined;
+
             if (req.timestamp) {
                 const dateTime = epochToLocaleDate(req.timestamp);
-                timeRangeDaily = dateTime.getUTCFullYear() + StringUtils.padLeft(dateTime.getUTCMonth() + 1, '0', 2) + StringUtils.padLeft(dateTime.getUTCDate() + 1, '0', 2);
-                timeRangeMonthly = dateTime.getUTCFullYear() + StringUtils.padLeft(dateTime.getUTCMonth() + 1, '0', 2);
-                timeRangeYearly = dateTime.getUTCFullYear().toString();
+
+                const daily = dateTime.getUTCFullYear() + StringUtils.padLeft(dateTime.getUTCMonth() + 1, '0', 2) + StringUtils.padLeft(dateTime.getUTCDate(), '0', 2);
+                const monthly = dateTime.getUTCFullYear() + StringUtils.padLeft(dateTime.getUTCMonth() + 1, '0', 2);
+                const yearly = dateTime.getUTCFullYear();
+
+                timeRangeDailysGET = daily + '01';
+                timeRangeDailysLET = daily + '24';
+                timeRangeMonthlysGET = monthly + '01';
+                timeRangeMonthlysLET = monthly + '31';
+                timeRangeYearlysGET = yearly + '01';
+                timeRangeYearlysLET = yearly + '12';
             }
 
             const searchRequests: TimeRangeReadingSearchRequest[] = [
@@ -54,19 +66,25 @@ export const userTimeRangeReadings = (logging: ILogging): Service<UserTimeRangeR
                     deviceId: req.deviceId,
                     type: req.type,
                     granularity: Granularity.daily,
-                    timeRange: timeRangeDaily
+                    timeRangeGreaterEqualThan: timeRangeDailysGET,
+                    timeRangeLowerEqualThan: timeRangeDailysLET,
+                    limit: 24 // Hours
                 },
                 {
                     deviceId: req.deviceId,
                     type: req.type,
                     granularity: Granularity.monthly,
-                    timeRange: timeRangeMonthly
+                    timeRangeGreaterEqualThan: timeRangeMonthlysGET,
+                    timeRangeLowerEqualThan: timeRangeMonthlysLET,
+                    limit: 31 // Days
                 },
                 {
                     deviceId: req.deviceId,
                     type: req.type,
                     granularity: Granularity.yearly,
-                    timeRange: timeRangeYearly
+                    timeRangeGreaterEqualThan: timeRangeYearlysGET,
+                    timeRangeLowerEqualThan: timeRangeYearlysLET,
+                    limit: 12 // Months
                 }
             ];
 

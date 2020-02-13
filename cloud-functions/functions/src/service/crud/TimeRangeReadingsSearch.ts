@@ -1,10 +1,10 @@
 import { ILogging } from "../../book/Logging";
 import { Collections } from "../../entity/Collections";
+import { Granularity } from "../../entity/Granularity";
 import { PagedRequest } from "../../entity/PagedRequest";
 import { buildErrorResponse, buildResponse, Service } from "../../entity/Service";
 import { TimeRangeReading } from "../../entity/TimeRangeReading";
 import admin = require('firebase-admin');
-import { Granularity } from "../../entity/Granularity";
 
 export const timeRangeReadingsSearch = (logging: ILogging): Service<TimeRangeReadingSearchRequest, TimeRangeReadingSearchResponse> => req => {
     logging.info("timeRangeReadingsSearch", "Starts");
@@ -26,6 +26,14 @@ export const timeRangeReadingsSearch = (logging: ILogging): Service<TimeRangeRea
 
     if (req.timeRange) {
         collectionRef = collectionRef.where('timeRange', '==', req.timeRange);
+    }
+
+    if (req.timeRangeGreaterEqualThan) {
+        collectionRef = collectionRef.where('timeRange', '>=', req.timeRangeGreaterEqualThan);
+    }
+
+    if (req.timeRangeLowerEqualThan) {
+        collectionRef = collectionRef.where('timeRange', '<=', req.timeRangeLowerEqualThan);
     }
 
     if (req.offset) {
@@ -55,6 +63,8 @@ export interface TimeRangeReadingSearchRequest extends PagedRequest {
     deviceId?: string;
     type?: string;
     timeRange?: string;
+    timeRangeGreaterEqualThan?: string;
+    timeRangeLowerEqualThan?: string;
     granularity?: Granularity;
 }
 

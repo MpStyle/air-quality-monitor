@@ -34,7 +34,7 @@ export const weekDayNames = (): string[] => {
 };
 
 export const monthNames = (): string[] => {
-    var month = [];
+    const month = [];
     month[0] = "January";
     month[1] = "February";
     month[2] = "March";
