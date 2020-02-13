@@ -72,3 +72,5 @@ functions/config
 .runtimeconfig.json
 
 public
+
+functions/Air Quality Monitor-*.json
