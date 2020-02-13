@@ -11,10 +11,18 @@ Written in Typescript.
 
 ## Development
 
-Download remote configuration and emulate the Firebase functions.
-
+Download remote configuration.
+On Linux/MacOS:
 ```
 firebase functions:config:get > .runtimeconfig.json
+```
+On Windows:
+```
+firebase functions:config:get | ac .runtimeconfig.json
+```
+
+And emulate the Firebase functions:
+```
 firebase emulators:start
 ```
 
