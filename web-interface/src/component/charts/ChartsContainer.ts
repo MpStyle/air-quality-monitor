@@ -7,7 +7,7 @@ import { userTimeRangeReadings } from '../../book/UserTimeRangeReadings';
 import { Granularity } from '../../entity/Granularity';
 import { LoginToken } from '../../entity/LoginToken';
 import { ServiceResponse } from '../../entity/ServiceResponse';
-import { fetchTimeRangeStartActionBuilder, fetchTimeRangeSuccessActionBuilder, fetchTimeRangeErrorActionBuilder } from './../../action/FetchTimeRangeAction';
+import { fetchTimeRangeErrorActionBuilder, fetchTimeRangeStartActionBuilder, fetchTimeRangeSuccessActionBuilder } from './../../action/FetchTimeRangeAction';
 import { AppState } from './../../entity/AppState';
 import { Charts, ChartsProps } from './Charts';
 
@@ -41,10 +41,12 @@ export const ChartsContainer = connect(
     },
     (dispatch: Dispatch): ChartsProps => {
         return {
-            fetchAverages: (token: LoginToken, deviceId: string, measurementType: string) => {
+            fetchAverages: (token: LoginToken, deviceId: string, measurementType: string, timestamp: number | undefined) => {
                 dispatch(fetchTimeRangeStartActionBuilder());
 
-                const renewToken: Promise<ServiceResponse<UserRenewAccessTokenResponse>> = token.expiredAt <= Date.now() ? userRenewAccessToken(token.refreshToken) : Promise.resolve({ payload: { accessToken: token.accessToken, expiredAt: token.expiredAt } });
+                const renewToken: Promise<ServiceResponse<UserRenewAccessTokenResponse>> = token.expiredAt <= Date.now() ?
+                    userRenewAccessToken(token.refreshToken) :
+                    Promise.resolve({ payload: { accessToken: token.accessToken, expiredAt: token.expiredAt } });
 
                 renewToken
                     .then(response => {
@@ -53,7 +55,7 @@ export const ChartsContainer = connect(
                             return;
                         }
 
-                        return userTimeRangeReadings(deviceId, response.payload?.accessToken, measurementType)
+                        return userTimeRangeReadings(deviceId, response.payload?.accessToken, measurementType, timestamp)
                             .then(response => {
                                 if (response.error) {
                                     dispatch(fetchTimeRangeErrorActionBuilder(response.error));

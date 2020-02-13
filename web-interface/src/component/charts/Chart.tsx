@@ -24,7 +24,8 @@ export const Chart: FunctionComponent<ChartProps> = (props) => {
 
     return <div className="chart">
         <Typography variant="h6" className="title">{props.title}</Typography>
-        <ResponsiveContainer width="100%" height={300}>
+        {props.averages.length === 0 && <div>No data</div>}
+        {props.averages.length > 0 && <ResponsiveContainer width="100%" height={300}>
             <LineChart data={props.averages} maxBarSize={50}>
                 <Tooltip
                     content={<ChartTooltip readingsType={props.readingType} readingUnitMeter={props.readingUnitMeter} />}
@@ -34,7 +35,7 @@ export const Chart: FunctionComponent<ChartProps> = (props) => {
                 <YAxis width={yAxisWidth} domain={[chartInfo.minValue - 2, chartInfo.maxValue + 2]} />
                 <CartesianGrid strokeDasharray="0 0" vertical={false} />
             </LineChart>
-        </ResponsiveContainer>
+        </ResponsiveContainer>}
     </div>;
 };
 

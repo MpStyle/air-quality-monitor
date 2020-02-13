@@ -1,11 +1,13 @@
-import { CircularProgress } from "@material-ui/core";
+import MomentUtils from '@date-io/moment';
+import CircularProgress from "@material-ui/core/CircularProgress/CircularProgress";
 import IconButton from "@material-ui/core/IconButton/IconButton";
 import Paper from "@material-ui/core/Paper/Paper";
 import Typography from "@material-ui/core/Typography/Typography";
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import * as React from 'react';
-import { FunctionComponent, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useEffect, useState, FunctionComponent } from "react";
+import { useParams, Link } from "react-router-dom";
 import { DASHBOARD_URL } from "../../book/Pages";
 import { StringUtils } from "../../book/StringUtils";
 import { AirQualityDataAverages } from "../../entity/AirQualityDataAverages";
@@ -17,9 +19,10 @@ import "./Charts.scss";
 
 export const Charts: FunctionComponent<ChartsProps> = (props) => {
     const { readingType } = useParams();
+    const [selectedTimestamp, setSelectedTimestamp] = useState<number>(Date.now());
 
     useEffect(() => {
-        props.fetchAverages(props.token, props.deviceId, readingType as string);
+        props.fetchAverages(props.token, props.deviceId, readingType as string, Date.now());
     }, []);
 
     return <div className="charts">
@@ -38,6 +41,27 @@ export const Charts: FunctionComponent<ChartsProps> = (props) => {
             </Paper>}
 
             {props.airQualityDataAverages.loadingState === LoadingState.success && <Paper elevation={2} className="charts-container">
+
+                <div className="date-picker-container">
+                    <MuiPickersUtilsProvider utils={MomentUtils}>
+                        <KeyboardDatePicker
+                            className="date-picker"
+                            autoOk
+                            variant="dialog"
+                            inputVariant="outlined"
+                            label="Select date"
+                            format="YYYY-MM-DD"
+                            value={new Date(selectedTimestamp)}
+                            InputAdornmentProps={{ position: "start" }}
+                            onChange={date => {
+                                const choosedDate = date?.toDate().getTime() ?? Date.now();
+                                setSelectedTimestamp(choosedDate);
+                                props.fetchAverages(props.token, props.deviceId, readingType as string, choosedDate);
+                            }}
+                        />
+                    </MuiPickersUtilsProvider>
+                </div>
+
                 <Chart title="Hourly" readingUnitMeter={props.unitMeter(readingType as string)} readingType={props.title(readingType as string)} averages={props.airQualityDataAverages.dailyAverages.map(da => {
                     const utcDate = new Date(Date.UTC(parseInt(da.timeRange.substring(0, 4)), parseInt(da.timeRange.substring(4, 6)), parseInt(da.timeRange.substring(6, 8)), parseInt(da.timeRange.substring(8, 10)), 0, 0));
                     return {
@@ -74,5 +98,5 @@ export interface ChartsProps {
 
     airQualityDataAverages: AirQualityDataAverages;
 
-    fetchAverages: (token: LoginToken, deviceId: string, measurementType: string) => void;
+    fetchAverages: (token: LoginToken, deviceId: string, measurementType: string, timestamp: number | undefined) => void;
 }

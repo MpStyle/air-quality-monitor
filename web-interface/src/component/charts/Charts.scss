@@ -21,5 +21,13 @@
         max-width: 600px;
         margin: 0 auto;
         padding: 1px 20px;
+
+        .date-picker-container {
+            display: block;
+            width: 200px;
+            margin: 30px auto 0px auto;
+
+            .date-picker {}
+        }
     }
 }
