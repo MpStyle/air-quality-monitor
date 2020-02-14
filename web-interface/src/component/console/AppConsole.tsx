@@ -4,7 +4,7 @@ import Typography from "@material-ui/core/Typography/Typography";
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import React, { FunctionComponent } from "react";
 import { Link } from "react-router-dom";
-import { epochToFormatedDate } from "../../book/DateTimeUtils";
+import { DateTimeUtils } from "../../book/DateTimeUtils";
 import { DASHBOARD_URL } from "../../book/Pages";
 import { AppError } from "../../entity/AppError";
 import { AppBarOneRow } from "../common/AppBarOneRow";
@@ -30,7 +30,7 @@ export const AppConsole: FunctionComponent<ConsoleProps> = (props) => {
                     {props.appErrors.map(err => <li>
                         <strong>Error code</strong>: {err.code} <br />
                         <strong>Error description</strong>: {err.description} <br />
-                        <strong>Date time</strong>: {epochToFormatedDate(err.dateTime)}
+                        <strong>Date time</strong>: {DateTimeUtils.epochToFormatedDate(err.dateTime, "YYYY-MM-DD HH:mm:ss")}
                     </li>)}
                 </ul>}
             </Paper>
