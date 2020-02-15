@@ -33,7 +33,7 @@ export const createLoginTokenTrigger = (logging: Logging) => {
                     }
 
                     return Bluebird.map(response.payload.loginTokens, (loginToken) => {
-                        logging.error("createLoginTokenTrigger", `Removing refresh token ${loginToken.refreshToken}...`);
+                        logging.info("createLoginTokenTrigger", `Removing refresh token ${loginToken.refreshToken}...`);
                         return loginTokenDelete(logging)({ refreshToken: loginToken.refreshToken });
                     }, { concurrency: 5 });
                 });
@@ -64,7 +64,7 @@ export const createReadingTrigger = (logging: Logging) => {
                     }
 
                     return Bluebird.map(response.payload.readings, (loginToken) => {
-                        logging.error("createReadingTrigger", `Removing reading ${loginToken.readingId}...`);
+                        logging.info("createReadingTrigger", `Removing reading ${loginToken.readingId}...`);
                         return readingDelete(logging)({ readingId: loginToken.readingId });
                     }, { concurrency: 5 });
                 });
