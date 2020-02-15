@@ -63,9 +63,9 @@ export const createReadingTrigger = (logging: Logging) => {
                         return;
                     }
 
-                    return Bluebird.map(response.payload.readings, (loginToken) => {
-                        logging.info("createReadingTrigger", `Removing reading ${loginToken.readingId}...`);
-                        return readingDelete(logging)({ readingId: loginToken.readingId });
+                    return Bluebird.map(response.payload.readings, (reading) => {
+                        logging.info("createReadingTrigger", `Removing reading ${reading.readingId}...`);
+                        return readingDelete(logging)({ readingId: reading.readingId });
                     }, { concurrency: 5 });
                 });
         })

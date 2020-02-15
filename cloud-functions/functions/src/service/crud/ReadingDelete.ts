@@ -13,7 +13,7 @@ export const readingDelete = (logging: ILogging): Service<ReadingDeleteRequest, 
 
     const db = admin.firestore();
 
-    return db.collection(Collections.LOGIN_TOKEN).doc(req.readingId).delete().then(_ => buildResponse({}));
+    return db.collection(Collections.READING).doc(req.readingId).delete().then(_ => buildResponse({}));
 };
 
 export interface ReadingDeleteRequest {
