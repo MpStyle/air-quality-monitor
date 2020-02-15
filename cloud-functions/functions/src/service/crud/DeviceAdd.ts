@@ -7,7 +7,8 @@ import { devicesSearch, DevicesSearchRequest } from "./DevicesSearch";
 import admin = require('firebase-admin');
 
 export const deviceAdd = (logging: ILogging): Service<DeviceAddRequest, DeviceAddResponse> => req => {
-    if (!req.deviceId || req.deviceId === '') {
+    if (!req.deviceId || req.deviceId === ''
+        || !req.deviceName || req.deviceName === '') {
         return buildErrorResponse(Errors.INVALID_DEVICE_ADD_REQUEST);
     }
 
@@ -32,7 +33,7 @@ export const deviceAdd = (logging: ILogging): Service<DeviceAddRequest, DeviceAd
                 device = deviceSearchResponse.payload.devices[0];
             }
 
-            device.name = req.deviceName || device.name || '';
+            device.name = req.deviceName;
             device.address = req.deviceAddress || device.address || '';
             device.deviceIP = req.deviceIp || device.deviceIP || '';
             device.enabled = req.enabled ?? device.enabled ?? true;
