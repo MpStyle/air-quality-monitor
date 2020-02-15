@@ -2,7 +2,7 @@ import { ILogging } from "../../book/Logging";
 import { Collections } from "../../entity/Collections";
 import { Errors } from "../../entity/Errors";
 import { buildErrorResponse, buildResponse, Service } from "../../entity/Service";
-import { loginTokenSearch } from "../crud/LoginTokenSearch";
+import { loginTokensSearch } from "../crud/LoginTokensSearch";
 import admin = require('firebase-admin');
 import { loginTokenAdd } from "../crud/LoginTokenAdd";
 
@@ -18,7 +18,7 @@ export const userRenewAccessToken = (logging: ILogging): Service<UserRenewAccess
 
     collectionRef = collectionRef.where('refreshToken', '==', req.refreshToken);
 
-    return loginTokenSearch(logging)({ refreshToken: req.refreshToken })
+    return loginTokensSearch(logging)({ refreshToken: req.refreshToken })
         .then(loginTokenSearchResponse => {
             if (loginTokenSearchResponse.error) {
                 return buildErrorResponse(loginTokenSearchResponse.error);

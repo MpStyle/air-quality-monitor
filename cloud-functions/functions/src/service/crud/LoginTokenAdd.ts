@@ -5,7 +5,7 @@ import { Errors } from "../../entity/Errors";
 import { StringUtils } from "../../book/StringUtils";
 import admin = require('firebase-admin');
 import { Collections } from "../../entity/Collections";
-import { loginTokenSearch } from "./LoginTokenSearch";
+import { loginTokensSearch } from "./LoginTokensSearch";
 
 export const loginTokenAdd = (logging: ILogging): Service<LoginTokenRequest, LoginTokenResponse> => req => {
     if (!req.username) {
@@ -33,7 +33,7 @@ export const loginTokenAdd = (logging: ILogging): Service<LoginTokenRequest, Log
                 return buildErrorResponse(Errors.ERROR_WHILE_ADD_DEVICE);
             }
 
-            return loginTokenSearch(logging)({ refreshToken: userLoginData.refreshToken })
+            return loginTokensSearch(logging)({ refreshToken: userLoginData.refreshToken })
                 .then(loginTokenSearchResponse => {
                     if (loginTokenSearchResponse.error) {
                         return buildErrorResponse(loginTokenSearchResponse.error);

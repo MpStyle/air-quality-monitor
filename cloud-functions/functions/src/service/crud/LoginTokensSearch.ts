@@ -6,7 +6,7 @@ import { buildErrorResponse, buildResponse, Service } from "../../entity/Service
 import admin = require('firebase-admin');
 import { PagedRequest } from "../../entity/PagedRequest";
 
-export const loginTokenSearch = (logging: ILogging): Service<LoginTokenSearchRequest, LoginTokenSearchResponse> => req => {
+export const loginTokensSearch = (logging: ILogging): Service<LoginTokenSearchRequest, LoginTokenSearchResponse> => req => {
     logging.info("loginTokenSearch", "Starts");
 
     const db = admin.firestore();

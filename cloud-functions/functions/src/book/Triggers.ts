@@ -2,7 +2,7 @@ import functions = require('firebase-functions');
 import { Collections } from '../entity/Collections';
 import { LoginToken } from '../entity/LoginToken';
 import { loginTokenDelete } from '../service/crud/LoginTokenDelete';
-import { loginTokenSearch } from '../service/crud/LoginTokenSearch';
+import { loginTokensSearch } from '../service/crud/LoginTokensSearch';
 import { Logging } from './Logging';
 import Bluebird = require('bluebird');
 import { Reading } from '../entity/Reading';
@@ -20,7 +20,7 @@ export const createLoginTokenTrigger = (logging: Logging) => {
 
             logging.info("createLoginTokenTrigger", `expiredBefore: ${expiredBefore}`);
 
-            return loginTokenSearch(logging)({ expiredBefore: expiredBefore })
+            return loginTokensSearch(logging)({ expiredBefore: expiredBefore })
                 .then(response => {
                     if (response.error) {
                         logging.error("createLoginTokenTrigger", `loginTokenSearch - ${response.error}`);
