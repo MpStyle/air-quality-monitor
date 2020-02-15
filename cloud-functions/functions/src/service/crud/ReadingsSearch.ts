@@ -25,6 +25,10 @@ export const readingsSearch = (logging: ILogging): Service<ReadingSearchRequest,
         collectionRef = collectionRef.where('type', '==', req.type);
     }
 
+    if (req.insertedBefore) {
+        collectionRef = collectionRef.where('inserted', '<', req.insertedBefore);
+    }
+
     if (req.offset) {
         collectionRef = collectionRef.startAfter(req.offset);
     }
@@ -54,6 +58,7 @@ export interface ReadingSearchRequest extends PagedRequest {
     readingId?: string;
     deviceId?: string;
     type?: string;
+    insertedBefore?: number;
 }
 
 export interface ReadingSearchResponse {
