@@ -44,7 +44,7 @@ export const userLastReadings = (logging: ILogging): Service<UserLastReadingsReq
                             return acc;
                         }
 
-                        const value = curr.payload.readings[0].value ? parseFloat(curr.payload.readings[0].value) : null;
+                        const value = curr.payload.readings[0].value ? curr.payload.readings[0].value : null;
                         switch (curr.payload.readings[0].type) {
                             case ReadingTypes.TEMPERATURE: acc.temperature = value; break;
                             case ReadingTypes.CO2: acc.co2 = value; break;
