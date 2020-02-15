@@ -73,7 +73,7 @@ export const deviceAdd = (logging: ILogging): Service<DeviceAddRequest, DeviceAd
 
 export interface DeviceAddRequest {
     deviceId: string;
-    deviceName?: string;
+    deviceName: string;
     deviceAddress?: string;
     deviceIp?: string;
     enabled?: boolean;
