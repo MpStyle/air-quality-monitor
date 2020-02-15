@@ -5,6 +5,7 @@ import { Errors } from "../../entity/Errors";
 import { StringUtils } from "../../book/StringUtils";
 import admin = require('firebase-admin');
 import { Collections } from "../../entity/Collections";
+import { loginTokenSearch } from "./LoginTokenSearch";
 
 export const loginTokenAdd = (logging: ILogging): Service<LoginTokenRequest, LoginTokenResponse> => req => {
     if (!req.username) {
@@ -32,7 +33,18 @@ export const loginTokenAdd = (logging: ILogging): Service<LoginTokenRequest, Log
                 return buildErrorResponse(Errors.ERROR_WHILE_ADD_DEVICE);
             }
 
-            return buildResponse<LoginTokenResponse>({ loginToken: userLoginData });
+            return loginTokenSearch(logging)({ refreshToken: userLoginData.refreshToken })
+                .then(loginTokenSearchResponse => {
+                    if (loginTokenSearchResponse.error) {
+                        return buildErrorResponse(loginTokenSearchResponse.error);
+                    }
+
+                    if (!loginTokenSearchResponse.payload || !loginTokenSearchResponse.payload.loginTokens || loginTokenSearchResponse.payload.loginTokens.length !== 1) {
+                        return buildErrorResponse(Errors.ERROR_WHILE_SEARCH_LOGIN_TOKEN);
+                    }
+
+                    return buildResponse<LoginTokenResponse>({ loginToken: loginTokenSearchResponse.payload.loginTokens[0] });
+                });
         })
         .catch(err => {
             logging.error("userLogin", `Error while login: ${err}`);
