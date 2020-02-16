@@ -1,10 +1,9 @@
 import { ILogging } from "../../book/Logging";
-import { Collections } from "../../entity/Collections";
 import { Errors } from "../../entity/Errors";
 import { buildErrorResponse, buildResponse, Service } from "../../entity/Service";
-import { loginTokensSearch } from "../crud/LoginTokensSearch";
-import admin = require('firebase-admin');
-import { loginTokenAdd } from "../crud/LoginTokenAdd";
+import { loginTokenById } from "../crud/LoginTokenById";
+import { loginTokenUpsert } from "../crud/LoginTokenUpsert";
+import uuid = require("uuid");
 
 export const userRenewAccessToken = (logging: ILogging): Service<UserRenewAccessTokenRequest, UserRenewAccessTokenResponse> => req => {
     if (!req.refreshToken) {
@@ -13,27 +12,22 @@ export const userRenewAccessToken = (logging: ILogging): Service<UserRenewAccess
 
     logging.info("userRenewAccessToken", "Starts");
 
-    const db = admin.firestore();
-    let collectionRef: FirebaseFirestore.CollectionReference | FirebaseFirestore.Query = db.collection(Collections.LOGIN_TOKEN);
-
-    collectionRef = collectionRef.where('refreshToken', '==', req.refreshToken);
-
-    return loginTokensSearch(logging)({ refreshToken: req.refreshToken })
+    return loginTokenById(logging)({ refreshToken: req.refreshToken })
         .then(loginTokenSearchResponse => {
             if (loginTokenSearchResponse.error) {
                 return buildErrorResponse(loginTokenSearchResponse.error);
             }
 
-            if (!loginTokenSearchResponse.payload || !loginTokenSearchResponse.payload.loginTokens || !loginTokenSearchResponse.payload.loginTokens.length) {
-                return buildErrorResponse(Errors.ERROR_WHILE_SEARCH_LOGIN_TOKEN);
+            if (!loginTokenSearchResponse.payload || !loginTokenSearchResponse.payload.loginToken) {
+                return buildErrorResponse(Errors.LOGIN_TOKEN_NOT_FOUND);
             }
 
-            const loginToken = loginTokenSearchResponse.payload.loginTokens[0];
-
-            return loginTokenAdd(logging)({
-                username: loginToken.username,
-                expiredAt: Date.now() + 300000,
-                refreshToken: loginToken.refreshToken
+            return loginTokenUpsert(logging)({
+                loginToken: {
+                    ...loginTokenSearchResponse.payload.loginToken,
+                    accessToken: uuid.v4(),
+                    expiredAt: Date.now() + 300000
+                }
             }).then(loginTokenAddResponse => {
                 if (loginTokenAddResponse.error) {
                     return buildErrorResponse(loginTokenAddResponse.error);

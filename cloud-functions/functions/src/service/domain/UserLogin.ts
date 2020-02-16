@@ -2,8 +2,9 @@ import { ILogging } from "../../book/Logging";
 import { Errors } from "../../entity/Errors";
 import { buildErrorResponse, buildResponse, Service } from "../../entity/Service";
 import { User } from "../../entity/User";
-import { loginTokenAdd } from "../crud/LoginTokenAdd";
 import functions = require('firebase-functions');
+import { loginTokenUpsert } from "../crud/LoginTokenUpsert";
+import uuid = require("uuid");
 
 export const userLogin = (logging: ILogging): Service<UserLoginRequest, UserLoginResponse> => req => {
     if (!req.username || !req.password) {
@@ -24,7 +25,14 @@ export const userLogin = (logging: ILogging): Service<UserLoginRequest, UserLogi
         return buildErrorResponse(Errors.USER_NOT_FOUND);
     }
 
-    return loginTokenAdd(logging)({ username: user.username })
+    return loginTokenUpsert(logging)({
+        loginToken: {
+            username: req.username,
+            expiredAt: Date.now() + 5 * 60 * 1000,
+            refreshToken: uuid.v4(),
+            accessToken: uuid.v4()
+        }
+    })
         .then(result => {
             if (result.error) {
                 return buildErrorResponse(result.error);
@@ -34,10 +42,10 @@ export const userLogin = (logging: ILogging): Service<UserLoginRequest, UserLogi
                 return buildErrorResponse(Errors.ERROR_WHILE_USER_LOGIN);
             }
 
-            return buildResponse({
-                accessToken: result.payload.loginToken.accessToken,
-                refreshToken: result.payload.loginToken.refreshToken,
-                expiredAt: result.payload.loginToken.expiredAt
+            return buildResponse<UserLoginResponse>({
+                accessToken: result.payload.loginToken?.accessToken as string,
+                refreshToken: result.payload.loginToken?.refreshToken as string,
+                expiredAt: result.payload.loginToken?.expiredAt as number
             });
         })
         .catch(err => {

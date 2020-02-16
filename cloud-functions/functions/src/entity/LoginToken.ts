@@ -3,6 +3,7 @@ export interface LoginToken {
     expiredAt: number;
     refreshToken: string;
     username: string;
-    enabled: boolean;
-    updated: number;
+    enabled?: boolean;
+    inserted?: number;
+    updated?: number;
 }

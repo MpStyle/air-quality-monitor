@@ -1,6 +1,6 @@
 export interface Device {
     deviceId: string;
-    address: string;
+    address?: string;
     inserted: number;
     deviceIP: string;
     name: string;
