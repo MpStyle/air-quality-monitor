@@ -10,8 +10,8 @@ import uuid = require("uuid");
 
 export const readingUpsert = (logging: ILogging): Service<ReadingUpsertRequest, ReadingUpsertResponse> => req => {
     if (!req.reading
-        || !StringUtils.isNullOrEmpty(req.reading.deviceId)
-        || !StringUtils.isNullOrEmpty(req.reading.type)
+        || StringUtils.isNullOrEmpty(req.reading.deviceId)
+        || StringUtils.isNullOrEmpty(req.reading.type)
         || !req.reading.value) {
         return buildErrorResponse(Errors.INVALID_READING_UPSERT_REQUEST);
     }
