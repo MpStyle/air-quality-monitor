@@ -1,9 +1,9 @@
 import { Typography } from "@material-ui/core";
 import React, { FunctionComponent } from "react";
-import { AreaChart, CartesianGrid, Line, ResponsiveContainer, Tooltip, TooltipProps, XAxis, YAxis, Area } from "recharts";
+import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, TooltipProps, XAxis, YAxis } from "recharts";
+import { Colors } from "../../book/Colors";
 import { TimeRangeReading } from "../../entity/TimeRangeReading";
 import "./Chart.scss";
-import { Colors } from "../../book/Colors";
 
 const ChartTooltip = (props: TooltipProps & { readingsType: string, readingUnitMeter: string }) => {
     if (props.active && !!props.payload) {
