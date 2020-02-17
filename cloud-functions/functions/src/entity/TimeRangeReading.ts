@@ -7,4 +7,6 @@ export interface TimeRangeReading {
     counter: number,
     timeRange: string // use this field as ID
     granularity: Granularity;
+    inserted: number;
+    updated: number;
 }

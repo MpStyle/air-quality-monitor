@@ -36,14 +36,17 @@ export const upsertTimeRangeReadings = (logging: ILogging): Service<UpsertTimeRa
                         granularity: timeRange.granularity,
                         timeRange: timeRange.timeRange,
                         type: req.reading.type,
-                        value: 0
+                        value: 0,
+                        inserted: Date.now(),
+                        updated: Date.now()
                     };
 
                     return timeRangeReadingUpsert(logging)({
                         timeRangeReading: {
                             ...timeRangeReading,
                             counter: timeRangeReading.counter + 1,
-                            value: timeRangeReading.value + req.reading.value
+                            value: timeRangeReading.value + req.reading.value,
+                            updated: Date.now()
                         }
                     });
                 })
