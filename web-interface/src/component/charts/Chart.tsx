@@ -1,8 +1,9 @@
 import { Typography } from "@material-ui/core";
 import React, { FunctionComponent } from "react";
-import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, TooltipProps, XAxis, YAxis } from "recharts";
+import { AreaChart, CartesianGrid, Line, ResponsiveContainer, Tooltip, TooltipProps, XAxis, YAxis, Area } from "recharts";
 import { TimeRangeReading } from "../../entity/TimeRangeReading";
 import "./Chart.scss";
+import { Colors } from "../../book/Colors";
 
 const ChartTooltip = (props: TooltipProps & { readingsType: string, readingUnitMeter: string }) => {
     if (props.active && !!props.payload) {
@@ -27,15 +28,21 @@ export const Chart: FunctionComponent<ChartProps> = (props) => {
         <span className="subtitle">{props.subtitle}</span>
         {props.averages.length === 0 && <div>No data</div>}
         {props.averages.length > 0 && <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={props.averages} maxBarSize={50}>
+            <AreaChart data={props.averages} maxBarSize={50}>
+                <defs>
+                    <linearGradient id="coloraverage" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor={`${Colors.PRIMARY}99`} stopOpacity={0.8} />
+                        <stop offset="95%" stopColor={`${Colors.PRIMARY}99`} stopOpacity={0} />
+                    </linearGradient>
+                </defs>
                 <Tooltip
                     content={<ChartTooltip readingsType={props.readingType} readingUnitMeter={props.readingUnitMeter} />}
                     cursor={{ fill: '#f5f5f5' }} />
-                <Line type="monotone" dataKey="average" fill="#d4d4d4" />
+                <Area type="monotone" dataKey="average" stroke={Colors.PRIMARY} fillOpacity={1} fill="url(#coloraverage)" />
                 <XAxis dataKey="xaxis" />
                 <YAxis width={yAxisWidth} domain={[chartInfo.minValue - 2, chartInfo.maxValue + 2]} />
                 <CartesianGrid strokeDasharray="0 0" vertical={false} />
-            </LineChart>
+            </AreaChart>
         </ResponsiveContainer>}
     </div>;
 };
