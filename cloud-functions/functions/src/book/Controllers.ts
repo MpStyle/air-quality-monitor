@@ -54,12 +54,6 @@ export const controllers = (logging: Logging) => {
             .catch(err => buildErrorResponse(err));
     });
 
-    app.post('/user-suggestions', (req, res) => {
-        userSuggestions(logging)(req.body)
-            .then(data => res.send(data))
-            .catch(err => buildErrorResponse(err));
-    });
-
     // User - Authentication/Authorization
     app.post('/user-login', (req, res) => {
         userLogin(logging)(req.body)
