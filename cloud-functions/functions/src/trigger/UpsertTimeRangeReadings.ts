@@ -27,6 +27,7 @@ export const upsertTimeRangeReadings = (logging: ILogging): Service<UpsertTimeRa
             return timeRangeReadingById(logging)({ timeRangeReadingId: id })
                 .then(response => {
                     if (response.error) {
+                        logging.error("upsertTimeRangeReadings", `Error while get time range reading by id: ${response.error}`);
                         return buildErrorResponse(response.error);
                     }
 
@@ -50,7 +51,7 @@ export const upsertTimeRangeReadings = (logging: ILogging): Service<UpsertTimeRa
                         }
                     });
                 })
-        }, { concurrency: 5 })
+        }, { concurrency: timeRanges.length })
         .then(_ => buildResponse({}))
         .catch(err => {
             logging.error("upsertTimeRangeReadings", `Error while upserting time range readings: ${err}`);

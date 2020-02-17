@@ -95,7 +95,7 @@ export const deviceDataIngestion = (logging: ILogging): Service<DeviceDataIngest
                                     type: ReadingTypes.HUMIDITY,
                                     value: req.airData.humidity
                                 },
-                            ].filter(m => !!m.value);
+                            ].filter(m => m.value !== null && m.value !== undefined);
 
                             return Bluebird.map(readings, (reading) => {
                                 return readingUpsertService({

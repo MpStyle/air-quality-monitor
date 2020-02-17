@@ -12,9 +12,9 @@ export const timeRangeReadingUpsert = (logging: ILogging): Service<TimeRangeRead
         || StringUtils.isNullOrEmpty(req.timeRangeReading.deviceId)
         || StringUtils.isNullOrEmpty(req.timeRangeReading.timeRange)
         || StringUtils.isNullOrEmpty(req.timeRangeReading.type)
-        || !req.timeRangeReading.counter
-        || !req.timeRangeReading.granularity
-        || !req.timeRangeReading.value
+        || req.timeRangeReading.counter === null || req.timeRangeReading.counter === undefined
+        || req.timeRangeReading.granularity === null || req.timeRangeReading.granularity === undefined
+        || req.timeRangeReading.value === null || req.timeRangeReading.value === undefined
     ) {
         return buildErrorResponse(Errors.INVALID_LOGIN_TOKEN_ADD_REQUEST);
     }
