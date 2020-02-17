@@ -6,6 +6,7 @@ import { buildErrorResponse, buildResponse, Service } from "../entity/Service";
 import { timeRangeReadingById } from "../service/crud/TimeRangeReadingById";
 import { timeRangeReadingUpsert } from "../service/crud/TimeRangeReadingUpsert";
 import Bluebird = require("bluebird");
+import { Granularity } from "../entity/Granularity";
 
 export const upsertTimeRangeReadings = (logging: ILogging): Service<UpsertTimeRangeReadingsRequest, {}> => req => {
     logging.info("upsertTimeRangeReadings", "Starts");
@@ -15,26 +16,35 @@ export const upsertTimeRangeReadings = (logging: ILogging): Service<UpsertTimeRa
     const day = StringUtils.padLeft(dateObj.getUTCDate(), '0', 2);
     const month = StringUtils.padLeft(dateObj.getUTCMonth() + 1, '0', 2);
     const year = "" + dateObj.getUTCFullYear();
-    const timeRanges = [year + month + day + hours, year + month + day, year + month];
+    const timeRanges = [
+        { timeRange: year + month + day + hours, granularity: Granularity.daily },
+        { timeRange: year + month + day, granularity: Granularity.monthly },
+        { timeRange: year + month, granularity: Granularity.yearly }
+    ];
 
     return Bluebird
         .map(timeRanges, timeRange => {
-            const id = `${timeRange}_${req.reading.type}_${req.reading.deviceId}`;
+            const id = `${timeRange.timeRange}_${req.reading.type}_${req.reading.deviceId}`;
             return timeRangeReadingById(logging)({ timeRangeReadingId: id })
                 .then(response => {
                     if (response.error) {
                         return buildErrorResponse(response.error);
                     }
 
-                    if (!response.payload || !response.payload.timeRangeReading) {
-                        return buildErrorResponse(Errors.TIME_RANGE_READING_NOT_FOUND);
-                    }
+                    const timeRangeReading = response.payload?.timeRangeReading || {
+                        counter: 0,
+                        deviceId: req.reading.deviceId,
+                        granularity: timeRange.granularity,
+                        timeRange: timeRange.timeRange,
+                        type: req.reading.type,
+                        value: 0
+                    };
 
                     return timeRangeReadingUpsert(logging)({
                         timeRangeReading: {
-                            ...response.payload.timeRangeReading,
-                            counter: response.payload.timeRangeReading.counter + 1,
-                            value: response.payload.timeRangeReading.value + req.reading.value
+                            ...timeRangeReading,
+                            counter: timeRangeReading.counter + 1,
+                            value: timeRangeReading.value + req.reading.value
                         }
                     });
                 })
