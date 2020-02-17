@@ -7,5 +7,4 @@ export interface AirQualityData {
     pressure: number;
     humidity: number;
     temperature: number;
-    loadingState: LoadingState;
 }

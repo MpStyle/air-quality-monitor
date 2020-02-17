@@ -1,39 +1,40 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import { fetchAirQualityDataErrorActionBuilder, fetchAirQualityDataStartActionBuilder, fetchAirQualityDataSuccessActionBuilder } from '../../action/FetchAirQualityDataAction';
 import { fetchDevicesErrorActionBuilder, fetchDevicesStartActionBuilder, fetchDevicesSuccessActionBuilder } from '../../action/FetchDevicesAction';
-import { fetchSuggestionsStartActionBuilder, fetchSuggestionsSuccessActionBuilder } from '../../action/FetchSuggestions';
+import { fetchLastReadingsErrorActionBuilder, fetchLastReadingsStartActionBuilder, fetchLastReadingsSuccessActionBuilder } from '../../action/FetchLastReadingsAction';
+import { updateAirStatusActionBuilder } from '../../action/UpdateAirStatusAction';
+import { updateAirStatusAverageActionBuilder } from '../../action/UpdateAirStatusAverageAction';
 import { updateCurrentDeviceActionBuilder } from '../../action/UpdateCurrentDeviceAction';
-import { co2Quality, humidityQuality, temperatureQuality, tvocQuality } from '../../book/AirQuality';
+import { updateLastReadingsActionBuilder } from '../../action/UpdateLastReadingsAction';
+import { updateSuggestionsActionBuilder } from '../../action/UpdateSuggestionsAction';
 import { userDevicesList } from '../../book/UserDevicesList';
 import { userLastReadings } from '../../book/UserLastReadings';
 import { userRenewAccessToken, UserRenewAccessTokenResponse } from '../../book/UserRenewAccessToken';
 import { AirQualityData } from '../../entity/AirQualityData';
-import { AirQuality } from '../../entity/AirStatus';
+import { AirQuality, AirStatus } from '../../entity/AirStatus';
 import { AppState } from '../../entity/AppState';
 import { Device } from '../../entity/Device';
 import { LoadingState } from '../../entity/LoadingState';
 import { LoginToken } from '../../entity/LoginToken';
 import { ServiceResponse } from '../../entity/ServiceResponse';
-import { fetchSuggestionsErrorActionBuilder } from './../../action/FetchSuggestions';
-import { userSuggestions } from './../../book/UserSuggestions';
 import { Dashboard, DashboardProps } from './Dashboard';
 
 export const DashboardContainer = connect(
     (appState: AppState): DashboardProps => {
         return {
+            lastReadingLoadingState: appState.lastReadingLoadingState,
             token: appState.token,
-            airQualityData: appState.airQualityData,
+            airQualityData: appState.lastReadings,
             airStatus: appState.airStatus,
+            airStatusAverage: appState.airStatusAverage,
             meterUnit: appState.settings.meterUnit,
             currentDevice: appState.currentDevice,
             devicesData: appState.devicesData,
-            suggestions: appState.suggestionsData.suggestions,
+            suggestions: appState.suggestions,
             decimalSeparator: appState.settings.decimalSeparator,
             iconVisualizationType: appState.settings.iconVisualizationType,
-            isLoading: appState.airQualityData.loadingState === LoadingState.loading
+            isLoading: appState.lastReadingLoadingState === LoadingState.loading
                 || appState.devicesData.loadingState === LoadingState.loading
-                || appState.suggestionsData.loadingState === LoadingState.loading
         } as DashboardProps;
     },
     (dispatch: Dispatch): DashboardProps => {
@@ -75,7 +76,7 @@ export const DashboardContainer = connect(
             },
             fetchAirQualityData: (token: LoginToken, currentDeviceId: string) => {
                 const poller = () => {
-                    dispatch(fetchAirQualityDataStartActionBuilder());
+                    dispatch(fetchLastReadingsStartActionBuilder());
 
                     const renewToken: Promise<ServiceResponse<UserRenewAccessTokenResponse>> = token.expiredAt <= Date.now() ? userRenewAccessToken(token.refreshToken) : Promise.resolve({ payload: { accessToken: token.accessToken, expiredAt: token.expiredAt } });
 
@@ -94,41 +95,22 @@ export const DashboardContainer = connect(
                             .then(response => {
                                 if (response.error) {
                                     console.log(response.error);
-                                    dispatch(fetchAirQualityDataErrorActionBuilder(response.error));
+                                    dispatch(fetchLastReadingsErrorActionBuilder(response.error));
                                     return;
                                 }
 
-                                dispatch(fetchAirQualityDataSuccessActionBuilder(response.payload as AirQualityData));
-
-                                dispatch(fetchSuggestionsStartActionBuilder());
-
-                                userSuggestions({
-                                    co2: co2Quality(response.payload?.co2 as number),
-                                    humidity: humidityQuality(response.payload?.humidity as number),
-                                    pressure: AirQuality.Excellent,
-                                    temperature: temperatureQuality(response.payload?.temperature as number),
-                                    tvoc: tvocQuality(response.payload?.tvoc as number),
-                                })
-                                    .then(response => {
-                                        if (response.error) {
-                                            console.log(response.error);
-                                            dispatch(fetchSuggestionsErrorActionBuilder(response.error));
-                                            return;
-                                        }
-
-                                        dispatch(fetchSuggestionsSuccessActionBuilder(response.payload?.suggestions || []));
-                                    })
-                                    .catch(error => {
-                                        console.log(`Error while fetch suggestions: ${error}`);
-                                        dispatch(fetchSuggestionsErrorActionBuilder(error));
-                                    });
+                                dispatch(fetchLastReadingsSuccessActionBuilder());
+                                dispatch(updateLastReadingsActionBuilder(response.payload?.data as AirQualityData))
+                                dispatch(updateSuggestionsActionBuilder(response.payload?.suggestions || []));
+                                dispatch(updateAirStatusActionBuilder(response.payload?.status as AirStatus));
+                                dispatch(updateAirStatusAverageActionBuilder(response.payload?.averageStatus as AirQuality));
 
                                 setTimeout(() => poller(), parseInt(process.env.REACT_APP_AIR_QUALITY_DATA_REFRESH_TIME as string));
                             })
                             .catch((error) => {
                                 console.error(`Error while fetch air quality data: ${error}`);
 
-                                dispatch(fetchAirQualityDataErrorActionBuilder(error));
+                                dispatch(fetchLastReadingsErrorActionBuilder(error));
                             });
                     });
                 };

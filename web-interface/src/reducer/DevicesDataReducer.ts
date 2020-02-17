@@ -1,9 +1,9 @@
 import { Action } from "redux";
+import { DeleteDeviceErrorActionName, DeleteDeviceStartActionName, DeleteDeviceSuccessActionName } from "../action/DeleteDeviceAction";
 import { FetchDevicesErrorActionName, FetchDevicesStartActionName, FetchDevicesSuccessAction, FetchDevicesSuccessActionName } from "../action/FetchDevicesAction";
 import { DevicesData } from "../entity/DevicesData";
 import { LoadingState } from "../entity/LoadingState";
 import { initialAppState } from "../store/InitialAppState";
-import { DeleteDeviceStartActionName, DeleteDeviceErrorActionName, DeleteDeviceSuccessActionName } from "../action/DeleteDeviceAction";
 
 export const devicesDataReducer = (state: DevicesData = initialAppState.devicesData, action: Action): DevicesData => {
     switch (action.type) {

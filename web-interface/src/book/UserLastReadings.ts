@@ -1,3 +1,4 @@
+import { AirQuality, AirStatus } from "../entity/AirStatus";
 import { ServiceResponse } from "../entity/ServiceResponse";
 
 export const userLastReadings = (currentDeviceId: string, accessToken: String): Promise<ServiceResponse<UserMeasurementsSearchResponse>> => {
@@ -20,10 +21,15 @@ export interface UserMeasurementsSearchRequest {
 }
 
 export interface UserMeasurementsSearchResponse {
-    humidity: number | null;
-    temperature: number | null;
-    pressure: number | null;
-    tvoc: number | null;
-    co2: number | null;
-    inserted: number;
+    data: {
+        humidity: number | null;
+        temperature: number | null;
+        pressure: number | null;
+        tvoc: number | null;
+        co2: number | null;
+        inserted: number;
+    };
+    status: AirStatus;
+    averageStatus: AirQuality;
+    suggestions: string[];
 }

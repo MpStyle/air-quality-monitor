@@ -1,4 +1,3 @@
-import { co2Quality, humidityQuality, temperatureQuality, tvocQuality } from '../book/AirQuality';
 import { defaultDecimalSeparator } from '../book/DefaultDecimalSeparator';
 import { IconVisualizationType } from '../book/IconVisualizationType';
 import { localStorageManager } from '../book/LocalStorageManager';
@@ -16,32 +15,30 @@ import { AppState } from './../entity/AppState';
 const currentDevice = localStorageManager.getItem<Device>(LocalStorageKey.CURRENT_DEVICE_KEY);
 
 export const initialAppState: AppState = {
-    airQualityData: {
+    lastReadingLoadingState: LoadingState.none,
+    lastReadings: {
         inserted: localStorageManager.getItem(LocalStorageKey.INSERTED_KEY),
         co2: localStorageManager.getItem(LocalStorageKey.CO2_KEY),
         tvoc: localStorageManager.getItem(LocalStorageKey.TVOC_KEY),
         pressure: localStorageManager.getItem(LocalStorageKey.PRESSURE_KEY),
         humidity: localStorageManager.getItem(LocalStorageKey.HUMIDITY_KEY),
         temperature: localStorageManager.getItem(LocalStorageKey.TEMPERATURE_KEY),
-        loadingState: LoadingState.none
     } as AirQualityData,
     airStatus: {
-        co2: co2Quality(localStorageManager.getItem(LocalStorageKey.CO2_KEY) ?? AirQuality.VeryBad),
-        humidity: humidityQuality(localStorageManager.getItem(LocalStorageKey.HUMIDITY_KEY) ?? AirQuality.VeryBad),
-        pressure: AirQuality.Excellent,
-        temperature: temperatureQuality(localStorageManager.getItem(LocalStorageKey.TEMPERATURE_KEY) ?? AirQuality.VeryBad),
-        tvoc: tvocQuality(localStorageManager.getItem(LocalStorageKey.TVOC_KEY) ?? AirQuality.VeryBad),
+        co2: localStorageManager.getItem(LocalStorageKey.CO2_STATUS_KEY) ?? AirQuality.VeryBad,
+        humidity: localStorageManager.getItem(LocalStorageKey.HUMIDITY_STATUS_KEY) ?? AirQuality.VeryBad,
+        pressure: localStorageManager.getItem(LocalStorageKey.PRESSURE_STATUS_KEY) ?? AirQuality.VeryBad,
+        temperature: localStorageManager.getItem(LocalStorageKey.TEMPERATURE_STATUS_KEY) ?? AirQuality.VeryBad,
+        tvoc: localStorageManager.getItem(LocalStorageKey.TVOC_STATUS_KEY) ?? AirQuality.VeryBad,
     } as AirStatus,
+    airStatusAverage: localStorageManager.getItem(LocalStorageKey.AIR_STATUS_AVERAGE_KEY) ?? AirQuality.VeryBad,
     devicesData: {
         devices: currentDevice ? [currentDevice] : [],
         loadingState: LoadingState.none,
         deletingState: LoadingState.none
     },
     currentDevice: currentDevice,
-    suggestionsData: {
-        suggestions: sessionStorageManager.getItem(LocalStorageKey.SUGGESTIONS_KEY) ?? [],
-        loadingState: LoadingState.none
-    },
+    suggestions: sessionStorageManager.getItem(LocalStorageKey.SUGGESTIONS_KEY) ?? [],
     token: sessionStorageManager.getItem(SessionStorageKey.TOKEN_KEY),
     loginStatus: LoginStatus.None,
     settings: {

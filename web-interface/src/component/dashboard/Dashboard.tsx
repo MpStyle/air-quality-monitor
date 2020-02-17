@@ -1,8 +1,7 @@
 import React, { FunctionComponent, useEffect } from 'react';
 import 'react-alice-carousel/lib/alice-carousel.css';
-import { averageAirStatus } from "../../book/AverageAirStatus";
 import { AirQualityData } from '../../entity/AirQualityData';
-import { AirStatus } from "../../entity/AirStatus";
+import { AirQuality, AirStatus } from "../../entity/AirStatus";
 import { Device } from "../../entity/Device";
 import { DevicesData } from '../../entity/DevicesData';
 import { LoadingState } from '../../entity/LoadingState';
@@ -25,8 +24,6 @@ export const Dashboard: FunctionComponent<DashboardProps> = (props) => {
         }
     }, [props.currentDevice]);
 
-    const average = averageAirStatus(props.airStatus);
-
     const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
         if (event.type === "keydown" && ((event as React.KeyboardEvent).key === "Tab" || (event as React.KeyboardEvent).key === "Shift")) {
             return;
@@ -41,10 +38,10 @@ export const Dashboard: FunctionComponent<DashboardProps> = (props) => {
             toggleDrawer={toggleDrawer} />
 
         <DashboardHeader
-            isLoading={props.devicesData.loadingState === LoadingState.loading || props.airQualityData.loadingState === LoadingState.loading}
+            isLoading={props.devicesData.loadingState === LoadingState.loading || props.lastReadingLoadingState === LoadingState.loading}
             devices={props.devicesData.devices}
             currentDevice={props.currentDevice}
-            average={average}
+            average={props.airStatusAverage}
             toggleDrawer={toggleDrawer}
             onCurrentDeviceChange={props.onCurrentDeviceChange}
             suggestions={props.suggestions} />
@@ -68,6 +65,7 @@ export interface DashboardProps {
 
     airQualityData: AirQualityData;
     airStatus: AirStatus;
+    airStatusAverage: AirQuality;
     meterUnit: MeterUnit;
 
     devicesData: DevicesData;
@@ -82,4 +80,5 @@ export interface DashboardProps {
     iconVisualizationType: string;
 
     isLoading: boolean;
+    lastReadingLoadingState: LoadingState;
 }

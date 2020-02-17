@@ -1,7 +1,6 @@
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { updateTokenActionBuilder } from "../../action/UpdateTokenAction";
-import { averageAirStatus } from "../../book/AverageAirStatus";
 import { localStorageManager } from "../../book/LocalStorageManager";
 import { sessionStorageManager } from "../../book/SessionStorageManager";
 import { userRevokeRefreshToken } from "../../book/UserRevokeRefreshToken";
@@ -13,7 +12,7 @@ export const AppDrawerContainer = connect(
         return {
             currentDevice: appState.currentDevice,
             isOpen: props.isOpen,
-            average: averageAirStatus(appState.airStatus),
+            average: appState.airStatusAverage,
             toggleDrawer: props.toggleDrawer,
             refreshToken: appState.token?.refreshToken,
             username: appState.token?.username
