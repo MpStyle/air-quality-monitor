@@ -1,12 +1,11 @@
 import { ILogging } from "../book/Logging";
 import { StringUtils } from "../book/StringUtils";
-import { Errors } from "../entity/Errors";
+import { Granularity } from "../entity/Granularity";
 import { Reading } from "../entity/Reading";
 import { buildErrorResponse, buildResponse, Service } from "../entity/Service";
 import { timeRangeReadingById } from "../service/crud/TimeRangeReadingById";
 import { timeRangeReadingUpsert } from "../service/crud/TimeRangeReadingUpsert";
 import Bluebird = require("bluebird");
-import { Granularity } from "../entity/Granularity";
 
 export const upsertTimeRangeReadings = (logging: ILogging): Service<UpsertTimeRangeReadingsRequest, {}> => req => {
     logging.info("upsertTimeRangeReadings", "Starts");
