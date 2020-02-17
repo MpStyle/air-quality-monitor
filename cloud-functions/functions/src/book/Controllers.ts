@@ -3,14 +3,13 @@ import { Logging } from '../book/Logging';
 import { buildErrorResponse } from '../entity/Service';
 import { deviceDataIngestion } from '../service/domain/DeviceDataIngestion';
 import { healthCheck } from '../service/domain/HealthCheck';
+import { userDeviceDelete } from '../service/domain/UserDeviceDelete';
 import { userDevicesList } from '../service/domain/UserDevicesList';
-import { userLogin } from '../service/domain/UserLogin';
 import { userLastReadings as userLastReadings } from '../service/domain/UserLastReadings';
+import { userLogin } from '../service/domain/UserLogin';
 import { userRenewAccessToken } from '../service/domain/UserRenewAccessToken';
 import { userRevokeRefreshToken } from '../service/domain/UserRevokeRefreshToken';
 import { userTimeRangeReadings } from '../service/domain/UserTimeRangeReadings';
-import { userDeviceDelete } from '../service/domain/UserDeviceDelete';
-import { userSuggestions } from './../service/domain/UserSuggestions';
 
 export const controllers = (logging: Logging) => {
     const cors = require('cors')({ origin: true });
