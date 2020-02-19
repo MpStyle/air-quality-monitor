@@ -5,14 +5,14 @@ import Typography from "@material-ui/core/Typography/Typography";
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import React, { FunctionComponent } from 'react';
 import { Link } from "react-router-dom";
-import { DASHBOARD_URL } from "../../book/Pages";
+import { Pages } from "../../book/Pages";
 import { AppBarOneRow } from '../common/AppBarOneRow';
 import "./Credits.scss";
 
 export const Credits: FunctionComponent<CreditsProps> = (_props) => {
     return <div className="credits">
         <AppBarOneRow>
-            <IconButton edge="start" color="inherit" aria-label="menu" component={Link} to={DASHBOARD_URL} className="back-button">
+            <IconButton edge="start" color="inherit" aria-label="menu" component={Link} to={Pages.DASHBOARD_URL} className="back-button">
                 <ArrowBackIosIcon />
             </IconButton>
             <Typography variant="h6">

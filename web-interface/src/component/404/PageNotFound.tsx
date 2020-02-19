@@ -4,7 +4,7 @@ import Paper from "@material-ui/core/Paper/Paper";
 import Toolbar from "@material-ui/core/Toolbar/Toolbar";
 import Typography from "@material-ui/core/Typography/Typography";
 import React, { FunctionComponent } from "react";
-import { DASHBOARD_URL } from "../../book/Pages";
+import { Pages } from "../../book/Pages";
 import "./PageNotFound.scss";
 
 export const NotFoundPage: FunctionComponent<{}> = () => {
@@ -21,7 +21,7 @@ export const NotFoundPage: FunctionComponent<{}> = () => {
                 Page not found
             </Typography>
 
-            <Button href={`#${DASHBOARD_URL}`} className="to-homepage" variant="contained">Go to home page</Button>
+            <Button href={`#${Pages.DASHBOARD_URL}`} className="to-homepage" variant="contained">Go to home page</Button>
         </Paper>
 
     </div>;

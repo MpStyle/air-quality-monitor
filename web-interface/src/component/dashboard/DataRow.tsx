@@ -6,7 +6,7 @@ import { airQualityToLabel } from '../../book/AirQualityToLabel';
 import { IconVisualizationType } from '../../book/IconVisualizationType';
 import { AirQuality } from '../../entity/AirStatus';
 import warning from '../../images/warning.svg';
-import { CHARTS_URL } from './../../book/Pages';
+import { Pages } from './../../book/Pages';
 import './DataRow.scss';
 
 export const DataRow: FunctionComponent<DataRowProps> = (props: DataRowProps) => {
@@ -14,7 +14,7 @@ export const DataRow: FunctionComponent<DataRowProps> = (props: DataRowProps) =>
         return null;
     }
 
-    return <Link to={`${CHARTS_URL}/${props.measurementType}`} className="data" title={props.title}>
+    return <Link to={`${Pages.CHARTS_URL}/${props.measurementType}`} className="data" title={props.title}>
         {(props.iconVisualizationType === IconVisualizationType.icon || props.iconVisualizationType === IconVisualizationType.both) && <span className="icon">
             <img src={props.icon} className="value-icon" alt={props.title} />
         </span>}

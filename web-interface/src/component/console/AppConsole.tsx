@@ -5,7 +5,7 @@ import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import React, { FunctionComponent } from "react";
 import { Link } from "react-router-dom";
 import { DateTimeUtils } from "../../book/DateTimeUtils";
-import { DASHBOARD_URL } from "../../book/Pages";
+import { Pages } from "../../book/Pages";
 import { AppError } from "../../entity/AppError";
 import { AppBarOneRow } from "../common/AppBarOneRow";
 import "./AppConsole.scss";
@@ -15,7 +15,7 @@ export const AppConsole: FunctionComponent<ConsoleProps> = (props) => {
 
     return <div className="app-console">
         <AppBarOneRow>
-            <IconButton edge="start" color="inherit" aria-label="menu" component={Link} to={DASHBOARD_URL} className="back-button">
+            <IconButton edge="start" color="inherit" aria-label="menu" component={Link} to={Pages.DASHBOARD_URL} className="back-button">
                 <ArrowBackIosIcon />
             </IconButton>
             <Typography variant="h6">

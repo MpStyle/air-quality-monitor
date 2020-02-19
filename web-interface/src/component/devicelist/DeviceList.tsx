@@ -16,7 +16,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import InfoIcon from '@material-ui/icons/Info';
 import React, { FunctionComponent, useState } from "react";
 import { Link } from "react-router-dom";
-import { DASHBOARD_URL } from "../../book/Pages";
+import { Pages } from "../../book/Pages";
 import { Device } from "../../entity/Device";
 import { LoginToken } from "../../entity/LoginToken";
 import { AppBarOneRow } from "../common/AppBarOneRow";
@@ -45,7 +45,7 @@ export const DeviceList: FunctionComponent<DevicesListProps> = (props) => {
 
     return <div className="devices-list">
         <AppBarOneRow>
-            <IconButton edge="start" color="inherit" aria-label="menu" component={Link} to={DASHBOARD_URL} className="back-button">
+            <IconButton edge="start" color="inherit" aria-label="menu" component={Link} to={Pages.DASHBOARD_URL} className="back-button">
                 <ArrowBackIosIcon />
             </IconButton>
             <Typography variant="h6">

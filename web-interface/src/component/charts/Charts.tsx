@@ -13,7 +13,7 @@ import * as React from 'react';
 import { useEffect, useState, FunctionComponent } from "react";
 import { useParams, Link } from "react-router-dom";
 import { DateTimeUtils } from '../../book/DateTimeUtils';
-import { DASHBOARD_URL } from "../../book/Pages";
+import { Pages } from "../../book/Pages";
 import { StringUtils } from "../../book/StringUtils";
 import { AirQualityDataAverages } from "../../entity/AirQualityDataAverages";
 import { LoadingState } from "../../entity/LoadingState";
@@ -41,7 +41,7 @@ export const Charts: FunctionComponent<ChartsProps> = (props) => {
 
     return <div className="charts">
         <AppBarOneRow>
-            <IconButton edge="start" color="inherit" aria-label="back to dashboard" component={Link} to={DASHBOARD_URL} className="back-button">
+            <IconButton edge="start" color="inherit" aria-label="back to dashboard" component={Link} to={Pages.DASHBOARD_URL} className="back-button">
                 <ArrowBackIosIcon />
             </IconButton>
             <Typography variant="h6">

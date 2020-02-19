@@ -15,7 +15,7 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import React, { FunctionComponent } from "react";
 import { Link } from "react-router-dom";
 import { airQualityToLabel } from "../../book/AirQualityToLabel";
-import { APP_CONSOLE_URL, APP_SETTINGS_URL, CREDITS_URL, DEVICE_LIST_URL } from '../../book/Pages';
+import { Pages } from '../../book/Pages';
 import { Device } from "../../entity/Device";
 import logo from '../../images/logo.svg';
 import "./AppDrawer.scss";
@@ -62,25 +62,25 @@ export const AppDrawer: FunctionComponent<AppDrawerProps> = (props) => {
             <Divider />
 
             <List>
-                <ListItem button className="list-item" component={Link} to={DEVICE_LIST_URL}>
+                <ListItem button className="list-item" component={Link} to={Pages.DEVICE_LIST_URL}>
                     <ListItemIcon>
                         <FormatListBulletedIcon />
                     </ListItemIcon>
                     <ListItemText primary="Device List" />
                 </ListItem>
-                <ListItem button className="list-item" component={Link} to={APP_SETTINGS_URL}>
+                <ListItem button className="list-item" component={Link} to={Pages.APP_SETTINGS_URL}>
                     <ListItemIcon>
                         <SettingsIcon />
                     </ListItemIcon>
                     <ListItemText primary="Settings" />
                 </ListItem>
-                <ListItem button className="list-item" component={Link} to={CREDITS_URL}>
+                <ListItem button className="list-item" component={Link} to={Pages.CREDITS_URL}>
                     <ListItemIcon>
                         <InfoIcon />
                     </ListItemIcon>
                     <ListItemText primary="Credits" />
                 </ListItem>
-                <ListItem button className="list-item" component={Link} to={APP_CONSOLE_URL}>
+                <ListItem button className="list-item" component={Link} to={Pages.APP_CONSOLE_URL}>
                     <ListItemIcon>
                         <DashboardIcon />
                     </ListItemIcon>

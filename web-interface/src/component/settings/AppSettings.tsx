@@ -7,7 +7,7 @@ import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import React, { FunctionComponent } from "react";
 import { Link } from "react-router-dom";
 import { IconVisualizationType } from "../../book/IconVisualizationType";
-import { DASHBOARD_URL } from "../../book/Pages";
+import { Pages } from "../../book/Pages";
 import { TemperatureUnit } from "../../book/Unit";
 import { AppBarOneRow } from "../common/AppBarOneRow";
 import "./AppSettings.scss";
@@ -15,7 +15,7 @@ import "./AppSettings.scss";
 export const AppSettings: FunctionComponent<AppSettingsProps> = (props) => {
     return <div className="app-settings">
         <AppBarOneRow>
-            <IconButton edge="start" color="inherit" aria-label="menu" component={Link} to={DASHBOARD_URL} className="back-button">
+            <IconButton edge="start" color="inherit" aria-label="menu" component={Link} to={Pages.DASHBOARD_URL} className="back-button">
                 <ArrowBackIosIcon />
             </IconButton>
             <Typography variant="h6">
