@@ -37,7 +37,7 @@ export const initialAppState: AppState = {
         deletingState: LoadingState.none
     },
     currentDevice: currentDevice,
-    suggestions: sessionStorageManager.getItem(LocalStorageKey.SUGGESTIONS_KEY) ?? [],
+    suggestions: localStorageManager.getItem(LocalStorageKey.SUGGESTIONS_KEY) ?? [],
     token: sessionStorageManager.getItem(SessionStorageKey.TOKEN_KEY),
     loginStatus: LoadingState.none,
     settings: {
