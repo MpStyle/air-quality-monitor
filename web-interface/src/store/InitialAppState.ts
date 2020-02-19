@@ -7,7 +7,6 @@ import { AirQualityData } from '../entity/AirQualityData';
 import { AirQuality, AirStatus } from '../entity/AirStatus';
 import { Device } from '../entity/Device';
 import { LoadingState } from '../entity/LoadingState';
-import { LoginStatus } from '../entity/LoginStatus';
 import { LocalStorageKey } from './../book/LocalStorageKey';
 import { SessionStorageKey } from './../book/SessionStorageKey';
 import { AppState } from './../entity/AppState';
@@ -40,7 +39,7 @@ export const initialAppState: AppState = {
     currentDevice: currentDevice,
     suggestions: sessionStorageManager.getItem(LocalStorageKey.SUGGESTIONS_KEY) ?? [],
     token: sessionStorageManager.getItem(SessionStorageKey.TOKEN_KEY),
-    loginStatus: LoginStatus.None,
+    loginStatus: LoadingState.none,
     settings: {
         iconVisualizationType: localStorageManager.getItem(LocalStorageKey.ICON_LABEL_VISUALIZATION_TYPE_KEY) || IconVisualizationType.icon,
         decimalSeparator: defaultDecimalSeparator(),

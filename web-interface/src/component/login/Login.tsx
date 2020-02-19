@@ -2,10 +2,10 @@ import { Button, CircularProgress, Paper, TextField, Typography } from "@materia
 import React, { useState, FunctionComponent } from 'react';
 import { useLocation, RouteChildrenProps } from 'react-router';
 import { Link, Redirect } from "react-router-dom";
-import { LoginStatus } from "../../entity/LoginStatus";
 import { LoginToken } from "../../entity/LoginToken";
 import logo from '../../images/logo.svg';
 import "./Login.scss";
+import { LoadingState } from "../../entity/LoadingState";
 ;
 
 function useQuery() {
@@ -27,14 +27,14 @@ export const Login: FunctionComponent<LoginProps> = (props) => {
                 <img src={logo} alt="Air Quality Monitor logo" /> Air Quality Monitor
             </Typography>
 
-            {props.loginStatus === LoginStatus.InProgress && <div className="login-in-progress">
+            {props.loginStatus === LoadingState.loading && <div className="login-in-progress">
                 <CircularProgress />
                 <Typography variant="body1" className="message" color="textSecondary">
                     Login in progress
                 </Typography>
             </div>}
 
-            {props.loginStatus !== LoginStatus.InProgress && <React.Fragment>
+            {props.loginStatus !== LoadingState.loading && <React.Fragment>
                 <Typography variant="h6" className="subtitle1">
                     Sign in
                 </Typography>
@@ -54,7 +54,7 @@ export const Login: FunctionComponent<LoginProps> = (props) => {
                     value={password || ""}
                     onChange={event => setPassword(event.target.value as string)}
                 />
-                {props.loginStatus === LoginStatus.Error && <Typography variant="body1" className="login-error" color="error">
+                {props.loginStatus === LoadingState.error && <Typography variant="body1" className="login-error" color="error">
                     Error during login. Check the credentials and try again
                 </Typography>}
                 <div className="sign-in-button-container">
@@ -80,5 +80,5 @@ export interface LoginProps extends RouteChildrenProps {
     onSignInClick: (username: string | null | undefined, password: string | null | undefined) => void;
     fallbackUrl: string;
     token: LoginToken | null;
-    loginStatus: LoginStatus;
+    loginStatus: LoadingState;
 }
