@@ -1,4 +1,5 @@
 import Box from '@material-ui/core/Box/Box';
+import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress';
 import IconButton from '@material-ui/core/IconButton/IconButton';
 import Menu from '@material-ui/core/Menu/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -10,7 +11,6 @@ import 'react-alice-carousel/lib/alice-carousel.css';
 import { airQualityToLabel } from "../../book/AirQualityToLabel";
 import { Device } from '../../entity/Device';
 import './DashboardHeader.scss';
-import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress';
 
 export const DashboardHeader: FunctionComponent<DashboardHeaderProps> = (props) => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);

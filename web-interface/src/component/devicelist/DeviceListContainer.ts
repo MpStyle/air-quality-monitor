@@ -9,7 +9,7 @@ import { AppState } from "../../entity/AppState";
 import { LoadingState } from "../../entity/LoadingState";
 import { LoginToken } from "../../entity/LoginToken";
 import { ServiceResponse } from "../../entity/ServiceResponse";
-import { DeviceList, DevicesListProps } from "./DeviceList";
+import { DevicesListProps, DeviceList } from "./DeviceList";
 
 export const DeviceListContainer = connect(
     (appState: AppState): DevicesListProps => {

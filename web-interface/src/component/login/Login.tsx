@@ -2,11 +2,10 @@ import { Button, CircularProgress, Paper, TextField, Typography } from "@materia
 import React, { useState, FunctionComponent } from 'react';
 import { useLocation, RouteChildrenProps } from 'react-router';
 import { Link, Redirect } from "react-router-dom";
+import { LoadingState } from "../../entity/LoadingState";
 import { LoginToken } from "../../entity/LoginToken";
 import logo from '../../images/logo.svg';
 import "./Login.scss";
-import { LoadingState } from "../../entity/LoadingState";
-;
 
 function useQuery() {
     return new URLSearchParams(useLocation().search);

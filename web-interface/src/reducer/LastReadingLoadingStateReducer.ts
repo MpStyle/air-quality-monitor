@@ -1,6 +1,6 @@
 import { Action } from "redux";
-import { FetchLastReadingsErrorActionName, FetchLastReadingsName, FetchLastReadingsSuccessActionName } from '../action/FetchLastReadingsAction';
 import { FetchDevicesSuccessAction, FetchDevicesSuccessActionName } from "../action/FetchDevicesAction";
+import { FetchLastReadingsErrorActionName, FetchLastReadingsName, FetchLastReadingsSuccessActionName } from '../action/FetchLastReadingsAction';
 import { LoadingState } from "../entity/LoadingState";
 import { initialAppState } from "../store/InitialAppState";
 

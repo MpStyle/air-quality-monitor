@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect } from 'react';
+import React, { useEffect, FunctionComponent } from 'react';
 import 'react-alice-carousel/lib/alice-carousel.css';
 import { AirQualityData } from '../../entity/AirQualityData';
 import { AirQuality, AirStatus } from "../../entity/AirStatus";

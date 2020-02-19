@@ -14,7 +14,7 @@ import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import InfoIcon from '@material-ui/icons/Info';
-import React, { FunctionComponent, useState } from "react";
+import React, { useState, FunctionComponent } from "react";
 import { Link } from "react-router-dom";
 import { Pages } from "../../book/Pages";
 import { Device } from "../../entity/Device";

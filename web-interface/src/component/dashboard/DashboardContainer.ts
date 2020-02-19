@@ -100,7 +100,7 @@ export const DashboardContainer = connect(
                                 }
 
                                 dispatch(fetchLastReadingsSuccessActionBuilder());
-                                dispatch(updateLastReadingsActionBuilder(response.payload?.data as AirQualityData))
+                                dispatch(updateLastReadingsActionBuilder(response.payload?.data as AirQualityData));
                                 dispatch(updateSuggestionsActionBuilder(response.payload?.suggestions || []));
                                 dispatch(updateAirStatusActionBuilder(response.payload?.status as AirStatus));
                                 dispatch(updateAirStatusAverageActionBuilder(response.payload?.averageStatus as AirQuality));

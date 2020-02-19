@@ -1,7 +1,7 @@
 import { Action } from "redux";
 import { DeleteDeviceErrorAction, DeleteDeviceErrorActionName } from "../action/DeleteDeviceAction";
-import { FetchLastReadingsErrorAction, FetchLastReadingsErrorActionName } from "../action/FetchLastReadingsAction";
 import { FetchDevicesErrorAction, FetchDevicesErrorActionName } from "../action/FetchDevicesAction";
+import { FetchLastReadingsErrorAction, FetchLastReadingsErrorActionName } from "../action/FetchLastReadingsAction";
 import { FetchTimeRangeErrorAction, FetchTimeRangeErrorActionName } from "../action/FetchTimeRangeAction";
 import { AppError } from "../entity/AppError";
 import { initialAppState } from "../store/InitialAppState";
