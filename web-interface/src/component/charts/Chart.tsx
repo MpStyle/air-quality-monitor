@@ -2,14 +2,29 @@ import { Typography } from "@material-ui/core";
 import React, { FunctionComponent } from "react";
 import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, TooltipProps, XAxis, YAxis } from "recharts";
 import { Colors } from "../../book/Colors";
+import { Granularity } from "../../entity/Granularity";
 import { TimeRangeReading } from "../../entity/TimeRangeReading";
 import "./Chart.scss";
 
 const ChartTooltip = (props: TooltipProps & { readingsType: string, readingUnitMeter: string }) => {
     if (props.active && !!props.payload) {
+        let label = '';
+        switch (props.payload[0].payload.granularity) {
+            case Granularity.daily:
+                label = 'hour';
+                break;
+            case Granularity.monthly:
+                label = 'day';
+                break;
+            case Granularity.yearly:
+                label = 'month';
+                break;
+        }
+
         return <div className="chart-tooltip">
             <div className="label"><strong>{props.readingsType}</strong>: {props.payload[0].value}{props.readingUnitMeter}</div>
             <div><strong>Reading date</strong>: {props.payload[0].payload.datetime}</div>
+            <div><strong>Readings per {label}</strong>: {props.payload[0].payload.counter}</div>
         </div>;
     }
 
@@ -48,7 +63,7 @@ export const Chart: FunctionComponent<ChartProps> = (props) => {
 };
 
 export interface ChartProps {
-    averages: (TimeRangeReading & { average: number, xaxis: string, datetime: string })[];
+    averages: (TimeRangeReading & { average: number, xaxis: string, datetime: string, counter: number, granularity: Granularity })[];
     title: string;
     subtitle: string;
     readingType: string;

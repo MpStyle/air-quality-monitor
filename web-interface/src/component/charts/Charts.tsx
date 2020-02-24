@@ -82,29 +82,50 @@ export const Charts: FunctionComponent<ChartsProps> = (props) => {
                     </MuiPickersUtilsProvider>
                 </div>
 
-                <Chart title="Hourly" subtitle={DateTimeUtils.epochToFormatedDate(selectedTimestamp, "YYYY-MM-DD")} readingUnitMeter={props.unitMeter(readingType as string)} readingType={props.title(readingType as string)} averages={props.airQualityDataAverages.dailyAverages.map(da => {
-                    const utcDate = new Date(Date.UTC(parseInt(da.timeRange.substring(0, 4)), parseInt(da.timeRange.substring(4, 6)), parseInt(da.timeRange.substring(6, 8)), parseInt(da.timeRange.substring(8, 10)), 0, 0));
-                    return {
+                <Chart
+                    title="Hourly"
+                    subtitle={DateTimeUtils.epochToFormatedDate(selectedTimestamp, "YYYY-MM-DD")}
+                    readingUnitMeter={props.unitMeter(readingType as string)}
+                    readingType={props.title(readingType as string)}
+                    averages={props.airQualityDataAverages.dailyAverages.map(da => {
+                        const utcDate = new Date(Date.UTC(parseInt(da.timeRange.substring(0, 4)), parseInt(da.timeRange.substring(4, 6)), parseInt(da.timeRange.substring(6, 8)), parseInt(da.timeRange.substring(8, 10)), 0, 0));
+                        return {
+                            ...da,
+                            average: parseFloat((da.value / da.counter).toFixed(1)),
+                            count: da.value,
+                            xaxis: utcDate.getHours().toString(),
+                            datetime: `${utcDate.getFullYear()}-${StringUtils.padLeft(utcDate.getMonth() + 1, '0', 2)}-${StringUtils.padLeft(utcDate.getDate(), '0', 2)} ${utcDate.getHours()}:00`,
+                            granularity: da.granularity
+                        };
+                    })} />
+
+                <Chart
+                    title="Daily"
+                    subtitle={DateTimeUtils.epochToFormatedDate(selectedTimestamp, "YYYY-MM")}
+                    readingUnitMeter={props.unitMeter(readingType as string)}
+                    readingType={props.title(readingType as string)}
+                    averages={props.airQualityDataAverages.monthlyAverages.map(da => ({
                         ...da,
                         average: parseFloat((da.value / da.counter).toFixed(1)),
-                        xaxis: utcDate.getHours().toString(),
-                        datetime: `${utcDate.getFullYear()}-${StringUtils.padLeft(utcDate.getMonth() + 1, '0', 2)}-${StringUtils.padLeft(utcDate.getDate(), '0', 2)} ${utcDate.getHours()}:00`
-                    };
-                })} />
+                        count: da.value,
+                        xaxis: da.timeRange.substring(4, 6) + '-' + da.timeRange.substring(6),
+                        datetime: da.timeRange.substring(0, 4) + '-' + da.timeRange.substring(4, 6) + '-' + da.timeRange.substring(6),
+                        granularity: da.granularity
+                    }))} />
 
-                <Chart title="Daily" subtitle={DateTimeUtils.epochToFormatedDate(selectedTimestamp, "YYYY-MM")} readingUnitMeter={props.unitMeter(readingType as string)} readingType={props.title(readingType as string)} averages={props.airQualityDataAverages.monthlyAverages.map(da => ({
-                    ...da,
-                    average: parseFloat((da.value / da.counter).toFixed(1)),
-                    xaxis: da.timeRange.substring(4, 6) + '-' + da.timeRange.substring(6),
-                    datetime: da.timeRange.substring(0, 4) + '-' + da.timeRange.substring(4, 6) + '-' + da.timeRange.substring(6)
-                }))} />
-
-                <Chart title="Montly" subtitle={DateTimeUtils.epochToFormatedDate(selectedTimestamp, "YYYY")} readingUnitMeter={props.unitMeter(readingType as string)} readingType={props.title(readingType as string)} averages={props.airQualityDataAverages.yearlyAverages.map(da => ({
-                    ...da,
-                    average: parseFloat((da.value / da.counter).toFixed(1)),
-                    xaxis: da.timeRange.substring(0, 4) + '-' + da.timeRange.substring(4),
-                    datetime: da.timeRange.substring(0, 4) + '-' + da.timeRange.substring(4),
-                }))} />
+                <Chart
+                    title="Montly"
+                    subtitle={DateTimeUtils.epochToFormatedDate(selectedTimestamp, "YYYY")}
+                    readingUnitMeter={props.unitMeter(readingType as string)}
+                    readingType={props.title(readingType as string)}
+                    averages={props.airQualityDataAverages.yearlyAverages.map(da => ({
+                        ...da,
+                        average: parseFloat((da.value / da.counter).toFixed(1)),
+                        counter: da.counter,
+                        xaxis: da.timeRange.substring(0, 4) + '-' + da.timeRange.substring(4),
+                        datetime: da.timeRange.substring(0, 4) + '-' + da.timeRange.substring(4),
+                        granularity: da.granularity
+                    }))} />
             </Paper>}
         </main>
     </div>;
