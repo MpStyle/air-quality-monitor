@@ -15,6 +15,7 @@ import temperature from '../../images/temperature.svg';
 import tvoc from '../../images/tvoc.svg';
 import { DataRow } from "./DataRow";
 import "./DeviceAirQualityData.scss";
+import { IconVisualizationType } from "../../book/IconVisualizationType";
 
 export const DeviceAirQualityData: FunctionComponent<AirQualityDataProps> = (props) => {
     const noData = !props.airQualityData.temperature &&
@@ -113,6 +114,6 @@ export interface AirQualityDataProps {
     airStatus: AirStatus;
     meterUnit: MeterUnit;
     decimalSeparator: string;
-    iconVisualizationType: string;
+    iconVisualizationType: IconVisualizationType;
     isLoading: boolean;
 }

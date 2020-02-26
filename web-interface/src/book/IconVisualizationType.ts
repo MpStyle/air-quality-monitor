@@ -1,5 +1,5 @@
-export const IconVisualizationType = {
-    icon: "icon",
-    label: "label",
-    both: "both"
-};
+export enum IconVisualizationType {
+    icon,
+    label,
+    both
+}

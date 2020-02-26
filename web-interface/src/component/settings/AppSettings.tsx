@@ -60,7 +60,7 @@ export const AppSettings: FunctionComponent<AppSettingsProps> = (props) => {
                         <Typography variant="subtitle2" className="secondary-label"></Typography>
                     </div>
                     <div className="configuration">
-                        <NativeSelect value={props.iconVisualizationType} onChange={(event) => props.onIconVisualizationTypeChange(event.target.value as string)}>
+                        <NativeSelect value={props.iconVisualizationType} onChange={(event) => props.onIconVisualizationTypeChange(parseInt(event.target.value) as IconVisualizationType)}>
                             <option value={IconVisualizationType.icon}>Icon</option>
                             <option value={IconVisualizationType.label}>Label</option>
                             <option value={IconVisualizationType.both}>Both</option>
@@ -79,6 +79,6 @@ export interface AppSettingsProps {
     decimalSeparator: string;
     onDecimalSeparatorChange: (decimalSeparator: string) => void;
 
-    iconVisualizationType: string;
-    onIconVisualizationTypeChange: (value: string) => void;
+    iconVisualizationType: IconVisualizationType;
+    onIconVisualizationTypeChange: (value: IconVisualizationType) => void;
 }

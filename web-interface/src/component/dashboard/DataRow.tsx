@@ -40,6 +40,6 @@ export interface DataRowProps {
     value: number | string;
     meter: string;
     quality: AirQuality;
-    iconVisualizationType: string;
+    iconVisualizationType: IconVisualizationType;
     measurementType: string;
 }

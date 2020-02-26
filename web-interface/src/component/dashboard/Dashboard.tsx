@@ -11,6 +11,7 @@ import { AppDrawerContainer } from '../common/AppDrawerContainer';
 import './Dashboard.scss';
 import { DashboardHeader } from './DashboardHeader';
 import { DeviceAirQualityData } from './DeviceAirQualityData';
+import { IconVisualizationType } from '../../book/IconVisualizationType';
 
 export const Dashboard: FunctionComponent<DashboardProps> = (props) => {
     const [isAppDrawerOpen, setIsAppDrawerOpen] = React.useState(false);
@@ -77,7 +78,7 @@ export interface DashboardProps {
     fetchDevices: (token: LoginToken) => void;
     fetchAirQualityData: (token: LoginToken, currentDeviceId: string) => void;
 
-    iconVisualizationType: string;
+    iconVisualizationType: IconVisualizationType;
 
     isLoading: boolean;
     lastReadingLoadingState: LoadingState;

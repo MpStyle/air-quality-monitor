@@ -1,7 +1,8 @@
+import { IconVisualizationType } from "../book/IconVisualizationType";
 import { MeterUnit } from "./MeterUnit";
 
 export interface Settings {
-    iconVisualizationType: string;
+    iconVisualizationType: IconVisualizationType;
     decimalSeparator: string;
     meterUnit: MeterUnit;
 }
