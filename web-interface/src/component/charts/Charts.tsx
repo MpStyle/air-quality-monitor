@@ -2,16 +2,17 @@ import MomentUtils from '@date-io/moment';
 import CircularProgress from "@material-ui/core/CircularProgress/CircularProgress";
 import IconButton from "@material-ui/core/IconButton/IconButton";
 import Paper from "@material-ui/core/Paper/Paper";
-import Typography from "@material-ui/core/Typography/Typography";
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import createStyles from '@material-ui/core/styles/createStyles';
 import makeStyles from '@material-ui/core/styles/makeStyles';
+import Typography from "@material-ui/core/Typography/Typography";
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import InsertInvitationIcon from '@material-ui/icons/InsertInvitation';
 import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import * as React from 'react';
-import { useEffect, useState, FunctionComponent } from "react";
-import { useParams, Link } from "react-router-dom";
+import { FunctionComponent, useEffect, useState } from "react";
+import { useTranslation } from 'react-i18next';
+import { Link, useParams } from "react-router-dom";
 import { DateTimeUtils } from '../../book/DateTimeUtils';
 import { Pages } from "../../book/Pages";
 import { StringUtils } from "../../book/StringUtils";
@@ -32,6 +33,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }));
 
 export const Charts: FunctionComponent<ChartsProps> = (props) => {
+    const { t } = useTranslation();
     const classes = useStyles();
     const { readingType } = useParams();
     const [selectedTimestamp, setSelectedTimestamp] = useState<number>(Date.now());
@@ -56,7 +58,7 @@ export const Charts: FunctionComponent<ChartsProps> = (props) => {
         </AppBarOneRow>
         <main>
             {props.airQualityDataAverages.loadingState === LoadingState.loading && <Paper elevation={2} className="loading">
-                <div className="message">Loading...</div>
+                <div className="message">{t("loading")}...</div>
                 <CircularProgress />
             </Paper>}
 

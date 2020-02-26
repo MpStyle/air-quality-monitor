@@ -21,8 +21,10 @@ import { Device } from "../../entity/Device";
 import { LoginToken } from "../../entity/LoginToken";
 import { AppBarOneRow } from "../common/AppBarOneRow";
 import "./DeviceList.scss";
+import { useTranslation } from 'react-i18next';
 
 export const DeviceList: FunctionComponent<DevicesListProps> = (props) => {
+    const { t } = useTranslation();
     const [deviceToDelete, setDeviceToDelete] = useState<Device | null>(null);
     const [openModal, setOpenModal] = useState(false);
     const [openDetails, setOpenDetails] = useState<string[]>([]);
@@ -54,7 +56,7 @@ export const DeviceList: FunctionComponent<DevicesListProps> = (props) => {
         </AppBarOneRow>
         <main>
             {props.isLoading && <Paper elevation={2} className="loading">
-                <div className="message">Loading...</div>
+                <div className="message">{t("loading")}...</div>
                 <CircularProgress />
             </Paper>}
             {!props.isLoading && <Paper elevation={2} className="devices-list-container">

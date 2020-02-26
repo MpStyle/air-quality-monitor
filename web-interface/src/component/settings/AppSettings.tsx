@@ -5,6 +5,7 @@ import Paper from "@material-ui/core/Paper/Paper";
 import Typography from "@material-ui/core/Typography/Typography";
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import React, { FunctionComponent } from "react";
+import { useTranslation } from 'react-i18next';
 import { Link } from "react-router-dom";
 import { IconVisualizationType } from "../../book/IconVisualizationType";
 import { Pages } from "../../book/Pages";
@@ -16,26 +17,28 @@ import { DateTimeUtils } from './../../book/DateTimeUtils';
 import "./AppSettings.scss";
 
 export const AppSettings: FunctionComponent<AppSettingsProps> = (props) => {
+    const { t } = useTranslation();
+
     return <div className="app-settings">
         <AppBarOneRow>
             <IconButton edge="start" color="inherit" aria-label="menu" component={Link} to={Pages.DASHBOARD_URL} className="back-button">
                 <ArrowBackIosIcon />
             </IconButton>
             <Typography variant="h6">
-                App Settings
-                </Typography>
+                {t("settings")}
+            </Typography>
         </AppBarOneRow>
         <main>
             <Paper elevation={2} className="settings-container">
                 <div className="settings">
                     <div className="labels">
-                        <Typography variant="subtitle1">Temperature unit</Typography>
+                        <Typography variant="subtitle1">{t("temperatureUnit")}</Typography>
                         <Typography variant="subtitle2" className="secondary-label"></Typography>
                     </div>
                     <div className="configuration">
                         <NativeSelect value={props.temperatureUnit} onChange={(event) => props.onTemperatureUnitChange(event.target.value as string)}>
-                            <option value={TemperatureUnit.CELSIUS}>Celsius</option>
-                            <option value={TemperatureUnit.FAHRENHEIT}>Fahrenheit</option>
+                            <option value={TemperatureUnit.CELSIUS}>{t("celsius")}</option>
+                            <option value={TemperatureUnit.FAHRENHEIT}>{t("fahrenheit")}</option>
                         </NativeSelect>
                     </div>
                 </div>
@@ -44,13 +47,13 @@ export const AppSettings: FunctionComponent<AppSettingsProps> = (props) => {
 
                 <div className="settings">
                     <div className="labels">
-                        <Typography variant="subtitle1">Decimal separator</Typography>
+                        <Typography variant="subtitle1">{t("decimalSeparator")}</Typography>
                         <Typography variant="subtitle2" className="secondary-label"></Typography>
                     </div>
                     <div className="configuration">
                         <NativeSelect value={props.decimalSeparator} onChange={(event) => props.onDecimalSeparatorChange(event.target.value as string)}>
-                            <option value=",">Coma (,)</option>
-                            <option value=".">Dot (.)</option>
+                            <option value=",">{t("coma")} (,)</option>
+                            <option value=".">{t("dot")} (.)</option>
                         </NativeSelect>
                     </div>
                 </div>
@@ -59,14 +62,14 @@ export const AppSettings: FunctionComponent<AppSettingsProps> = (props) => {
 
                 <div className="settings">
                     <div className="labels">
-                        <Typography variant="subtitle1">Icons - Labels</Typography>
+                        <Typography variant="subtitle1">{t("iconsLabels")}</Typography>
                         <Typography variant="subtitle2" className="secondary-label"></Typography>
                     </div>
                     <div className="configuration">
                         <NativeSelect value={props.iconVisualizationType} onChange={(event) => props.onIconVisualizationTypeChange(parseInt(event.target.value) as IconVisualizationType)}>
-                            <option value={IconVisualizationType.icon}>Icon</option>
-                            <option value={IconVisualizationType.label}>Label</option>
-                            <option value={IconVisualizationType.both}>Both</option>
+                            <option value={IconVisualizationType.icon}>{t("icons")}</option>
+                            <option value={IconVisualizationType.label}>{t("labels")}</option>
+                            <option value={IconVisualizationType.both}>{t("bothIconsLabels")}</option>
                         </NativeSelect>
                     </div>
                 </div>
@@ -75,7 +78,7 @@ export const AppSettings: FunctionComponent<AppSettingsProps> = (props) => {
 
                 <div className="settings">
                     <div className="labels">
-                        <Typography variant="subtitle1">Date format</Typography>
+                        <Typography variant="subtitle1">{t("dateFormat")}</Typography>
                         <Typography variant="subtitle2" className="secondary-label"></Typography>
                     </div>
                     <div className="configuration">
@@ -96,7 +99,7 @@ export const AppSettings: FunctionComponent<AppSettingsProps> = (props) => {
 
                 <div className="settings">
                     <div className="labels">
-                        <Typography variant="subtitle1">Short date format</Typography>
+                        <Typography variant="subtitle1">{t("shortDateFormat")}</Typography>
                         <Typography variant="subtitle2" className="secondary-label"></Typography>
                     </div>
                     <div className="configuration">

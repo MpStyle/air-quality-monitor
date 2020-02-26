@@ -1,6 +1,7 @@
 import { CircularProgress, Divider } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper/Paper";
 import React, { FunctionComponent } from "react";
+import { useTranslation } from 'react-i18next';
 import { DateTimeUtils } from "../../book/DateTimeUtils";
 import { IconVisualizationType } from "../../book/IconVisualizationType";
 import { ReadingTypes } from "../../book/ReadingTypes";
@@ -19,6 +20,7 @@ import { DataRow } from "./DataRow";
 import "./DeviceAirQualityData.scss";
 
 export const DeviceAirQualityData: FunctionComponent<AirQualityDataProps> = (props) => {
+    const { t } = useTranslation();
     const noData = !props.airQualityData.temperature &&
         !props.airQualityData.humidity &&
         !props.airQualityData.co2 &&
@@ -27,7 +29,7 @@ export const DeviceAirQualityData: FunctionComponent<AirQualityDataProps> = (pro
 
     if (props.isLoading && noData) {
         return <Paper elevation={2} className="loading">
-            <div className="message">Loading...</div>
+            <div className="message">{t("loading")}...</div>
             <CircularProgress />
         </Paper>;
     }

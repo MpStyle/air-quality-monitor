@@ -13,6 +13,7 @@ import PersonIcon from '@material-ui/icons/Person';
 import PhonelinkRingIcon from '@material-ui/icons/PhonelinkRing';
 import SettingsIcon from '@material-ui/icons/Settings';
 import React, { FunctionComponent } from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { airQualityToLabel } from "../../book/AirQualityToLabel";
 import { Pages } from '../../book/Pages';
@@ -21,6 +22,8 @@ import logo from '../../images/logo.svg';
 import "./AppDrawer.scss";
 
 export const AppDrawer: FunctionComponent<AppDrawerProps> = (props) => {
+    const { t } = useTranslation();
+
     return <Drawer open={props.isOpen} onClose={props.toggleDrawer(false)} className="app-drawer">
         <div
             role="presentation"
@@ -31,9 +34,9 @@ export const AppDrawer: FunctionComponent<AppDrawerProps> = (props) => {
             <div className="app">
                 <Typography variant="h6">
                     <div className="logo-container">
-                        <img src={logo} alt="Air Quality Monitor" />
+                        <img src={logo} alt={t("appName")} />
                     </div>
-                    Air Quality Monitor
+                    {t("appName")}
                 </Typography>
             </div>
 
