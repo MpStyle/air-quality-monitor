@@ -36,7 +36,9 @@ export const ChartsContainer = connect(
                     case ReadingTypes.CO2: return appState.settings.meterUnit.co2;
                 }
                 return '';
-            }
+            },
+            dateFormat: appState.settings.dateFormat,
+            shortDateFormat: appState.settings.shortDateFormat,
         } as ChartsProps;
     },
     (dispatch: Dispatch): ChartsProps => {

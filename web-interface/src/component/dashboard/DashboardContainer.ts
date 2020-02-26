@@ -34,7 +34,8 @@ export const DashboardContainer = connect(
             decimalSeparator: appState.settings.decimalSeparator,
             iconVisualizationType: appState.settings.iconVisualizationType,
             isLoading: appState.lastReadingLoadingState === LoadingState.loading
-                || appState.devicesData.loadingState === LoadingState.loading
+                || appState.devicesData.loadingState === LoadingState.loading,
+            dateFormat: appState.settings.dateFormat
         } as DashboardProps;
     },
     (dispatch: Dispatch): DashboardProps => {

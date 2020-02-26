@@ -2,11 +2,13 @@ import { CircularProgress, Divider } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper/Paper";
 import React, { FunctionComponent } from "react";
 import { DateTimeUtils } from "../../book/DateTimeUtils";
+import { IconVisualizationType } from "../../book/IconVisualizationType";
 import { ReadingTypes } from "../../book/ReadingTypes";
 import { celsiusToFahrenheit } from "../../book/TemperatureConverter";
 import { TemperatureUnit } from "../../book/Unit";
 import { AirQualityData } from "../../entity/AirQualityData";
 import { AirStatus } from "../../entity/AirStatus";
+import { DateFormat } from "../../entity/DateFormat";
 import { MeterUnit } from "../../entity/MeterUnit";
 import co2 from '../../images/co2.svg';
 import humidity from '../../images/humidity.svg';
@@ -15,7 +17,6 @@ import temperature from '../../images/temperature.svg';
 import tvoc from '../../images/tvoc.svg';
 import { DataRow } from "./DataRow";
 import "./DeviceAirQualityData.scss";
-import { IconVisualizationType } from "../../book/IconVisualizationType";
 
 export const DeviceAirQualityData: FunctionComponent<AirQualityDataProps> = (props) => {
     const noData = !props.airQualityData.temperature &&
@@ -102,7 +103,11 @@ export const DeviceAirQualityData: FunctionComponent<AirQualityDataProps> = (pro
 
         <div>
             {props.airQualityData.inserted && <div className="last-update">
-                <span>Last update:</span> {DateTimeUtils.epochToFormatedDate(props.airQualityData.inserted, "YYYY-MM-DD HH:mm:ss")}
+                <span>Last update:</span>
+                &nbsp;
+                {DateTimeUtils.timestampToDate(props.airQualityData.inserted, props.dateFormat)}
+                &nbsp;
+                {DateTimeUtils.timestampToFormatedDate(props.airQualityData.inserted, "HH:mm:ss")}
             </div>}
         </div>
 
@@ -116,4 +121,5 @@ export interface AirQualityDataProps {
     decimalSeparator: string;
     iconVisualizationType: IconVisualizationType;
     isLoading: boolean;
+    dateFormat: DateFormat;
 }

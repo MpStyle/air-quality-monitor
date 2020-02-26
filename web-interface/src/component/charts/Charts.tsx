@@ -16,7 +16,9 @@ import { DateTimeUtils } from '../../book/DateTimeUtils';
 import { Pages } from "../../book/Pages";
 import { StringUtils } from "../../book/StringUtils";
 import { AirQualityDataAverages } from "../../entity/AirQualityDataAverages";
+import { DateFormat } from '../../entity/DateFormat';
 import { LoadingState } from "../../entity/LoadingState";
+import { ShortDateFormat } from '../../entity/ShortDateFormat';
 import { AppBarOneRow } from "../common/AppBarOneRow";
 import { LoginToken } from './../../entity/LoginToken';
 import { Chart } from "./Chart";
@@ -84,7 +86,7 @@ export const Charts: FunctionComponent<ChartsProps> = (props) => {
 
                 <Chart
                     title="Hourly"
-                    subtitle={DateTimeUtils.epochToFormatedDate(selectedTimestamp, "YYYY-MM-DD")}
+                    subtitle={DateTimeUtils.timestampToDate(selectedTimestamp, props.dateFormat)}
                     readingUnitMeter={props.unitMeter(readingType as string)}
                     readingType={props.title(readingType as string)}
                     averages={props.airQualityDataAverages.dailyAverages.map(da => {
@@ -101,7 +103,7 @@ export const Charts: FunctionComponent<ChartsProps> = (props) => {
 
                 <Chart
                     title="Daily"
-                    subtitle={DateTimeUtils.epochToFormatedDate(selectedTimestamp, "YYYY-MM")}
+                    subtitle={DateTimeUtils.timestampToShortDate(selectedTimestamp, props.shortDateFormat)}
                     readingUnitMeter={props.unitMeter(readingType as string)}
                     readingType={props.title(readingType as string)}
                     averages={props.airQualityDataAverages.monthlyAverages.map(da => ({
@@ -115,7 +117,7 @@ export const Charts: FunctionComponent<ChartsProps> = (props) => {
 
                 <Chart
                     title="Montly"
-                    subtitle={DateTimeUtils.epochToFormatedDate(selectedTimestamp, "YYYY")}
+                    subtitle={DateTimeUtils.timestampToFormatedDate(selectedTimestamp, "YYYY")}
                     readingUnitMeter={props.unitMeter(readingType as string)}
                     readingType={props.title(readingType as string)}
                     averages={props.airQualityDataAverages.yearlyAverages.map(da => ({
@@ -140,4 +142,7 @@ export interface ChartsProps {
     airQualityDataAverages: AirQualityDataAverages;
 
     fetchAverages: (token: LoginToken, deviceId: string, measurementType: string, timestamp: number | undefined) => void;
+
+    dateFormat: DateFormat;
+    shortDateFormat: ShortDateFormat;
 }

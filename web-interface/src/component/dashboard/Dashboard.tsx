@@ -1,7 +1,9 @@
 import React, { useEffect, FunctionComponent } from 'react';
 import 'react-alice-carousel/lib/alice-carousel.css';
+import { IconVisualizationType } from '../../book/IconVisualizationType';
 import { AirQualityData } from '../../entity/AirQualityData';
 import { AirQuality, AirStatus } from "../../entity/AirStatus";
+import { DateFormat } from '../../entity/DateFormat';
 import { Device } from "../../entity/Device";
 import { DevicesData } from '../../entity/DevicesData';
 import { LoadingState } from '../../entity/LoadingState';
@@ -11,7 +13,6 @@ import { AppDrawerContainer } from '../common/AppDrawerContainer';
 import './Dashboard.scss';
 import { DashboardHeader } from './DashboardHeader';
 import { DeviceAirQualityData } from './DeviceAirQualityData';
-import { IconVisualizationType } from '../../book/IconVisualizationType';
 
 export const Dashboard: FunctionComponent<DashboardProps> = (props) => {
     const [isAppDrawerOpen, setIsAppDrawerOpen] = React.useState(false);
@@ -55,7 +56,8 @@ export const Dashboard: FunctionComponent<DashboardProps> = (props) => {
             decimalSeparator={props.decimalSeparator}
             meterUnit={props.meterUnit}
             iconVisualizationType={props.iconVisualizationType}
-            isLoading={props.isLoading} />
+            isLoading={props.isLoading}
+            dateFormat={props.dateFormat} />
     </div>;
 };
 
@@ -82,4 +84,6 @@ export interface DashboardProps {
 
     isLoading: boolean;
     lastReadingLoadingState: LoadingState;
+
+    dateFormat: DateFormat;
 }

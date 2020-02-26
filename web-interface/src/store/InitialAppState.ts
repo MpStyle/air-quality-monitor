@@ -5,8 +5,10 @@ import { sessionStorageManager } from '../book/SessionStorageManager';
 import { TemperatureUnit } from '../book/Unit';
 import { AirQualityData } from '../entity/AirQualityData';
 import { AirQuality, AirStatus } from '../entity/AirStatus';
+import { DateFormat } from '../entity/DateFormat';
 import { Device } from '../entity/Device';
 import { LoadingState } from '../entity/LoadingState';
+import { ShortDateFormat } from '../entity/ShortDateFormat';
 import { LocalStorageKey } from './../book/LocalStorageKey';
 import { SessionStorageKey } from './../book/SessionStorageKey';
 import { AppState } from './../entity/AppState';
@@ -50,7 +52,9 @@ export const initialAppState: AppState = {
             humidity: "% RH",
             noise: "db",
             temperature: localStorageManager.getItem(LocalStorageKey.TEMPERATURE_UNIT_KEY) ?? TemperatureUnit.CELSIUS,
-        }
+        },
+        dateFormat: localStorageManager.getItem(LocalStorageKey.DATE_FORMAT_KEY) ?? DateFormat.YYYY_MINUS_MM_MINUS_DD,
+        shortDateFormat: localStorageManager.getItem(LocalStorageKey.SHORT_DATE_FORMAT_KEY) ?? ShortDateFormat.YYYY_MINUS_MM,
     },
     airQualityDataAverages: {
         yearlyAverages: [],

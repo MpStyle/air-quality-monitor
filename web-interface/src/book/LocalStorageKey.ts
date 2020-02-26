@@ -7,6 +7,7 @@ export class LocalStorageKey {
     public static readonly HUMIDITY_KEY = "humidity_key";
     public static readonly TEMPERATURE_KEY = "temperature_key";
     public static readonly DECIMAL_SEPARATOR_KEY = "decimal_separator_key";
+    public static readonly DATE_FORMAT_KEY = "date_format_key";
     public static readonly CURRENT_DEVICE_KEY = "current_device_key";
     public static readonly ICON_LABEL_VISUALIZATION_TYPE_KEY = "icon_label_visualization_type_key";
     public static readonly SUGGESTIONS_KEY = "suggestions_key";
@@ -16,4 +17,5 @@ export class LocalStorageKey {
     public static readonly TEMPERATURE_STATUS_KEY = "temperature_status_key";
     public static readonly TVOC_STATUS_KEY = "tvoc_status_key";
     public static readonly AIR_STATUS_AVERAGE_KEY = "air_status_average_key";
+    public static readonly SHORT_DATE_FORMAT_KEY = "short_date_format_key";
 }

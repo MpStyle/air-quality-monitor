@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { DateTimeUtils } from "../../book/DateTimeUtils";
 import { Pages } from "../../book/Pages";
 import { AppError } from "../../entity/AppError";
+import { DateFormat } from "../../entity/DateFormat";
 import { AppBarOneRow } from "../common/AppBarOneRow";
 import "./AppConsole.scss";
 
@@ -30,7 +31,9 @@ export const AppConsole: FunctionComponent<ConsoleProps> = (props) => {
                     {props.appErrors.map(err => <li>
                         <strong>Error code</strong>: {err.code} <br />
                         <strong>Error description</strong>: {err.description} <br />
-                        <strong>Date time</strong>: {DateTimeUtils.epochToFormatedDate(err.dateTime, "YYYY-MM-DD HH:mm:ss")}
+                        <strong>Date time</strong>:&nbsp;
+                            {DateTimeUtils.timestampToDate(err.dateTime, props.dateFormat)}&nbsp;
+                            {DateTimeUtils.timestampToFormatedDate(err.dateTime, "HH:mm:ss")}
                     </li>)}
                 </ul>}
             </Paper>
@@ -40,4 +43,5 @@ export const AppConsole: FunctionComponent<ConsoleProps> = (props) => {
 
 export interface ConsoleProps {
     appErrors: AppError[];
+    dateFormat: DateFormat;
 }

@@ -2,11 +2,13 @@
 import { Action } from "redux";
 import { UpdateDecimalSeparatorAction, UpdateDecimalSeparatorActionName } from "../action/UpdateDecimalSeparatorAction";
 import { UpdateIconVisualizationTypeAction, UpdateIconVisualizationTypeActionName } from "../action/UpdateIconVisualizationTypeAction";
+import { UpdateShortDateFormatAction, UpdateShortDateFormatActionName } from "../action/UpdateShortDateFormatAction";
 import { UpdateTemperatureUnitAction, UpdateTemperatureUnitActionName } from "../action/UpdateTemperatureUnitAction";
 import { LocalStorageKey } from "../book/LocalStorageKey";
 import { localStorageManager } from "../book/LocalStorageManager";
 import { Settings } from "../entity/Settings";
 import { initialAppState } from "../store/InitialAppState";
+import { UpdateDateFormatAction, UpdateDateFormatActionName } from './../action/UpdateDateFormatAction';
 
 export const settingsReducer = (state: Settings = initialAppState.settings, action: Action): Settings => {
     switch (action.type) {
@@ -30,6 +32,18 @@ export const settingsReducer = (state: Settings = initialAppState.settings, acti
             localStorageManager.setItem(LocalStorageKey.DECIMAL_SEPARATOR_KEY, separator);
 
             return { ...state, decimalSeparator: separator } as Settings;
+
+        case UpdateDateFormatActionName:
+            const dateFormat = (action as UpdateDateFormatAction).dateFormat;
+            localStorageManager.setItem(LocalStorageKey.DATE_FORMAT_KEY, dateFormat);
+
+            return { ...state, dateFormat: dateFormat } as Settings;
+
+        case UpdateShortDateFormatActionName:
+            const shortDateFormat = (action as UpdateShortDateFormatAction).shortDateFormat;
+            localStorageManager.setItem(LocalStorageKey.SHORT_DATE_FORMAT_KEY, shortDateFormat);
+
+            return { ...state, shortDateFormat: shortDateFormat } as Settings;
     }
     return state;
 };
