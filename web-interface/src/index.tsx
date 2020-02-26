@@ -20,8 +20,17 @@ import { appStore } from './store/AppStore';
 
 const theme = createMuiTheme({
     palette: {
-        primary: { main: Colors.PRIMARY, contrastText: Colors.CONTRAST_TEXT },
-        secondary: { main: Colors.SECONDARY },
+        primary: {
+            main: Colors.PRIMARY,
+            contrastText: Colors.CONTRAST_TEXT
+        },
+        secondary: {
+            main: Colors.SECONDARY
+        },
+        text: {
+            primary: Colors.COLOR_TEXT_PRIMARY,
+            secondary: Colors.COLOR_TEXT_SECONDARY
+        }
     }
 });
 

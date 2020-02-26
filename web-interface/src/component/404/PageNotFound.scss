@@ -1,11 +1,7 @@
 @import '../../book/Colors.scss';
 
 .not-found-page {
-    .app-bar {
-        color: $color-text-alternative;
-        background: $color-primary;
-        background: linear-gradient(90deg, $color-primary 0%, $color-secondary 100%);
-    }
+    margin-top: 75px;
 
     .content {
         width: 96%;
@@ -16,12 +12,6 @@
 
         .title {
             margin-bottom: 30px;
-        }
-
-        .to-homepage {
-            color: $color-text-alternative;
-            background: $color-primary;
-            background: linear-gradient(135deg, $color-primary 0%, $color-secondary 100%);
         }
 
         .or-play {

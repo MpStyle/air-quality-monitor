@@ -40,7 +40,7 @@ export const Chart: FunctionComponent<ChartProps> = (props) => {
 
     return <div className="chart">
         <Typography variant="h6" className="title">{props.title}</Typography>
-        <span className="subtitle">{props.subtitle}</span>
+        <Typography variant="subtitle2" color="textSecondary" className="subtitle">{props.subtitle}</Typography>
         {props.averages.length === 0 && <div>No data</div>}
         {props.averages.length > 0 && <ResponsiveContainer width="100%" height={300}>
             <AreaChart data={props.averages} maxBarSize={50}>

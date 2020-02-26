@@ -1,10 +1,15 @@
-import { Button, CircularProgress, Paper, TextField, Typography } from "@material-ui/core";
+import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress';
+import Paper from '@material-ui/core/Paper/Paper';
+import TextField from '@material-ui/core/TextField/TextField';
+import Tooltip from '@material-ui/core/Tooltip/Tooltip';
+import Typography from '@material-ui/core/Typography/Typography';
 import React, { useState, FunctionComponent } from 'react';
 import { useLocation, RouteChildrenProps } from 'react-router';
 import { Link, Redirect } from "react-router-dom";
 import { LoadingState } from "../../entity/LoadingState";
 import { LoginToken } from "../../entity/LoginToken";
 import logo from '../../images/logo.svg';
+import { AppButton } from "../common/AppButton";
 import "./Login.scss";
 
 function useQuery() {
@@ -12,9 +17,11 @@ function useQuery() {
 }
 
 export const Login: FunctionComponent<LoginProps> = (props) => {
-    let query = useQuery();
+    const query = useQuery();
     const [password, setPassword] = useState<string | null | undefined>(process.env.REACT_APP_AIR_QUALITY_DATA_password);
     const [username, setUsername] = useState<string | null | undefined>(process.env.REACT_APP_AIR_QUALITY_DATA_USERNAME);
+    const isLoginButtonDisabled = !username || !password;
+    const loginButtonTooltip = isLoginButtonDisabled ? 'Insert username and password' : undefined;
 
     if (props.token) {
         return <Redirect to={{ pathname: query.get("sourceUrl") || props.fallbackUrl }} />;
@@ -57,14 +64,17 @@ export const Login: FunctionComponent<LoginProps> = (props) => {
                     Error during login. Check the credentials and try again
                 </Typography>}
                 <div className="sign-in-button-container">
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={() => props.onSignInClick(username, password)}
-                        className="sign-in-button"
-                        disabled={!username || !password}>
-                        Sign in
-                    </Button>
+                    <Tooltip title={loginButtonTooltip} aria-label={loginButtonTooltip}>
+                        <span>
+                            <AppButton
+                                onClick={() => props.onSignInClick(username, password)}
+                                className="sign-in-button"
+                                title={loginButtonTooltip}
+                                disabled={isLoginButtonDisabled}>
+                                Sign in
+                            </AppButton>
+                        </span>
+                    </Tooltip>
                 </div>
 
                 <Link to="/credits" className="credits-link">Credits</Link>
