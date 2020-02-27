@@ -51,12 +51,15 @@ export const deviceDataIngestion = (logging: ILogging): Service<DeviceDataIngest
                         updated: Date.now(),
                         enabled: true,
                         inserted: Date.now(),
+                        cpuTemperature: req.device.cpuTemperature
                     } : <Device>{
                         ...response.payload.device,
                         address: req.device.address,
                         deviceIP: req.device.ip,
                         deviceId: req.device.id,
                         name: req.device.name,
+                        cpuTemperature: req.device.cpuTemperature,
+                        updated: Date.now()
                     };
 
                     return deviceUpsertService({ device })
@@ -95,6 +98,11 @@ export const deviceDataIngestion = (logging: ILogging): Service<DeviceDataIngest
                                     type: ReadingTypes.HUMIDITY,
                                     value: req.airData.humidity
                                 },
+                                {
+                                    id: uuid.v4(),
+                                    type: ReadingTypes.CPU_TEMPERATURE,
+                                    value: req.device.cpuTemperature
+                                }
                             ].filter(m => m.value !== null && m.value !== undefined);
 
                             return Bluebird.map(readings, (reading) => {
@@ -133,7 +141,8 @@ export interface DeviceDataIngestionRequest {
         id: string,
         name: string,
         ip: string,
-        address?: string
+        address?: string,
+        cpuTemperature: number
     },
     airData: {
         temperature: number

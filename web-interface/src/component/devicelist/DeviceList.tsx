@@ -14,8 +14,9 @@ import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import InfoIcon from '@material-ui/icons/Info';
-import React, { useState, FunctionComponent } from "react";
+import React, { FunctionComponent, useState } from "react";
 import { Link } from "react-router-dom";
+import { isNullOrUndefined } from "../../book/IsNullOrUndefined";
 import { Pages } from "../../book/Pages";
 import { Device } from "../../entity/Device";
 import { LoginToken } from "../../entity/LoginToken";
@@ -80,6 +81,9 @@ export const DeviceList: FunctionComponent<DevicesListProps> = (props) => {
                                         </div>
                                         {d.address && d.address.length && <div className="address">
                                             <strong>Address:</strong> {d.address}
+                                        </div>}
+                                        {!isNullOrUndefined(d.cpuTemperature) && <div className="temperature">
+                                            <strong>CPU temperature:</strong> {d.cpuTemperature}
                                         </div>}
                                     </React.Fragment>
                                 } />

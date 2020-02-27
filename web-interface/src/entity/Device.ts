@@ -3,4 +3,5 @@ export interface Device {
     name: string;
     deviceIP: string;
     address: string;
+    cpuTemperature: number;
 }
