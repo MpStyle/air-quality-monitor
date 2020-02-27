@@ -4,4 +4,5 @@ export class ReadingTypes {
     public static readonly TVOC = "tvoc";
     public static readonly HUMIDITY = "humidity";
     public static readonly PRESSURE = "pressure";
+    public static readonly CPU_TEMPERATURE = "cpu-temperature";
 }

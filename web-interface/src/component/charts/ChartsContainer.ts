@@ -24,6 +24,7 @@ export const ChartsContainer = connect(
                     case ReadingTypes.HUMIDITY: return 'Humidity';
                     case ReadingTypes.TEMPERATURE: return 'Temperature';
                     case ReadingTypes.CO2: return 'CO2';
+                    case ReadingTypes.CPU_TEMPERATURE: return 'CPU temperature';
                 }
                 return '';
             },
@@ -34,6 +35,7 @@ export const ChartsContainer = connect(
                     case ReadingTypes.HUMIDITY: return appState.settings.meterUnit.humidity;
                     case ReadingTypes.TEMPERATURE: return appState.settings.meterUnit.temperature === TemperatureUnit.CELSIUS ? "°C" : "°F";
                     case ReadingTypes.CO2: return appState.settings.meterUnit.co2;
+                    case ReadingTypes.CPU_TEMPERATURE: return "°C";
                 }
                 return '';
             },
