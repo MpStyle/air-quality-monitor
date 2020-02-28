@@ -17,7 +17,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import InfoIcon from '@material-ui/icons/Info';
 import TimelineIcon from '@material-ui/icons/Timeline';
 import React, { useState, FunctionComponent } from "react";
-import { Link } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { isNullOrUndefined } from "../../book/IsNullOrUndefined";
 import { Pages } from "../../book/Pages";
 import { Device } from "../../entity/Device";
@@ -27,6 +27,7 @@ import { ReadingTypes } from './../../book/ReadingTypes';
 import "./DeviceList.scss";
 
 export const DeviceList: FunctionComponent<DevicesListProps> = (props) => {
+    const history = useHistory();
     const [deviceToDelete, setDeviceToDelete] = useState<Device | null>(null);
     const [openModal, setOpenModal] = useState(false);
     const [openDetails, setOpenDetails] = useState<string[]>([]);
@@ -49,7 +50,7 @@ export const DeviceList: FunctionComponent<DevicesListProps> = (props) => {
 
     return <div className="devices-list">
         <AppBarOneRow>
-            <IconButton edge="start" color="inherit" aria-label="menu" component={Link} to={Pages.DASHBOARD_URL} className="back-button">
+            <IconButton edge="start" color="inherit" aria-label="menu" onClick={() => history.goBack()} className="back-button">
                 <ArrowBackIosIcon />
             </IconButton>
             <Typography variant="h6">

@@ -5,9 +5,8 @@ import Paper from "@material-ui/core/Paper/Paper";
 import Typography from "@material-ui/core/Typography/Typography";
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import React, { FunctionComponent } from "react";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { IconVisualizationType } from "../../book/IconVisualizationType";
-import { Pages } from "../../book/Pages";
 import { TemperatureUnit } from "../../book/Unit";
 import { DateFormat } from "../../entity/DateFormat";
 import { ShortDateFormat } from "../../entity/ShortDateFormat";
@@ -16,9 +15,11 @@ import { DateTimeUtils } from './../../book/DateTimeUtils';
 import "./AppSettings.scss";
 
 export const AppSettings: FunctionComponent<AppSettingsProps> = (props) => {
+    const history = useHistory();
+
     return <div className="app-settings">
         <AppBarOneRow>
-            <IconButton edge="start" color="inherit" aria-label="menu" component={Link} to={Pages.DASHBOARD_URL} className="back-button">
+            <IconButton edge="start" color="inherit" aria-label="menu" onClick={() => history.goBack()} className="back-button">
                 <ArrowBackIosIcon />
             </IconButton>
             <Typography variant="h6">

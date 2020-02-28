@@ -4,15 +4,16 @@ import Paper from '@material-ui/core/Paper/Paper';
 import Typography from "@material-ui/core/Typography/Typography";
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import React, { FunctionComponent } from 'react';
-import { Link } from "react-router-dom";
-import { Pages } from "../../book/Pages";
+import { useHistory } from "react-router-dom";
 import { AppBarOneRow } from '../common/AppBarOneRow';
 import "./Credits.scss";
 
 export const Credits: FunctionComponent<CreditsProps> = (_props) => {
+    const history = useHistory();
+
     return <div className="credits">
         <AppBarOneRow>
-            <IconButton edge="start" color="inherit" aria-label="menu" component={Link} to={Pages.DASHBOARD_URL} className="back-button">
+            <IconButton edge="start" color="inherit" aria-label="menu" onClick={() => history.goBack()} className="back-button">
                 <ArrowBackIosIcon />
             </IconButton>
             <Typography variant="h6">
