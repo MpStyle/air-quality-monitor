@@ -44,6 +44,14 @@ export const Routing: FunctionComponent<{}> = (_props) => {
                 </IsLogged>
             </Route>
 
+            <Route path={`${Pages.CHARTS_URL}/:readingType/:deviceId`}>
+                <IsLogged
+                    loginPageUrl={Pages.LOGIN_URL}
+                    sourceUrl={Pages.CHARTS_URL}>
+                    <ChartsContainer />
+                </IsLogged>
+            </Route>
+
             <Route exact path={`${Pages.APP_CONSOLE_URL}`}>
                 <IsLogged
                     loginPageUrl={Pages.LOGIN_URL}

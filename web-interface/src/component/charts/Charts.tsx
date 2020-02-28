@@ -11,9 +11,8 @@ import InsertInvitationIcon from '@material-ui/icons/InsertInvitation';
 import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import * as React from 'react';
 import { useEffect, useState, FunctionComponent } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { DateTimeUtils } from '../../book/DateTimeUtils';
-import { Pages } from "../../book/Pages";
 import { StringUtils } from "../../book/StringUtils";
 import { AirQualityDataAverages } from "../../entity/AirQualityDataAverages";
 import { DateFormat } from '../../entity/DateFormat';
@@ -24,7 +23,7 @@ import { LoginToken } from './../../entity/LoginToken';
 import { Chart } from "./Chart";
 import "./Charts.scss";
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
     createStyles({
         grow: {
             flexGrow: 1,
@@ -33,17 +32,18 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const Charts: FunctionComponent<ChartsProps> = (props) => {
     const classes = useStyles();
-    const { readingType } = useParams();
+    const { readingType, deviceId } = useParams();
+    const history = useHistory();
     const [selectedTimestamp, setSelectedTimestamp] = useState<number>(Date.now());
     const [isCalendarVisible, setIsCalendarVisible] = useState<boolean>(false);
 
     useEffect(() => {
-        props.fetchAverages(props.token, props.deviceId, readingType as string, Date.now());
+        props.fetchAverages(props.token, deviceId ?? props.deviceId, readingType as string, Date.now());
     }, []);
 
     return <div className="charts">
         <AppBarOneRow>
-            <IconButton edge="start" color="inherit" aria-label="back to dashboard" component={Link} to={Pages.DASHBOARD_URL} className="back-button">
+            <IconButton edge="start" color="inherit" aria-label="go back" onClick={() => history.goBack()} className="back-button">
                 <ArrowBackIosIcon />
             </IconButton>
             <Typography variant="h6">
@@ -78,7 +78,7 @@ export const Charts: FunctionComponent<ChartsProps> = (props) => {
                                 const choosedDate = date?.toDate().getTime() ?? Date.now();
                                 setSelectedTimestamp(choosedDate);
                                 setIsCalendarVisible(false);
-                                props.fetchAverages(props.token, props.deviceId, readingType as string, choosedDate);
+                                props.fetchAverages(props.token, deviceId ?? props.deviceId, readingType as string, choosedDate);
                             }}
                         />
                     </MuiPickersUtilsProvider>
