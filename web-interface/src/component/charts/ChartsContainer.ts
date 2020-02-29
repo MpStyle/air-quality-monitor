@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { ReadingTypes } from '../../book/ReadingTypes';
+import { celsiusToFahrenheit } from '../../book/TemperatureConverter';
 import { TemperatureUnit } from '../../book/Unit';
 import { userRenewAccessToken, UserRenewAccessTokenResponse } from '../../book/UserRenewAccessToken';
 import { userTimeRangeReadings } from '../../book/UserTimeRangeReadings';
@@ -12,10 +13,10 @@ import { AppState } from './../../entity/AppState';
 import { Charts, ChartsProps } from './Charts';
 
 export const ChartsContainer = connect(
-    (appState: AppState): ChartsProps => {
+    (appState: AppState): Partial<ChartsProps> => {
         return {
             airQualityDataAverages: appState.airQualityDataAverages,
-            token: appState.token,
+            token: appState.token as LoginToken,
             deviceId: appState.currentDevice?.deviceId,
             title: (measurementType: string): string => {
                 switch (measurementType) {
@@ -25,6 +26,24 @@ export const ChartsContainer = connect(
                     case ReadingTypes.TEMPERATURE: return 'Temperature';
                     case ReadingTypes.CO2: return 'CO2';
                     case ReadingTypes.CPU_TEMPERATURE: return 'CPU temperature';
+                }
+                return '';
+            },
+            decimalSeparator: appState.settings.decimalSeparator,
+            value: (measurementType: string, value: number, decimalSeparator: string): string => {
+                switch (measurementType) {
+                    case ReadingTypes.TVOC:
+                    case ReadingTypes.PRESSURE:
+                    case ReadingTypes.HUMIDITY:
+                    case ReadingTypes.CO2:
+                        return value
+                            .toFixed(0)
+                            .replace('.', decimalSeparator);
+                    case ReadingTypes.TEMPERATURE:
+                    case ReadingTypes.CPU_TEMPERATURE:
+                        return (appState.settings.meterUnit.temperature === TemperatureUnit.CELSIUS ? value : celsiusToFahrenheit(value))
+                            .toFixed(1)
+                            .replace(".", decimalSeparator);
                 }
                 return '';
             },

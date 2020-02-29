@@ -89,9 +89,11 @@ export const Charts: FunctionComponent<ChartsProps> = (props) => {
                     readingType={props.title(readingType as string)}
                     averages={props.airQualityDataAverages.dailyAverages.map(da => {
                         const utcDate = DateTimeUtils.localeDateToTimestamp(new Date(Date.UTC(parseInt(da.timeRange.substring(0, 4)), parseInt(da.timeRange.substring(4, 6)), parseInt(da.timeRange.substring(6, 8)), parseInt(da.timeRange.substring(8, 10)), 0, 0)));
+                        const value = da.value / da.counter;
                         return {
                             ...da,
-                            average: parseFloat((da.value / da.counter).toFixed(1)),
+                            average: value,
+                            formattedAverage: props.value(readingType as string, value, props.decimalSeparator),
                             count: da.value,
                             xaxis: DateTimeUtils.timestampToFormatedDate(utcDate, "H"),
                             datetime: DateTimeUtils.timestampToDate(utcDate, props.dateFormat) + ' ' + DateTimeUtils.timestampToFormatedDate(utcDate, "H:mm:ss"),
@@ -106,9 +108,11 @@ export const Charts: FunctionComponent<ChartsProps> = (props) => {
                     readingType={props.title(readingType as string)}
                     averages={props.airQualityDataAverages.monthlyAverages.map(da => {
                         const utcDate = DateTimeUtils.localeDateToTimestamp(new Date(Date.UTC(parseInt(da.timeRange.substring(0, 4)), parseInt(da.timeRange.substring(4, 6)), parseInt(da.timeRange.substring(6, 8)))));
+                        const value = da.value / da.counter;
                         return {
                             ...da,
-                            average: parseFloat((da.value / da.counter).toFixed(1)),
+                            average: value,
+                            formattedAverage: props.value(readingType as string, value, props.decimalSeparator),
                             count: da.value,
                             xaxis: DateTimeUtils.timestampToDate(utcDate, props.dateFormat),
                             datetime: DateTimeUtils.timestampToDate(utcDate, props.dateFormat),
@@ -123,9 +127,11 @@ export const Charts: FunctionComponent<ChartsProps> = (props) => {
                     readingType={props.title(readingType as string)}
                     averages={props.airQualityDataAverages.yearlyAverages.map(da => {
                         const utcDate = DateTimeUtils.localeDateToTimestamp(new Date(Date.UTC(parseInt(da.timeRange.substring(0, 4)), parseInt(da.timeRange.substring(4, 6)), 1)));
+                        const value = da.value / da.counter;
                         return {
                             ...da,
-                            average: parseFloat((da.value / da.counter).toFixed(1)),
+                            average: value,
+                            formattedAverage: props.value(readingType as string, value, props.decimalSeparator),
                             counter: da.counter,
                             xaxis: DateTimeUtils.timestampToShortDate(utcDate, props.shortDateFormat),
                             datetime: DateTimeUtils.timestampToShortDate(utcDate, props.shortDateFormat),
@@ -140,9 +146,10 @@ export const Charts: FunctionComponent<ChartsProps> = (props) => {
 export interface ChartsProps {
     title: (measurementType: string) => string;
     unitMeter: (measurementType: string) => string;
+    value: (measurementType: string, value: number, decimalSeparator: string) => string;
     token: LoginToken;
     deviceId: string;
-
+    decimalSeparator: string;
     airQualityDataAverages: AirQualityDataAverages;
 
     fetchAverages: (token: LoginToken, deviceId: string, measurementType: string, timestamp: number | undefined) => void;
