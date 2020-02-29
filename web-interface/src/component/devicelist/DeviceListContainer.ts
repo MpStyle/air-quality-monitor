@@ -16,7 +16,9 @@ export const DeviceListContainer = connect(
         return {
             token: appState.token as LoginToken,
             devices: appState.devicesData.devices,
-            isLoading: appState.devicesData.deletingState === LoadingState.loading
+            isLoading: appState.devicesData.deletingState === LoadingState.loading,
+            decimalSeparator: appState.settings.decimalSeparator,
+            meterUnit: appState.settings.meterUnit
         } as DevicesListProps;
     },
     (dispatch: Dispatch): DevicesListProps => {

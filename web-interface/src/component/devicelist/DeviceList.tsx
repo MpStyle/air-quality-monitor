@@ -3,49 +3,27 @@ import CircularProgress from "@material-ui/core/CircularProgress/CircularProgres
 import Fade from '@material-ui/core/Fade';
 import IconButton from "@material-ui/core/IconButton/IconButton";
 import List from "@material-ui/core/List/List";
-import ListItem from "@material-ui/core/ListItem/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText/ListItemText";
 import Modal from "@material-ui/core/Modal/Modal";
 import Paper from "@material-ui/core/Paper/Paper";
-import Tooltip from "@material-ui/core/Tooltip/Tooltip";
 import Typography from "@material-ui/core/Typography/Typography";
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-import ExpandLessIcon from '@material-ui/icons/ExpandLess';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import InfoIcon from '@material-ui/icons/Info';
-import TimelineIcon from '@material-ui/icons/Timeline';
-import React, { useState, FunctionComponent } from "react";
-import { useHistory, Link } from "react-router-dom";
-import { isNullOrUndefined } from "../../book/IsNullOrUndefined";
-import { Pages } from "../../book/Pages";
+import React, { FunctionComponent, useState } from "react";
+import { useHistory } from "react-router-dom";
 import { Device } from "../../entity/Device";
 import { LoginToken } from "../../entity/LoginToken";
+import { MeterUnit } from "../../entity/MeterUnit";
 import { AppBarOneRow } from "../common/AppBarOneRow";
-import { ReadingTypes } from './../../book/ReadingTypes';
+import { DeviceInfo } from "./DeviceInfo";
 import "./DeviceList.scss";
 
 export const DeviceList: FunctionComponent<DevicesListProps> = (props) => {
     const history = useHistory();
     const [deviceToDelete, setDeviceToDelete] = useState<Device | null>(null);
     const [openModal, setOpenModal] = useState(false);
-    const [openDetails, setOpenDetails] = useState<string[]>([]);
-
-    const toggle = (deviceId: string) => {
-        const index = openDetails.indexOf(deviceId);
-        const copy = [...openDetails];
-        if (index === -1) {
-            copy.push(deviceId);
-        }
-        else {
-            copy.splice(index, 1);
-        }
-        setOpenDetails(copy);
-    };
-
-    const isOpen = (deviceId: string): boolean => {
-        return openDetails.indexOf(deviceId) !== -1;
+    const onDeleteClick = (d: Device) => {
+        setDeviceToDelete(d);
+        setOpenModal(true);
     };
 
     return <div className="devices-list">
@@ -66,49 +44,7 @@ export const DeviceList: FunctionComponent<DevicesListProps> = (props) => {
                 {!props.devices.length && <div className="message">No devices</div>}
 
                 {props.devices && <List className="devices-list">
-                    {props.devices.map(d => (
-                        <ListItem key={d.deviceId} className="device">
-                            <ListItemIcon
-                                onClick={() => {
-                                    toggle(d.deviceId);
-                                }}>
-                                <IconButton>
-                                    {isOpen(d.deviceId) === false ? <ExpandMoreIcon /> : <ExpandLessIcon />}
-                                </IconButton>
-                            </ListItemIcon>
-                            <ListItemText
-                                primary={d.name}
-                                secondary={
-                                    isOpen(d.deviceId) && <React.Fragment>
-                                        <div className="ip">
-                                            <strong>IP:</strong> {d.deviceIP.split(";")[0]}
-                                        </div>
-                                        {d.address && d.address.length && <div className="address">
-                                            <strong>Address:</strong> {d.address}
-                                        </div>}
-                                        {!isNullOrUndefined(d.cpuTemperature) && <div className="temperature">
-                                            <strong>CPU temperature:</strong> {d.cpuTemperature}
-                                        </div>}
-                                    </React.Fragment>
-                                } />
-                            <ListItemIcon>
-                                <Tooltip title="CPU temperature trend">
-                                    <IconButton component={Link} to={`${Pages.CHARTS_URL}/${ReadingTypes.CPU_TEMPERATURE}/${d.deviceId}`}>
-                                        <TimelineIcon />
-                                    </IconButton>
-                                </Tooltip>
-                            </ListItemIcon>
-                            <ListItemIcon>
-                                <IconButton
-                                    onClick={() => {
-                                        setDeviceToDelete(d);
-                                        setOpenModal(true);
-                                    }}>
-                                    <DeleteForeverIcon />
-                                </IconButton>
-                            </ListItemIcon>
-                        </ListItem>
-                    ))}
+                    {props.devices.map(d => <DeviceInfo device={d} decimalSeparator={props.decimalSeparator} meterUnit={props.meterUnit} onDeleteClick={onDeleteClick} />)}
                 </List>}
             </Paper>}
         </main>
@@ -137,6 +73,8 @@ export const DeviceList: FunctionComponent<DevicesListProps> = (props) => {
 export interface DevicesListProps {
     devices: Device[];
     token: LoginToken;
+    decimalSeparator: string;
+    meterUnit: MeterUnit;
     onDeleteClick: (token: LoginToken, deviceId: string) => void;
     isLoading: boolean;
 }
