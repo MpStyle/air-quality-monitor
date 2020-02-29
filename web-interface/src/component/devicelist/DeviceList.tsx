@@ -8,7 +8,7 @@ import Paper from "@material-ui/core/Paper/Paper";
 import Typography from "@material-ui/core/Typography/Typography";
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import InfoIcon from '@material-ui/icons/Info';
-import React, { FunctionComponent, useState } from "react";
+import React, { FunctionComponent, useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Device } from "../../entity/Device";
 import { LoginToken } from "../../entity/LoginToken";
@@ -25,6 +25,9 @@ export const DeviceList: FunctionComponent<DevicesListProps> = (props) => {
         setDeviceToDelete(d);
         setOpenModal(true);
     };
+    useEffect(() => {
+        props.fetchDevices(props.token);
+    }, []);
 
     return <div className="devices-list">
         <AppBarOneRow>
@@ -44,7 +47,7 @@ export const DeviceList: FunctionComponent<DevicesListProps> = (props) => {
                 {!props.devices.length && <div className="message">No devices</div>}
 
                 {props.devices && <List className="devices-list">
-                    {props.devices.map(d => <DeviceInfo device={d} decimalSeparator={props.decimalSeparator} meterUnit={props.meterUnit} onDeleteClick={onDeleteClick} />)}
+                    {props.devices.map(d => <DeviceInfo key={`device-${d.deviceId}`} device={d} decimalSeparator={props.decimalSeparator} meterUnit={props.meterUnit} onDeleteClick={onDeleteClick} />)}
                 </List>}
             </Paper>}
         </main>
@@ -76,5 +79,6 @@ export interface DevicesListProps {
     decimalSeparator: string;
     meterUnit: MeterUnit;
     onDeleteClick: (token: LoginToken, deviceId: string) => void;
+    fetchDevices: (token: LoginToken) => void;
     isLoading: boolean;
 }
