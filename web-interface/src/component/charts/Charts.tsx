@@ -1,13 +1,13 @@
 import MomentUtils from '@date-io/moment';
 import IconButton from "@material-ui/core/IconButton/IconButton";
 import Paper from "@material-ui/core/Paper/Paper";
+import Typography from "@material-ui/core/Typography/Typography";
 import createStyles from '@material-ui/core/styles/createStyles';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import Typography from "@material-ui/core/Typography/Typography";
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import InsertInvitationIcon from '@material-ui/icons/InsertInvitation';
 import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
-import React, { FunctionComponent, useEffect, useState } from "react";
+import React, { useEffect, useState, FunctionComponent } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { DateTimeUtils } from '../../book/DateTimeUtils';
 import { AirQualityDataAverages } from "../../entity/AirQualityDataAverages";

@@ -7,7 +7,7 @@ import Paper from "@material-ui/core/Paper/Paper";
 import Typography from "@material-ui/core/Typography/Typography";
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import InfoIcon from '@material-ui/icons/Info';
-import React, { FunctionComponent, useEffect, useState } from "react";
+import React, { useEffect, useState, FunctionComponent } from "react";
 import { useHistory } from "react-router-dom";
 import { Device } from "../../entity/Device";
 import { LoginToken } from "../../entity/LoginToken";
