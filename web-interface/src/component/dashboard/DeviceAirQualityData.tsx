@@ -1,4 +1,4 @@
-import { CircularProgress, Divider } from "@material-ui/core";
+import { Divider } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper/Paper";
 import React, { FunctionComponent } from "react";
 import { DateTimeUtils } from "../../book/DateTimeUtils";

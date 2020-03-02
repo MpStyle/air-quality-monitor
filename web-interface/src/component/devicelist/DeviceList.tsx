@@ -1,5 +1,4 @@
 import Button from "@material-ui/core/Button/Button";
-import CircularProgress from "@material-ui/core/CircularProgress/CircularProgress";
 import Fade from '@material-ui/core/Fade';
 import IconButton from "@material-ui/core/IconButton/IconButton";
 import List from "@material-ui/core/List/List";
@@ -8,15 +7,15 @@ import Paper from "@material-ui/core/Paper/Paper";
 import Typography from "@material-ui/core/Typography/Typography";
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import InfoIcon from '@material-ui/icons/Info';
-import React, { useEffect, useState, FunctionComponent } from "react";
+import React, { FunctionComponent, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Device } from "../../entity/Device";
 import { LoginToken } from "../../entity/LoginToken";
 import { MeterUnit } from "../../entity/MeterUnit";
 import { AppBarOneRow } from "../common/AppBarOneRow";
+import { LoadingPaper } from "../common/LoadingPaper";
 import { DeviceInfo } from "./DeviceInfo";
 import "./DeviceList.scss";
-import { LoadingPaper } from "../common/LoadingPaper";
 
 export const DeviceList: FunctionComponent<DevicesListProps> = (props) => {
     const history = useHistory();
