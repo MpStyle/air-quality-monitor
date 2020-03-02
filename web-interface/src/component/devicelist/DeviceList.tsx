@@ -16,6 +16,7 @@ import { MeterUnit } from "../../entity/MeterUnit";
 import { AppBarOneRow } from "../common/AppBarOneRow";
 import { DeviceInfo } from "./DeviceInfo";
 import "./DeviceList.scss";
+import { LoadingPaper } from "../common/LoadingPaper";
 
 export const DeviceList: FunctionComponent<DevicesListProps> = (props) => {
     const history = useHistory();
@@ -41,10 +42,7 @@ export const DeviceList: FunctionComponent<DevicesListProps> = (props) => {
             </Typography>
         </AppBarOneRow>
         <main>
-            {props.isLoading && <Paper elevation={2} className="loading">
-                <div className="message">Loading...</div>
-                <CircularProgress />
-            </Paper>}
+            {props.isLoading && <LoadingPaper message="Loading..." />}
             {!props.isLoading && <Paper elevation={2} className="devices-list-container">
                 {!props.devices.length && <div className="message">No devices</div>}
 

@@ -16,6 +16,7 @@ import { DateFormat } from '../../entity/DateFormat';
 import { LoadingState } from "../../entity/LoadingState";
 import { ShortDateFormat } from '../../entity/ShortDateFormat';
 import { AppBarOneRow } from "../common/AppBarOneRow";
+import { LoadingPaper } from '../common/LoadingPaper';
 import { LoginToken } from './../../entity/LoginToken';
 import { Chart } from "./Chart";
 import "./Charts.scss";
@@ -53,10 +54,7 @@ export const Charts: FunctionComponent<ChartsProps> = (props) => {
             </IconButton>
         </AppBarOneRow>
         <main>
-            {props.airQualityDataAverages.loadingState === LoadingState.loading && <Paper elevation={2} className="loading">
-                <div className="message">Loading...</div>
-                <CircularProgress />
-            </Paper>}
+            {props.airQualityDataAverages.loadingState === LoadingState.loading && <LoadingPaper message="Loading..." />}
 
             {props.airQualityDataAverages.loadingState === LoadingState.success && <Paper elevation={2} className="charts-container">
 
