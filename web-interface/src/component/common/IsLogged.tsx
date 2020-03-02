@@ -1,18 +1,26 @@
-import React, { Fragment, FunctionComponent } from 'react';
-import { Redirect } from "react-router-dom";
-import { appStore } from '../../store/AppStore';
+import React, { createElement, FunctionComponent } from 'react';
+import { connect } from 'react-redux';
+import { Redirect, Route, RouteProps } from "react-router-dom";
+import { Pages } from '../../book/Pages';
+import { AppState } from './../../entity/AppState';
 import "./IsLogged.scss";
 
-export const IsLogged: FunctionComponent<IsLoggedProps> = (props: IsLoggedProps) => {
-    if (!appStore.getState().token) {
-        return <Redirect to={{ pathname: `${props.loginPageUrl}`, search: `?sourceUrl=${props.sourceUrl}` }} />;
-    }
-
-    return <Fragment>{props.children}</Fragment>;
+const IsLogged: FunctionComponent<IsLoggedProps & RouteProps> = props => {
+    return <Route {...props} render={internalProps => (
+        props.isAuthenticated ?
+            createElement(props.component as FunctionComponent, internalProps as any) :
+            <Redirect to={{ pathname: `${Pages.LOGIN_URL}`, search: `?sourceUrl=${internalProps.location.pathname}` }} />
+    )} />;
 };
 
 export interface IsLoggedProps {
-    loginPageUrl: string;
-    children: React.ReactNode;
-    sourceUrl: string | null;
+    isAuthenticated?: boolean;
 }
+
+export const RequiredAuthenticationRoute = connect(
+    (appState: AppState): IsLoggedProps => {
+        return {
+            isAuthenticated: !!appState.token && appState.token.expiredAt < Date.now()
+        } as IsLoggedProps;
+    }
+)(IsLogged);

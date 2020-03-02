@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import { RouteChildrenProps } from 'react-router-dom';
 import { Dispatch } from 'redux';
 import { ReadingTypes } from '../../book/ReadingTypes';
 import { celsiusToFahrenheit } from '../../book/TemperatureConverter';
@@ -10,54 +11,59 @@ import { LoginToken } from '../../entity/LoginToken';
 import { ServiceResponse } from '../../entity/ServiceResponse';
 import { fetchTimeRangeErrorActionBuilder, fetchTimeRangeStartActionBuilder, fetchTimeRangeSuccessActionBuilder } from './../../action/FetchTimeRangeAction';
 import { AppState } from './../../entity/AppState';
+import { Settings } from './../../entity/Settings';
 import { Charts, ChartsProps } from './Charts';
 
+const getTitle = (readingType: string): string => {
+    switch (readingType) {
+        case ReadingTypes.TVOC: return 'TVOC';
+        case ReadingTypes.PRESSURE: return 'Pressure';
+        case ReadingTypes.HUMIDITY: return 'Humidity';
+        case ReadingTypes.TEMPERATURE: return 'Temperature';
+        case ReadingTypes.CO2: return 'CO2';
+        case ReadingTypes.CPU_TEMPERATURE: return 'CPU temperature';
+    }
+    return '';
+};
+const getUnitMeter = (readingType: string, settings: Settings): string => {
+    switch (readingType) {
+        case ReadingTypes.TVOC: return settings.meterUnit.tvoc;
+        case ReadingTypes.PRESSURE: return settings.meterUnit.pressure;
+        case ReadingTypes.HUMIDITY: return settings.meterUnit.humidity;
+        case ReadingTypes.TEMPERATURE: return settings.meterUnit.temperature === TemperatureUnit.CELSIUS ? "°C" : "°F";
+        case ReadingTypes.CO2: return settings.meterUnit.co2;
+        case ReadingTypes.CPU_TEMPERATURE: return "°C";
+    }
+    return '';
+};
+
 export const ChartsContainer = connect(
-    (appState: AppState): Partial<ChartsProps> => {
+    (appState: AppState, ownProps: RouteChildrenProps): Partial<ChartsProps> => {
+        const readingType = ownProps.match ? (ownProps.match.params as any).readingType : undefined;
+
         return {
             airQualityDataAverages: appState.airQualityDataAverages,
             token: appState.token as LoginToken,
             deviceId: appState.currentDevice?.deviceId,
-            title: (measurementType: string): string => {
-                switch (measurementType) {
-                    case ReadingTypes.TVOC: return 'TVOC';
-                    case ReadingTypes.PRESSURE: return 'Pressure';
-                    case ReadingTypes.HUMIDITY: return 'Humidity';
-                    case ReadingTypes.TEMPERATURE: return 'Temperature';
-                    case ReadingTypes.CO2: return 'CO2';
-                    case ReadingTypes.CPU_TEMPERATURE: return 'CPU temperature';
-                }
-                return '';
-            },
-            decimalSeparator: appState.settings.decimalSeparator,
-            value: (measurementType: string, value: number, decimalSeparator: string): string => {
-                switch (measurementType) {
+            title: getTitle(readingType),
+            formatValue: (value: number): string => {
+                switch (readingType) {
                     case ReadingTypes.TVOC:
                     case ReadingTypes.PRESSURE:
                     case ReadingTypes.HUMIDITY:
                     case ReadingTypes.CO2:
                         return value
                             .toFixed(0)
-                            .replace('.', decimalSeparator);
+                            .replace('.', appState.settings.decimalSeparator);
                     case ReadingTypes.TEMPERATURE:
                     case ReadingTypes.CPU_TEMPERATURE:
                         return (appState.settings.meterUnit.temperature === TemperatureUnit.CELSIUS ? value : celsiusToFahrenheit(value))
                             .toFixed(1)
-                            .replace(".", decimalSeparator);
+                            .replace(".", appState.settings.decimalSeparator);
                 }
                 return '';
             },
-            unitMeter: (measurementType: string): string => {
-                switch (measurementType) {
-                    case ReadingTypes.TVOC: return appState.settings.meterUnit.tvoc;
-                    case ReadingTypes.PRESSURE: return appState.settings.meterUnit.pressure;
-                    case ReadingTypes.HUMIDITY: return appState.settings.meterUnit.humidity;
-                    case ReadingTypes.TEMPERATURE: return appState.settings.meterUnit.temperature === TemperatureUnit.CELSIUS ? "°C" : "°F";
-                    case ReadingTypes.CO2: return appState.settings.meterUnit.co2;
-                    case ReadingTypes.CPU_TEMPERATURE: return "°C";
-                }
-                return '';
-            },
+            unitMeter: getUnitMeter(readingType, appState.settings),
             dateFormat: appState.settings.dateFormat,
             shortDateFormat: appState.settings.shortDateFormat,
         } as ChartsProps;

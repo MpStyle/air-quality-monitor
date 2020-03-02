@@ -4,7 +4,7 @@ import { HashRouter } from 'react-router-dom';
 import { Pages } from '../../book/Pages';
 import { NotFoundPage } from '../404/PageNotFound';
 import { ChartsContainer } from '../charts/ChartsContainer';
-import { IsLogged } from '../common/IsLogged';
+import { RequiredAuthenticationRoute } from '../common/IsLogged';
 import { AppConsoleContainer } from '../console/AppConsoleContainer';
 import { Credits } from '../credits/Credits';
 import { DashboardContainer } from '../dashboard/DashboardContainer';
@@ -12,7 +12,7 @@ import { DeviceListContainer } from '../devicelist/DeviceListContainer';
 import { LoginContainer } from '../login/LoginContainer';
 import { AppSettingsContainer } from '../settings/AppSettingsContainer';
 
-export const Routing: FunctionComponent<{}> = (_props) => {
+export const Routing: FunctionComponent = () => {
     return <HashRouter>
         <Switch>
             <Route exact path="/" component={LoginContainer} />
@@ -20,45 +20,11 @@ export const Routing: FunctionComponent<{}> = (_props) => {
             <Route exact path={Pages.CREDITS_URL} component={Credits} />
             <Route exact path={Pages.APP_SETTINGS_URL} component={AppSettingsContainer} />
 
-            <Route exact path={Pages.DASHBOARD_URL}>
-                <IsLogged
-                    loginPageUrl={Pages.LOGIN_URL}
-                    sourceUrl={Pages.DASHBOARD_URL}>
-                    <DashboardContainer />
-                </IsLogged>
-            </Route>
-
-            <Route exact path={Pages.DEVICE_LIST_URL}>
-                <IsLogged
-                    loginPageUrl={Pages.LOGIN_URL}
-                    sourceUrl={Pages.DEVICE_LIST_URL}>
-                    <DeviceListContainer />
-                </IsLogged>
-            </Route>
-
-            <Route path={`${Pages.CHARTS_URL}/:readingType`}>
-                <IsLogged
-                    loginPageUrl={Pages.LOGIN_URL}
-                    sourceUrl={Pages.CHARTS_URL}>
-                    <ChartsContainer />
-                </IsLogged>
-            </Route>
-
-            <Route path={`${Pages.CHARTS_URL}/:readingType/:deviceId`}>
-                <IsLogged
-                    loginPageUrl={Pages.LOGIN_URL}
-                    sourceUrl={Pages.CHARTS_URL}>
-                    <ChartsContainer />
-                </IsLogged>
-            </Route>
-
-            <Route exact path={`${Pages.APP_CONSOLE_URL}`}>
-                <IsLogged
-                    loginPageUrl={Pages.LOGIN_URL}
-                    sourceUrl={Pages.APP_CONSOLE_URL}>
-                    <AppConsoleContainer />
-                </IsLogged>
-            </Route>
+            <RequiredAuthenticationRoute exact path={Pages.DASHBOARD_URL} component={DashboardContainer} />
+            <RequiredAuthenticationRoute exact path={Pages.DEVICE_LIST_URL} component={DeviceListContainer} />
+            <RequiredAuthenticationRoute path={`${Pages.CHARTS_URL}/:readingType`} component={ChartsContainer} />
+            <RequiredAuthenticationRoute path={`${Pages.CHARTS_URL}/:readingType/:deviceId`} component={ChartsContainer} />
+            <RequiredAuthenticationRoute exact path={`${Pages.APP_CONSOLE_URL}`} component={AppConsoleContainer} />
 
             <Route component={NotFoundPage} />
         </Switch>

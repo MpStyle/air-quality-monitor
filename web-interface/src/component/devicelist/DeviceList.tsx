@@ -25,9 +25,11 @@ export const DeviceList: FunctionComponent<DevicesListProps> = (props) => {
         setDeviceToDelete(d);
         setOpenModal(true);
     };
+    const { fetchDevices, token } = props;
+
     useEffect(() => {
-        props.fetchDevices(props.token);
-    }, []);
+        fetchDevices(token);
+    }, [fetchDevices, token]);
 
     return <div className="devices-list">
         <AppBarOneRow>

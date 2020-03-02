@@ -16,15 +16,16 @@ import { DeviceAirQualityData } from './DeviceAirQualityData';
 
 export const Dashboard: FunctionComponent<DashboardProps> = (props) => {
     const [isAppDrawerOpen, setIsAppDrawerOpen] = React.useState(false);
+    const { currentDevice, fetchAirQualityData, fetchDevices, token } = props;
 
     useEffect(() => {
-        props.fetchDevices(props.token);
-    }, []);
+        fetchDevices(token);
+    }, [fetchDevices, token]);
     useEffect(() => {
-        if (props.currentDevice) {
-            props.fetchAirQualityData(props.token, props.currentDevice.deviceId);
+        if (currentDevice) {
+            fetchAirQualityData(token, currentDevice.deviceId);
         }
-    }, [props.currentDevice]);
+    }, [currentDevice, fetchAirQualityData, token]);
 
     const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
         if (event.type === "keydown" && ((event as React.KeyboardEvent).key === "Tab" || (event as React.KeyboardEvent).key === "Shift")) {
