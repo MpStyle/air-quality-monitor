@@ -1,5 +1,5 @@
 import { Action } from "redux";
-import { UpdateAirStatusAverageAction, UpdateAirStatusAverageActionName } from "../action/UpdateAirStatusAverageAction";
+import { FetchLastReadingsSuccessAction, FetchLastReadingsSuccessActionName } from "../action/FetchLastReadingsAction";
 import { LocalStorageKey } from "../book/LocalStorageKey";
 import { localStorageManager } from "../book/LocalStorageManager";
 import { AirQuality } from "../entity/AirStatus";
@@ -7,12 +7,12 @@ import { initialAppState } from "../store/InitialAppState";
 
 export const airStatusAverageReducer = (state: AirQuality = initialAppState.airStatusAverage, action: Action): AirQuality => {
     switch (action.type) {
-        case UpdateAirStatusAverageActionName:
-            const updateAirStatusAverageAction = action as UpdateAirStatusAverageAction;
+        case FetchLastReadingsSuccessActionName:
+            const airQuality = (action as FetchLastReadingsSuccessAction).lastReadings?.averageStatus as AirQuality;
 
-            localStorageManager.setItem(LocalStorageKey.AIR_STATUS_AVERAGE_KEY, updateAirStatusAverageAction.airStatusAverage);
+            localStorageManager.setItem(LocalStorageKey.AIR_STATUS_AVERAGE_KEY, airQuality);
 
-            return updateAirStatusAverageAction.airStatusAverage;
+            return airQuality;
     }
     return state;
 };

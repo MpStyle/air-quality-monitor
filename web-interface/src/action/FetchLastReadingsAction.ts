@@ -1,4 +1,5 @@
 import { Action } from 'redux';
+import { UserMeasurementsSearchResponse } from '../book/UserLastReadings';
 
 // --- Start
 
@@ -18,11 +19,13 @@ export const fetchLastReadingsStartActionBuilder = (): FetchLastReadingsStartAct
 export const FetchLastReadingsSuccessActionName = 'FetchLastReadingsSuccessAction';
 
 export interface FetchLastReadingsSuccessAction extends Action {
+    lastReadings?: UserMeasurementsSearchResponse;
 }
 
-export const fetchLastReadingsSuccessActionBuilder = (): FetchLastReadingsSuccessAction => {
+export const fetchLastReadingsSuccessActionBuilder = (lastReadings?: UserMeasurementsSearchResponse): FetchLastReadingsSuccessAction => {
     return {
-        type: FetchLastReadingsSuccessActionName
+        type: FetchLastReadingsSuccessActionName,
+        lastReadings
     };
 };
 

@@ -1,6 +1,6 @@
 import { Action } from "redux";
 import { FetchDevicesSuccessAction, FetchDevicesSuccessActionName } from "../action/FetchDevicesAction";
-import { UpdateLastReadingsAction, UpdateLastReadingsActionName } from "../action/UpdateLastReadingsAction";
+import { FetchLastReadingsSuccessAction, FetchLastReadingsSuccessActionName } from "../action/FetchLastReadingsAction";
 import { LocalStorageKey } from "../book/LocalStorageKey";
 import { localStorageManager } from "../book/LocalStorageManager";
 import { AirQualityData } from "../entity/AirQualityData";
@@ -20,15 +20,17 @@ export const lastReadingsReducer = (state: AirQualityData = initialAppState.last
                 return {} as AirQualityData;
             }
             break;
-        case UpdateLastReadingsActionName:
-            const updateAirQualityDataAction = action as UpdateLastReadingsAction;
-            localStorageManager.setItem(LocalStorageKey.CO2_KEY, updateAirQualityDataAction.data.co2);
-            localStorageManager.setItem(LocalStorageKey.HUMIDITY_KEY, updateAirQualityDataAction.data.humidity);
-            localStorageManager.setItem(LocalStorageKey.INSERTED_KEY, updateAirQualityDataAction.data.inserted);
-            localStorageManager.setItem(LocalStorageKey.PRESSURE_KEY, updateAirQualityDataAction.data.pressure);
-            localStorageManager.setItem(LocalStorageKey.TEMPERATURE_KEY, updateAirQualityDataAction.data.temperature);
-            localStorageManager.setItem(LocalStorageKey.TVOC_KEY, updateAirQualityDataAction.data.tvoc);
-            return { ...updateAirQualityDataAction.data };
+        case FetchLastReadingsSuccessActionName:
+            const airQualityData = (action as FetchLastReadingsSuccessAction).lastReadings?.data as AirQualityData;
+
+            localStorageManager.setItem(LocalStorageKey.CO2_KEY, airQualityData.co2);
+            localStorageManager.setItem(LocalStorageKey.HUMIDITY_KEY, airQualityData.humidity);
+            localStorageManager.setItem(LocalStorageKey.INSERTED_KEY, airQualityData.inserted);
+            localStorageManager.setItem(LocalStorageKey.PRESSURE_KEY, airQualityData.pressure);
+            localStorageManager.setItem(LocalStorageKey.TEMPERATURE_KEY, airQualityData.temperature);
+            localStorageManager.setItem(LocalStorageKey.TVOC_KEY, airQualityData.tvoc);
+
+            return { ...airQualityData };
     }
     return state;
 };
