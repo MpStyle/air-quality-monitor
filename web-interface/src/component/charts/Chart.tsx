@@ -39,11 +39,20 @@ export const Chart: FunctionComponent<ChartProps> = (props) => {
 };
 
 export interface ChartProps {
-    averages: (TimeRangeReading & { average: number, formattedAverage: string, xaxis: string, datetime: string, counter: number, granularity: Granularity })[];
+    averages: Average[];
     title: string;
     subtitle: string;
     readingType: string;
     readingUnitMeter: string;
+}
+
+export interface Average extends TimeRangeReading {
+    average: number;
+    formattedAverage: string;
+    xaxis: string;
+    datetime: string;
+    counter: number;
+    granularity: Granularity;
 }
 
 interface ChartInfo {
