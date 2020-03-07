@@ -5,6 +5,7 @@
 #include <WiFi.h>
 #include <HTTPClient.h>
 
+/**** START CONFIGURATION ****/
 const char *WIFI_SSID = "***";
 const char *WIFI_PASSWORD = "***";
 const char *BACKEND_SERVICE_URL = "***";
@@ -12,6 +13,7 @@ const char *DEVICE_ID = "***";
 const char *DEVICE_NAME = "***";
 const char *DEVICE_ADDRESS = "***";
 const char *SECRET_KEY = "***";
+/**** END CONFIGURATION ****/
 
 const float INVALID_READING = NAN;
 const int READINGS_ARRAY_SIZE = 20;
@@ -79,7 +81,7 @@ void setup()
     altitudeReadings[i] = INVALID_READING;
 
   // CCS811 initialization
-  Serial.println("CCS811 test");
+  Serial.println("CCS811 initialization...");
 
   if (!ccs_5a.begin(0x5a))
   {
@@ -104,7 +106,7 @@ void setup()
   ccs_5b.setTempOffset(ccs_5b.calculateTemperature() - 25.0);
 
   // BMP280 initialization
-  Serial.println(F("BMP280 test"));
+  Serial.println(F("BMP280 initialization..."));
 
   if (!bmp.begin(0x76))
   {
@@ -121,7 +123,7 @@ void setup()
                   Adafruit_BMP280::STANDBY_MS_500); /* Standby time. */
 
   // DHT11 initialization
-  Serial.println(F("DHT11 test!"));
+  Serial.println(F("DHT11 initialization..."));
 
   dht.begin();
 }
@@ -264,6 +266,7 @@ void loop()
   if (loopCount > LOOP_COUNT_BEFORE_UPLOAD)
   {
     loopCount = 0;
+
     char *json = "{ \"secretKey\": \"" + SECRET_KEY + "\", \"device\": { \"id\": \"" + DEVICE_ID + "\", \"name\": \"" + DEVICE_NAME + "\", \"address\": \"" + DEVICE_ADDRESS + "\", \"ip\": \"" + WiFi.localIP() + "\" }, \"airData\": { \"temperature\":\"" + temperature + "\", \"co2\":\"" + co2 + "\", \"tvoc\":\"" + tvoc + "\", \"humidity\":\"" + humidity + "\", \"pressure\":\"" + pressure + "\", \"altitude\":\"" + altitude + "\" } }";
     int httpResponseCode = http.POST(json);
 
