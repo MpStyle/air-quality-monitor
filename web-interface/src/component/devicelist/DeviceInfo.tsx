@@ -50,13 +50,6 @@ export const DeviceInfo: FunctionComponent<DeviceInfoProps> = props => {
                 </React.Fragment>
             } />
         <ListItemIcon>
-            <Tooltip title="CPU temperature trend">
-                <IconButton component={Link} to={`${Pages.CHARTS_URL}/${ReadingTypes.CPU_TEMPERATURE}/${props.device.deviceId}`}>
-                    <TimelineIcon />
-                </IconButton>
-            </Tooltip>
-        </ListItemIcon>
-        <ListItemIcon>
             <IconButton onClick={() => props.onDeleteClick(props.device)}>
                 <DeleteForeverIcon />
             </IconButton>
