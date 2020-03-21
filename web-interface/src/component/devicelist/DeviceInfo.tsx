@@ -5,42 +5,31 @@ import ListItemText from "@material-ui/core/ListItemText/ListItemText";
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import React, { FunctionComponent, useState } from "react";
-import { isNullOrUndefined } from "../../book/IsNullOrUndefined";
-import { celsiusToFahrenheit } from "../../book/TemperatureConverter";
-import { TemperatureUnit } from "../../book/Unit";
+import React, { useState, FunctionComponent } from "react";
 import { Device } from "../../entity/Device";
 import { MeterUnit } from "../../entity/MeterUnit";
 
 export const DeviceInfo: FunctionComponent<DeviceInfoProps> = props => {
     const [isDetailsOpen, setIsDetailsOpen] = useState<boolean>(false);
     const isThereAddress = props.device.address && props.device.address.length;
-
-    let temperatureValue =
-        (props.meterUnit.temperature === TemperatureUnit.CELSIUS ? props.device.cpuTemperature : celsiusToFahrenheit(props.device.cpuTemperature))
-            .toFixed(1)
-            .replace(".", props.decimalSeparator)
-        + (props.meterUnit.temperature === TemperatureUnit.CELSIUS ? "°C" : "°F");
+    const isThereIp = props.device.deviceIP && props.device.deviceIP.length;
 
     return <ListItem className="device">
-        <ListItemIcon
+        {(isThereIp || isThereAddress) && <ListItemIcon
             onClick={() => setIsDetailsOpen(!isDetailsOpen)}>
             <IconButton>
                 {isDetailsOpen ? <ExpandLessIcon /> : <ExpandMoreIcon />}
             </IconButton>
-        </ListItemIcon>
+        </ListItemIcon>}
         <ListItemText
             primary={props.device.name}
             secondary={
                 isDetailsOpen && <React.Fragment>
-                    <div className="ip">
+                    {isThereIp && <div className="ip">
                         <strong>IP:</strong> {props.device.deviceIP.split(";")[0]}
-                    </div>
+                    </div>}
                     {isThereAddress && <div className="address">
                         <strong>Address:</strong> {props.device.address}
-                    </div>}
-                    {!isNullOrUndefined(props.device.cpuTemperature) && <div className="temperature">
-                        <strong>CPU temperature:</strong> {temperatureValue}
                     </div>}
                 </React.Fragment>
             } />

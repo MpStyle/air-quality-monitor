@@ -20,7 +20,10 @@ import { Device } from "../../entity/Device";
 import logo from '../../images/logo.svg';
 import "./AppDrawer.scss";
 
-export const AppDrawer: FunctionComponent<AppDrawerProps> = (props) => {
+export const AppDrawer: FunctionComponent<AppDrawerProps> = props => {
+    const isThereAddress = props.currentDevice?.address && props.currentDevice?.address.length;
+    const isThereIp = props.currentDevice?.deviceIP && props.currentDevice?.deviceIP.length;
+
     return <Drawer open={props.isOpen} onClose={props.toggleDrawer(false)} className="app-drawer">
         <div
             role="presentation"
@@ -53,10 +56,12 @@ export const AppDrawer: FunctionComponent<AppDrawerProps> = (props) => {
                     <PhonelinkRingIcon className="icon" />
                     {props.currentDevice.name} <span className="air-quality-average">({airQualityToLabel(props.average)})</span>
                 </Typography>
-                <div className="ip">
+                {isThereIp && <div className="ip">
                     <strong>IP:</strong> {props.currentDevice.deviceIP.split(";")[0]}
-                </div>
-                {props.currentDevice.address && props.currentDevice.address.length && <div className="address">{props.currentDevice.address}</div>}
+                </div>}
+                {isThereAddress && <div className="address">
+                    <strong>Address:</strong> {props.currentDevice.address}
+                </div>}
             </div>}
 
             <Divider />
