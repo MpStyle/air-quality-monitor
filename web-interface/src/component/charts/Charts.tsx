@@ -85,7 +85,7 @@ export const Charts: FunctionComponent<ChartsProps> = (props) => {
                     readingUnitMeter={props.unitMeter}
                     readingType={props.title}
                     averages={props.airQualityDataAverages.dailyAverages.map(da => {
-                        const utcDate = DateTimeUtils.localeDateToTimestamp(new Date(Date.UTC(parseInt(da.timeRange.substring(0, 4)), parseInt(da.timeRange.substring(4, 6)), parseInt(da.timeRange.substring(6, 8)), parseInt(da.timeRange.substring(8, 10)), 0, 0)));
+                        const utcDate = DateTimeUtils.localeDateToTimestamp(new Date(Date.UTC(parseInt(da.timeRange.substring(0, 4)), parseInt(da.timeRange.substring(4, 6))-1, parseInt(da.timeRange.substring(6, 8)), parseInt(da.timeRange.substring(8, 10)), 0, 0)));
                         const value = da.value / da.counter;
                         return {
                             ...da,
@@ -104,7 +104,7 @@ export const Charts: FunctionComponent<ChartsProps> = (props) => {
                     readingUnitMeter={props.unitMeter}
                     readingType={props.title}
                     averages={props.airQualityDataAverages.monthlyAverages.map(da => {
-                        const utcDate = DateTimeUtils.localeDateToTimestamp(new Date(Date.UTC(parseInt(da.timeRange.substring(0, 4)), parseInt(da.timeRange.substring(4, 6)), parseInt(da.timeRange.substring(6, 8)))));
+                        const utcDate = DateTimeUtils.localeDateToTimestamp(new Date(Date.UTC(parseInt(da.timeRange.substring(0, 4)), parseInt(da.timeRange.substring(4, 6))-1, parseInt(da.timeRange.substring(6, 8)))));
                         const value = da.value / da.counter;
                         return {
                             ...da,
@@ -123,7 +123,7 @@ export const Charts: FunctionComponent<ChartsProps> = (props) => {
                     readingUnitMeter={props.unitMeter}
                     readingType={props.title}
                     averages={props.airQualityDataAverages.yearlyAverages.map(da => {
-                        const utcDate = DateTimeUtils.localeDateToTimestamp(new Date(Date.UTC(parseInt(da.timeRange.substring(0, 4)), parseInt(da.timeRange.substring(4, 6)), 1)));
+                        const utcDate = DateTimeUtils.localeDateToTimestamp(new Date(Date.UTC(parseInt(da.timeRange.substring(0, 4)), parseInt(da.timeRange.substring(4, 6))-1, 1)));
                         const value = da.value / da.counter;
                         return {
                             ...da,
