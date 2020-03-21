@@ -1,9 +1,9 @@
 import { connect } from "react-redux";
 import { RouteChildrenProps } from "react-router";
 import { Action, Dispatch } from "redux";
+import { fetchLoginTokenSuccessActionBuilder } from "../../action/FetchLoginTokenAction";
 import { loginErrorActionBuilder } from "../../action/LoginErrorAction";
 import { loginInProgressActionBuilder } from "../../action/LoginInProgressAction";
-import { fetchLoginTokenSuccessActionBuilder } from "../../action/FetchLoginTokenAction";
 import { Pages } from "../../book/Pages";
 import { userLogin } from "../../book/UserLogin";
 import { AppState } from '../../entity/AppState';
