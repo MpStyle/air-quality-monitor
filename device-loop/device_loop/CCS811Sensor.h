@@ -13,12 +13,12 @@ struct CCS811Data
 class CCS811Sensor
 {
 private:
-    const int READINGS_BEFORE_RESET_COUNT = 50;
+    const int READINGS_BEFORE_RESET_COUNT = 150;
     const int RESET_PIN_5A = 15;
     const int RESET_PIN_5B = 14;
-    const int DELTA_TEMPERATURE = 4;
-    const int DELTA_CO2 = 50;
-    const float DELTA_TVOC = 0.3;
+    const int DELTA_TEMPERATURE = 2;
+    const int DELTA_CO2 = 40;
+    const float DELTA_TVOC = 0.4;
 
     int readingCount = 0;
 
