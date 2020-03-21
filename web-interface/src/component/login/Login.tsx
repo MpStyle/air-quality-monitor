@@ -1,10 +1,9 @@
 import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress';
 import Paper from '@material-ui/core/Paper/Paper';
 import TextField from '@material-ui/core/TextField/TextField';
-import Tooltip from '@material-ui/core/Tooltip/Tooltip';
 import Typography from '@material-ui/core/Typography/Typography';
-import React, { useState, FunctionComponent } from 'react';
-import { useLocation, RouteChildrenProps } from 'react-router';
+import React, { FunctionComponent, useState } from 'react';
+import { RouteChildrenProps, useLocation } from 'react-router';
 import { Link, Redirect } from "react-router-dom";
 import { LoadingState } from "../../entity/LoadingState";
 import { LoginToken } from "../../entity/LoginToken";
@@ -64,17 +63,13 @@ export const Login: FunctionComponent<LoginProps> = (props) => {
                     Error during login. Check the credentials and try again
                 </Typography>}
                 <div className="sign-in-button-container">
-                    <Tooltip title={loginButtonTooltip} aria-label={loginButtonTooltip}>
-                        <span>
-                            <AppButton
-                                onClick={() => props.onSignInClick(username, password)}
-                                className="sign-in-button"
-                                title={loginButtonTooltip}
-                                disabled={isLoginButtonDisabled}>
-                                Sign in
-                            </AppButton>
-                        </span>
-                    </Tooltip>
+                    <AppButton
+                        onClick={() => props.onSignInClick(username, password)}
+                        className="sign-in-button"
+                        title={loginButtonTooltip}
+                        disabled={isLoginButtonDisabled}>
+                        Sign in
+                    </AppButton>
                 </div>
 
                 <Link to="/credits" className="credits-link">Credits</Link>
