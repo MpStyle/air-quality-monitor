@@ -25,7 +25,7 @@ export const AppDrawerContainer = connect(
                     localStorageManager.removeAll();
                     sessionStorageManager.removeAll();
 
-                    window.location.reload();
+                    window.location.href = "/";
                 };
 
                 userRevokeRefreshToken(refreshToken as string)

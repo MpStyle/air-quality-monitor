@@ -23,7 +23,7 @@ export const Login: FunctionComponent<LoginProps> = (props) => {
     const isLoginButtonDisabled = !username || !password;
     const loginButtonTooltip = isLoginButtonDisabled ? 'Insert username and password' : undefined;
 
-    if (props.token) {
+    if (props.token && props.token.expiredAt > Date.now()) {
         return <Redirect to={{ pathname: query.get("sourceUrl") || props.fallbackUrl }} />;
     }
 
