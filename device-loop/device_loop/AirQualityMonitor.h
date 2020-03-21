@@ -24,9 +24,9 @@ private:
     HTTPClient http;
 
     WiFiUDP ntpUDP;
-    NTPClient timeClient=NTPClient(ntpUDP);
+    NTPClient timeClient = NTPClient(ntpUDP);
 
-    static const int BUFFER_SIZE = 16;
+    static const int BUFFER_SIZE = 32;
 
     int temperatureCurrentPosition = 0;
     int co2CurrentPosition = 0;
@@ -34,11 +34,11 @@ private:
     int humidityCurrentPosition = 0;
     int pressureCurrentPosition = 0;
 
-    float temperatures[AirQualityMonitor::BUFFER_SIZE] = {NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN};
-    float co2s[AirQualityMonitor::BUFFER_SIZE] = {NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN};
-    float tvocs[AirQualityMonitor::BUFFER_SIZE] = {NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN};
-    float humidities[AirQualityMonitor::BUFFER_SIZE] = {NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN};
-    float pressures[AirQualityMonitor::BUFFER_SIZE] = {NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN};
+    float temperatures[AirQualityMonitor::BUFFER_SIZE] = {NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN};
+    float co2s[AirQualityMonitor::BUFFER_SIZE] = {NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN};
+    float tvocs[AirQualityMonitor::BUFFER_SIZE] = {NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN};
+    float humidities[AirQualityMonitor::BUFFER_SIZE] = {NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN};
+    float pressures[AirQualityMonitor::BUFFER_SIZE] = {NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN};
 
 public:
     void begin();
