@@ -2,8 +2,8 @@ import CircularProgress from '@material-ui/core/CircularProgress/CircularProgres
 import Paper from '@material-ui/core/Paper/Paper';
 import TextField from '@material-ui/core/TextField/TextField';
 import Typography from '@material-ui/core/Typography/Typography';
-import React, { FunctionComponent, useState } from 'react';
-import { RouteChildrenProps, useLocation } from 'react-router';
+import React, { useState, FunctionComponent } from 'react';
+import { useLocation, RouteChildrenProps } from 'react-router';
 import { Link, Redirect } from "react-router-dom";
 import { LoadingState } from "../../entity/LoadingState";
 import { LoginToken } from "../../entity/LoginToken";
