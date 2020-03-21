@@ -43,7 +43,7 @@ export const ChartsContainer = connect(
 
         return {
             airQualityDataAverages: appState.airQualityDataAverages,
-            token: appState.token as LoginToken,
+            token: appState.loginTokenStatus.loginToken as LoginToken,
             deviceId: appState.currentDevice?.deviceId,
             title: getTitle(readingType),
             formatValue: (value: number): string => {

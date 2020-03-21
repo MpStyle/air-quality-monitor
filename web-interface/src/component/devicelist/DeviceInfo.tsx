@@ -2,20 +2,15 @@ import IconButton from "@material-ui/core/IconButton/IconButton";
 import ListItem from "@material-ui/core/ListItem/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText/ListItemText";
-import Tooltip from "@material-ui/core/Tooltip/Tooltip";
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import TimelineIcon from '@material-ui/icons/Timeline';
-import React, { useState, FunctionComponent } from "react";
-import { Link } from "react-router-dom";
+import React, { FunctionComponent, useState } from "react";
 import { isNullOrUndefined } from "../../book/IsNullOrUndefined";
-import { Pages } from "../../book/Pages";
 import { celsiusToFahrenheit } from "../../book/TemperatureConverter";
 import { TemperatureUnit } from "../../book/Unit";
 import { Device } from "../../entity/Device";
 import { MeterUnit } from "../../entity/MeterUnit";
-import { ReadingTypes } from './../../book/ReadingTypes';
 
 export const DeviceInfo: FunctionComponent<DeviceInfoProps> = props => {
     const [isDetailsOpen, setIsDetailsOpen] = useState<boolean>(false);

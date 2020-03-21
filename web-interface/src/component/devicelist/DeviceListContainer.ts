@@ -14,7 +14,7 @@ import { DevicesListProps, DeviceList } from "./DeviceList";
 export const DeviceListContainer = connect(
     (appState: AppState): DevicesListProps => {
         return {
-            token: appState.token as LoginToken,
+            token: appState.loginTokenStatus.loginToken as LoginToken,
             devices: appState.devicesData.devices,
             isLoading: appState.devicesData.deletingState === LoadingState.loading || appState.devicesData.loadingState === LoadingState.loading,
             decimalSeparator: appState.settings.decimalSeparator,

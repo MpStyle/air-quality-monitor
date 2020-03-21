@@ -20,7 +20,7 @@ export interface IsLoggedProps {
 export const RequiredAuthenticationRoute = connect(
     (appState: AppState): IsLoggedProps => {
         return {
-            isAuthenticated: !!appState.token && appState.token.expiredAt < Date.now()
+            isAuthenticated: !!appState.loginTokenStatus.loginToken && appState.loginTokenStatus.loginToken.expiredAt < Date.now()
         } as IsLoggedProps;
     }
 )(IsLogged);

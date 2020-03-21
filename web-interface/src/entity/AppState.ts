@@ -5,7 +5,7 @@ import { AppError } from "./AppError";
 import { Device } from "./Device";
 import { DevicesData } from "./DevicesData";
 import { LoadingState } from "./LoadingState";
-import { LoginToken } from "./LoginToken";
+import { LoginTokenStatus } from "./LoginTokenStatus";
 import { Settings } from "./Settings";
 
 export interface AppState {
@@ -16,8 +16,7 @@ export interface AppState {
     devicesData: DevicesData;
     currentDevice: Device | null;
     suggestions: string[];
-    token: LoginToken | null;
-    loginStatus: LoadingState;
+    loginTokenStatus: LoginTokenStatus;
     settings: Settings;
     airQualityDataAverages: AirQualityDataAverages;
     appErrors: AppError[];

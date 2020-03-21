@@ -2,22 +2,22 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { fetchDevicesErrorActionBuilder, fetchDevicesStartActionBuilder, fetchDevicesSuccessActionBuilder } from '../../action/FetchDevicesAction';
 import { fetchLastReadingsErrorActionBuilder, fetchLastReadingsStartActionBuilder, fetchLastReadingsSuccessActionBuilder } from '../../action/FetchLastReadingsAction';
+import { fetchLoginTokenErrorActionBuilder, fetchLoginTokenStartActionBuilder, fetchLoginTokenSuccessActionBuilder } from '../../action/FetchLoginTokenAction';
 import { updateCurrentDeviceActionBuilder } from '../../action/UpdateCurrentDeviceAction';
 import { userDevicesList } from '../../book/UserDevicesList';
 import { userLastReadings } from '../../book/UserLastReadings';
-import { userRenewAccessToken, UserRenewAccessTokenResponse } from '../../book/UserRenewAccessToken';
+import { userRenewAccessToken } from '../../book/UserRenewAccessToken';
 import { AppState } from '../../entity/AppState';
 import { Device } from '../../entity/Device';
 import { LoadingState } from '../../entity/LoadingState';
 import { LoginToken } from '../../entity/LoginToken';
-import { ServiceResponse } from '../../entity/ServiceResponse';
 import { Dashboard, DashboardProps } from './Dashboard';
 
 export const DashboardContainer = connect(
     (appState: AppState): DashboardProps => {
         return {
             lastReadingLoadingState: appState.lastReadingLoadingState,
-            token: appState.token,
+            token: appState.loginTokenStatus.loginToken,
             airQualityData: appState.lastReadings,
             airStatus: appState.airStatus,
             airStatusAverage: appState.airStatusAverage,
@@ -27,94 +27,83 @@ export const DashboardContainer = connect(
             suggestions: appState.suggestions,
             decimalSeparator: appState.settings.decimalSeparator,
             iconVisualizationType: appState.settings.iconVisualizationType,
-            isLoading: appState.lastReadingLoadingState === LoadingState.loading
-                || appState.devicesData.loadingState === LoadingState.loading,
+            isLoading: appState.loginTokenStatus.loadingState === LoadingState.loading || appState.lastReadingLoadingState === LoadingState.loading || appState.devicesData.loadingState === LoadingState.loading,
             dateFormat: appState.settings.dateFormat
         } as DashboardProps;
     },
     (dispatch: Dispatch): DashboardProps => {
+        const renewToken = (token: LoginToken) => {
+            dispatch(fetchLoginTokenStartActionBuilder());
+
+            userRenewAccessToken(token.refreshToken)
+                .then(response => {
+                    if (response.error) {
+                        console.error("Error renew token: ", response.error);
+                        dispatch(fetchLoginTokenErrorActionBuilder(response.error));
+                        return;
+                    }
+
+                    if (!response.payload) {
+                        console.error("Error renew token: ", "invalid payload");
+                        dispatch(fetchLoginTokenErrorActionBuilder("invalid payload"));
+                        return;
+                    }
+
+                    dispatch(fetchLoginTokenSuccessActionBuilder({
+                        ...token,
+                        accessToken: response.payload.accessToken,
+                        expiredAt: response.payload.expiredAt
+                    } as LoginToken));
+                });
+        };
+
         return {
             onCurrentDeviceChange: (device: Device) => { dispatch(updateCurrentDeviceActionBuilder(device)); },
             fetchDevices: (token: LoginToken) => {
+                if (token.expiredAt <= Date.now()) {
+                    renewToken(token);
+                    return;
+                }
+
                 dispatch(fetchDevicesStartActionBuilder());
-
-                const renewToken: Promise<ServiceResponse<UserRenewAccessTokenResponse>> = token.expiredAt <= Date.now() ? userRenewAccessToken(token.refreshToken) : Promise.resolve({ payload: { accessToken: token.accessToken, expiredAt: token.expiredAt } });
-
-                renewToken
+                userDevicesList(token.accessToken)
                     .then(response => {
                         if (response.error) {
-                            console.log("Error renew token: ", response.error);
+                            console.log(response.error);
                             dispatch(fetchDevicesErrorActionBuilder(response.error));
                             return;
                         }
 
-                        if (!response.payload) {
-                            console.log("Error renew token: ", "invalid payload");
-                            return;
-                        }
-
-                        userDevicesList(response.payload.accessToken)
-                            .then(response => {
-                                if (response.error) {
-                                    console.log(response.error);
-                                    dispatch(fetchDevicesErrorActionBuilder(response.error));
-                                    return;
-                                }
-
-                                dispatch(fetchDevicesSuccessActionBuilder(response.payload?.devices || []));
-                            })
-                            .catch((error) => {
-                                console.error(`Error while fetch devices: ${error}`);
-
-                                dispatch(fetchDevicesErrorActionBuilder(error));
-                            });
+                        dispatch(fetchDevicesSuccessActionBuilder(response.payload?.devices || []));
                     })
-                    .catch(err => {
-                        dispatch(fetchDevicesErrorActionBuilder(err));
+                    .catch((error) => {
+                        console.error(`Error while fetch devices: ${error}`);
+
+                        dispatch(fetchDevicesErrorActionBuilder(error));
                     });
             },
             fetchAirQualityData: (token: LoginToken, currentDeviceId: string) => {
-                const poller = () => {
-                    dispatch(fetchLastReadingsStartActionBuilder());
+                if (token.expiredAt <= Date.now()) {
+                    renewToken(token);
+                    return;
+                }
 
-                    const renewToken: Promise<ServiceResponse<UserRenewAccessTokenResponse>> = token.expiredAt <= Date.now() ? userRenewAccessToken(token.refreshToken) : Promise.resolve({ payload: { accessToken: token.accessToken, expiredAt: token.expiredAt } });
+                dispatch(fetchLastReadingsStartActionBuilder());
+                userLastReadings(currentDeviceId, token.accessToken)
+                    .then(response => {
+                        if (response.error) {
+                            console.log(response.error);
+                            dispatch(fetchLastReadingsErrorActionBuilder(response.error));
+                            return;
+                        }
 
-                    renewToken
-                        .then(response => {
-                            if (response.error) {
-                                console.log("Error renew token: ", response.error);
-                                return;
-                            }
+                        dispatch(fetchLastReadingsSuccessActionBuilder(response.payload));
+                    })
+                    .catch((error) => {
+                        console.error(`Error while fetch air quality data: ${error}`);
 
-                            if (!response.payload) {
-                                console.log("Error renew token: ", "invalid payload");
-                                return;
-                            }
-
-                            userLastReadings(currentDeviceId, response.payload.accessToken)
-                                .then(response => {
-                                    if (response.error) {
-                                        console.log(response.error);
-                                        dispatch(fetchLastReadingsErrorActionBuilder(response.error));
-                                        return;
-                                    }
-
-                                    dispatch(fetchLastReadingsSuccessActionBuilder(response.payload));
-
-                                    setTimeout(() => poller(), parseInt(process.env.REACT_APP_AIR_QUALITY_DATA_REFRESH_TIME as string));
-                                })
-                                .catch((error) => {
-                                    console.error(`Error while fetch air quality data: ${error}`);
-
-                                    dispatch(fetchLastReadingsErrorActionBuilder(error));
-                                });
-                        })
-                        .catch(err => {
-                            dispatch(fetchLastReadingsErrorActionBuilder(err));
-                        });
-                };
-
-                poller();
+                        dispatch(fetchLastReadingsErrorActionBuilder(error));
+                    });
             }
         } as DashboardProps;
     }
