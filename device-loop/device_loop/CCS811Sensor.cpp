@@ -2,6 +2,14 @@
 
 bool CCS811Sensor::setup()
 {
+    pinMode(this->RESET_PIN_5A, OUTPUT);
+    digitalWrite(this->RESET_PIN_5A, HIGH);
+    delay(200);
+
+    pinMode(this->RESET_PIN_5B, OUTPUT);
+    digitalWrite(this->RESET_PIN_5B, HIGH);
+    delay(200);
+
     if (!ccs_5a.begin(0x5a))
     {
         Serial.println("Failed to start sensor! Please check your wiring.");
@@ -75,6 +83,20 @@ CCS811Data CCS811Sensor::getData()
     {
         toReturn.tvoc = NAN;
     }
+
+    if (this->readingCount > this->READINGS_BEFORE_RESET_COUNT)
+    {
+        Serial.println("Reseting CCS811 sensor..");
+
+        digitalWrite(this->RESET_PIN_5A, LOW);
+        digitalWrite(this->RESET_PIN_5B, LOW);
+        delay(500);
+        digitalWrite(this->RESET_PIN_5A, HIGH);
+        digitalWrite(this->RESET_PIN_5B, HIGH);
+        delay(200);
+        this->readingCount = 0;
+    }
+    this->readingCount++;
 
     return toReturn;
 }
