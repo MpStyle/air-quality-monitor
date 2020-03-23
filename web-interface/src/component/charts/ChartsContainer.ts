@@ -21,7 +21,6 @@ const getTitle = (readingType: string): string => {
         case ReadingTypes.HUMIDITY: return 'Humidity';
         case ReadingTypes.TEMPERATURE: return 'Temperature';
         case ReadingTypes.CO2: return 'CO2';
-        case ReadingTypes.CPU_TEMPERATURE: return 'CPU temperature';
     }
     return '';
 };
@@ -32,7 +31,6 @@ const getUnitMeter = (readingType: string, settings: Settings): string => {
         case ReadingTypes.HUMIDITY: return settings.meterUnit.humidity;
         case ReadingTypes.TEMPERATURE: return settings.meterUnit.temperature === TemperatureUnit.CELSIUS ? "°C" : "°F";
         case ReadingTypes.CO2: return settings.meterUnit.co2;
-        case ReadingTypes.CPU_TEMPERATURE: return "°C";
     }
     return '';
 };
@@ -56,7 +54,6 @@ export const ChartsContainer = connect(
                             .toFixed(0)
                             .replace('.', appState.settings.decimalSeparator);
                     case ReadingTypes.TEMPERATURE:
-                    case ReadingTypes.CPU_TEMPERATURE:
                         return (appState.settings.meterUnit.temperature === TemperatureUnit.CELSIUS ? value : celsiusToFahrenheit(value))
                             .toFixed(1)
                             .replace(".", appState.settings.decimalSeparator);
