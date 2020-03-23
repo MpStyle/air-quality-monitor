@@ -85,16 +85,14 @@ export const Charts: FunctionComponent<ChartsProps> = (props) => {
                     readingUnitMeter={props.unitMeter}
                     readingType={props.title}
                     averages={props.airQualityDataAverages.dailyAverages.map(da => {
-                        const utcDate = DateTimeUtils.localeDateToTimestamp(new Date(Date.UTC(parseInt(da.timeRange.substring(0, 4)), parseInt(da.timeRange.substring(4, 6))-1, parseInt(da.timeRange.substring(6, 8)), parseInt(da.timeRange.substring(8, 10)), 0, 0)));
+                        const utcDate = DateTimeUtils.localeDateToTimestamp(new Date(Date.UTC(parseInt(da.timeRange.substring(0, 4)), parseInt(da.timeRange.substring(4, 6)) - 1, parseInt(da.timeRange.substring(6, 8)), parseInt(da.timeRange.substring(8, 10)), 0, 0)));
                         const value = da.value / da.counter;
                         return {
                             ...da,
                             average: value,
                             formattedAverage: props.formatValue(value),
-                            count: da.value,
                             xaxis: DateTimeUtils.timestampToFormatedDate(utcDate, "H"),
                             datetime: DateTimeUtils.timestampToDate(utcDate, props.dateFormat) + ' ' + DateTimeUtils.timestampToFormatedDate(utcDate, "H:mm:ss"),
-                            granularity: da.granularity
                         };
                     })} />
 
@@ -104,16 +102,14 @@ export const Charts: FunctionComponent<ChartsProps> = (props) => {
                     readingUnitMeter={props.unitMeter}
                     readingType={props.title}
                     averages={props.airQualityDataAverages.monthlyAverages.map(da => {
-                        const utcDate = DateTimeUtils.localeDateToTimestamp(new Date(Date.UTC(parseInt(da.timeRange.substring(0, 4)), parseInt(da.timeRange.substring(4, 6))-1, parseInt(da.timeRange.substring(6, 8)))));
+                        const utcDate = DateTimeUtils.localeDateToTimestamp(new Date(Date.UTC(parseInt(da.timeRange.substring(0, 4)), parseInt(da.timeRange.substring(4, 6)) - 1, parseInt(da.timeRange.substring(6, 8)))));
                         const value = da.value / da.counter;
                         return {
                             ...da,
                             average: value,
                             formattedAverage: props.formatValue(value),
-                            count: da.value,
                             xaxis: DateTimeUtils.timestampToDate(utcDate, props.dateFormat),
                             datetime: DateTimeUtils.timestampToDate(utcDate, props.dateFormat),
-                            granularity: da.granularity
                         };
                     })} />
 
@@ -123,16 +119,14 @@ export const Charts: FunctionComponent<ChartsProps> = (props) => {
                     readingUnitMeter={props.unitMeter}
                     readingType={props.title}
                     averages={props.airQualityDataAverages.yearlyAverages.map(da => {
-                        const utcDate = DateTimeUtils.localeDateToTimestamp(new Date(Date.UTC(parseInt(da.timeRange.substring(0, 4)), parseInt(da.timeRange.substring(4, 6))-1, 1)));
+                        const utcDate = DateTimeUtils.localeDateToTimestamp(new Date(Date.UTC(parseInt(da.timeRange.substring(0, 4)), parseInt(da.timeRange.substring(4, 6)) - 1, 1)));
                         const value = da.value / da.counter;
                         return {
                             ...da,
                             average: value,
                             formattedAverage: props.formatValue(value),
-                            counter: da.counter,
                             xaxis: DateTimeUtils.timestampToShortDate(utcDate, props.shortDateFormat),
                             datetime: DateTimeUtils.timestampToShortDate(utcDate, props.shortDateFormat),
-                            granularity: da.granularity
                         };
                     })} />
             </Paper>}

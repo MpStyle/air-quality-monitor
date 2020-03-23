@@ -2,7 +2,6 @@ import { Typography } from "@material-ui/core";
 import React, { FunctionComponent } from "react";
 import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { Colors } from "../../book/Colors";
-import { Granularity } from "../../entity/Granularity";
 import { TimeRangeReading } from "../../entity/TimeRangeReading";
 import "./Chart.scss";
 import { ChartTooltip } from "./ChartTooltip";
@@ -51,8 +50,6 @@ export interface Average extends TimeRangeReading {
     formattedAverage: string;
     xaxis: string;
     datetime: string;
-    counter: number;
-    granularity: Granularity;
 }
 
 interface ChartInfo {
