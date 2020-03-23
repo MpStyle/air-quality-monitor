@@ -1,12 +1,8 @@
 #include "CCS811Sensor.h"
 
-bool CCS811Sensor::setup()
+bool CCS811Sensor::reset()
 {
-    pinMode(this->RESET_PIN_5A, OUTPUT);
     digitalWrite(this->RESET_PIN_5A, HIGH);
-    delay(200);
-
-    pinMode(this->RESET_PIN_5B, OUTPUT);
     digitalWrite(this->RESET_PIN_5B, HIGH);
     delay(200);
 
@@ -31,6 +27,14 @@ bool CCS811Sensor::setup()
     ccs_5b.setTempOffset(ccs_5b.calculateTemperature() - 25.0);
 
     return true;
+}
+
+bool CCS811Sensor::setup()
+{
+    pinMode(this->RESET_PIN_5A, OUTPUT);
+    pinMode(this->RESET_PIN_5B, OUTPUT);
+
+    return this->reset();
 }
 
 CCS811Data CCS811Sensor::getData()
@@ -91,9 +95,9 @@ CCS811Data CCS811Sensor::getData()
         digitalWrite(this->RESET_PIN_5A, LOW);
         digitalWrite(this->RESET_PIN_5B, LOW);
         delay(500);
-        digitalWrite(this->RESET_PIN_5A, HIGH);
-        digitalWrite(this->RESET_PIN_5B, HIGH);
-        delay(200);
+
+        this->reset();
+
         this->readingCount = 0;
     }
     this->readingCount++;

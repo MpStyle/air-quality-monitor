@@ -25,6 +25,8 @@ private:
     Adafruit_CCS811 ccs_5a;
     Adafruit_CCS811 ccs_5b;
 
+    bool reset();
+
 public:
     bool setup();
     CCS811Data getData();
