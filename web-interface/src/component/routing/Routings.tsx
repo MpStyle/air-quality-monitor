@@ -19,7 +19,7 @@ export const Routing: FunctionComponent<{}> = () => {
         <CircularProgress />
     </Paper>);
 
-    return <Suspense fallback={Loading}>
+    return <Suspense fallback={<Loading />}>
         <HashRouter>
             <Switch>
                 <Route exact path="/" component={LoginContainer} />
@@ -27,11 +27,11 @@ export const Routing: FunctionComponent<{}> = () => {
                 <Route exact path={Pages.CREDITS_URL} component={Credits} />
                 <Route exact path={Pages.APP_SETTINGS_URL} component={AppSettingsContainer} />
 
-            <Route exact path={Pages.DASHBOARD_URL} component={DashboardContainer} />
-            <Route exact path={Pages.DEVICE_LIST_URL} component={DeviceListContainer} />
-            <Route path={`${Pages.CHARTS_URL}/:readingType`} component={ChartsContainer} />
-            <Route path={`${Pages.CHARTS_URL}/:readingType/:deviceId`} component={ChartsContainer} />
-            <Route exact path={`${Pages.APP_CONSOLE_URL}`} component={AppConsoleContainer} />
+                <Route exact path={Pages.DASHBOARD_URL} component={DashboardContainer} />
+                <Route exact path={Pages.DEVICE_LIST_URL} component={DeviceListContainer} />
+                <Route path={`${Pages.CHARTS_URL}/:readingType`} component={ChartsContainer} />
+                <Route path={`${Pages.CHARTS_URL}/:readingType/:deviceId`} component={ChartsContainer} />
+                <Route exact path={`${Pages.APP_CONSOLE_URL}`} component={AppConsoleContainer} />
 
                 <Route component={NotFoundPage} />
             </Switch>

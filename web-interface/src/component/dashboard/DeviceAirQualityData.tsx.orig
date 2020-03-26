@@ -29,7 +29,14 @@ export const DeviceAirQualityData: FunctionComponent<AirQualityDataProps> = (pro
         !props.airQualityData.tvoc;
 
     if (props.isLoading && noData) {
-        return <LoadingPaper message={`${t("loading")}...`} />;
+<<<<<<< HEAD
+        return <Paper elevation={2} className="loading">
+            <div className="message">{t("loading")}...</div>
+            <CircularProgress />
+        </Paper>;
+=======
+        return <LoadingPaper message="Loading..." />;
+>>>>>>> master
     }
 
     if (noData) {

@@ -1,15 +1,26 @@
 import MomentUtils from '@date-io/moment';
 import IconButton from "@material-ui/core/IconButton/IconButton";
 import Paper from "@material-ui/core/Paper/Paper";
+<<<<<<< HEAD
+import { Theme } from '@material-ui/core/styles/createMuiTheme';
+=======
 import Typography from "@material-ui/core/Typography/Typography";
+>>>>>>> master
 import createStyles from '@material-ui/core/styles/createStyles';
 import makeStyles from '@material-ui/core/styles/makeStyles';
+import Typography from "@material-ui/core/Typography/Typography";
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import InsertInvitationIcon from '@material-ui/icons/InsertInvitation';
 import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
-import React, { useEffect, useState, FunctionComponent } from "react";
+<<<<<<< HEAD
+import * as React from 'react';
+import { FunctionComponent, useEffect, useState } from "react";
 import { useTranslation } from 'react-i18next';
+import { Link, useParams } from "react-router-dom";
+=======
+import React, { useEffect, useState, FunctionComponent } from "react";
 import { useHistory, useParams } from "react-router-dom";
+>>>>>>> master
 import { DateTimeUtils } from '../../book/DateTimeUtils';
 import { AirQualityDataAverages } from "../../entity/AirQualityDataAverages";
 import { DateFormat } from '../../entity/DateFormat';
@@ -55,7 +66,14 @@ export const Charts: FunctionComponent<ChartsProps> = (props) => {
             </IconButton>
         </AppBarOneRow>
         <main>
-            {props.airQualityDataAverages.loadingState === LoadingState.loading && <LoadingPaper message={`${t("loading")}...`} />}
+<<<<<<< HEAD
+            {props.airQualityDataAverages.loadingState === LoadingState.loading && <Paper elevation={2} className="loading">
+                <div className="message">{t("loading")}...</div>
+                <CircularProgress />
+            </Paper>}
+=======
+            {props.airQualityDataAverages.loadingState === LoadingState.loading && <LoadingPaper message="Loading..." />}
+>>>>>>> master
 
             {props.airQualityDataAverages.loadingState === LoadingState.success && <Paper elevation={2} className="charts-container">
 
