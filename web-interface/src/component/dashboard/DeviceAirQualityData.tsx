@@ -35,8 +35,8 @@ export const DeviceAirQualityData: FunctionComponent<AirQualityDataProps> = (pro
     if (noData) {
         return <Paper elevation={2} className="no-data">
             <div className="message">
-                <strong>No data</strong><br />
-                Install almost a device to show something.
+                <strong>{t("noData")}</strong><br />
+                {t("installADevice")}.
             </div>
         </Paper>;
     }
@@ -103,7 +103,7 @@ export const DeviceAirQualityData: FunctionComponent<AirQualityDataProps> = (pro
 
         <div>
             {props.airQualityData.inserted && <div className="last-update">
-                <span>Last update:</span>
+                <span>t("lastUpdate"):</span>
                 &nbsp;
                 {DateTimeUtils.timestampToDate(props.airQualityData.inserted, props.dateFormat)}
                 &nbsp;

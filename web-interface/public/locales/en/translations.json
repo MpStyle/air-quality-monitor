@@ -33,5 +33,8 @@
     "noErrors": "No errors",
     "errorCode": "Error code",
     "errorDescription": "Error description",
-    "dateTime": "Date time"
+    "dateTime": "Date time",
+    "noData": "No data",
+    "installADevice": "Install almost a device to show something",
+    "lastUpdate": "Last update"
 }
