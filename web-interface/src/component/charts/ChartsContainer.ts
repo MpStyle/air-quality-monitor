@@ -14,16 +14,6 @@ import { AppState } from './../../entity/AppState';
 import { Settings } from './../../entity/Settings';
 import { Charts, ChartsProps } from './Charts';
 
-const getTitle = (readingType: string): string => {
-    switch (readingType) {
-        case ReadingTypes.TVOC: return 'TVOC';
-        case ReadingTypes.PRESSURE: return 'Pressure';
-        case ReadingTypes.HUMIDITY: return 'Humidity';
-        case ReadingTypes.TEMPERATURE: return 'Temperature';
-        case ReadingTypes.CO2: return 'CO2';
-    }
-    return '';
-};
 const getUnitMeter = (readingType: string, settings: Settings): string => {
     switch (readingType) {
         case ReadingTypes.TVOC: return settings.meterUnit.tvoc;
@@ -37,13 +27,13 @@ const getUnitMeter = (readingType: string, settings: Settings): string => {
 
 export const ChartsContainer = connect(
     (appState: AppState, ownProps: RouteChildrenProps): Partial<ChartsProps> => {
-        const readingType = ownProps.match ? (ownProps.match.params as any).readingType : undefined;
+        const readingType: string = ownProps.match ? (ownProps.match.params as any).readingType : undefined;
 
         return {
+            readingType: readingType,
             airQualityDataAverages: appState.airQualityDataAverages,
             token: appState.loginTokenStatus.loginToken as LoginToken,
             deviceId: appState.currentDevice?.deviceId,
-            title: getTitle(readingType),
             formatValue: (value: number): string => {
                 switch (readingType) {
                     case ReadingTypes.TVOC:

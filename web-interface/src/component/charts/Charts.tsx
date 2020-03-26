@@ -11,6 +11,7 @@ import React, { useEffect, useState, FunctionComponent } from "react";
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from "react-router-dom";
 import { DateTimeUtils } from '../../book/DateTimeUtils';
+import { ReadingTypes } from '../../book/ReadingTypes';
 import { AirQualityDataAverages } from "../../entity/AirQualityDataAverages";
 import { DateFormat } from '../../entity/DateFormat';
 import { LoadingState } from "../../entity/LoadingState";
@@ -36,6 +37,17 @@ export const Charts: FunctionComponent<ChartsProps> = (props) => {
     const [selectedTimestamp, setSelectedTimestamp] = useState<number>(Date.now());
     const [isCalendarVisible, setIsCalendarVisible] = useState<boolean>(false);
     const { fetchAverages, token, deviceId } = props;
+    const getTitle = (readingType: string): string => {
+        switch (readingType) {
+            case ReadingTypes.TVOC: return t("tvocTitle");
+            case ReadingTypes.PRESSURE: return t("pressureTitle");
+            case ReadingTypes.HUMIDITY: return t("humidityTitle");
+            case ReadingTypes.TEMPERATURE: return t("temperatureTitle");
+            case ReadingTypes.CO2: return t("co2Title");
+        }
+        return '';
+    };
+    const title = getTitle(props.readingType);
 
     useEffect(() => {
         fetchAverages(token, currentDeviceId ?? deviceId, readingType as string, Date.now());
@@ -47,7 +59,7 @@ export const Charts: FunctionComponent<ChartsProps> = (props) => {
                 <ArrowBackIosIcon />
             </IconButton>
             <Typography variant="h6">
-                {props.title} ({props.unitMeter})
+                {title} ({props.unitMeter})
             </Typography>
             <div className={classes.grow} />
             <IconButton edge="start" color="inherit" aria-label="select date" className="select-date-button" onClick={() => setIsCalendarVisible(!isCalendarVisible)}>
@@ -85,7 +97,7 @@ export const Charts: FunctionComponent<ChartsProps> = (props) => {
                     title="Hourly"
                     subtitle={DateTimeUtils.timestampToDate(selectedTimestamp, props.dateFormat)}
                     readingUnitMeter={props.unitMeter}
-                    readingType={props.title}
+                    readingType={title}
                     averages={props.airQualityDataAverages.dailyAverages.map(da => {
                         const utcDate = DateTimeUtils.localeDateToTimestamp(new Date(Date.UTC(parseInt(da.timeRange.substring(0, 4)), parseInt(da.timeRange.substring(4, 6)) - 1, parseInt(da.timeRange.substring(6, 8)), parseInt(da.timeRange.substring(8, 10)), 0, 0)));
                         const value = da.value / da.counter;
@@ -102,7 +114,7 @@ export const Charts: FunctionComponent<ChartsProps> = (props) => {
                     title="Daily"
                     subtitle={DateTimeUtils.timestampToShortDate(selectedTimestamp, props.shortDateFormat)}
                     readingUnitMeter={props.unitMeter}
-                    readingType={props.title}
+                    readingType={title}
                     averages={props.airQualityDataAverages.monthlyAverages.map(da => {
                         const utcDate = DateTimeUtils.localeDateToTimestamp(new Date(Date.UTC(parseInt(da.timeRange.substring(0, 4)), parseInt(da.timeRange.substring(4, 6)) - 1, parseInt(da.timeRange.substring(6, 8)))));
                         const value = da.value / da.counter;
@@ -119,7 +131,7 @@ export const Charts: FunctionComponent<ChartsProps> = (props) => {
                     title="Montly"
                     subtitle={DateTimeUtils.timestampToFormatedDate(selectedTimestamp, "YYYY")}
                     readingUnitMeter={props.unitMeter}
-                    readingType={props.title}
+                    readingType={title}
                     averages={props.airQualityDataAverages.yearlyAverages.map(da => {
                         const utcDate = DateTimeUtils.localeDateToTimestamp(new Date(Date.UTC(parseInt(da.timeRange.substring(0, 4)), parseInt(da.timeRange.substring(4, 6)) - 1, 1)));
                         const value = da.value / da.counter;
@@ -137,7 +149,7 @@ export const Charts: FunctionComponent<ChartsProps> = (props) => {
 };
 
 export interface ChartsProps {
-    title: string;
+    readingType: string;
     unitMeter: string;
     formatValue: (value: number) => string;
     token: LoginToken;

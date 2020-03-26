@@ -22,5 +22,10 @@
     "labels": "Labels",
     "bothIconsLabels": "Both",
     "dateFormat": "Date format",
-    "shortDateFormat": "Short date format"
+    "shortDateFormat": "Short date format",
+    "tvocTitle": "TVOC",
+    "pressureTitle": "Pressure",
+    "humidityTitle": "Humidity",
+    "temperatureTitle": "Temperature",
+    "co2Title": "CO2"
 }
