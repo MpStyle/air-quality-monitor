@@ -5,10 +5,9 @@ import Menu from '@material-ui/core/Menu/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import MenuIcon from '@material-ui/icons/Menu';
-import { CarouselProvider, Slide, Slider } from 'pure-react-carousel';
-import 'pure-react-carousel/dist/react-carousel.es.css';
 import React, { FunctionComponent } from 'react';
-import 'react-alice-carousel/lib/scss/alice-carousel.scss';
+import Carousel from 'react-multi-carousel';
+import 'react-multi-carousel/lib/styles.css';
 import { airQualityToLabel } from "../../book/AirQualityToLabel";
 import { Device } from '../../entity/Device';
 import './DashboardHeader.scss';
@@ -17,6 +16,12 @@ export const DashboardHeader: FunctionComponent<DashboardHeaderProps> = (props) 
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const handleClick = (event: React.MouseEvent<HTMLDivElement>) => setAnchorEl(event.currentTarget);
     const handleClose = () => setAnchorEl(null);
+    const responsive = {
+        mobile: {
+            breakpoint: { max: 800, min: 0 },
+            items: 1,
+        },
+    };
 
     return <Box boxShadow={2} className="dashboard-header">
         <IconButton onClick={props.toggleDrawer(true)} className="hamburger">
@@ -49,17 +54,9 @@ export const DashboardHeader: FunctionComponent<DashboardHeaderProps> = (props) 
                 {airQualityToLabel(props.average)}
             </div>
             <div className="sub-header carousel">
-                {props.suggestions && props.suggestions.length > 0 && <CarouselProvider
-                    infinite={true}
-                    dragEnabled={false}
-                    isPlaying={true}
-                    naturalSlideWidth={100}
-                    naturalSlideHeight={125}
-                    totalSlides={props.suggestions.length}>
-                    <Slider>
-                        {props.suggestions.map((s, i) => <Slide key={`slide-${i}`} index={i}>{s}</Slide>)}
-                    </Slider>
-                </CarouselProvider>}
+                {props.suggestions && props.suggestions.length > 0 && <Carousel responsive={responsive}>
+                    {props.suggestions.map((s, i) => <div key={`slide-${i}`}>{s}</div>)}
+                </Carousel>}
             </div>
         </div>
         {props.isLoading && <CircularProgress size={22} className="spinner" />}
