@@ -4,11 +4,13 @@ import Paper from '@material-ui/core/Paper/Paper';
 import Typography from "@material-ui/core/Typography/Typography";
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import React, { FunctionComponent } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useHistory } from "react-router-dom";
 import { AppBarOneRow } from '../common/AppBarOneRow';
 import "./Credits.scss";
 
-export const Credits: FunctionComponent<CreditsProps> = (_props) => {
+export const Credits: FunctionComponent<{}> = () => {
+    const { t } = useTranslation();
     const history = useHistory();
 
     return <div className="credits">
@@ -17,12 +19,12 @@ export const Credits: FunctionComponent<CreditsProps> = (_props) => {
                 <ArrowBackIosIcon />
             </IconButton>
             <Typography variant="h6">
-                Credits
+                {t("credits")}
             </Typography>
         </AppBarOneRow>
         <main>
             <Paper elevation={2} className="links-container">
-                <Typography variant="h6">Icons</Typography>
+                <Typography variant="h6">{t("icons")}</Typography>
                 <ul>
                     <li>Icons made by <MUILink href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</MUILink> from <MUILink href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</MUILink></li>
                     <li>Icons made by <MUILink href="https://www.flaticon.com/authors/hirschwolf" title="hirschwolf">hirschwolf</MUILink> from <MUILink href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</MUILink></li>
@@ -36,7 +38,7 @@ export const Credits: FunctionComponent<CreditsProps> = (_props) => {
                     <li>Icons made by <MUILink href="https://www.flaticon.com/authors/gregor-cresnar" title="Gregor Cresnar">Gregor Cresnar</MUILink> from <MUILink href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</MUILink></li>
                 </ul>
 
-                <Typography variant="h6">Packages</Typography>
+                <Typography variant="h6">{t("packages")}</Typography>
                 <ul>
                     <li><MUILink href="https://it.reactjs.org/">React</MUILink></li>
                     <li><MUILink href="https://redux.js.org/">Redux</MUILink></li>
@@ -50,6 +52,3 @@ export const Credits: FunctionComponent<CreditsProps> = (_props) => {
         </main>
     </div>;
 };
-
-export interface CreditsProps {
-}

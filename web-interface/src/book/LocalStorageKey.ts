@@ -10,6 +10,7 @@ export class LocalStorageKey {
     public static readonly DATE_FORMAT_KEY = "date_format_key";
     public static readonly CURRENT_DEVICE_KEY = "current_device_key";
     public static readonly ICON_LABEL_VISUALIZATION_TYPE_KEY = "icon_label_visualization_type_key";
+    public static readonly LANGUAGE_KEY = "language_key";
     public static readonly SUGGESTIONS_KEY = "suggestions_key";
     public static readonly CO2_STATUS_KEY = "co2_status_key";
     public static readonly HUMIDITY_STATUS_KEY = "humidity_status_key";

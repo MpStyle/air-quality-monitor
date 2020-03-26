@@ -8,6 +8,7 @@ import Typography from "@material-ui/core/Typography/Typography";
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import InfoIcon from '@material-ui/icons/Info';
 import React, { useEffect, useState, FunctionComponent } from "react";
+import { useTranslation } from 'react-i18next';
 import { useHistory } from "react-router-dom";
 import { Device } from "../../entity/Device";
 import { LoginToken } from "../../entity/LoginToken";
@@ -18,6 +19,7 @@ import { DeviceInfo } from "./DeviceInfo";
 import "./DeviceList.scss";
 
 export const DeviceList: FunctionComponent<DevicesListProps> = (props) => {
+    const { t } = useTranslation();
     const history = useHistory();
     const [deviceToDelete, setDeviceToDelete] = useState<Device | null>(null);
     const [openModal, setOpenModal] = useState(false);
@@ -37,11 +39,11 @@ export const DeviceList: FunctionComponent<DevicesListProps> = (props) => {
                 <ArrowBackIosIcon />
             </IconButton>
             <Typography variant="h6">
-                Devices List
+                {t("deviceList")}
             </Typography>
         </AppBarOneRow>
         <main>
-            {props.isLoading && <LoadingPaper message="Loading..." />}
+            {props.isLoading && <LoadingPaper message={`${t("loading")}...`} />}
             {!props.isLoading && <Paper elevation={2} className="devices-list-container">
                 {!props.devices.length && <div className="message">No devices</div>}
 

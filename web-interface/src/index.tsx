@@ -1,11 +1,14 @@
 import { createMuiTheme, CssBaseline, ThemeProvider } from '@material-ui/core';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { I18nextProvider } from "react-i18next";
 import { Provider } from 'react-redux';
 import { Colors } from './book/Colors';
+import { localizationSettings } from './book/i18n';
 import { Routing } from './component/routing/Routings';
 import './index.scss';
 import { appStore } from './store/AppStore';
+import { initialAppState } from './store/InitialAppState';
 
 const theme = createMuiTheme({
     palette: {
@@ -26,8 +29,10 @@ const theme = createMuiTheme({
 ReactDOM.render(
     <Provider store={appStore}>
         <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <Routing />
+            <I18nextProvider i18n={localizationSettings(initialAppState.settings.language)}>
+                <CssBaseline />
+                <Routing />
+            </I18nextProvider>
         </ThemeProvider>
     </Provider>,
     document.getElementById('root')

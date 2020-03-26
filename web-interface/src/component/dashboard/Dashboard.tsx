@@ -1,5 +1,4 @@
 import React, { useEffect, FunctionComponent } from 'react';
-import 'react-alice-carousel/lib/alice-carousel.css';
 import { IconVisualizationType } from '../../book/IconVisualizationType';
 import { AirQualityData } from '../../entity/AirQualityData';
 import { AirQuality, AirStatus } from "../../entity/AirStatus";

@@ -3,6 +3,7 @@ import Paper from '@material-ui/core/Paper/Paper';
 import TextField from '@material-ui/core/TextField/TextField';
 import Typography from '@material-ui/core/Typography/Typography';
 import React, { useState, FunctionComponent } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useLocation, RouteChildrenProps } from 'react-router';
 import { Link, Redirect } from "react-router-dom";
 import { LoadingState } from "../../entity/LoadingState";
@@ -16,11 +17,12 @@ function useQuery() {
 }
 
 export const Login: FunctionComponent<LoginProps> = (props) => {
+    const { t } = useTranslation();
     const query = useQuery();
     const [password, setPassword] = useState<string | null | undefined>(process.env.REACT_APP_AIR_QUALITY_DATA_password);
     const [username, setUsername] = useState<string | null | undefined>(process.env.REACT_APP_AIR_QUALITY_DATA_USERNAME);
     const isLoginButtonDisabled = !username || !password;
-    const loginButtonTooltip = isLoginButtonDisabled ? 'Insert username and password' : undefined;
+    const loginButtonTooltip = isLoginButtonDisabled ? t('insertUserNameAndPassword') : undefined;
 
     if (props.token && props.token.expiredAt > Date.now()) {
         return <Redirect to={{ pathname: query.get("sourceUrl") || props.fallbackUrl }} />;
@@ -29,23 +31,23 @@ export const Login: FunctionComponent<LoginProps> = (props) => {
     return <div className="login">
         <Paper elevation={2} className="content">
             <Typography variant="h6">
-                <img src={logo} alt="Air Quality Monitor logo" /> Air Quality Monitor
+                <img src={logo} alt={t("appNameLogo")} /> {t("appName")}
             </Typography>
 
             {props.loginStatus === LoadingState.loading && <div className="login-in-progress">
                 <CircularProgress />
                 <Typography variant="body1" className="message" color="textSecondary">
-                    Login in progress
+                    {t("loginInProgress")}
                 </Typography>
             </div>}
 
             {props.loginStatus !== LoadingState.loading && <React.Fragment>
                 <Typography variant="h6" className="subtitle1">
-                    Sign in
+                    {t("signIn")}
                 </Typography>
                 <TextField
                     className="username"
-                    label="Username"
+                    label={t("username")}
                     type="text"
                     variant="outlined"
                     value={username || ""}
@@ -53,14 +55,14 @@ export const Login: FunctionComponent<LoginProps> = (props) => {
                 />
                 <TextField
                     className="password"
-                    label="Password"
+                    label={t("password")}
                     type="password"
                     variant="outlined"
                     value={password || ""}
                     onChange={event => setPassword(event.target.value as string)}
                 />
                 {props.loginStatus === LoadingState.error && <Typography variant="body1" className="login-error" color="error">
-                    Error during login. Check the credentials and try again
+                    {t("loginError01")}
                 </Typography>}
                 <div className="sign-in-button-container">
                     <AppButton
@@ -68,11 +70,11 @@ export const Login: FunctionComponent<LoginProps> = (props) => {
                         className="sign-in-button"
                         title={loginButtonTooltip}
                         disabled={isLoginButtonDisabled}>
-                        Sign in
+                                {t("signIn")}
                     </AppButton>
                 </div>
 
-                <Link to="/credits" className="credits-link">Credits</Link>
+                <Link to="/credits" className="credits-link">{t("credits")}</Link>
 
             </React.Fragment>}
 

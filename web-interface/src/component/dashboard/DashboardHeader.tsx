@@ -6,16 +6,22 @@ import MenuItem from '@material-ui/core/MenuItem';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import MenuIcon from '@material-ui/icons/Menu';
 import React, { FunctionComponent } from 'react';
-import AliceCarousel from 'react-alice-carousel';
-import 'react-alice-carousel/lib/alice-carousel.css';
-import { airQualityToLabel } from "../../book/AirQualityToLabel";
+import Carousel from 'react-multi-carousel';
+import 'react-multi-carousel/lib/styles.css';
 import { Device } from '../../entity/Device';
+import { AirQualityToLabel } from '../common/AirQualityToLabel';
 import './DashboardHeader.scss';
 
 export const DashboardHeader: FunctionComponent<DashboardHeaderProps> = (props) => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const handleClick = (event: React.MouseEvent<HTMLDivElement>) => setAnchorEl(event.currentTarget);
     const handleClose = () => setAnchorEl(null);
+    const responsive = {
+        mobile: {
+            breakpoint: { max: 800, min: 0 },
+            items: 1,
+        },
+    };
 
     return <Box boxShadow={2} className="dashboard-header">
         <IconButton onClick={props.toggleDrawer(true)} className="hamburger">
@@ -45,16 +51,12 @@ export const DashboardHeader: FunctionComponent<DashboardHeaderProps> = (props) 
                     </Menu>
                 </div>}
             <div className="sub-header quality">
-                {airQualityToLabel(props.average)}
+                <AirQualityToLabel airQuality={props.average} />
             </div>
             <div className="sub-header carousel">
-                {props.suggestions && props.suggestions.length > 0 && <AliceCarousel
-                    autoPlayInterval={6000}
-                    buttonsDisabled={true}
-                    dotsDisabled={props.suggestions.length === 1}
-                    autoPlay={props.suggestions.length > 1}>
+                {props.suggestions && props.suggestions.length > 0 && <Carousel responsive={responsive}>
                     {props.suggestions.map((s, i) => <div key={`slide-${i}`}>{s}</div>)}
-                </AliceCarousel >}
+                </Carousel>}
             </div>
         </div>
         {props.isLoading && <CircularProgress size={22} className="spinner" />}

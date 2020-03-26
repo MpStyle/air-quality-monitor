@@ -17,7 +17,7 @@
         color: #fff;
     }
 
-    .spinner{
+    .spinner {
         position: fixed;
         right: 16px;
         top: 16px;
@@ -53,11 +53,10 @@
             font-size: 1.2em;
             display: block;
             width: 100%;
-            margin-bottom: 0px;
-
-            .alice-carousel__dots {
-                margin: 0px auto 0px auto;
-            }
+            max-width: 450px;
+            margin: 0px auto;
+            cursor: pointer;
+            user-select: none;
         }
     }
 }
