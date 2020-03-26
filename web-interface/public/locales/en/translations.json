@@ -27,5 +27,11 @@
     "pressureTitle": "Pressure",
     "humidityTitle": "Humidity",
     "temperatureTitle": "Temperature",
-    "co2Title": "CO2"
+    "co2Title": "CO2",
+    "console": "Console",
+    "errors": "Errors",
+    "noErrors": "No errors",
+    "errorCode": "Error code",
+    "errorDescription": "Error description",
+    "dateTime": "Date time"
 }
