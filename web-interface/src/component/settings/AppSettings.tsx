@@ -14,7 +14,6 @@ import { ShortDateFormat } from "../../entity/ShortDateFormat";
 import { AppBarOneRow } from "../common/AppBarOneRow";
 import { DateTimeUtils } from './../../book/DateTimeUtils';
 import "./AppSettings.scss";
-import { AppSettingsItem } from "./AppSettingsItem";
 
 export const AppSettings: FunctionComponent<AppSettingsProps> = (props) => {
     const history = useHistory();
