@@ -4,8 +4,8 @@ import Paper from '@material-ui/core/Paper/Paper';
 import Typography from "@material-ui/core/Typography/Typography";
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import React, { FunctionComponent } from 'react';
-import { useHistory } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
+import { useHistory } from "react-router-dom";
 import { AppBarOneRow } from '../common/AppBarOneRow';
 import "./Credits.scss";
 
