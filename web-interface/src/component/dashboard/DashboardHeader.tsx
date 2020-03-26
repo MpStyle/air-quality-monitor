@@ -5,9 +5,10 @@ import Menu from '@material-ui/core/Menu/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import MenuIcon from '@material-ui/icons/Menu';
+import { CarouselProvider, Slide, Slider } from 'pure-react-carousel';
+import 'pure-react-carousel/dist/react-carousel.es.css';
 import React, { FunctionComponent } from 'react';
-import AliceCarousel from 'react-alice-carousel';
-import 'react-alice-carousel/lib/alice-carousel.css';
+import 'react-alice-carousel/lib/scss/alice-carousel.scss';
 import { airQualityToLabel } from "../../book/AirQualityToLabel";
 import { Device } from '../../entity/Device';
 import './DashboardHeader.scss';
@@ -48,13 +49,17 @@ export const DashboardHeader: FunctionComponent<DashboardHeaderProps> = (props) 
                 {airQualityToLabel(props.average)}
             </div>
             <div className="sub-header carousel">
-                {props.suggestions && props.suggestions.length > 0 && <AliceCarousel
-                    autoPlayInterval={6000}
-                    buttonsDisabled={true}
-                    dotsDisabled={props.suggestions.length === 1}
-                    autoPlay={props.suggestions.length > 1}>
-                    {props.suggestions.map((s, i) => <div key={`slide-${i}`}>{s}</div>)}
-                </AliceCarousel >}
+                {props.suggestions && props.suggestions.length > 0 && <CarouselProvider
+                    infinite={true}
+                    dragEnabled={false}
+                    isPlaying={true}
+                    naturalSlideWidth={100}
+                    naturalSlideHeight={125}
+                    totalSlides={props.suggestions.length}>
+                    <Slider>
+                        {props.suggestions.map((s, i) => <Slide key={`slide-${i}`} index={i}>{s}</Slide>)}
+                    </Slider>
+                </CarouselProvider>}
             </div>
         </div>
         {props.isLoading && <CircularProgress size={22} className="spinner" />}
