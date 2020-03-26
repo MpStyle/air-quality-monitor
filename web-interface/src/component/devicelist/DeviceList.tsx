@@ -39,7 +39,7 @@ export const DeviceList: FunctionComponent<DevicesListProps> = (props) => {
                 <ArrowBackIosIcon />
             </IconButton>
             <Typography variant="h6">
-                Devices List
+                {t("deviceList")}
             </Typography>
         </AppBarOneRow>
         <main>

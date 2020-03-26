@@ -103,7 +103,7 @@ export const DeviceAirQualityData: FunctionComponent<AirQualityDataProps> = (pro
 
         <div>
             {props.airQualityData.inserted && <div className="last-update">
-                <span>t("lastUpdate"):</span>
+                <span>{t("lastUpdate")}:</span>
                 &nbsp;
                 {DateTimeUtils.timestampToDate(props.airQualityData.inserted, props.dateFormat)}
                 &nbsp;

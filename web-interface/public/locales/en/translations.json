@@ -36,5 +36,8 @@
     "dateTime": "Date time",
     "noData": "No data",
     "installADevice": "Install almost a device to show something",
-    "lastUpdate": "Last update"
+    "lastUpdate": "Last update",
+    "ip": "IP",
+    "address": "Address",
+    "deviceList": "Devices List"
 }
