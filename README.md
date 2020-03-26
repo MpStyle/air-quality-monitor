@@ -2,7 +2,7 @@
 
 # Air Quality Monitor
 
-Smart air quality monitor (less then € 50.00 *).
+Smart air quality monitor (less then € 15.00).
 
 A full stack IoT Project.
 
@@ -35,7 +35,3 @@ A full stack IoT Project.
 ### ~~Step 4~~
 
 - ~~Show charts in the web interface for temperature, CO<sub>2</sub>, pressure and ppb.~~
-
-### Note
-
-I am working on a cheaper hardware version, using ESP32 (€ 3.52) instead of Raspberry (33.50).

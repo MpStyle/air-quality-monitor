@@ -5,23 +5,24 @@ import Paper from "@material-ui/core/Paper/Paper";
 import Typography from "@material-ui/core/Typography/Typography";
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import React, { FunctionComponent } from "react";
+import { useHistory } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
-import { Link } from "react-router-dom";
 import { IconVisualizationType } from "../../book/IconVisualizationType";
-import { Pages } from "../../book/Pages";
 import { TemperatureUnit } from "../../book/Unit";
 import { DateFormat } from "../../entity/DateFormat";
 import { ShortDateFormat } from "../../entity/ShortDateFormat";
 import { AppBarOneRow } from "../common/AppBarOneRow";
 import { DateTimeUtils } from './../../book/DateTimeUtils';
 import "./AppSettings.scss";
+import { AppSettingsItem } from "./AppSettingsItem";
 
 export const AppSettings: FunctionComponent<AppSettingsProps> = (props) => {
+    const history = useHistory();
     const { t } = useTranslation();
 
     return <div className="app-settings">
         <AppBarOneRow>
-            <IconButton edge="start" color="inherit" aria-label="menu" component={Link} to={Pages.DASHBOARD_URL} className="back-button">
+            <IconButton edge="start" color="inherit" aria-label="menu" onClick={() => history.goBack()} className="back-button">
                 <ArrowBackIosIcon />
             </IconButton>
             <Typography variant="h6">
@@ -48,6 +49,7 @@ export const AppSettings: FunctionComponent<AppSettingsProps> = (props) => {
                 <div className="settings">
                     <div className="labels">
                         <Typography variant="subtitle1">{t("decimalSeparator")}</Typography>
+                    <NativeSelect value={props.decimalSeparator} onChange={(event) => props.onDecimalSeparatorChange(event.target.value as string)}>
                         <Typography variant="subtitle2" className="secondary-label"></Typography>
                     </div>
                     <div className="configuration">

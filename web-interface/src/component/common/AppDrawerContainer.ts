@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { updateTokenActionBuilder } from "../../action/UpdateTokenAction";
+import { fetchLoginTokenSuccessActionBuilder } from "../../action/FetchLoginTokenAction";
 import { localStorageManager } from "../../book/LocalStorageManager";
 import { sessionStorageManager } from "../../book/SessionStorageManager";
 import { userRevokeRefreshToken } from "../../book/UserRevokeRefreshToken";
@@ -14,8 +14,8 @@ export const AppDrawerContainer = connect(
             isOpen: props.isOpen,
             average: appState.airStatusAverage,
             toggleDrawer: props.toggleDrawer,
-            refreshToken: appState.token?.refreshToken,
-            username: appState.token?.username
+            refreshToken: appState.loginTokenStatus.loginToken?.refreshToken,
+            username: appState.loginTokenStatus.loginToken?.username
         } as AppDrawerProps;
     },
     (dispatch: Dispatch): AppDrawerProps => {
@@ -25,7 +25,7 @@ export const AppDrawerContainer = connect(
                     localStorageManager.removeAll();
                     sessionStorageManager.removeAll();
 
-                    window.location.reload();
+                    window.location.href = "/";
                 };
 
                 userRevokeRefreshToken(refreshToken as string)
@@ -35,7 +35,7 @@ export const AppDrawerContainer = connect(
                             return;
                         }
 
-                        dispatch(updateTokenActionBuilder(null));
+                        dispatch(fetchLoginTokenSuccessActionBuilder(null));
                     })
                     .catch(err => {
                         console.error(err);

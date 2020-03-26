@@ -1,6 +1,6 @@
 import { Action } from "redux";
 import { FetchDevicesSuccessAction, FetchDevicesSuccessActionName } from "../action/FetchDevicesAction";
-import { UpdateSuggestionsAction, UpdateSuggestionsActionName } from '../action/UpdateSuggestionsAction';
+import { FetchLastReadingsSuccessAction, FetchLastReadingsSuccessActionName } from "../action/FetchLastReadingsAction";
 import { LocalStorageKey } from "../book/LocalStorageKey";
 import { localStorageManager } from "../book/LocalStorageManager";
 import { initialAppState } from "../store/InitialAppState";
@@ -16,10 +16,11 @@ export const suggestionsReducer = (state: string[] = initialAppState.suggestions
                 return emptySuggestions;
             }
             break;
-        case UpdateSuggestionsActionName:
-            const fetchSuggestionsSuccessAction = action as UpdateSuggestionsAction;
-            const suggestions = fetchSuggestionsSuccessAction.suggestions;
+        case FetchLastReadingsSuccessActionName:
+            const suggestions = (action as FetchLastReadingsSuccessAction).lastReadings?.suggestions ?? [];
+
             localStorageManager.setItem(LocalStorageKey.SUGGESTIONS_KEY, suggestions);
+
             return suggestions;
     }
 

@@ -12,6 +12,7 @@ from book.GetIpAddress import getIpAddress
 from book.SystemArgumentsReader import systemArgumentsReader
 from book.SystemArgumentsReader import printHelp
 from book.ReadConfiguration import readConfiguration
+from book.GetCPUTemperature import getCPUtemperature
 from book.DataUpload import dataUpload
 import time
 import sys
@@ -65,6 +66,7 @@ while(clock >= 0):
                     "name": configuration.deviceName,
                     "address": configuration.deviceAddress,
                     "ip": getIpAddress(),
+                    "cpuTemperature": getCPUtemperature()
                 },
                 "airData": dataCollector.getData().__dict__,
                 "readingDate": int((time.time() * 1000)),

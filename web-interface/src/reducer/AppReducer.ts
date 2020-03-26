@@ -8,10 +8,9 @@ import { appErrorsReducer } from "./AppErrorsReducer";
 import { currentDeviceReducer } from "./CurrentDeviceReducer";
 import { devicesDataReducer } from "./DevicesDataReducer";
 import { lastReadingLoadingStateReducer } from "./LastReadingLoadingStateReducer";
-import { loginStatusReducer } from "./LoginStatusReducer";
+import { loginTokenStatusResucer } from "./LoginTokenStatusReducer";
 import { settingsReducer } from "./SettingsReducer";
 import { suggestionsReducer } from './SuggestionsReducer';
-import { tokenReducer } from "./TokenReducer";
 
 export const appReducer = combineReducers<AppState>({
     lastReadingLoadingState: lastReadingLoadingStateReducer,
@@ -20,8 +19,7 @@ export const appReducer = combineReducers<AppState>({
     devicesData: devicesDataReducer,
     currentDevice: currentDeviceReducer,
     suggestions: suggestionsReducer,
-    token: tokenReducer,
-    loginStatus: loginStatusReducer,
+    loginTokenStatus: loginTokenStatusResucer,
     settings: settingsReducer,
     airQualityDataAverages: airQualityDataAveragesReducer,
     appErrors: appErrorsReducer,

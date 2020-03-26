@@ -8,6 +8,10 @@ export class DateTimeUtils {
         return moment(d).format(format);
     }
 
+    static localeDateToTimestamp(ms: Date): number {
+        return ms.getTime();
+    }
+
     static timestampToLocaleDate(ms: number): Date {
         return new Date(ms);
     }

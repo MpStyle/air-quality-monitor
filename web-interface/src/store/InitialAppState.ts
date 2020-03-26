@@ -40,8 +40,10 @@ export const initialAppState: AppState = {
     },
     currentDevice: currentDevice,
     suggestions: localStorageManager.getItem(LocalStorageKey.SUGGESTIONS_KEY) ?? [],
-    token: sessionStorageManager.getItem(SessionStorageKey.TOKEN_KEY),
-    loginStatus: LoadingState.none,
+    loginTokenStatus: {
+        loginToken: sessionStorageManager.getItem(SessionStorageKey.TOKEN_KEY),
+        loadingState: LoadingState.none,
+    },
     settings: {
         iconVisualizationType: localStorageManager.getItem(LocalStorageKey.ICON_LABEL_VISUALIZATION_TYPE_KEY) || IconVisualizationType.icon,
         decimalSeparator: defaultDecimalSeparator(),

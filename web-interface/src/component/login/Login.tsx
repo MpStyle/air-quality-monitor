@@ -1,7 +1,6 @@
 import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress';
 import Paper from '@material-ui/core/Paper/Paper';
 import TextField from '@material-ui/core/TextField/TextField';
-import Tooltip from '@material-ui/core/Tooltip/Tooltip';
 import Typography from '@material-ui/core/Typography/Typography';
 import React, { useState, FunctionComponent } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -25,7 +24,7 @@ export const Login: FunctionComponent<LoginProps> = (props) => {
     const isLoginButtonDisabled = !username || !password;
     const loginButtonTooltip = isLoginButtonDisabled ? t('insertUserNameAndPassword') : undefined;
 
-    if (props.token) {
+    if (props.token && props.token.expiredAt > Date.now()) {
         return <Redirect to={{ pathname: query.get("sourceUrl") || props.fallbackUrl }} />;
     }
 
@@ -66,17 +65,13 @@ export const Login: FunctionComponent<LoginProps> = (props) => {
                     {t("loginError01")}
                 </Typography>}
                 <div className="sign-in-button-container">
-                    <Tooltip title={loginButtonTooltip} aria-label={loginButtonTooltip}>
-                        <span>
-                            <AppButton
-                                onClick={() => props.onSignInClick(username, password)}
-                                className="sign-in-button"
-                                title={loginButtonTooltip}
-                                disabled={isLoginButtonDisabled}>
+                    <AppButton
+                        onClick={() => props.onSignInClick(username, password)}
+                        className="sign-in-button"
+                        title={loginButtonTooltip}
+                        disabled={isLoginButtonDisabled}>
                                 {t("signIn")}
-                            </AppButton>
-                        </span>
-                    </Tooltip>
+                    </AppButton>
                 </div>
 
                 <Link to="/credits" className="credits-link">{t("credits")}</Link>

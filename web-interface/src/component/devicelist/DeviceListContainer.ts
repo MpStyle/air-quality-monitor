@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { deleteDeviceErrorActionBuilder, deleteDeviceStartActionBuilder, deleteDeviceSuccessActionBuilder } from "../../action/DeleteDeviceAction";
-import { fetchDevicesErrorActionBuilder, fetchDevicesSuccessActionBuilder } from "../../action/FetchDevicesAction";
+import { fetchDevicesErrorActionBuilder, fetchDevicesStartActionBuilder, fetchDevicesSuccessActionBuilder } from "../../action/FetchDevicesAction";
 import { userDeviceDelete } from "../../book/UserDeviceDelete";
 import { userDevicesList } from "../../book/UserDevicesList";
 import { userRenewAccessToken, UserRenewAccessTokenResponse } from "../../book/UserRenewAccessToken";
@@ -14,13 +14,49 @@ import { DevicesListProps, DeviceList } from "./DeviceList";
 export const DeviceListContainer = connect(
     (appState: AppState): DevicesListProps => {
         return {
-            token: appState.token as LoginToken,
+            token: appState.loginTokenStatus.loginToken as LoginToken,
             devices: appState.devicesData.devices,
-            isLoading: appState.devicesData.deletingState === LoadingState.loading
+            isLoading: appState.devicesData.deletingState === LoadingState.loading || appState.devicesData.loadingState === LoadingState.loading,
+            decimalSeparator: appState.settings.decimalSeparator,
+            meterUnit: appState.settings.meterUnit
         } as DevicesListProps;
     },
     (dispatch: Dispatch): DevicesListProps => {
         return {
+            fetchDevices: (token: LoginToken) => {
+                dispatch(fetchDevicesStartActionBuilder());
+
+                const renewToken: Promise<ServiceResponse<UserRenewAccessTokenResponse>> = token.expiredAt <= Date.now() ? userRenewAccessToken(token.refreshToken) : Promise.resolve({ payload: { accessToken: token.accessToken, expiredAt: token.expiredAt } });
+
+                renewToken.then(response => {
+                    if (response.error) {
+                        console.log("Error renew token: ", response.error);
+                        dispatch(fetchDevicesErrorActionBuilder(response.error));
+                        return;
+                    }
+
+                    if (!response.payload) {
+                        console.log("Error renew token: ", "invalid payload");
+                        return;
+                    }
+
+                    userDevicesList(response.payload.accessToken)
+                        .then(response => {
+                            if (response.error) {
+                                console.log(response.error);
+                                dispatch(fetchDevicesErrorActionBuilder(response.error));
+                                return;
+                            }
+
+                            dispatch(fetchDevicesSuccessActionBuilder(response.payload?.devices || []));
+                        })
+                        .catch((error) => {
+                            console.error(`Error while fetch devices: ${error}`);
+
+                            dispatch(fetchDevicesErrorActionBuilder(error));
+                        });
+                });
+            },
             onDeleteClick: (token: LoginToken, deviceId: string) => {
                 dispatch(deleteDeviceStartActionBuilder());
 

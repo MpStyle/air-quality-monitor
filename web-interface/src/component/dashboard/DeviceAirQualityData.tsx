@@ -1,4 +1,4 @@
-import { CircularProgress, Divider } from "@material-ui/core";
+import { Divider } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper/Paper";
 import React, { FunctionComponent } from "react";
 import { useTranslation } from 'react-i18next';
@@ -16,6 +16,7 @@ import humidity from '../../images/humidity.svg';
 import pressure from '../../images/pressure.svg';
 import temperature from '../../images/temperature.svg';
 import tvoc from '../../images/tvoc.svg';
+import { LoadingPaper } from "../common/LoadingPaper";
 import { DataRow } from "./DataRow";
 import "./DeviceAirQualityData.scss";
 
@@ -28,10 +29,7 @@ export const DeviceAirQualityData: FunctionComponent<AirQualityDataProps> = (pro
         !props.airQualityData.tvoc;
 
     if (props.isLoading && noData) {
-        return <Paper elevation={2} className="loading">
-            <div className="message">{t("loading")}...</div>
-            <CircularProgress />
-        </Paper>;
+        return <LoadingPaper message="{t("loading")}..." />;
     }
 
     if (noData) {
