@@ -6,7 +6,7 @@ i18n
     .use(backend)
     .use(detector)
     .init({
-        debug: true,
+        debug: false,
         lng: "en",
         fallbackLng: "en", // use en if detected lng is not available
 
