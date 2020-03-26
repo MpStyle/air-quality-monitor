@@ -47,7 +47,7 @@ export const DeviceAirQualityData: FunctionComponent<AirQualityDataProps> = (pro
 
     return < Paper className="air-quality-data" >
         <DataRow
-            title="Temperature"
+            title={t("temperatureTitle")}
             icon={temperature}
             value={temperatureValue}
             meter={props.meterUnit.temperature === TemperatureUnit.CELSIUS ? "°C" : "°F"}
@@ -58,7 +58,7 @@ export const DeviceAirQualityData: FunctionComponent<AirQualityDataProps> = (pro
         <Divider light />
 
         <DataRow
-            title="Humidity"
+            title={t("humidityTitle")}
             icon={humidity}
             value={props.airQualityData.humidity.toFixed(0)}
             meter={props.meterUnit.humidity}
@@ -69,7 +69,7 @@ export const DeviceAirQualityData: FunctionComponent<AirQualityDataProps> = (pro
         <Divider light />
 
         <DataRow
-            title="CO2"
+            title={t("co2Title")}
             icon={co2}
             value={props.airQualityData.co2.toFixed(0)}
             meter={props.meterUnit.co2}
@@ -80,7 +80,7 @@ export const DeviceAirQualityData: FunctionComponent<AirQualityDataProps> = (pro
         <Divider light />
 
         <DataRow
-            title="Pressure"
+            title={t("pressureTitle")}
             icon={pressure}
             value={props.airQualityData.pressure.toFixed(0)}
             meter={props.meterUnit.pressure}
@@ -91,7 +91,7 @@ export const DeviceAirQualityData: FunctionComponent<AirQualityDataProps> = (pro
         <Divider light />
 
         <DataRow
-            title="TVOC"
+            title={t("tvocTitle")}
             icon={tvoc}
             value={props.airQualityData.tvoc.toFixed(1).replace(".", props.decimalSeparator)}
             meter={props.meterUnit.tvoc}

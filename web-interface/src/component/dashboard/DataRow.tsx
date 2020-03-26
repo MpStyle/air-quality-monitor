@@ -2,10 +2,10 @@ import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import React, { FunctionComponent } from 'react';
 import { Link } from 'react-router-dom';
 import { airQualityToClassName } from '../../book/AirQualityToClassName';
-import { airQualityToLabel } from '../../book/AirQualityToLabel';
 import { IconVisualizationType } from '../../book/IconVisualizationType';
 import { AirQuality } from '../../entity/AirStatus';
 import warning from '../../images/warning.svg';
+import { AirQualityToLabel } from '../common/AirQualityToLabel';
 import { Pages } from './../../book/Pages';
 import './DataRow.scss';
 
@@ -26,7 +26,7 @@ export const DataRow: FunctionComponent<DataRowProps> = (props: DataRowProps) =>
         </span>
         <span className={`quality-level ${airQualityToClassName(props.quality)}`}>
             {props.quality === AirQuality.VeryBad && <img src={warning} className="warning-icon" alt="Warning" />}
-            {airQualityToLabel(props.quality)}
+            <AirQualityToLabel airQuality={props.quality} />
         </span>
         <span className="details">
             <ArrowForwardIosIcon />

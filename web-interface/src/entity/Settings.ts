@@ -4,6 +4,7 @@ import { MeterUnit } from "./MeterUnit";
 import { ShortDateFormat } from "./ShortDateFormat";
 
 export interface Settings {
+    language: string;
     iconVisualizationType: IconVisualizationType;
     decimalSeparator: string;
     meterUnit: MeterUnit;

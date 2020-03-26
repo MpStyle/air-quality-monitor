@@ -14,6 +14,7 @@ import { ShortDateFormat } from "../../entity/ShortDateFormat";
 import { AppBarOneRow } from "../common/AppBarOneRow";
 import { DateTimeUtils } from './../../book/DateTimeUtils';
 import "./AppSettings.scss";
+import { AppSettingsItem } from "./AppSettingsItem";
 
 export const AppSettings: FunctionComponent<AppSettingsProps> = (props) => {
     const history = useHistory();
@@ -30,97 +31,79 @@ export const AppSettings: FunctionComponent<AppSettingsProps> = (props) => {
         </AppBarOneRow>
         <main>
             <Paper elevation={2} className="settings-container">
-                <div className="settings">
-                    <div className="labels">
-                        <Typography variant="subtitle1">{t("temperatureUnit")}</Typography>
-                        <Typography variant="subtitle2" className="secondary-label"></Typography>
-                    </div>
-                    <div className="configuration">
-                        <NativeSelect value={props.temperatureUnit} onChange={(event) => props.onTemperatureUnitChange(event.target.value as string)}>
-                            <option value={TemperatureUnit.CELSIUS}>{t("celsius")}</option>
-                            <option value={TemperatureUnit.FAHRENHEIT}>{t("fahrenheit")}</option>
-                        </NativeSelect>
-                    </div>
-                </div>
+                <AppSettingsItem title={t("language")}>
+                    <NativeSelect value={props.language} onChange={(event) => props.onLanguageChange(event.target.value)}>
+                        <option value="en">English</option>
+                        <option value="it">Italiano</option>
+                    </NativeSelect>
+                </AppSettingsItem>
 
                 <Divider />
 
-                <div className="settings">
-                    <div className="labels">
-                        <Typography variant="subtitle1">{t("decimalSeparator")}</Typography>
-                        <Typography variant="subtitle2" className="secondary-label"></Typography>
-                    </div>
-                    <div className="configuration">
-                        <NativeSelect value={props.decimalSeparator} onChange={(event) => props.onDecimalSeparatorChange(event.target.value as string)}>
-                            <option value=",">{t("coma")} (,)</option>
-                            <option value=".">{t("dot")} (.)</option>
-                        </NativeSelect>
-                    </div>
-                </div>
+                <AppSettingsItem title={t("temperatureUnit")}>
+                    <NativeSelect value={props.temperatureUnit} onChange={(event) => props.onTemperatureUnitChange(event.target.value as string)}>
+                        <option value={TemperatureUnit.CELSIUS}>{t("celsius")}</option>
+                        <option value={TemperatureUnit.FAHRENHEIT}>{t("fahrenheit")}</option>
+                    </NativeSelect>
+                </AppSettingsItem>
 
                 <Divider />
 
-                <div className="settings">
-                    <div className="labels">
-                        <Typography variant="subtitle1">{t("iconsLabels")}</Typography>
-                        <Typography variant="subtitle2" className="secondary-label"></Typography>
-                    </div>
-                    <div className="configuration">
-                        <NativeSelect value={props.iconVisualizationType} onChange={(event) => props.onIconVisualizationTypeChange(parseInt(event.target.value) as IconVisualizationType)}>
-                            <option value={IconVisualizationType.icon}>{t("icons")}</option>
-                            <option value={IconVisualizationType.label}>{t("labels")}</option>
-                            <option value={IconVisualizationType.both}>{t("bothIconsLabels")}</option>
-                        </NativeSelect>
-                    </div>
-                </div>
+                <AppSettingsItem title={t("decimalSeparator")}>
+                    <NativeSelect value={props.decimalSeparator} onChange={(event) => props.onDecimalSeparatorChange(event.target.value as string)}>
+                        <option value=",">{t("coma")} (,)</option>
+                        <option value=".">{t("dot")} (.)</option>
+                    </NativeSelect>
+                </AppSettingsItem>
 
                 <Divider />
 
-                <div className="settings">
-                    <div className="labels">
-                        <Typography variant="subtitle1">{t("dateFormat")}</Typography>
-                        <Typography variant="subtitle2" className="secondary-label"></Typography>
-                    </div>
-                    <div className="configuration">
-                        <NativeSelect value={props.dateFormat} onChange={(event) => props.onDateFormatChange(parseInt(event.target.value) as DateFormat)}>
-                            {Object.keys(DateFormat).reduce((acc, curr) => {
-                                if (!isNaN(parseInt(curr))) {
-                                    acc.push(<option value={parseInt(curr) as DateFormat} key={`date-format-${curr}`}>
-                                        {DateTimeUtils.timestampToDate(Date.now(), parseInt(curr) as DateFormat)}
-                                    </option>);
-                                }
-                                return acc;
-                            }, [] as Array<JSX.Element>)}
-                        </NativeSelect>
-                    </div>
-                </div>
+                <AppSettingsItem title={t("iconsLabels")}>
+                    <NativeSelect value={props.iconVisualizationType} onChange={(event) => props.onIconVisualizationTypeChange(parseInt(event.target.value) as IconVisualizationType)}>
+                        <option value={IconVisualizationType.icon}>{t("icons")}</option>
+                        <option value={IconVisualizationType.label}>{t("labels")}</option>
+                        <option value={IconVisualizationType.both}>{t("bothIconsLabels")}</option>
+                    </NativeSelect>
+                </AppSettingsItem>
 
                 <Divider />
 
-                <div className="settings">
-                    <div className="labels">
-                        <Typography variant="subtitle1">{t("shortDateFormat")}</Typography>
-                        <Typography variant="subtitle2" className="secondary-label"></Typography>
-                    </div>
-                    <div className="configuration">
-                        <NativeSelect value={props.shortDateFormat} onChange={(event) => props.onShortDateFormatChange(parseInt(event.target.value) as ShortDateFormat)}>
-                            {Object.keys(ShortDateFormat).reduce((acc, curr) => {
-                                if (!isNaN(parseInt(curr))) {
-                                    acc.push(<option value={parseInt(curr) as ShortDateFormat} key={`date-format-${curr}`}>
-                                        {DateTimeUtils.timestampToShortDate(Date.now(), parseInt(curr) as ShortDateFormat)}
-                                    </option>);
-                                }
-                                return acc;
-                            }, [] as Array<JSX.Element>)}
-                        </NativeSelect>
-                    </div>
-                </div>
+                <AppSettingsItem title={t("dateFormat")}>
+                    <NativeSelect value={props.dateFormat} onChange={(event) => props.onDateFormatChange(parseInt(event.target.value) as DateFormat)}>
+                        {Object.keys(DateFormat).reduce((acc, curr) => {
+                            if (!isNaN(parseInt(curr))) {
+                                acc.push(<option value={parseInt(curr) as DateFormat} key={`date-format-${curr}`}>
+                                    {DateTimeUtils.timestampToDate(Date.now(), parseInt(curr) as DateFormat)}
+                                </option>);
+                            }
+                            return acc;
+                        }, [] as Array<JSX.Element>)}
+                    </NativeSelect>
+                </AppSettingsItem>
+
+                <Divider />
+
+                <AppSettingsItem title={t("shortDateFormat")}>
+                    <NativeSelect value={props.shortDateFormat} onChange={(event) => props.onShortDateFormatChange(parseInt(event.target.value) as ShortDateFormat)}>
+                        {Object.keys(ShortDateFormat).reduce((acc, curr) => {
+                            if (!isNaN(parseInt(curr))) {
+                                acc.push(<option value={parseInt(curr) as ShortDateFormat} key={`date-format-${curr}`}>
+                                    {DateTimeUtils.timestampToShortDate(Date.now(), parseInt(curr) as ShortDateFormat)}
+                                </option>);
+                            }
+                            return acc;
+                        }, [] as Array<JSX.Element>)}
+                    </NativeSelect>
+                </AppSettingsItem>
             </Paper>
         </main>
     </div>;
 };
 
 export interface AppSettingsProps {
+    language: string;
+    onLanguageChange: (language: string) => void;
+
     temperatureUnit: string;
     onTemperatureUnitChange: (temperatureUnit: string) => void;
 
@@ -135,4 +118,4 @@ export interface AppSettingsProps {
 
     iconVisualizationType: IconVisualizationType;
     onIconVisualizationTypeChange: (value: IconVisualizationType) => void;
-};
+}

@@ -8,8 +8,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 import React, { FunctionComponent } from 'react';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
-import { airQualityToLabel } from "../../book/AirQualityToLabel";
 import { Device } from '../../entity/Device';
+import { AirQualityToLabel } from '../common/AirQualityToLabel';
 import './DashboardHeader.scss';
 
 export const DashboardHeader: FunctionComponent<DashboardHeaderProps> = (props) => {
@@ -51,7 +51,7 @@ export const DashboardHeader: FunctionComponent<DashboardHeaderProps> = (props) 
                     </Menu>
                 </div>}
             <div className="sub-header quality">
-                {airQualityToLabel(props.average)}
+                <AirQualityToLabel airQuality={props.average} />
             </div>
             <div className="sub-header carousel">
                 {props.suggestions && props.suggestions.length > 0 && <Carousel responsive={responsive}>

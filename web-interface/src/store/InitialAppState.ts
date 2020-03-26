@@ -45,6 +45,7 @@ export const initialAppState: AppState = {
         loadingState: LoadingState.none,
     },
     settings: {
+        language: localStorageManager.getItem(LocalStorageKey.LANGUAGE_KEY) || 'en',
         iconVisualizationType: localStorageManager.getItem(LocalStorageKey.ICON_LABEL_VISUALIZATION_TYPE_KEY) || IconVisualizationType.icon,
         decimalSeparator: defaultDecimalSeparator(),
         meterUnit: {

@@ -9,9 +9,17 @@ import { localStorageManager } from "../book/LocalStorageManager";
 import { Settings } from "../entity/Settings";
 import { initialAppState } from "../store/InitialAppState";
 import { UpdateDateFormatAction, UpdateDateFormatActionName } from './../action/UpdateDateFormatAction';
+import { UpdateLanguageAction, UpdateLanguageActionName } from './../action/UpdateLanguageAction';
 
 export const settingsReducer = (state: Settings = initialAppState.settings, action: Action): Settings => {
     switch (action.type) {
+        case UpdateLanguageActionName:
+            const language = (action as UpdateLanguageAction).language;
+
+            localStorageManager.setItem(LocalStorageKey.LANGUAGE_KEY, language);
+
+            return { ...state, language } as Settings;
+
         case UpdateIconVisualizationTypeActionName:
             const visualizationType = (action as UpdateIconVisualizationTypeAction).visualizationType;
 

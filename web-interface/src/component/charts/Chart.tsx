@@ -1,5 +1,6 @@
 import { Typography } from "@material-ui/core";
 import React, { FunctionComponent } from "react";
+import { useTranslation } from "react-i18next";
 import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { Colors } from "../../book/Colors";
 import { TimeRangeReading } from "../../entity/TimeRangeReading";
@@ -7,6 +8,7 @@ import "./Chart.scss";
 import { ChartTooltip } from "./ChartTooltip";
 
 export const Chart: FunctionComponent<ChartProps> = (props) => {
+    const { t } = useTranslation();
     const chartInfo = props.averages.reduce((acc, curr): ChartInfo => ({
         maxValue: Math.max(acc.maxValue ?? Math.floor(curr.average), Math.floor(curr.average)),
         minValue: Math.min(acc.minValue ?? Math.floor(curr.average), Math.floor(curr.average)),
@@ -16,7 +18,7 @@ export const Chart: FunctionComponent<ChartProps> = (props) => {
     return <div className="chart">
         <Typography variant="h6" className="title">{props.title}</Typography>
         <Typography variant="subtitle2" color="textSecondary" className="subtitle">{props.subtitle}</Typography>
-        {props.averages.length === 0 && <div>No data</div>}
+        {props.averages.length === 0 && <div>{t("noData")}</div>}
         {props.averages.length > 0 && <ResponsiveContainer width="100%" height={300}>
             <AreaChart data={props.averages} maxBarSize={50}>
                 <defs>

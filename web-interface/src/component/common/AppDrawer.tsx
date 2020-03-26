@@ -15,17 +15,16 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import React, { FunctionComponent } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { airQualityToLabel } from "../../book/AirQualityToLabel";
 import { Pages } from '../../book/Pages';
 import { Device } from "../../entity/Device";
 import logo from '../../images/logo.svg';
+import { AirQualityToLabel } from "./AirQualityToLabel";
 import "./AppDrawer.scss";
 
 export const AppDrawer: FunctionComponent<AppDrawerProps> = props => {
     const isThereAddress = props.currentDevice?.address && props.currentDevice?.address.length;
     const isThereIp = props.currentDevice?.deviceIP && props.currentDevice?.deviceIP.length;
     const { t } = useTranslation();
-
 
     return <Drawer open={props.isOpen} onClose={props.toggleDrawer(false)} className="app-drawer">
         <div
@@ -57,7 +56,7 @@ export const AppDrawer: FunctionComponent<AppDrawerProps> = props => {
             {props.currentDevice && <div className="device">
                 <Typography variant="h6">
                     <PhonelinkRingIcon className="icon" />
-                    {props.currentDevice.name} <span className="air-quality-average">({airQualityToLabel(props.average)})</span>
+                    {props.currentDevice.name} <span className="air-quality-average">(<AirQualityToLabel airQuality={props.average} />)</span>
                 </Typography>
                 {isThereIp && <div className="ip">
                     <strong>IP:</strong> {props.currentDevice.deviceIP.split(";")[0]}
@@ -74,31 +73,31 @@ export const AppDrawer: FunctionComponent<AppDrawerProps> = props => {
                     <ListItemIcon>
                         <FormatListBulletedIcon />
                     </ListItemIcon>
-                    <ListItemText primary="Device List" />
+                    <ListItemText primary={t("deviceList")} />
                 </ListItem>
                 <ListItem button className="list-item" component={Link} to={Pages.APP_SETTINGS_URL}>
                     <ListItemIcon>
                         <SettingsIcon />
                     </ListItemIcon>
-                    <ListItemText primary="Settings" />
+                    <ListItemText primary={t("settings")} />
                 </ListItem>
                 <ListItem button className="list-item" component={Link} to={Pages.CREDITS_URL}>
                     <ListItemIcon>
                         <InfoIcon />
                     </ListItemIcon>
-                    <ListItemText primary="Credits" />
+                    <ListItemText primary={t("credits")} />
                 </ListItem>
                 <ListItem button className="list-item" component={Link} to={Pages.APP_CONSOLE_URL}>
                     <ListItemIcon>
                         <DashboardIcon />
                     </ListItemIcon>
-                    <ListItemText primary="Console" />
+                    <ListItemText primary={t("console")} />
                 </ListItem>
                 <ListItem button className="list-item" onClick={() => props.onLogoutClick()}>
                     <ListItemIcon>
                         <ExitToAppIcon />
                     </ListItemIcon>
-                    <ListItemText primary="Logout" />
+                    <ListItemText primary={t("logout")} />
                 </ListItem>
             </List>
         </div>

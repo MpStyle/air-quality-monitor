@@ -39,5 +39,17 @@
     "lastUpdate": "Last update",
     "ip": "IP",
     "address": "Address",
-    "deviceList": "Devices List"
+    "deviceList": "Devices List",
+    "language": "Language",
+    "excellent": "Excellent",
+    "good": "Good",
+    "notGood": "Not good",
+    "veryBad": "Very Bad",
+    "selectADevice": "Select a device",
+    "readingDate": "Reading date",
+    "readingsPer": "Readings per",
+    "hour": "hour",
+    "day": "day",
+    "month": "month",
+    "logout": "Logout"
 }
