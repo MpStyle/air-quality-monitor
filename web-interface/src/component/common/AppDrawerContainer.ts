@@ -22,7 +22,6 @@ export const AppDrawerContainer = connect(
         return {
             onLogoutClick: (refreshToken: string) => {
                 const finallyOps = () => {
-                    localStorageManager.removeAll();
                     sessionStorageManager.removeAll();
 
                     window.location.href = "/";
