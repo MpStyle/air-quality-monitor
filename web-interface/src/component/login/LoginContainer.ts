@@ -2,8 +2,7 @@ import { connect } from "react-redux";
 import { RouteChildrenProps } from "react-router";
 import { Action, Dispatch } from "redux";
 import { fetchLoginTokenSuccessActionBuilder } from "../../action/FetchLoginTokenAction";
-import { loginErrorActionBuilder } from "../../action/LoginErrorAction";
-import { loginInProgressActionBuilder } from "../../action/LoginInProgressAction";
+import { loginErrorActionBuilder, loginStartActionBuilder } from "../../action/LoginAction";
 import { Pages } from "../../book/Pages";
 import { userLogin } from "../../book/UserLogin";
 import { AppState } from '../../entity/AppState';
@@ -20,11 +19,11 @@ export const LoginContainer = connect(
     (dispatch: Dispatch<Action>): LoginProps => {
         return {
             onSignInClick: (username: string, password: string) => {
-                dispatch(loginInProgressActionBuilder());
+                dispatch(loginStartActionBuilder());
                 userLogin(username, password)
                     .then(response => {
                         if (response.error) {
-                            dispatch(loginErrorActionBuilder());
+                            dispatch(loginErrorActionBuilder(response.error));
                             console.error(response.error);
                             return;
                         }
@@ -40,6 +39,7 @@ export const LoginContainer = connect(
                     })
                     .catch(err => {
                         console.error(err);
+                        dispatch(loginErrorActionBuilder(err));
                     });
             }
         } as LoginProps;

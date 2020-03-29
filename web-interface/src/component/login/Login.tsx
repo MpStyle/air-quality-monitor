@@ -12,9 +12,7 @@ import logo from '../../images/logo.svg';
 import { AppButton } from "../common/AppButton";
 import "./Login.scss";
 
-function useQuery() {
-    return new URLSearchParams(useLocation().search);
-}
+const useQuery = () => (new URLSearchParams(useLocation().search));
 
 export const Login: FunctionComponent<LoginProps> = (props) => {
     const { t } = useTranslation();
@@ -70,7 +68,7 @@ export const Login: FunctionComponent<LoginProps> = (props) => {
                         className="sign-in-button"
                         title={loginButtonTooltip}
                         disabled={isLoginButtonDisabled}>
-                                {t("signIn")}
+                        {t("signIn")}
                     </AppButton>
                 </div>
 
