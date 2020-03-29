@@ -1,7 +1,6 @@
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { fetchLoginTokenSuccessActionBuilder } from "../../action/FetchLoginTokenAction";
-import { localStorageManager } from "../../book/LocalStorageManager";
 import { sessionStorageManager } from "../../book/SessionStorageManager";
 import { userRevokeRefreshToken } from "../../book/UserRevokeRefreshToken";
 import { AppState } from "../../entity/AppState";
