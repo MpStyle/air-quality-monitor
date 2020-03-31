@@ -29,15 +29,20 @@ I've been reccomanded to choose the __I2C__ devices by a colleague, who said: "t
 
 ## Hardware
 
-- Raspberry Pi 0 W => x1 => complete bundle
-![Raspberry Pi 0 W](images/raspberry_p0_w.jpg)
-- CO2/Temperature/TVOC sensor => x2 => CJMCU-8118
-![CO2/Temperature/TVOC sensor](images/cjmcu_8118.jpg)
+- ESP32 => x1 
+
+![Raspberry Pi 0 W](images/ESP32.jpg)
+- CO2/Temperature/TVOC sensor => x2 => CCS811-HDC1080
+
+![CO2/Temperature/TVOC sensor](images/CCS811-HDC1080.jpg)
 - Temperature/Humidity => x1 => DHT11 
-![Temperature/Humidity](images/dht11.png)
-- Temperature/Pressure sensor => x1 => HW-611 E/P 280  
-![Temperature/Pressure](images/hw_611_e_p_280.jpg)
+
+![Temperature/Humidity](images/DHT11.png)
+- Temperature/Pressure sensor => x1 => BMP280 
+
+![Temperature/Pressure](images/BMP280.jpg)
 - Jumper Wires
+
 ![Jumper Wires](images/jumper_wires.jpg)
 
 Every component is available in the most popular eCommerce services, such as Amazon and AliExpress.
@@ -51,18 +56,20 @@ We have 3 players in this procjet:
 
 So, you can split it in 3 parts, one for each usage:
 - [Cloud functions](cloud-functions/README.md): [Firebase](https://en.wikipedia.org/wiki/Firebase) function written in Typescript using [NodeJS](https://en.wikipedia.org/wiki/Node.js)
-- [Device Deamon](device-deamon/README.md): air data poller written in [Python](https://en.wikipedia.org/wiki/Python) using third part libraries
+- Device Loop: air data loop written in C/C++ using ArduinoIDE and third part libraries
 - [Web Interface](web-interface/README.md): air data interface writtern in [Typescript](https://en.wikipedia.org/wiki/TypeScript) using [React](https://en.wikipedia.org/wiki/React_(web_framework))/[Redux](https://en.wikipedia.org/wiki/Redux_(JavaScript_library))
 
 ## Price
 
 These are approximately the prices for each components:
 
-- Raspberry Pi 0 W: € 33.50
-- CJMCU-8118: € 8.88
-- DHT11: € 0.83
-- HW-611 E/P 280: € 0.64
-- Jumper Wires: € 1.00
-- Firebase Cloud: free
+- ESP32: ~ € 3.60
+- CCS811-HDC1080: ~ € 8.63
+- DHT11: ~ € 0.83
+- BMP280: ~ € 0.35
+- Jumper Wires: ~ € 1.00
+- Firebase Cloud: ~ free
 
-__TOTAL__: € 44.85
+__TOTAL__: € 14.41
+
+Prices may have changed over time.
