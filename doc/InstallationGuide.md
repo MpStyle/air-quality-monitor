@@ -2,7 +2,31 @@
 
 ## Firebase Cloud Functions
 
-- __TODO__
+### Configuration
+- Install [nodejs and npm](https://nodejs.org/en/) 
+- Install Firebase cli (use the right privilegies):
+```
+npm install -g firebase-tools
+```
+- Install the dependencies, run the command in the "_web-interface_" folder:
+```
+npm install
+```
+
+### Deploy
+In order to deploy, you have to login in Firebase. Run:
+```
+firebase login
+```
+And follow the instructions on the browser.
+
+Settings:
+- __TODO__ Add commands 
+
+After that, you can deploy the web interface, run:
+```
+firebase deploy --only functions --project <firebase-project-id>
+```
 
 ## Firebase Web Interface
 
