@@ -31,7 +31,7 @@ REACT_APP_AIR_QUALITY_DATA_REFRESH_TIME=300000
 ## Build
 
 ```bash
-npm run build
+yarn build
 ```
 
 ## Deploy
@@ -39,5 +39,5 @@ npm run build
 After build, run:
 
 ```bash
-npm run deploy
+yarn deploy --project <project-id>
 ```
