@@ -88,9 +88,10 @@ CCS811Data CCS811Sensor::getData()
         toReturn.tvoc = NAN;
     }
 
+    // Resets sensors every READINGS_BEFORE_RESET_COUNT readings
     if (this->readingCount > this->READINGS_BEFORE_RESET_COUNT)
     {
-        Serial.println("Reseting CCS811 sensor..");
+        Serial.println("Reseting CCS811 sensor...");
 
         digitalWrite(this->RESET_PIN_5A, LOW);
         digitalWrite(this->RESET_PIN_5B, LOW);
@@ -100,6 +101,36 @@ CCS811Data CCS811Sensor::getData()
 
         this->readingCount = 0;
     }
+
+    if(
+      (this->lastReading.temperature != NAN && toReturn.temperature != NAN && abs(this->lastReading.temperature - toReturn.temperature) >= 2)
+      || (this->lastReading.co2 != NAN && toReturn.co2 != NAN && abs(this->lastReading.co2 - toReturn.co2) >= 100)
+      || (this->lastReading.tvoc != NAN && toReturn.tvoc != NAN && abs(this->lastReading.tvoc - toReturn.tvoc) >= 10)
+      )
+    {
+      Serial.println("Strange reading (T:"+String(toReturn.temperature, 2)+";C:"+String(toReturn.co2, 2)+";V:"+String(toReturn.tvoc, 2)+"), reseting CCS811 sensor...");
+
+      digitalWrite(this->RESET_PIN_5A, LOW);
+      digitalWrite(this->RESET_PIN_5B, LOW);
+      delay(500);
+
+        
+      this->reset();
+
+      this->readingCount = 0;
+
+      toReturn.temperature = NAN;
+      toReturn.co2 = NAN;
+      toReturn.tvoc = NAN;
+    }
+    else
+    {
+      // Updates last reading
+      this->lastReading.temperature = toReturn.temperature;
+      this->lastReading.co2 = toReturn.co2;
+      this->lastReading.tvoc = toReturn.tvoc;
+    }
+
     this->readingCount++;
 
     return toReturn;

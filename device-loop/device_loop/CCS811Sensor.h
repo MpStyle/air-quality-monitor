@@ -21,14 +21,25 @@ private:
     const float DELTA_TVOC = 0.4;
 
     int readingCount = 0;
+    CCS811Data lastReading;
 
     Adafruit_CCS811 ccs_5a;
     Adafruit_CCS811 ccs_5b;
 
+    /**
+     * Resets both the sensors
+     */
     bool reset();
 
 public:
+    /**
+     * Prepares the sensors: sets the reset pins and resets the sensors
+     */
     bool setup();
+
+    /**
+     * Retrieves data/readings from sensors
+     */
     CCS811Data getData();
 };
 
