@@ -2,7 +2,41 @@
 
 ## Firebase Cloud Functions
 
-- **TODO**
+- __TODO__
+
+## Firebase Web Interface
+
+### Configuration
+- Install [nodejs and npm](https://nodejs.org/en/) 
+- Install Yarn
+```
+npm install -g yarn
+```
+- Install Firebase cli (use the right privilegies):
+```
+npm install -g firebase-tools
+```
+- Install the dependencies, run the command in the "_web-interface_" folder:
+```
+yarn install
+```
+
+### Run and deploy
+To run the web interface in your PC, run the following command in the "_web-interface_" folder:
+```
+yarn start
+```
+
+In order to deploy, you have to login in Firebase. Run:
+```
+firebase login
+```
+And follow the instructions on the browser.
+
+After that, you can deploy the web interface, run:
+```
+yarn deploy --project <firebase-project-id>
+```
 
 ## Arduino IDE
 
