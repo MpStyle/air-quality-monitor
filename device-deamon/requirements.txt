@@ -1,7 +1,0 @@
-RPi.bme280
-smbus2
-Adafruit_bitfield
-Adafruit_GPIO
-Adafruit_DHT
-adafruit-circuitpython-ccs811
-ifaddr
