@@ -17,13 +17,13 @@ I am a pure software developer (Java, C#, Typescript, etc...), so I have never l
 Arduino, Raspberry, GPIO, chip, sensor, micro-controllers, ...? :confused: Theese are only a few examples of unknown words for me.
 
 So, I have started this project to understand/learn theese new and "futuristic" technologies. 
-I know, definig Raspberry a futuristic stuff, is same as saying  I'm old... :sweat_smile:
+I know, definig ESP32 board a futuristic stuff, is same as saying  I'm old... :sweat_smile:
 
 ## How
 
 As a software developer, hardware was the challange.
 
-I've  select __Raspberry Pi__ instead of Arduino or other micro-controllers because it is well supported by a big community and it has a steep learning curve for an electronic outsider (and in case of failure it can be recycled as a mame console, multimedia box, nas, ....).
+I've select __ESP32 board__ instead of Raspberry or other micro-controllers because it is well supported by a big community and it has a steep learning curve for an electronic outsider.
 
 I've been reccomanded to choose the __I2C__ devices by a colleague, who said: "they are well documented and there are a lot out-of-the-box libraries ready-to-use". :+1: I trusted him.
 
