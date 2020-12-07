@@ -2,14 +2,12 @@ import { Divider } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper/Paper";
 import React, { FunctionComponent } from "react";
 import { useTranslation } from 'react-i18next';
-import { DateTimeUtils } from "../../book/DateTimeUtils";
 import { IconVisualizationType } from "../../book/IconVisualizationType";
 import { ReadingTypes } from "../../book/ReadingTypes";
 import { celsiusToFahrenheit } from "../../book/TemperatureConverter";
 import { TemperatureUnit } from "../../book/Unit";
 import { AirQualityData } from "../../entity/AirQualityData";
 import { AirStatus } from "../../entity/AirStatus";
-import { DateFormat } from "../../entity/DateFormat";
 import { MeterUnit } from "../../entity/MeterUnit";
 import co2 from '../../images/co2.svg';
 import humidity from '../../images/humidity.svg';
@@ -99,18 +97,6 @@ export const DeviceAirQualityData: FunctionComponent<AirQualityDataProps> = (pro
             iconVisualizationType={props.iconVisualizationType}
             measurementType={ReadingTypes.TVOC} />
 
-        <Divider light />
-
-        <div>
-            {props.airQualityData.inserted && <div className="last-update">
-                <span>{t("lastUpdate")}:</span>
-                &nbsp;
-                {DateTimeUtils.timestampToDate(props.airQualityData.inserted, props.dateFormat)}
-                &nbsp;
-                {DateTimeUtils.timestampToFormatedDate(props.airQualityData.inserted, "HH:mm:ss")}
-            </div>}
-        </div>
-
     </Paper >;
 };
 
@@ -121,5 +107,4 @@ export interface AirQualityDataProps {
     decimalSeparator: string;
     iconVisualizationType: IconVisualizationType;
     isLoading: boolean;
-    dateFormat: DateFormat;
 }

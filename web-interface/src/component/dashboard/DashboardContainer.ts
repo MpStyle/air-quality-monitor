@@ -3,12 +3,10 @@ import { Dispatch } from 'redux';
 import { fetchDevicesErrorActionBuilder, fetchDevicesStartActionBuilder, fetchDevicesSuccessActionBuilder } from '../../action/FetchDevicesAction';
 import { fetchLastReadingsErrorActionBuilder, fetchLastReadingsStartActionBuilder, fetchLastReadingsSuccessActionBuilder } from '../../action/FetchLastReadingsAction';
 import { fetchLoginTokenErrorActionBuilder, fetchLoginTokenStartActionBuilder, fetchLoginTokenSuccessActionBuilder } from '../../action/FetchLoginTokenAction';
-import { updateCurrentDeviceActionBuilder } from '../../action/UpdateCurrentDeviceAction';
 import { userDevicesList } from '../../book/UserDevicesList';
 import { userLastReadings } from '../../book/UserLastReadings';
 import { userRenewAccessToken } from '../../book/UserRenewAccessToken';
 import { AppState } from '../../entity/AppState';
-import { Device } from '../../entity/Device';
 import { LoadingState } from '../../entity/LoadingState';
 import { LoginToken } from '../../entity/LoginToken';
 import { Dashboard, DashboardProps } from './Dashboard';
@@ -58,7 +56,6 @@ export const DashboardContainer = connect(
         };
 
         return {
-            onCurrentDeviceChange: (device: Device) => { dispatch(updateCurrentDeviceActionBuilder(device)); },
             fetchDevices: (token: LoginToken) => {
                 if (token.expiredAt <= Date.now()) {
                     renewToken(token);

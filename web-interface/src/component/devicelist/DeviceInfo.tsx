@@ -5,10 +5,13 @@ import ListItemText from "@material-ui/core/ListItemText/ListItemText";
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import React, { useState, FunctionComponent } from "react";
+import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
+import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
+import React, { FunctionComponent, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Device } from "../../entity/Device";
 import { MeterUnit } from "../../entity/MeterUnit";
+import "./DeviceInfo.scss";
 
 export const DeviceInfo: FunctionComponent<DeviceInfoProps> = props => {
     const { t } = useTranslation();
@@ -24,7 +27,12 @@ export const DeviceInfo: FunctionComponent<DeviceInfoProps> = props => {
             </IconButton>
         </ListItemIcon>}
         <ListItemText
-            primary={props.device.name}
+            primary={<div className="device-name" onClick={() => props.onCurrentDeviceChange(props.device)}>
+                {props.isCurrentDevice ?
+                    <RadioButtonCheckedIcon /> :
+                    <RadioButtonUncheckedIcon />}
+                {props.device.name}
+            </div>}
             secondary={
                 isDetailsOpen && <React.Fragment>
                     {isThereIp && <div className="ip">
@@ -48,4 +56,6 @@ export interface DeviceInfoProps {
     meterUnit: MeterUnit;
     decimalSeparator: string;
     onDeleteClick: (device: Device) => void;
+    onCurrentDeviceChange: (device: Device) => void;
+    isCurrentDevice: boolean;
 }

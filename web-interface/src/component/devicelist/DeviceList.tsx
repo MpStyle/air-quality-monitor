@@ -55,7 +55,15 @@ export const DeviceList: FunctionComponent<DevicesListProps> = (props) => {
                 {!props.devices.length && <div className="message">No devices</div>}
 
                 {props.devices && <List className="devices-list">
-                    {props.devices.map(d => <DeviceInfo key={`device-${d.deviceId}`} device={d} decimalSeparator={props.decimalSeparator} meterUnit={props.meterUnit} onDeleteClick={onDeleteClick} />)}
+                    {props.devices.map(d =>
+                        <DeviceInfo
+                            isCurrentDevice={props.currentDevice.deviceId === d.deviceId}
+                            onCurrentDeviceChange={props.onCurrentDeviceChange}
+                            key={`device-${d.deviceId}`}
+                            device={d}
+                            decimalSeparator={props.decimalSeparator}
+                            meterUnit={props.meterUnit}
+                            onDeleteClick={onDeleteClick} />)}
                 </List>}
             </Paper>}
         </main>
@@ -89,4 +97,6 @@ export interface DevicesListProps {
     onDeleteClick: (token: LoginToken, deviceId: string) => void;
     fetchDevices: (token: LoginToken) => void;
     isLoading: boolean;
+    onCurrentDeviceChange: (device: Device) => void;
+    currentDevice: Device;
 }

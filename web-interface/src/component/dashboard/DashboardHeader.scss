@@ -1,7 +1,7 @@
 @import '../../book/Colors.scss';
 
 .dashboard-header {
-    height: 185px;
+    height: 195px;
     padding: 1em 16px;
     position: fixed;
     top: 0px;
@@ -15,6 +15,9 @@
         margin-left: -12px;
         margin-top: -12px;
         color: #fff;
+        padding: 12px;
+        vertical-align: bottom;
+        margin-right: 16px;
     }
 
     .spinner {
@@ -24,8 +27,17 @@
         color: #fff;
     }
 
+    .headers{
+        display: inline-block;
+
+        .device-name {
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+    }
+
     .sub-headers {
-        margin-top: -35px;
+        margin-top: 15px;
         display: flex;
         flex-direction: column;
 
@@ -34,23 +46,12 @@
             text-align: center;
         }
 
-        .sub-header.device-list {
-            font-size: 1.1em;
-            margin: 0px auto 0px auto;
-            cursor: pointer;
-
-            svg {
-                vertical-align: text-bottom;
-            }
-        }
-
         .sub-header.quality {
-            font-size: 2.5em;
+            font-size: 2.0em;
             margin: 0.5em auto;
         }
 
         .sub-header.carousel {
-            font-size: 1.2em;
             display: block;
             width: 100%;
             max-width: 450px;

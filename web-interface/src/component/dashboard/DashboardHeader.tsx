@@ -1,55 +1,40 @@
 import Box from '@material-ui/core/Box/Box';
 import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress';
 import IconButton from '@material-ui/core/IconButton/IconButton';
-import Menu from '@material-ui/core/Menu/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import MenuIcon from '@material-ui/icons/Menu';
 import React, { FunctionComponent } from 'react';
+import { useTranslation } from 'react-i18next';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
+import { AirQualityData } from '../../entity/AirQualityData';
+import { DateFormat } from '../../entity/DateFormat';
 import { Device } from '../../entity/Device';
 import { AirQualityToLabel } from '../common/AirQualityToLabel';
 import './DashboardHeader.scss';
 
 export const DashboardHeader: FunctionComponent<DashboardHeaderProps> = (props) => {
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-    const handleClick = (event: React.MouseEvent<HTMLDivElement>) => setAnchorEl(event.currentTarget);
-    const handleClose = () => setAnchorEl(null);
     const responsive = {
         mobile: {
             breakpoint: { max: 800, min: 0 },
             items: 1,
         },
     };
+    const { t } = useTranslation();
 
     return <Box boxShadow={2} className="dashboard-header">
         <IconButton onClick={props.toggleDrawer(true)} className="hamburger">
             <MenuIcon />
         </IconButton>
-        <div className="sub-headers">
-            {props.currentDevice &&
-                <div className="sub-header device-list">
-                    <div aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-                        {props.currentDevice ? props.currentDevice.name : "Select a device..."}
-                        <ArrowDropDownIcon />
-                    </div>
-                    <Menu
-                        id="simple-menu"
-                        anchorEl={anchorEl}
-                        keepMounted
-                        open={Boolean(anchorEl)}
-                        onClose={handleClose}>
-                        {props.devices.map((device) => (
-                            <MenuItem key={device.deviceId} value={device.deviceId} onClick={() => {
-                                props.onCurrentDeviceChange(device);
-                                handleClose();
-                            }}>
-                                {device.name}
-                            </MenuItem>
-                        ))}
-                    </Menu>
+
+        {props.currentDevice &&
+            <div className="headers">
+                <div className="header device-name">{props.currentDevice.name}</div>
+                {props.airQualityData.inserted && <div className="last-update">
+                    {Math.ceil((new Date().getTime() - props.airQualityData.inserted) / 60000)}&nbsp;{t("minutesAgo")}
                 </div>}
+            </div>}
+
+        <div className="sub-headers">
             <div className="sub-header quality">
                 <AirQualityToLabel airQuality={props.average} />
             </div>
@@ -66,9 +51,9 @@ export const DashboardHeader: FunctionComponent<DashboardHeaderProps> = (props) 
 export interface DashboardHeaderProps {
     suggestions: string[];
     average: number;
-    devices: Device[];
     currentDevice: Device | null;
-    onCurrentDeviceChange: (device: Device) => void;
     toggleDrawer: (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => void;
     isLoading: boolean;
+    airQualityData: AirQualityData;
+    dateFormat: DateFormat;
 }

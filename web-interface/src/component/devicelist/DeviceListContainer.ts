@@ -2,10 +2,12 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { deleteDeviceErrorActionBuilder, deleteDeviceStartActionBuilder, deleteDeviceSuccessActionBuilder } from "../../action/DeleteDeviceAction";
 import { fetchDevicesErrorActionBuilder, fetchDevicesStartActionBuilder, fetchDevicesSuccessActionBuilder } from "../../action/FetchDevicesAction";
+import { updateCurrentDeviceActionBuilder } from "../../action/UpdateCurrentDeviceAction";
 import { userDeviceDelete } from "../../book/UserDeviceDelete";
 import { userDevicesList } from "../../book/UserDevicesList";
 import { userRenewAccessToken, UserRenewAccessTokenResponse } from "../../book/UserRenewAccessToken";
 import { AppState } from "../../entity/AppState";
+import { Device } from "../../entity/Device";
 import { LoadingState } from "../../entity/LoadingState";
 import { LoginToken } from "../../entity/LoginToken";
 import { ServiceResponse } from "../../entity/ServiceResponse";
@@ -18,7 +20,8 @@ export const DeviceListContainer = connect(
             devices: appState.devicesData.devices,
             isLoading: appState.devicesData.deletingState === LoadingState.loading || appState.devicesData.loadingState === LoadingState.loading,
             decimalSeparator: appState.settings.decimalSeparator,
-            meterUnit: appState.settings.meterUnit
+            meterUnit: appState.settings.meterUnit,
+            currentDevice: appState.currentDevice
         } as DevicesListProps;
     },
     (dispatch: Dispatch): DevicesListProps => {
@@ -56,6 +59,9 @@ export const DeviceListContainer = connect(
                             dispatch(fetchDevicesErrorActionBuilder(error));
                         });
                 });
+            },
+            onCurrentDeviceChange: (device: Device) => {
+                dispatch(updateCurrentDeviceActionBuilder(device));
             },
             onDeleteClick: (token: LoginToken, deviceId: string) => {
                 dispatch(deleteDeviceStartActionBuilder());

@@ -57,11 +57,11 @@ export const Dashboard: FunctionComponent<DashboardProps> = (props) => {
 
         <DashboardHeader
             isLoading={props.devicesData.loadingState === LoadingState.loading || props.lastReadingLoadingState === LoadingState.loading}
-            devices={props.devicesData.devices}
             currentDevice={props.currentDevice}
             average={props.airStatusAverage}
             toggleDrawer={toggleDrawer}
-            onCurrentDeviceChange={props.onCurrentDeviceChange}
+            airQualityData={props.airQualityData}
+            dateFormat={props.dateFormat}
             suggestions={props.suggestions} />
 
         <div className="spacer" />
@@ -72,8 +72,7 @@ export const Dashboard: FunctionComponent<DashboardProps> = (props) => {
             decimalSeparator={props.decimalSeparator}
             meterUnit={props.meterUnit}
             iconVisualizationType={props.iconVisualizationType}
-            isLoading={props.isLoading}
-            dateFormat={props.dateFormat} />
+            isLoading={props.isLoading} />
     </div>;
 };
 
@@ -91,7 +90,6 @@ export interface DashboardProps {
     suggestions: string[];
 
     currentDevice: Device | null;
-    onCurrentDeviceChange: (device: Device) => void;
 
     fetchDevices: (token: LoginToken) => void;
     fetchAirQualityData: (token: LoginToken, currentDeviceId: string) => void;
