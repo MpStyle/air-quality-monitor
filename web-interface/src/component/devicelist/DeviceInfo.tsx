@@ -7,7 +7,7 @@ import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
 import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
-import React, { FunctionComponent, useState } from "react";
+import React, { useState, FunctionComponent } from "react";
 import { useTranslation } from "react-i18next";
 import { Device } from "../../entity/Device";
 import { MeterUnit } from "../../entity/MeterUnit";
