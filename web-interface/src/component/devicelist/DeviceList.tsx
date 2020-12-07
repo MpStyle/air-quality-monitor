@@ -9,7 +9,8 @@ import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import InfoIcon from '@material-ui/icons/Info';
 import React, { useEffect, useState, FunctionComponent } from "react";
 import { useTranslation } from 'react-i18next';
-import { useHistory } from "react-router-dom";
+import { useHistory, Redirect } from "react-router-dom";
+import { Pages } from "../../book/Pages";
 import { Device } from "../../entity/Device";
 import { LoginToken } from "../../entity/LoginToken";
 import { MeterUnit } from "../../entity/MeterUnit";
@@ -30,8 +31,14 @@ export const DeviceList: FunctionComponent<DevicesListProps> = (props) => {
     const { fetchDevices, token } = props;
 
     useEffect(() => {
-        fetchDevices(token);
+        if (token) {
+            fetchDevices(token);
+        }
     }, [fetchDevices, token]);
+
+    if (!token) {
+        return <Redirect to={Pages.LOGIN_URL} />;
+    }
 
     return <div className="devices-list">
         <AppBarOneRow>

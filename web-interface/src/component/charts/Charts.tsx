@@ -9,8 +9,9 @@ import InsertInvitationIcon from '@material-ui/icons/InsertInvitation';
 import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import React, { useEffect, useState, FunctionComponent } from "react";
 import { useTranslation } from 'react-i18next';
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory, useParams, Redirect } from "react-router-dom";
 import { DateTimeUtils } from '../../book/DateTimeUtils';
+import { Pages } from '../../book/Pages';
 import { ReadingTypes } from '../../book/ReadingTypes';
 import { AirQualityDataAverages } from "../../entity/AirQualityDataAverages";
 import { DateFormat } from '../../entity/DateFormat';
@@ -50,8 +51,14 @@ export const Charts: FunctionComponent<ChartsProps> = (props) => {
     const title = getTitle(props.readingType);
 
     useEffect(() => {
-        fetchAverages(token, currentDeviceId ?? deviceId, readingType as string, Date.now());
+        if (token) {
+            fetchAverages(token, currentDeviceId ?? deviceId, readingType as string, Date.now());
+        }
     }, [fetchAverages, token, deviceId, currentDeviceId, readingType]);
+
+    if (!token) {
+        return <Redirect to={Pages.LOGIN_URL} />;
+    }
 
     return <div className="charts">
         <AppBarOneRow>

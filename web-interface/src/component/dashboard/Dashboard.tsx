@@ -1,5 +1,7 @@
 import React, { useEffect, FunctionComponent } from 'react';
+import { Redirect } from 'react-router-dom';
 import { IconVisualizationType } from '../../book/IconVisualizationType';
+import { Pages } from '../../book/Pages';
 import { AirQualityData } from '../../entity/AirQualityData';
 import { AirQuality, AirStatus } from "../../entity/AirStatus";
 import { DateFormat } from '../../entity/DateFormat';
@@ -18,10 +20,12 @@ export const Dashboard: FunctionComponent<DashboardProps> = (props) => {
     const { currentDevice, fetchAirQualityData, fetchDevices, token } = props;
 
     useEffect(() => {
-        fetchDevices(token);
+        if (token) {
+            fetchDevices(token);
+        }
     }, [fetchDevices, token]);
     useEffect(() => {
-        if (currentDevice) {
+        if (currentDevice && token) {
             const timeout = setTimeout(() => {
                 fetchAirQualityData(token, currentDevice.deviceId);
             }, parseInt(process.env.REACT_APP_AIR_QUALITY_DATA_REFRESH_TIME as string));
@@ -33,6 +37,10 @@ export const Dashboard: FunctionComponent<DashboardProps> = (props) => {
             };
         }
     }, [fetchAirQualityData, token, currentDevice]);
+
+    if (!token) {
+        return <Redirect to={Pages.LOGIN_URL} />;
+    }
 
     const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
         if (event.type === "keydown" && ((event as React.KeyboardEvent).key === "Tab" || (event as React.KeyboardEvent).key === "Shift")) {
