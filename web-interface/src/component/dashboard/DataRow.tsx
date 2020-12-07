@@ -1,3 +1,4 @@
+import Badge from '@material-ui/core/Badge/Badge';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import React, { FunctionComponent } from 'react';
 import { Link } from 'react-router-dom';
@@ -14,9 +15,21 @@ export const DataRow: FunctionComponent<DataRowProps> = (props: DataRowProps) =>
         return null;
     }
 
+    const RowIcon = () => <img src={props.icon} className="value-icon" alt={props.title} />;
+
+    const QualityRowIcon = () => {
+        if (props.quality === AirQuality.VeryBad) {
+            return <Badge badgeContent={"!"} color="error">
+                <RowIcon />
+            </Badge>;
+        }
+
+        return <RowIcon />;
+    };
+
     return <Link to={`${Pages.CHARTS_URL}/${props.measurementType}`} className="data" title={props.title}>
         {(props.iconVisualizationType === IconVisualizationType.icon || props.iconVisualizationType === IconVisualizationType.both) && <span className="icon">
-            <img src={props.icon} className="value-icon" alt={props.title} />
+            <QualityRowIcon />
         </span>}
         {(props.iconVisualizationType === IconVisualizationType.label || props.iconVisualizationType === IconVisualizationType.both) && <span className="label">
             {props.title}
