@@ -17,7 +17,7 @@ import InfoIcon from '@material-ui/icons/Info';
 import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 import { Pages } from '../../book/Pages';
 import logo from '../../images/logo.svg';
-import "./UserDialog.scss"
+import "./UserDialog.scss";
 
 export const UserDialog: FunctionComponent<UserDialogProps> = props => {
     const { t } = useTranslation();
@@ -78,8 +78,8 @@ export const UserDialog: FunctionComponent<UserDialogProps> = props => {
             </List>
 
         </DialogContent>
-    </Dialog>
-}
+    </Dialog>;
+};
 
 export interface UserDialogProps {
     isOpen: boolean;

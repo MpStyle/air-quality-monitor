@@ -9,11 +9,11 @@ import { AirQualityData } from '../../entity/AirQualityData';
 import { DateFormat } from '../../entity/DateFormat';
 import { Device } from '../../entity/Device';
 import { AirQualityToLabel } from '../common/AirQualityToLabel';
-import './DashboardHeader.scss';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import SettingsIcon from '@material-ui/icons/Settings';
 import { Pages } from '../../book/Pages';
 import { Link } from 'react-router-dom';
+import './DashboardHeader.scss';
 
 export const DashboardHeader: FunctionComponent<DashboardHeaderProps> = (props) => {
     const responsive = {
@@ -43,7 +43,6 @@ export const DashboardHeader: FunctionComponent<DashboardHeaderProps> = (props) 
             <SettingsIcon />
         </IconButton>
         {props.isLoading && <CircularProgress size={22} className="spinner" />}
-
 
         <div className="sub-headers">
             <div className="sub-header quality">

@@ -11,8 +11,8 @@ import { LoadingState } from '../../entity/LoadingState';
 import { LoginToken } from '../../entity/LoginToken';
 import { MeterUnit } from '../../entity/MeterUnit';
 import { UserDialogContainer } from './UserDialogContainer';
-import './Dashboard.scss';
 import { DashboardHeader } from './DashboardHeader';
+import './Dashboard.scss';
 import { DeviceAirQualityData } from './DeviceAirQualityData';
 
 export const Dashboard: FunctionComponent<DashboardProps> = (props) => {
