@@ -3,6 +3,7 @@
     "appNameLogo": "Air quality monitor logo",
     "loading": "Loading",
     "minutesAgo": "minutes ago",
+    "minuteAgo": "minute ago",
     "insertUserNameAndPassword": "Insert username and password",
     "loginInProgress": "Login in progress",
     "signIn": "Sign in",

@@ -20,6 +20,7 @@ export const DashboardHeader: FunctionComponent<DashboardHeaderProps> = (props) 
         },
     };
     const { t } = useTranslation();
+    const minutesFromLastUpdate = Math.ceil((new Date().getTime() - props.airQualityData.inserted) / 60000);
 
     return <Box boxShadow={2} className="dashboard-header">
         <IconButton onClick={props.toggleDrawer(true)} className="hamburger">
@@ -30,7 +31,9 @@ export const DashboardHeader: FunctionComponent<DashboardHeaderProps> = (props) 
             <div className="headers">
                 <div className="header device-name">{props.currentDevice.name}</div>
                 {props.airQualityData.inserted && <div className="last-update">
-                    {Math.ceil((new Date().getTime() - props.airQualityData.inserted) / 60000)}&nbsp;{t("minutesAgo")}
+                    {minutesFromLastUpdate}
+                    &nbsp;
+                    {minutesFromLastUpdate == 1 ? t("minuteAgo") : t("minutesAgo")}
                 </div>}
             </div>}
 
