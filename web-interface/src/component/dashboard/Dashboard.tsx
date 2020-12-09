@@ -10,7 +10,7 @@ import { DevicesData } from '../../entity/DevicesData';
 import { LoadingState } from '../../entity/LoadingState';
 import { LoginToken } from '../../entity/LoginToken';
 import { MeterUnit } from '../../entity/MeterUnit';
-import { AppDrawerContainer } from '../common/AppDrawerContainer';
+import { UserDialogContainer } from './UserDialogContainer';
 import './Dashboard.scss';
 import { DashboardHeader } from './DashboardHeader';
 import { DeviceAirQualityData } from './DeviceAirQualityData';
@@ -51,7 +51,7 @@ export const Dashboard: FunctionComponent<DashboardProps> = (props) => {
     };
 
     return <div className="dashboard">
-        <AppDrawerContainer
+        <UserDialogContainer
             isOpen={isAppDrawerOpen}
             toggleDrawer={toggleDrawer} />
 
@@ -59,7 +59,7 @@ export const Dashboard: FunctionComponent<DashboardProps> = (props) => {
             isLoading={props.devicesData.loadingState === LoadingState.loading || props.lastReadingLoadingState === LoadingState.loading}
             currentDevice={props.currentDevice}
             average={props.airStatusAverage}
-            toggleDrawer={toggleDrawer}
+            toggleUserDialog={toggleDrawer}
             airQualityData={props.airQualityData}
             dateFormat={props.dateFormat}
             suggestions={props.suggestions} />

@@ -4,20 +4,18 @@ import { fetchLoginTokenSuccessActionBuilder } from "../../action/FetchLoginToke
 import { sessionStorageManager } from "../../book/SessionStorageManager";
 import { userRevokeRefreshToken } from "../../book/UserRevokeRefreshToken";
 import { AppState } from "../../entity/AppState";
-import { AppDrawer, AppDrawerProps } from "./AppDrawer";
+import { UserDialog, UserDialogProps } from "./UserDialog";
 
-export const AppDrawerContainer = connect(
-    (appState: AppState, props: AppDrawerContainerProps): AppDrawerProps => {
+export const UserDialogContainer = connect(
+    (appState: AppState, props: UserDialogContainerProps): UserDialogProps => {
         return {
-            currentDevice: appState.currentDevice,
             isOpen: props.isOpen,
-            average: appState.airStatusAverage,
             toggleDrawer: props.toggleDrawer,
             refreshToken: appState.loginTokenStatus.loginToken?.refreshToken,
             username: appState.loginTokenStatus.loginToken?.username
-        } as AppDrawerProps;
+        } as UserDialogProps;
     },
-    (dispatch: Dispatch): AppDrawerProps => {
+    (dispatch: Dispatch): UserDialogProps => {
         return {
             onLogoutClick: (refreshToken: string) => {
                 const finallyOps = () => {
@@ -42,11 +40,11 @@ export const AppDrawerContainer = connect(
                         finallyOps();
                     });
             },
-        } as AppDrawerProps;
+        } as UserDialogProps;
     }
-)(AppDrawer);
+)(UserDialog);
 
-export interface AppDrawerContainerProps {
+export interface UserDialogContainerProps {
     isOpen: boolean;
     toggleDrawer: (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => void;
 }

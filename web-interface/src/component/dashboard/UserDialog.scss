@@ -1,0 +1,24 @@
+.user-dialog{
+    #scroll-dialog-title{
+        .app{
+            .logo-container{
+                display: inline-block;
+
+                img {
+                    width: 24px;
+                    vertical-align: middle;
+                    margin-right: 20px;
+                }
+            }
+        }
+    }
+
+    .user {
+        margin: 0 16px 16px 10px;
+
+        .icon {
+            vertical-align: text-bottom;
+            margin-right: 30px;
+        }
+    }
+}

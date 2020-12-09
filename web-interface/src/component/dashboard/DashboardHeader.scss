@@ -11,20 +11,13 @@
     background: $color-primary;
     background: linear-gradient(180deg, $color-primary 0%, $color-secondary 100%);
 
-    .hamburger {
-        margin-left: -12px;
-        margin-top: -12px;
+    .user-menu-button, .settings-button, .spinner {
+        margin-right: -12px;
         color: #fff;
         padding: 12px;
         vertical-align: bottom;
-        margin-right: 16px;
-    }
-
-    .spinner {
-        position: fixed;
-        right: 16px;
-        top: 16px;
-        color: #fff;
+        margin-left: 16px;
+        float: right;
     }
 
     .headers{
