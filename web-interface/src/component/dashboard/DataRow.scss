@@ -46,6 +46,22 @@
         }
     }
 
+    .quality-level.excellent{
+        color: #0f158c;
+    }
+
+    .quality-level.good{
+        color: #009605;
+    }
+
+    .quality-level.not-good{
+        color: #e48000;
+    }
+
+    .quality-level.very-bad{
+        color: #dc0000;
+    }
+
     .details {
         display: inline-block;
     }
