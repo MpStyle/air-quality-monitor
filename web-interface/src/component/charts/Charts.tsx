@@ -33,7 +33,7 @@ const useStyles = makeStyles(() =>
 export const Charts: FunctionComponent<ChartsProps> = (props) => {
     const { t } = useTranslation();
     const classes = useStyles();
-    const { readingType, currentDeviceId } = useParams();
+    const { readingType, currentDeviceId } = useParams<{ readingType: string, currentDeviceId: string }>();
     const history = useHistory();
     const [selectedTimestamp, setSelectedTimestamp] = useState<number>(Date.now());
     const [isCalendarVisible, setIsCalendarVisible] = useState<boolean>(false);

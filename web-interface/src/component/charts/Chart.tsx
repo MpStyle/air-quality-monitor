@@ -32,7 +32,13 @@ export const Chart: FunctionComponent<ChartProps> = (props) => {
                     cursor={{ fill: '#f5f5f5' }} />
                 <Area type="monotone" dataKey="average" stroke={Colors.PRIMARY} fillOpacity={1} fill="url(#coloraverage)" />
                 <XAxis dataKey="xaxis" />
-                <YAxis width={yAxisWidth} domain={[chartInfo.minValue - 2, chartInfo.maxValue + 2]} />
+                <YAxis
+                    tickFormatter={value => Math.floor(parseFloat(value))}
+                    width={yAxisWidth}
+                    domain={[
+                        chartInfo.minValue - (chartInfo.minValue / 3),
+                        chartInfo.maxValue + (chartInfo.maxValue / 3)
+                    ]} />
                 <CartesianGrid strokeDasharray="0 0" vertical={false} />
             </AreaChart>
         </ResponsiveContainer>}
