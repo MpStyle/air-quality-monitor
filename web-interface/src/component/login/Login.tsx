@@ -39,7 +39,7 @@ export const Login: FunctionComponent<LoginProps> = (props) => {
                 </Typography>
             </div>}
 
-            {props.loginStatus !== LoadingState.loading && <React.Fragment>
+            {props.loginStatus !== LoadingState.loading && <form onSubmit={() => props.onSignInClick(username, password)}>
                 <Typography variant="h6" className="subtitle1">
                     {t("signIn")}
                 </Typography>
@@ -64,7 +64,7 @@ export const Login: FunctionComponent<LoginProps> = (props) => {
                 </Typography>}
                 <div className="sign-in-button-container">
                     <AppButton
-                        onClick={() => props.onSignInClick(username, password)}
+                        type="submit"
                         className="sign-in-button"
                         title={loginButtonTooltip}
                         disabled={isLoginButtonDisabled}>
@@ -74,7 +74,7 @@ export const Login: FunctionComponent<LoginProps> = (props) => {
 
                 <Link to="/credits" className="credits-link">{t("credits")}</Link>
 
-            </React.Fragment>}
+            </form>}
 
         </Paper>
     </div>;
