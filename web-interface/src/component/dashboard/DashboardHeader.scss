@@ -11,7 +11,7 @@
     background: $color-primary;
     background: linear-gradient(180deg, $color-primary 0%, $color-secondary 100%);
 
-    .user-menu-button, .settings-button, .spinner {
+    .user-menu-button, .settings-button{
         margin-right: -12px;
         color: #fff;
         padding: 12px;
@@ -52,5 +52,12 @@
             cursor: pointer;
             user-select: none;
         }
+    }
+
+    .loader{
+        position: fixed;
+        top: 192px;
+        left: 0px;
+        right: 0px;
     }
 }

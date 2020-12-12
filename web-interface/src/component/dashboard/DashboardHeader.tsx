@@ -14,6 +14,7 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import { Pages } from '../../book/Pages';
 import { Link } from 'react-router-dom';
 import './DashboardHeader.scss';
+import LinearProgress from '@material-ui/core/LinearProgress/LinearProgress';
 
 export const DashboardHeader: FunctionComponent<DashboardHeaderProps> = (props) => {
     const responsive = {
@@ -42,7 +43,6 @@ export const DashboardHeader: FunctionComponent<DashboardHeaderProps> = (props) 
         <IconButton component={Link} to={Pages.APP_SETTINGS_URL} className="settings-button" title={t("settings")}>
             <SettingsIcon />
         </IconButton>
-        {props.isLoading && <CircularProgress size={22} className="spinner" />}
 
         <div className="sub-headers">
             <div className="sub-header quality">
@@ -54,6 +54,8 @@ export const DashboardHeader: FunctionComponent<DashboardHeaderProps> = (props) 
                 </Carousel>}
             </div>
         </div>
+
+        {props.isLoading && <LinearProgress className="loader" />}
     </Box>;
 };
 
