@@ -1,5 +1,4 @@
 import Box from '@material-ui/core/Box/Box';
-import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress';
 import IconButton from '@material-ui/core/IconButton/IconButton';
 import React, { FunctionComponent } from 'react';
 import { useTranslation } from 'react-i18next';
