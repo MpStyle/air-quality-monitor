@@ -53,5 +53,7 @@
     "hour": "hour",
     "day": "day",
     "month": "month",
-    "logout": "Logout"
+    "logout": "Logout",
+    "ssid": "WiFi Name",
+    "wifi-strenght": "WiFi signal strenght"
 }

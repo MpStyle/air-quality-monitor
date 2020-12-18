@@ -17,7 +17,9 @@ export const DeviceInfo: FunctionComponent<DeviceInfoProps> = props => {
     const { t } = useTranslation();
     const [isDetailsOpen, setIsDetailsOpen] = useState<boolean>(false);
     const isThereAddress = props.device.address && props.device.address.length;
-    const isThereIp = props.device.deviceIP && props.device.deviceIP.length;
+    const isThereIp = !!props.device.ip && !!props.device.ip.length;
+    const isThereSSID = !!props.device.wifiName && !!props.device.wifiName.length;
+    const isThereSignalStrenght = !!props.device.wifiSignalStrength;
 
     return <ListItem className="device">
         {(isThereIp || isThereAddress) && <ListItemIcon
@@ -36,7 +38,13 @@ export const DeviceInfo: FunctionComponent<DeviceInfoProps> = props => {
             secondary={
                 isDetailsOpen && <React.Fragment>
                     {isThereIp && <div className="ip">
-                        <strong>{t("ip")}:</strong> {props.device.deviceIP.split(";")[0]}
+                        <strong>{t("ip")}:</strong> {props.device.ip}
+                    </div>}
+                    {isThereSSID && <div className="ssid">
+                        <strong>{t("ssi")}:</strong> {props.device.wifiName}
+                    </div>}
+                    {isThereSignalStrenght && <div className="wifi-strenght">
+                        <strong>{t("wifi-strenght")}:</strong> {props.device.wifiSignalStrength}
                     </div>}
                     {isThereAddress && <div className="address">
                         <strong>{t("address")}:</strong> {props.device.address}

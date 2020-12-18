@@ -53,5 +53,7 @@
     "hour": "ora",
     "day": "giorno",
     "month": "mese",
-    "logout": "Esci"
+    "logout": "Esci",
+    "ssid": "WiFi",
+    "wifi-strenght": "Potenza segnale WiFi"
 }
