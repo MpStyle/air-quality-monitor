@@ -6,5 +6,6 @@ export interface Device {
     name: string;
     enabled: boolean;
     updated: number;
-    cpuTemperature: number;
+    wifiName: string;
+    wifiSignalStrength: number;
 }

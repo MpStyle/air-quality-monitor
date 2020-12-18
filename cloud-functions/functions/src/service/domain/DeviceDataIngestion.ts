@@ -51,13 +51,17 @@ export const deviceDataIngestion = (logging: ILogging): Service<DeviceDataIngest
                         updated: Date.now(),
                         enabled: true,
                         inserted: Date.now(),
+                        wifiName: req.device.wifiName,
+                        wifiSignalStrength: req.device.wifiSignalStrength,
                     } : <Device>{
                         ...response.payload.device,
                         address: req.device.address,
                         deviceIP: req.device.ip,
                         deviceId: req.device.id,
                         name: req.device.name,
-                        updated: Date.now()
+                        updated: Date.now(),
+                        wifiName: req.device.wifiName,
+                        wifiSignalStrength: req.device.wifiSignalStrength,
                     };
 
                     return deviceUpsertService({ device })
@@ -134,7 +138,9 @@ export interface DeviceDataIngestionRequest {
         id: string,
         name: string,
         ip: string,
-        address?: string
+        address?: string,
+        wifiName: string,
+        wifiSignalStrength: number
     },
     airData: {
         temperature: number
