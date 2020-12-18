@@ -3,15 +3,37 @@
         {
             "name": "Linux",
             "includePath": [
-                "/home/michelepagnin/.arduino15/packages/esp32/tools/**",
-                "/home/michelepagnin/.arduino15/packages/esp32/hardware/esp32/1.0.4/**",
-                "/home/michelepagnin/Arduino/libraries/**"
+                "~/.arduino15/packages/esp32/tools/**",
+                "~/.arduino15/packages/esp32/hardware/esp32/1.0.4/**",
+                "~/Arduino/libraries/**",
+                "/Users/michele.pagnin/Library/Arduino15/packages/esp32/hardware/esp32/1.0.4/**",
+                "/Applications/Arduino.app/Contents/Java/libraries/**",
+                "/Users/michele.pagnin/Documents/Arduino/libraries/**",
+                "/Users/michele.pagnin/Library/Arduino15/packages/esp32/tools/**"
             ],
             "forcedInclude": [],
             "intelliSenseMode": "gcc-x64",
             "compilerPath": "/usr/bin/gcc",
             "cStandard": "c11",
-            "cppStandard": "c++17"
+            "cppStandard": "c++17",
+            "defines": [
+                "ARDUINO=100",
+                "USBCON"
+            ]
+        },
+        {
+            "name": "Mac",
+            "includePath": [
+                "~/Library/Arduino15/packages/esp32/tools/**",
+                "~/Documents/Arduino/libraries/**",
+                "/Applications/Arduino.app/Contents/Java/libraries/**",
+                "~/Library/Arduino15/packages/esp32/hardware/esp32/1.0.4/**"
+            ],
+            "forcedInclude": [],
+            "defines": [
+                "USBCON",
+                "ARDUINO=100"
+            ]
         }
     ],
     "version": 4
