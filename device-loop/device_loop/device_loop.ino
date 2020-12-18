@@ -47,8 +47,13 @@ void loop()
     CCS811Data ccsData = ccs811.getData();
     BMP280Data bmpData = bmp280.getData();
     DHT11Data dhtData = dht11.getData();
+    WiFiData wifiData;
 
-    airQualityMonitor.addData(bmpData, ccsData, dhtData);
+    wifiData.ip = WiFi.localIP();
+    wifiData.ssid = WIFI_SSID;
+    wifiData.strenght = WiFi.RSSI();
+
+    airQualityMonitor.addData(bmpData, ccsData, dhtData, wifiData);
 
     if (loopCount >= MAX_LOOP_COUNT)
     {

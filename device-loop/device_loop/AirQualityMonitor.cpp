@@ -5,8 +5,12 @@ void AirQualityMonitor::begin()
     this->timeClient.begin();
 }
 
-void AirQualityMonitor::addData(BMP280Data bmp, CCS811Data ccs, DHT11Data dht)
+void AirQualityMonitor::addData(BMP280Data bmp, CCS811Data ccs, DHT11Data dht, WiFiData wf)
 {
+    this->wiFiData.ssid = wf.ssid;
+    this->wiFiData.strenght = wf.strenght;
+    this->wiFiData.ip = wf.ip;
+
     if (!isnan(bmp.temperature))
     {
         this->temperatures[this->temperatureCurrentPosition++] = bmp.temperature;
@@ -125,9 +129,12 @@ bool AirQualityMonitor::upload(Configuration configuration)
     char json[300];
     sprintf(
         json,
-        "{ \"secretKey\": \"%s\", \"readingDate\": %d000, \"device\": { \"cpuTemperature\": 0, \"id\": \"%s\", \"name\": \"%s\", \"address\": \"%s\", \"ip\": \"%s\" }, \"airData\": { \"temperature\":%s, \"co2\":%s, \"tvoc\":%s, \"humidity\":%s, \"pressure\":%s } }",
+        "{ \"secretKey\": \"%s\", \"readingDate\": %d000, \"device\": { \"wifiName\": \"%s\", \"wifiSignalStrength\": %s, \"ip\": \"%s\", \"cpuTemperature\": 0, \"id\": \"%s\", \"name\": \"%s\", \"address\": \"%s\", \"ip\": \"%s\" }, \"airData\": { \"temperature\":%s, \"co2\":%s, \"tvoc\":%s, \"humidity\":%s, \"pressure\":%s } }",
         configuration.secretKey,
         timeClient.getEpochTime(),
+        this->wiFiData.ssid,
+        String(this->wiFiData.strenght),
+        this->wiFiData.ip.toString(),
         configuration.deviceId, configuration.deviceName, configuration.deviceAddress, configuration.ip,
         isnan(temperature) || temperatureCount == 0 ? "null" : String(temperature / temperatureCount),
         isnan(co2) || co2Count == 0 ? "null" : String(co2 / co2Count),
@@ -140,17 +147,17 @@ bool AirQualityMonitor::upload(Configuration configuration)
     Serial.print(" json: ");
     Serial.println(json);
 
-     http.begin(configuration.backendServiceUrl);
-     http.addHeader("Content-Type", "application/json");
-     int httpResponseCode = http.PUT(json);
-     if (httpResponseCode > 0)
-     {
-         Serial.println("Success on sending PUT");
-         Serial.println(http.getString());
-         return true;
-     }
+    http.begin(configuration.backendServiceUrl);
+    http.addHeader("Content-Type", "application/json");
+    int httpResponseCode = http.PUT(json);
+    if (httpResponseCode > 0)
+    {
+        Serial.println("Success on sending PUT");
+        Serial.println(http.getString());
+        return true;
+    }
 
-     Serial.print("Error on sending POST: ");
-     Serial.println(httpResponseCode);
+    Serial.print("Error on sending POST: ");
+    Serial.println(httpResponseCode);
     return false;
 }

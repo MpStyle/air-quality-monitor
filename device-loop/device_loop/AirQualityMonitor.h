@@ -4,6 +4,7 @@
 #include "HTTPClient.h"
 #include <NTPClient.h>
 #include <WiFiUdp.h>
+#include "WiFiData.h"
 
 #ifndef AIRQUALITYMONITOR_H
 #define AIRQUALITYMONITOR_H
@@ -40,9 +41,11 @@ private:
     float humidities[AirQualityMonitor::BUFFER_SIZE] = {NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN};
     float pressures[AirQualityMonitor::BUFFER_SIZE] = {NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN, NAN};
 
+    WiFiData wiFiData;
+
 public:
     void begin();
-    void addData(BMP280Data bmp, CCS811Data ccs, DHT11Data dht);
+    void addData(BMP280Data bmp, CCS811Data ccs, DHT11Data dht, WiFiData wf);
     bool upload(Configuration configuration);
 };
 
