@@ -8,4 +8,5 @@ export interface Device {
     updated: number;
     wifiName: string;
     wifiSignalStrength: number;
+    ip: string;
 }

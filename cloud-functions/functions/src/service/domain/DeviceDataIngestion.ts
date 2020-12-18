@@ -53,6 +53,7 @@ export const deviceDataIngestion = (logging: ILogging): Service<DeviceDataIngest
                         inserted: Date.now(),
                         wifiName: req.device.wifiName,
                         wifiSignalStrength: req.device.wifiSignalStrength,
+                        ip: req.device.ip
                     } : <Device>{
                         ...response.payload.device,
                         address: req.device.address,
@@ -62,6 +63,7 @@ export const deviceDataIngestion = (logging: ILogging): Service<DeviceDataIngest
                         updated: Date.now(),
                         wifiName: req.device.wifiName,
                         wifiSignalStrength: req.device.wifiSignalStrength,
+                        ip: req.device.ip
                     };
 
                     return deviceUpsertService({ device })
