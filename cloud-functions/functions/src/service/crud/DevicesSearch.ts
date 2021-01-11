@@ -15,6 +15,10 @@ export const devicesSearch = (logging: ILogging): Service<DevicesSearchRequest, 
         collectionRef = collectionRef.where('deviceId', '==', req.deviceId);
     }
 
+    if (req.secretKey) {
+        collectionRef = collectionRef.where('secretKey', '==', req.secretKey);
+    }
+
     if (req.offset) {
         collectionRef = collectionRef.startAt(req.offset);
     }
@@ -41,7 +45,8 @@ export const devicesSearch = (logging: ILogging): Service<DevicesSearchRequest, 
 };
 
 export interface DevicesSearchRequest extends PagedRequest {
-    deviceId: string;
+    deviceId?: string;
+    secretKey?: string;
 }
 
 export interface DevicesSearchResponse {
