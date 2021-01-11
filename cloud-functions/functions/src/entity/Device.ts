@@ -10,5 +10,5 @@ export interface Device {
     wifiSignalStrength: number;
     ip: string;
     scope: string;
-    token: string;
+    secretKey: string;
 }

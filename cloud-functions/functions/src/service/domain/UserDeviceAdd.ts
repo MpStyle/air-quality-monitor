@@ -25,14 +25,24 @@ export const userDeviceAdd = (logging: ILogging): Service<UserDeviceAddRequest, 
                 enabled: true,
                 name: req.name,
                 scope: req.scope,
-                token: req.token,
+                secretKey: req.secretKey,
                 address: req.address,
                 inserted: Date.now(),
                 updated: Date.now(),
             } as Device;
 
             return deviceUpsertService({ device })
-                .then(response => buildResponse({ device: response.payload.device }));
+                .then(deviceUpsertResponse => {
+                    if (deviceUpsertResponse.error) {
+                        return buildErrorResponse(deviceUpsertResponse.error);
+                    }
+
+                    if (!deviceUpsertResponse.payload || !deviceUpsertResponse.payload.device) {
+                        return buildErrorResponse(Errors.ERROR_WHILE_ADD_DEVICE);
+                    }
+
+                    return buildResponse({ device: deviceUpsertResponse.payload.device });
+                });
         })
         .catch((error: any) => {
             logging.error("userDeviceAdd", `Error while add device: ${JSON.stringify(error)}`);
@@ -45,7 +55,7 @@ export interface UserDeviceAddRequest {
     address?: string;
     name: string;
     scope: string;
-    token: string;
+    secretKey: string;
 }
 
 export interface UserDeviceAddResponse {
