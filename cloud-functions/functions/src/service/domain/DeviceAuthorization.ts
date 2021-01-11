@@ -1,25 +1,32 @@
 import { ILogging } from "../../book/Logging";
 import { Authorization } from "../../entity/Authorization";
-import { DeviceAuthorizations } from "../../entity/DeviceAuthorizations";
 import { Errors } from "../../entity/Errors";
 import { buildErrorResponse, buildResponse, Service } from "../../entity/Service";
-import functions = require('firebase-functions');
+import { devicesSearch } from "../crud/DevicesSearch";
 
 export const deviceAuthorization = (logging: ILogging): Service<DeviceAuthorizationRequest, DeviceAuthorizationResponse> => req => {
     try {
         logging.info("authorization", "Starts");
 
-        const appAuthorizations: DeviceAuthorizations[] = JSON.parse(functions.config().airqualitymonitor.devicesauthorizations);
+        return devicesSearch(logging)({
+            secretKey: req.secretKey
+        })
+            .then(deviceAuthorizationResponse => {
+                if (deviceAuthorizationResponse.error) {
+                    return buildErrorResponse(deviceAuthorizationResponse.error);
+                }
 
-        if (!appAuthorizations) {
-            return buildErrorResponse(Errors.AUTHORIZATIONS_CONFIGURATION_NOT_FOUND);
-        }
+                if (!deviceAuthorizationResponse.payload || !deviceAuthorizationResponse.payload.devices || !deviceAuthorizationResponse.payload.devices.length) {
+                    return buildErrorResponse(Errors.SECRET_KEY_NOT_FOUND);
+                }
 
-        return buildResponse<DeviceAuthorizationResponse>({
-            authorizations: appAuthorizations
-                .filter(a => a.secretKey === req.secretKey)
-                .reduce((acc, cur) => acc.concat(cur.authorizations), <Authorization[]>[])
-        });
+                return buildResponse(deviceAuthorizationResponse.payload.devices.map(d => {
+                    return {
+                        deviceId: d.deviceId,
+                        scopes: d.scope.split(";")
+                    } as Authorization;
+                }));
+            });
     }
     catch (error) {
         logging.error("deviceAuthorization", `Error while autorizating: ${error}`);
