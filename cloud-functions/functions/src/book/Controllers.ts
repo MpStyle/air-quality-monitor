@@ -3,6 +3,7 @@ import { Logging } from '../book/Logging';
 import { buildErrorResponse } from '../entity/Service';
 import { deviceDataIngestion } from '../service/domain/DeviceDataIngestion';
 import { healthCheck } from '../service/domain/HealthCheck';
+import { userDeviceAdd } from '../service/domain/UserDeviceAdd';
 import { userDeviceDelete } from '../service/domain/UserDeviceDelete';
 import { userDevicesList } from '../service/domain/UserDevicesList';
 import { userLastReadings as userLastReadings } from '../service/domain/UserLastReadings';
@@ -33,6 +34,11 @@ export const controllers = (logging: Logging) => {
     // User - To retrieve data
     app.post('/user-devices-list', (req, res) => {
         userDevicesList(logging)(req.body)
+            .then(data => res.send(data))
+            .catch(err => buildErrorResponse(err));
+    });
+    app.post('/user-device-add', (req, res) => {
+        userDeviceAdd(logging)(req.body)
             .then(data => res.send(data))
             .catch(err => buildErrorResponse(err));
     });

@@ -9,4 +9,6 @@ export interface Device {
     wifiName: string;
     wifiSignalStrength: number;
     ip: string;
+    scope: string;
+    token: string;
 }
