@@ -6,6 +6,9 @@ import { healthCheck } from '../service/domain/HealthCheck';
 import { userDeviceAdd } from '../service/domain/UserDeviceAdd';
 import { userDeviceDelete } from '../service/domain/UserDeviceDelete';
 import { userDevicesList } from '../service/domain/UserDevicesList';
+import { userUserAdd } from '../service/domain/UserUserAdd';
+import { userUserDelete } from '../service/domain/UserUserDelete';
+import { userUsersList } from '../service/domain/UserUsersList';
 import { userLastReadings as userLastReadings } from '../service/domain/UserLastReadings';
 import { userLogin } from '../service/domain/UserLogin';
 import { userRenewAccessToken } from '../service/domain/UserRenewAccessToken';
@@ -31,7 +34,24 @@ export const controllers = (logging: Logging) => {
             .catch(err => buildErrorResponse(err));
     });
 
-    // User - To retrieve data
+    // User - Users management
+    app.post('/user-users-list', (req, res) => {
+        userUsersList(logging)(req.body)
+            .then(data => res.send(data))
+            .catch(err => buildErrorResponse(err));
+    });
+    app.post('/user-user-add', (req, res) => {
+        userUserAdd(logging)(req.body)
+            .then(data => res.send(data))
+            .catch(err => buildErrorResponse(err));
+    });
+    app.post('/user-user-delete', (req, res) => {
+        userUserDelete(logging)(req.body)
+            .then(data => res.send(data))
+            .catch(err => buildErrorResponse(err));
+    });
+
+    // User - Devices management
     app.post('/user-devices-list', (req, res) => {
         userDevicesList(logging)(req.body)
             .then(data => res.send(data))
@@ -47,6 +67,8 @@ export const controllers = (logging: Logging) => {
             .then(data => res.send(data))
             .catch(err => buildErrorResponse(err));
     });
+
+    // User - To retrieve data
     app.post('/user-last-readings', (req, res) => {
         userLastReadings(logging)(req.body)
             .then(data => res.send(data))
