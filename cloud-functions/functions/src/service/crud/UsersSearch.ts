@@ -15,6 +15,10 @@ export const usersSearch = (logging: ILogging): Service<UsersSearchRequest, User
         collectionRef = collectionRef.where('username', '==', req.username);
     }
 
+    if (req.password) {
+        collectionRef = collectionRef.where('password', '==', req.password);
+    }
+
     if (req.offset) {
         collectionRef = collectionRef.startAt(req.offset);
     }
@@ -42,6 +46,7 @@ export const usersSearch = (logging: ILogging): Service<UsersSearchRequest, User
 
 export interface UsersSearchRequest extends PagedRequest {
     username?: string;
+    password?: string;
 }
 
 export interface UsersSearchResponse {

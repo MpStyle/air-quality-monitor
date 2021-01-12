@@ -1,16 +1,15 @@
 import { ILogging } from "../../book/Logging";
-import { Errors } from "../../entity/Errors";
-import { Scopes } from "../../entity/Scopes";
-import { buildErrorResponse, buildResponse, Service } from "../../entity/Service";
-import { userAuthorization } from "./UserAuthorization";
-import { ReadingSearchRequest, readingsSearch } from "../crud/ReadingsSearch";
-import Bluebird = require("bluebird");
-import { ReadingTypes } from "../../entity/ReadingTypes";
-import { AirStatus } from "../../entity/AirStatus";
-import { userSuggestions } from "./UserSuggestions";
 import { AirQuality } from "../../entity/AirQuality";
+import { AirStatus } from "../../entity/AirStatus";
+import { Errors } from "../../entity/Errors";
+import { ReadingTypes } from "../../entity/ReadingTypes";
+import { buildErrorResponse, buildResponse, Service } from "../../entity/Service";
+import { ReadingSearchRequest, readingsSearch } from "../crud/ReadingsSearch";
 import { userAirStatus } from "./UserAirStatus";
 import { userAirStatusAverage } from "./UserAirStatusAverage";
+import { userAuthorization } from "./UserAuthorization";
+import { userSuggestions } from "./UserSuggestions";
+import Bluebird = require("bluebird");
 
 export const userLastReadings = (logging: ILogging): Service<UserLastReadingsRequest, UserLastReadingsResponse> => req => {
     if (!req.accessToken || req.accessToken === '' || !req.deviceId || req.deviceId === '') {
@@ -27,14 +26,6 @@ export const userLastReadings = (logging: ILogging): Service<UserLastReadingsReq
 
             if (!authorizationResponse.payload) {
                 return buildErrorResponse(Errors.USER_UNAUTHORIZED);
-            }
-
-            const deviceIds = authorizationResponse.payload.authorizations
-                .filter(a => a.scopes.indexOf(Scopes.device_air_quality_data_read) !== -1)
-                .map(a => a.deviceId);
-
-            if (deviceIds.indexOf(req.deviceId) === -1) {
-                return buildErrorResponse(Errors.DEVICE_AUTHORIZATION_ERROR);
             }
 
             const readingTypes = [ReadingTypes.PRESSURE, ReadingTypes.TEMPERATURE, ReadingTypes.CO2, ReadingTypes.HUMIDITY, ReadingTypes.TVOC];

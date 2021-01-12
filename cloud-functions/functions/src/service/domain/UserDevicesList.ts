@@ -3,7 +3,6 @@ import { Errors } from "../../entity/Errors";
 import { devicesSearch, DevicesSearchRequest, DevicesSearchResponse as DevicesSearchResponse } from '../crud/DevicesSearch';
 import { userAuthorization } from "./UserAuthorization";
 import { Service, buildErrorResponse, buildResponse } from "../../entity/Service";
-import { Scopes } from "../../entity/Scopes";
 
 export const userDevicesList = (logging: ILogging): Service<UserDevicesListRequest, UserDevicesListResponse> => req => {
     if (!req.accessToken || req.accessToken === '') {
@@ -22,10 +21,6 @@ export const userDevicesList = (logging: ILogging): Service<UserDevicesListReque
                 return buildErrorResponse(Errors.USER_UNAUTHORIZED);
             }
 
-            const deviceIds = authorizationResponse.payload.authorizations
-                .filter(a => a.scopes.indexOf(Scopes.device_air_quality_data_read) !== -1)
-                .map(a => a.deviceId);
-
             return devicesSearch(logging)(req)
                 .then(response => {
                     if (response.error) {
@@ -37,7 +32,7 @@ export const userDevicesList = (logging: ILogging): Service<UserDevicesListReque
                     }
 
                     return buildResponse<UserDevicesListResponse>({
-                        devices: response.payload.devices.filter(d => deviceIds.indexOf(d.deviceId) !== -1)
+                        devices: response.payload.devices
                     });
                 });
         })

@@ -1,9 +1,6 @@
-export interface LoginToken {
-    accessToken: string;
-    expiredAt: number;
-    refreshToken: string;
+export interface AuthorizationToken {
+    exp: number;
+    iat: number;
     username: string;
-    enabled?: boolean;
-    inserted?: number;
-    updated?: number;
+    jti: string;
 }

@@ -11,8 +11,6 @@ import { userUserDelete } from '../service/domain/UserUserDelete';
 import { userUsersList } from '../service/domain/UserUsersList';
 import { userLastReadings as userLastReadings } from '../service/domain/UserLastReadings';
 import { userLogin } from '../service/domain/UserLogin';
-import { userRenewAccessToken } from '../service/domain/UserRenewAccessToken';
-import { userRevokeRefreshToken } from '../service/domain/UserRevokeRefreshToken';
 import { userTimeRangeReadings } from '../service/domain/UserTimeRangeReadings';
 
 export const controllers = (logging: Logging) => {
@@ -84,16 +82,6 @@ export const controllers = (logging: Logging) => {
     // User - Authentication/Authorization
     app.post('/user-login', (req, res) => {
         userLogin(logging)(req.body)
-            .then(data => res.send(data))
-            .catch(err => buildErrorResponse(err));
-    });
-    app.post('/user-renew-access-token', (req, res) => {
-        userRenewAccessToken(logging)(req.body)
-            .then(data => res.send(data))
-            .catch(err => buildErrorResponse(err));
-    });
-    app.post('/user-revoke-refresh-token', (req, res) => {
-        userRevokeRefreshToken(logging)(req.body)
             .then(data => res.send(data))
             .catch(err => buildErrorResponse(err));
     });

@@ -2,7 +2,6 @@ import { epochToLocaleDate } from "../../book/DateTimeUtils";
 import { ILogging } from "../../book/Logging";
 import { Errors } from "../../entity/Errors";
 import { Granularity } from "../../entity/Granularity";
-import { Scopes } from "../../entity/Scopes";
 import { buildErrorResponse, buildResponse, Service } from "../../entity/Service";
 import { TimeRangeReading } from '../../entity/TimeRangeReading';
 import { TimeRangeReadingSearchRequest, timeRangeReadingsSearch } from "../crud/TimeRangeReadingsSearch";
@@ -29,14 +28,6 @@ export const userTimeRangeReadings = (logging: ILogging): Service<UserTimeRangeR
 
             if (!authorizationResponse.payload) {
                 return buildErrorResponse(Errors.USER_UNAUTHORIZED);
-            }
-
-            const deviceIds = authorizationResponse.payload.authorizations
-                .filter(a => a.scopes.indexOf(Scopes.device_air_quality_data_read) !== -1)
-                .map(a => a.deviceId);
-
-            if (deviceIds.indexOf(req.deviceId) === -1) {
-                return buildErrorResponse(Errors.DEVICE_AUTHORIZATION_ERROR);
             }
 
             let timeRangeDailysGET = undefined;

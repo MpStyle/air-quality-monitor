@@ -1,9 +1,8 @@
 import { ILogging } from "../../book/Logging";
-import { User } from "../../entity/User";
-import { buildErrorResponse, buildResponse, Service } from "../../entity/Service";
-import { userUpsert } from "../crud/UserUpsert";
-import uuid = require("uuid");
 import { Errors } from "../../entity/Errors";
+import { buildErrorResponse, buildResponse, Service } from "../../entity/Service";
+import { User } from "../../entity/User";
+import { userUpsert } from "../crud/UserUpsert";
 import { userAuthorization } from "./UserAuthorization";
 
 export const userUserAdd = (logging: ILogging): Service<UserUserAddRequest, UserUserAddResponse> => req => {

@@ -1,9 +1,8 @@
 import { ILogging } from "../../book/Logging";
 import { Errors } from "../../entity/Errors";
+import { buildErrorResponse, buildResponse, Service } from "../../entity/Service";
 import { usersSearch, UsersSearchRequest, UsersSearchResponse as UsersSearchResponse } from '../crud/UsersSearch';
 import { userAuthorization } from "./UserAuthorization";
-import { Service, buildErrorResponse, buildResponse } from "../../entity/Service";
-import { Scopes } from "../../entity/Scopes";
 
 export const userUsersList = (logging: ILogging): Service<UserUsersListRequest, UserUsersListResponse> => req => {
     if (!req.accessToken || req.accessToken === '') {
@@ -22,10 +21,6 @@ export const userUsersList = (logging: ILogging): Service<UserUsersListRequest, 
                 return buildErrorResponse(Errors.USER_UNAUTHORIZED);
             }
 
-            const userIds = authorizationResponse.payload.authorizations
-                .filter(a => a.scopes.indexOf(Scopes.device_air_quality_data_read) !== -1)
-                .map(a => a.deviceId);
-
             return usersSearch(logging)(req)
                 .then(response => {
                     if (response.error) {
@@ -37,7 +32,7 @@ export const userUsersList = (logging: ILogging): Service<UserUsersListRequest, 
                     }
 
                     return buildResponse<UserUsersListResponse>({
-                        users: response.payload.users.filter(d => userIds.indexOf(d.username) !== -1)
+                        users: response.payload.users
                     });
                 });
         })

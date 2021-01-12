@@ -1,10 +1,10 @@
 import { ILogging } from "../../book/Logging";
 import { Errors } from "../../entity/Errors";
+import { AuthorizationToken } from "../../entity/LoginToken";
 import { buildErrorResponse, buildResponse, Service } from "../../entity/Service";
-import { User } from "../../entity/User";
-import functions = require('firebase-functions');
-import { loginTokenUpsert } from "../crud/LoginTokenUpsert";
 import uuid = require("uuid");
+import { usersSearch } from "../crud/UsersSearch";
+import { Settings } from "../../book/Settings";
 
 export const userLogin = (logging: ILogging): Service<UserLoginRequest, UserLoginResponse> => req => {
     if (!req.username || !req.password) {
@@ -13,44 +13,33 @@ export const userLogin = (logging: ILogging): Service<UserLoginRequest, UserLogi
 
     logging.info("userLogin", "Starts");
 
-    const users: User[] = JSON.parse(functions.config().airqualitymonitor.users);
-
-    if (!users || !users.length) {
-        return buildErrorResponse(Errors.USERS_CONFIGURATION_NOT_FOUND);
-    }
-
-    const user = users.find(u => u.password === req.password && u.username === req.username);
-
-    if (!user) {
-        return buildErrorResponse(Errors.USER_NOT_FOUND);
-    }
-
-    return loginTokenUpsert(logging)({
-        loginToken: {
-            username: req.username,
-            expiredAt: Date.now() + 5 * 60 * 1000,
-            refreshToken: uuid.v4(),
-            accessToken: uuid.v4()
-        }
+    return usersSearch(logging)({
+        username: req.username,
+        password: req.password
     })
-        .then(result => {
-            if (result.error) {
-                return buildErrorResponse(result.error);
+        .then(usersSearchResponse => {
+            if (usersSearchResponse.error) {
+                return buildErrorResponse(usersSearchResponse.error);
             }
 
-            if (!result.payload) {
-                return buildErrorResponse(Errors.ERROR_WHILE_USER_LOGIN);
+            if (!usersSearchResponse.payload?.users?.length) {
+                return buildErrorResponse(Errors.LOGIN_FAILS);
             }
 
-            return buildResponse<UserLoginResponse>({
-                accessToken: result.payload.loginToken?.accessToken as string,
-                refreshToken: result.payload.loginToken?.refreshToken as string,
-                expiredAt: result.payload.loginToken?.expiredAt as number
-            });
-        })
-        .catch(err => {
-            logging.error("userLogin", `Error while login: ${err}`);
-            return buildErrorResponse(err);
+            const jwtHeader = { alg: 'HS256', typ: 'JWT' };
+            const iat = jsrsasign.KJUR.jws.IntDate.get('now');
+            const exp = jsrsasign.KJUR.jws.IntDate.get('now + 1hour');
+            const authenticationToken = {
+                iat: iat,
+                exp: exp,
+                jti: uuid.v4(),
+                username: usersSearchResponse.payload.users[0].username
+            } as AuthorizationToken;
+            const jsonHeader = JSON.stringify(jwtHeader);
+            const jsonPayload = JSON.stringify(authenticationToken);
+            const sJWT = jsrsasign.KJUR.jws.JWS.sign("HS256", jsonHeader, jsonPayload, Settings.jwtPassword);
+
+            return buildResponse({ authorizationToken: sJWT });
         });
 };
 
@@ -60,7 +49,5 @@ export interface UserLoginRequest {
 }
 
 export interface UserLoginResponse {
-    accessToken: string;
-    expiredAt: number;
-    refreshToken: string;
+    authorizationToken: string;
 }
